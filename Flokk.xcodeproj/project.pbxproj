@@ -7,13 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7F06660B1E37BAAD003167AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06660A1E37BAAD003167AC /* AppDelegate.swift */; };
-		7F06660D1E37BAAD003167AC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06660C1E37BAAD003167AC /* ViewController.swift */; };
-		7F0666101E37BAAD003167AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F06660E1E37BAAD003167AC /* Main.storyboard */; };
-		7F0666121E37BAAD003167AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666111E37BAAD003167AC /* Assets.xcassets */; };
 		7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */; };
 		7F0666201E37BAAD003167AC /* FlokkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06661F1E37BAAD003167AC /* FlokkTests.swift */; };
 		7F06662B1E37BAAD003167AC /* FlokkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06662A1E37BAAD003167AC /* FlokkUITests.swift */; };
+		7F0666481E37BC00003167AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666391E37BC00003167AC /* AppDelegate.swift */; };
+		7F0666491E37BC00003167AC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663A1E37BC00003167AC /* ViewController.swift */; };
+		7F06664A1E37BC00003167AC /* TestViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663B1E37BC00003167AC /* TestViewViewController.swift */; };
+		7F06664B1E37BC00003167AC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663C1E37BC00003167AC /* LoginViewController.swift */; };
+		7F06664C1E37BC00003167AC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663D1E37BC00003167AC /* SignUpViewController.swift */; };
+		7F06664D1E37BC00003167AC /* GroupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663E1E37BC00003167AC /* GroupProfileViewController.swift */; };
+		7F06664E1E37BC00003167AC /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663F1E37BC00003167AC /* FeedViewController.swift */; };
+		7F06664F1E37BC00003167AC /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666401E37BC00003167AC /* CreateGroupViewController.swift */; };
+		7F0666501E37BC00003167AC /* GroupSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666411E37BC00003167AC /* GroupSettingsViewController.swift */; };
+		7F0666511E37BC00003167AC /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666421E37BC00003167AC /* GroupsViewController.swift */; };
+		7F0666521E37BC00003167AC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666431E37BC00003167AC /* ProfileViewController.swift */; };
+		7F0666531E37BC00003167AC /* PasswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */; };
+		7F0666541E37BC00003167AC /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */; };
+		7F0666551E37BC00003167AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666461E37BC00003167AC /* Main.storyboard */; };
+		7F0666561E37BC00003167AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666471E37BC00003167AC /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +46,6 @@
 
 /* Begin PBXFileReference section */
 		7F0666071E37BAAD003167AC /* Flokk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flokk.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7F06660A1E37BAAD003167AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7F06660C1E37BAAD003167AC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7F06660F1E37BAAD003167AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7F0666111E37BAAD003167AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F0666141E37BAAD003167AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F0666161E37BAAD003167AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F06661B1E37BAAD003167AC /* FlokkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlokkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +54,22 @@
 		7F0666261E37BAAD003167AC /* FlokkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlokkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F06662A1E37BAAD003167AC /* FlokkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlokkUITests.swift; sourceTree = "<group>"; };
 		7F06662C1E37BAAD003167AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F0666381E37BBFF003167AC /* Flokk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flokk-Bridging-Header.h"; sourceTree = "<group>"; };
+		7F0666391E37BC00003167AC /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
+		7F06663A1E37BC00003167AC /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../ViewController.swift; sourceTree = "<group>"; };
+		7F06663B1E37BC00003167AC /* TestViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestViewViewController.swift; path = ../TestViewViewController.swift; sourceTree = "<group>"; };
+		7F06663C1E37BC00003167AC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../LoginViewController.swift; sourceTree = "<group>"; };
+		7F06663D1E37BC00003167AC /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ../SignUpViewController.swift; sourceTree = "<group>"; };
+		7F06663E1E37BC00003167AC /* GroupProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupProfileViewController.swift; path = ../GroupProfileViewController.swift; sourceTree = "<group>"; };
+		7F06663F1E37BC00003167AC /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedViewController.swift; path = ../FeedViewController.swift; sourceTree = "<group>"; };
+		7F0666401E37BC00003167AC /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateGroupViewController.swift; path = ../CreateGroupViewController.swift; sourceTree = "<group>"; };
+		7F0666411E37BC00003167AC /* GroupSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSettingsViewController.swift; path = ../GroupSettingsViewController.swift; sourceTree = "<group>"; };
+		7F0666421E37BC00003167AC /* GroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupsViewController.swift; path = ../GroupsViewController.swift; sourceTree = "<group>"; };
+		7F0666431E37BC00003167AC /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = ../ProfileViewController.swift; sourceTree = "<group>"; };
+		7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PasswordRecoveryViewController.swift; path = ../PasswordRecoveryViewController.swift; sourceTree = "<group>"; };
+		7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileSettingsViewController.swift; path = ../ProfileSettingsViewController.swift; sourceTree = "<group>"; };
+		7F0666461E37BC00003167AC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
+		7F0666471E37BC00003167AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +104,7 @@
 				7F06661E1E37BAAD003167AC /* FlokkTests */,
 				7F0666291E37BAAD003167AC /* FlokkUITests */,
 				7F0666081E37BAAD003167AC /* Products */,
+				7F0666381E37BBFF003167AC /* Flokk-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,10 +121,21 @@
 		7F0666091E37BAAD003167AC /* Flokk */ = {
 			isa = PBXGroup;
 			children = (
-				7F06660A1E37BAAD003167AC /* AppDelegate.swift */,
-				7F06660C1E37BAAD003167AC /* ViewController.swift */,
-				7F06660E1E37BAAD003167AC /* Main.storyboard */,
-				7F0666111E37BAAD003167AC /* Assets.xcassets */,
+				7F0666391E37BC00003167AC /* AppDelegate.swift */,
+				7F06663A1E37BC00003167AC /* ViewController.swift */,
+				7F06663B1E37BC00003167AC /* TestViewViewController.swift */,
+				7F06663C1E37BC00003167AC /* LoginViewController.swift */,
+				7F06663D1E37BC00003167AC /* SignUpViewController.swift */,
+				7F06663E1E37BC00003167AC /* GroupProfileViewController.swift */,
+				7F06663F1E37BC00003167AC /* FeedViewController.swift */,
+				7F0666401E37BC00003167AC /* CreateGroupViewController.swift */,
+				7F0666411E37BC00003167AC /* GroupSettingsViewController.swift */,
+				7F0666421E37BC00003167AC /* GroupsViewController.swift */,
+				7F0666431E37BC00003167AC /* ProfileViewController.swift */,
+				7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */,
+				7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */,
+				7F0666461E37BC00003167AC /* Main.storyboard */,
+				7F0666471E37BC00003167AC /* Assets.xcassets */,
 				7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */,
 				7F0666161E37BAAD003167AC /* Info.plist */,
 			);
@@ -193,6 +228,7 @@
 				TargetAttributes = {
 					7F0666061E37BAAD003167AC = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					7F06661A1E37BAAD003167AC = {
@@ -233,8 +269,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */,
-				7F0666121E37BAAD003167AC /* Assets.xcassets in Resources */,
-				7F0666101E37BAAD003167AC /* Main.storyboard in Resources */,
+				7F0666561E37BC00003167AC /* Assets.xcassets in Resources */,
+				7F0666551E37BC00003167AC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,8 +295,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F06660D1E37BAAD003167AC /* ViewController.swift in Sources */,
-				7F06660B1E37BAAD003167AC /* AppDelegate.swift in Sources */,
+				7F06664D1E37BC00003167AC /* GroupProfileViewController.swift in Sources */,
+				7F06664B1E37BC00003167AC /* LoginViewController.swift in Sources */,
+				7F06664F1E37BC00003167AC /* CreateGroupViewController.swift in Sources */,
+				7F0666501E37BC00003167AC /* GroupSettingsViewController.swift in Sources */,
+				7F0666541E37BC00003167AC /* ProfileSettingsViewController.swift in Sources */,
+				7F0666511E37BC00003167AC /* GroupsViewController.swift in Sources */,
+				7F06664A1E37BC00003167AC /* TestViewViewController.swift in Sources */,
+				7F0666521E37BC00003167AC /* ProfileViewController.swift in Sources */,
+				7F0666491E37BC00003167AC /* ViewController.swift in Sources */,
+				7F0666531E37BC00003167AC /* PasswordRecoveryViewController.swift in Sources */,
+				7F0666481E37BC00003167AC /* AppDelegate.swift in Sources */,
+				7F06664C1E37BC00003167AC /* SignUpViewController.swift in Sources */,
+				7F06664E1E37BC00003167AC /* FeedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,14 +343,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		7F06660E1E37BAAD003167AC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7F06660F1E37BAAD003167AC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -410,10 +449,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaredheyen.Flokk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -422,10 +464,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jaredheyen.Flokk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
