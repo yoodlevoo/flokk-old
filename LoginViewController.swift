@@ -8,11 +8,11 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
-
+class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var flokkImage: UIImageView!
-    @IBOutlet weak var username: UITextField!
-    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +22,24 @@ class LoginViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //we need to determine what the username and password character limit is in the future
+    //for now im setting both of them to be 10
+    //also we need to determine what symbols can and cannot be used in them(ie. ./#$%^&*_!-@ )
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(textField == usernameTextField) {
+            let characterCountLimit: Int = 10
+            
+            //?? is used so if we cant get the length of the text field it is set to 0 instead
+            let startingLength: Int = usernameTextField.text?.characters.count ?? 0
+            
+            
+        } else if(textField == passwordTextField) {
+            
+        }
+        
+        
     }
     
     @IBAction func loginAction(_ sender: AnyObject) {
@@ -39,5 +57,4 @@ class LoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }
