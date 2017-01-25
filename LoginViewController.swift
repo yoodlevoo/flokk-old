@@ -16,6 +16,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        
+         self.hideKeyboardWhenTappedAround()
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -59,6 +66,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     //so the text field doesnt try to line break when we press enter
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        
         return true
     }
 
@@ -77,4 +85,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
