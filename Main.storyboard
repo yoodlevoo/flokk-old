@@ -62,7 +62,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Groups:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Er-nS-MMV">
-                                        <rect key="frame" x="8" y="147" width="85" height="21"/>
+                                        <rect key="frame" x="8" y="147" width="85" height="20.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="85" id="YbU-3Z-0d8"/>
                                         </constraints>
@@ -71,7 +71,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bw6-UX-5pq">
-                                        <rect key="frame" x="83" y="147" width="11" height="21"/>
+                                        <rect key="frame" x="83" y="147" width="10.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.069421157240000003" green="0.069742165509999995" blue="0.1379233003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1048,7 +1048,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Flokk Logo 1 NoBackGrnd" translatesAutoresizingMaskIntoConstraints="NO" id="vAn-So-zoe">
                                 <rect key="frame" x="105" y="70" width="167" height="106"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="106" id="BAL-wP-wiN"/>
                                     <constraint firstAttribute="width" secondItem="vAn-So-zoe" secondAttribute="height" multiplier="167:106" id="D0F-5c-cHb"/>
                                 </constraints>
                             </imageView>
