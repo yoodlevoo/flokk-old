@@ -29,19 +29,39 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     //also we need to determine what symbols can and cannot be used in them(ie. ./#$%^&*_!-@ )
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if(textField == usernameTextField) {
-            let characterCountLimit: Int = 10
+            let characterCountLimit = 10
             
             //?? is used so if we cant get the length of the text field it is set to 0 instead
-            let startingLength: Int = usernameTextField.text?.characters.count ?? 0
+            let startingLength = usernameTextField.text?.characters.count ?? 0
+            let lengthToAdd = string.characters.count
+            let lengthToReplace = range.length
             
+            let newLength = startingLength + lengthToAdd - lengthToReplace
+            
+            return newLength <= characterCountLimit
             
         } else if(textField == passwordTextField) {
+            let characterCountLimit = 10
             
+            //?? is used so if we cant get the length of the text field it is set to 0 instead
+            let startingLength = passwordTextField.text?.characters.count ?? 0
+            let lengthToAdd = string.characters.count
+            let lengthToReplace = range.length
+            
+            let newLength = startingLength + lengthToAdd - lengthToReplace
+            
+            return newLength <= characterCountLimit
         }
         
-        
+        return true
     }
     
+    //so the text field doesnt try to line break when we press enter
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
     @IBAction func loginAction(_ sender: AnyObject) {
         
     }
