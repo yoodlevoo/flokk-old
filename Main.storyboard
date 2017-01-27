@@ -210,7 +210,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notification Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6y-w1-Toh">
-                                                    <rect key="frame" x="156" y="49" width="156" height="21"/>
+                                                    <rect key="frame" x="127" y="36" width="156" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.069421157240000003" green="0.069742165509999995" blue="0.1379233003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -430,7 +430,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wzx-h2-fcu">
-                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <imageView key="tableFooterView" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Qt7-iA-Gbx">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="292"/>
@@ -438,13 +438,13 @@
                                 </imageView>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="72L-OQ-JDZ">
-                                <rect key="frame" x="12" y="127" width="41" height="37"/>
+                                <rect key="frame" x="12" y="83" width="41" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="41" id="Fna-df-1yw"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K32-zU-bUq">
-                                <rect key="frame" x="61" y="130" width="46" height="30"/>
+                                <rect key="frame" x="61" y="86" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="46" id="uJB-Zd-YnB"/>
                                 </constraints>
@@ -1194,6 +1194,9 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kGf-rL-wCN">
                                 <rect key="frame" x="19" y="582" width="154" height="51"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="kGf-rL-wCN" secondAttribute="height" multiplier="154:51" id="e0K-Is-Gu4"/>
+                                </constraints>
                                 <state key="normal" image="CancelBttn"/>
                                 <connections>
                                     <segue destination="bJR-56-AxZ" kind="presentation" id="8cf-Zz-Qcb"/>
@@ -1313,6 +1316,7 @@
                             <constraint firstItem="c5C-sv-6sq" firstAttribute="centerX" secondItem="efe-7b-j2Y" secondAttribute="centerX" id="iSR-j6-nsT"/>
                             <constraint firstItem="8Tx-ig-dV2" firstAttribute="trailing" secondItem="8jp-lv-FTJ" secondAttribute="trailing" id="iaL-Ml-1x2"/>
                             <constraint firstItem="tTF-PG-EgF" firstAttribute="trailing" secondItem="9By-q9-kj6" secondAttribute="trailing" id="ip3-LA-Yn1"/>
+                            <constraint firstItem="noR-nk-L2d" firstAttribute="width" secondItem="efe-7b-j2Y" secondAttribute="height" multiplier="140:667" id="iwH-qP-dgS"/>
                             <constraint firstItem="9By-q9-kj6" firstAttribute="leading" secondItem="MYq-zf-caz" secondAttribute="leading" id="pSU-94-mXT"/>
                             <constraint firstItem="STt-Ml-M7w" firstAttribute="bottom" secondItem="8jp-lv-FTJ" secondAttribute="bottom" id="pwb-t4-ybf"/>
                             <constraint firstItem="8Tx-ig-dV2" firstAttribute="leading" secondItem="STt-Ml-M7w" secondAttribute="leading" id="qp1-kk-orJ"/>
@@ -1519,8 +1523,8 @@
         <image name="WhiteArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lpy-gb-OxK"/>
-        <segue reference="Kj6-Rv-9Qd"/>
+        <segue reference="hDk-t3-cDx"/>
+        <segue reference="Ssk-qF-9Pg"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
