@@ -20,6 +20,11 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         
         //load all of the user's groups here
+        defaultGroups["FPSF 2016"] = UIImage(named: "FPSF2016")
+        defaultGroups["Christmas 2016"] = UIImage(named: "Christmas2016")
+        defaultGroups["Ski Trip"] = UIImage(named: "SkiTrip")
+        defaultGroups["The Heyen Men"] = UIImage(named: "HeyenMen")
+        defaultGroups["The Wedding"] = UIImage(named: "TheWedding")
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,7 +63,5 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 class GroupTableViewCell: UITableViewCell {
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupTitleLabel: UILabel!
-    @IBOutlet weak var groupButton: UIButton!
-    
     
 }
