@@ -8,23 +8,41 @@
 
 import UIKit
 
-class GroupsViewController: UIViewController {
-    @IBOutlet weak var groupName: UILabel! 
-   
+class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var groupName: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    
+    var defaultGroups: [String: UIImage] = [:] //makes an empty dictionary
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        tableView.delegate = self
+        
+        //load all of the user's groups here
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! GroupTableViewCell
+        
+        cell.groupTitleLabel?.text = "Edited Group Name"
+        //cell.fruitImageView?.image = (load image that was preloaded from server here)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
     @IBAction func createGroup(_ sender: Any) {
     }
     
-
     /*
     // MARK: - Navigation
 
@@ -35,4 +53,12 @@ class GroupsViewController: UIViewController {
     }
     */
 
+}
+
+class GroupTableViewCell: UITableViewCell {
+    @IBOutlet weak var groupImageView: UIImageView!
+    @IBOutlet weak var groupTitleLabel: UILabel!
+    @IBOutlet weak var groupButton: UIButton!
+    
+    
 }
