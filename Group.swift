@@ -7,9 +7,21 @@
 //
 
 import Foundation
+import UIKit
 
 class Group {
     var groupName: String
     var groupIcon: UIImage
+    
+    init() {
+        self.groupName = "filler"
+        self.groupIcon = UIImage(named: "HOME ICON")! //just some filler image
+    }
+    
+    init(text: String, image: UIImage) {
+        self.groupName = text
+        self.groupIcon = image
+    }
+    
     
 }

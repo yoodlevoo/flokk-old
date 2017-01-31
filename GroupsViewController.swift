@@ -12,31 +12,31 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    var defaultGroups: [String: UIImage] = [:] //makes an empty dictionary
+    //var defaultGroups: [Group: UIImage] = [:] //makes an empty dictionary
+    var defaultGroups = [Group]() //an emptyarray of Groups
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         
-        //load all of the user's groups here
-        defaultGroups["FPSF 2016"] = UIImage(named: "FPSF2016")
-        defaultGroups["Christmas 2016"] = UIImage(named: "Christmas2016")
-        defaultGroups["Ski Trip"] = UIImage(named: "SkiTrip")
-        defaultGroups["The Heyen Men"] = UIImage(named: "HeyenMen")
-        defaultGroups["The Wedding"] = UIImage(named: "TheWedding")
+        defaultGroups.append(Group(text: "FPSF 2016", image: UIImage(named: "FPSF2016")!))
+        defaultGroups.append(Group(text: "Christmas 2016", image: UIImage(named: "Christmas2016")!))
+        defaultGroups.append(Group(text: "Ski Trip", image: UIImage(named: "SkiTrip")!))
+        //defaultGroups.append(Group(text: "The Heyen Men", image: UIImage(named: "HeyenMen")!))
+        defaultGroups.append(Group(text: "The Wedding", image: UIImage(named: "TheWedding")!))
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! GroupTableViewCell
         
-        cell.groupTitleLabel?.text = "Edited Group Name"
-        //cell.fruitImageView?.image = (load image that was preloaded from server here)
+        cell.groupTitleLabel?.text = defaultGroups[indexPath.row].groupName
+        cell.groupImageView?.image = defaultGroups[indexPath.row].groupIcon
         
         return cell
     }
