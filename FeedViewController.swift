@@ -10,9 +10,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
     @IBOutlet weak var userImage: UIImageView!
-
     @IBOutlet weak var userName: UIButton!
-    
     @IBOutlet weak var imagePost: UITableView!
     
     override func viewDidLoad() {

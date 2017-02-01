@@ -107,7 +107,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="113" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QT0-Ff-i1W">
-                                <rect key="frame" x="0.0" y="197" width="375" height="372"/>
+                                <rect key="frame" x="0.0" y="197" width="375" height="421"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="113" id="VGy-Oy-NC1">
@@ -417,10 +417,10 @@
             </objects>
             <point key="canvasLocation" x="3137" y="-1623"/>
         </scene>
-        <!--Feed View Controller-->
+        <!--View Controller-->
         <scene sceneID="mEq-3X-w8e">
             <objects>
-                <viewController id="5QM-Ue-Ase" customClass="FeedViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5QM-Ue-Ase" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CcF-hD-HWj"/>
                         <viewControllerLayoutGuide type="bottom" id="vw2-IP-Osd"/>
@@ -487,7 +487,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x4M-ae-gMV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4028" y="-2614"/>
+            <point key="canvasLocation" x="3966" y="-3541"/>
         </scene>
         <!--Groups-->
         <scene sceneID="bcU-22-3dx">
@@ -502,7 +502,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="146" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g8A-sd-EZu">
-                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="default" id="GHU-nU-29w" customClass="GroupTableViewCell" customModule="Flokk" customModuleProvider="target">
@@ -523,15 +523,13 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bab-MU-qvR">
-                                                    <rect key="frame" x="338" y="51" width="29" height="42"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="GreyArrowBttn" translatesAutoresizingMaskIntoConstraints="NO" id="Odc-mO-1ul">
+                                                    <rect key="frame" x="346" y="62" width="16" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Button" image="GreyArrowBttn"/>
-                                                </button>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="groupButton" destination="Bab-MU-qvR" id="IIM-kG-IU1"/>
                                             <outlet property="groupImageView" destination="NYa-aE-H3d" id="HgX-d4-BHg"/>
                                             <outlet property="groupTitleLabel" destination="cuT-P3-VFh" id="bl4-Hz-tgw"/>
                                         </connections>
@@ -567,6 +565,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="suF-6y-qWt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2128.8000000000002" y="-2613.6431784107949"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="AFg-bq-jBI">
+            <objects>
+                <navigationController id="nKl-w0-RhZ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ff4-SJ-RiX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="zMU-GR-fPQ" kind="relationship" relationship="rootViewController" id="GY4-rX-LQj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mtj-cC-kYT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3201" y="-2604"/>
+        </scene>
+        <!--Group Name-->
+        <scene sceneID="elb-lE-yaD">
+            <objects>
+                <viewController id="zMU-GR-fPQ" customClass="FeedViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6jp-AK-FcF"/>
+                        <viewControllerLayoutGuide type="bottom" id="slg-55-yjJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tns-3U-FVD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Group Name" id="Rer-vm-6y0">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="DXj-08-TMP">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SBJ-9F-oy1">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cPg-Ji-GDS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4100" y="-2605.5472263868069"/>
         </scene>
         <!--GroupProfile-->
         <scene sceneID="gf2-J1-OXR">
@@ -735,8 +776,8 @@
                                     <constraint firstAttribute="width" constant="145" id="yYy-k6-dBZ"/>
                                 </constraints>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="93" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T7o-JI-AI3">
-                                <rect key="frame" x="0.0" y="228" width="375" height="439"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="93" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T7o-JI-AI3">
+                                <rect key="frame" x="0.0" y="228" width="375" height="404"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="93" id="oWJ-2k-ijj">
@@ -806,6 +847,19 @@
                                     <action selector="groupName:" destination="mtH-ru-S40" eventType="editingDidEnd" id="Dbr-a9-Vzx"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJv-g0-f9U">
+                                <rect key="frame" x="83" y="637" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <segue destination="l32-fs-QFF" kind="presentation" modalTransitionStyle="coverVertical" id="Psp-Mj-m5z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGX-KM-sQ1">
+                                <rect key="frame" x="241" y="637" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Create"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -834,7 +888,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mu4-aW-skK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2129" y="-3572"/>
+            <point key="canvasLocation" x="2128.8000000000002" y="-3572.5637181409297"/>
         </scene>
         <!--GroupSettings-->
         <scene sceneID="0gA-kk-G47">
@@ -1509,7 +1563,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jlL-0J-wtJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3137" y="-2614"/>
+            <point key="canvasLocation" x="3186" y="-3541"/>
         </scene>
     </scenes>
     <resources>
@@ -1533,8 +1587,9 @@
         <image name="WhiteArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hDk-t3-cDx"/>
         <segue reference="Ssk-qF-9Pg"/>
+        <segue reference="Psp-Mj-m5z"/>
+        <segue reference="hDk-t3-cDx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

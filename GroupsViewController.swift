@@ -42,7 +42,13 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 3 //this number will be loaded in later on
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let group = defaultGroups[indexPath.row]
+        
+        
     }
     
     @IBAction func createGroup(_ sender: Any) {
