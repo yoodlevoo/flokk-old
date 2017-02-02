@@ -26,6 +26,7 @@
 		7F0666551E37BC00003167AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666461E37BC00003167AC /* Main.storyboard */; };
 		7F0666561E37BC00003167AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666471E37BC00003167AC /* Assets.xcassets */; };
 		AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3B25361E3BE5E2006B92AC /* Group.swift */; };
+		ADC7B3C11E43CA8900F9ADFC /* FeedNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		7F0666461E37BC00003167AC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		7F0666471E37BC00003167AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		AD3B25361E3BE5E2006B92AC /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = SOURCE_ROOT; };
+		ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedNavigationViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				7F0666431E37BC00003167AC /* ProfileViewController.swift */,
 				7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */,
 				7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */,
+				ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */,
 				AD3B25361E3BE5E2006B92AC /* Group.swift */,
 				7F0666461E37BC00003167AC /* Main.storyboard */,
 				7F0666471E37BC00003167AC /* Assets.xcassets */,
@@ -308,6 +311,7 @@
 				7F0666521E37BC00003167AC /* ProfileViewController.swift in Sources */,
 				7F0666491E37BC00003167AC /* ViewController.swift in Sources */,
 				AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */,
+				ADC7B3C11E43CA8900F9ADFC /* FeedNavigationViewController.swift in Sources */,
 				7F0666531E37BC00003167AC /* PasswordRecoveryViewController.swift in Sources */,
 				7F0666481E37BC00003167AC /* AppDelegate.swift in Sources */,
 				7F06664C1E37BC00003167AC /* SignUpViewController.swift in Sources */,

@@ -42,13 +42,22 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3 //this number will be loaded in later on
+        return 4 //this number will be loaded in later on
     }
     
+    //When one of the cells is selected
+    //In the future, the feed should not be loaded each time
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let group = defaultGroups[indexPath.row]
+        let group = defaultGroups[indexPath.row] //get the specific group referred to by the pressed cell
+    
+        //let feedViewController = FeedViewController() //create a new feed controller
+        //feedViewController.group = group //tell the feed controller which group it should use
         
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let feedViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewController")
+        //feedViewController.group = group
         
+        self.present(feedViewController, animated: true, completion: nil)
     }
     
     @IBAction func createGroup(_ sender: Any) {

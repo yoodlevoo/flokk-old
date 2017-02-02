@@ -2,7 +2,7 @@
 //  File.swift
 //  Flokk
 //
-//  Created by Taylor High School on 1/27/17.
+//  Created by Gannon Prudhomme on 1/27/17.
 //  Copyright © 2017 Heyen Enterprises. All rights reserved.
 //
 

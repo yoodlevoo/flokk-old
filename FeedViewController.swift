@@ -13,6 +13,8 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var userName: UIButton!
     @IBOutlet weak var imagePost: UITableView!
     
+    var group: Group! //the group this feed is reading from
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

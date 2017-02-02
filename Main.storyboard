@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bJR-56-AxZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bJR-56-AxZ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -430,7 +430,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wzx-h2-fcu">
-                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <imageView key="tableFooterView" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Qt7-iA-Gbx">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="292"/>
@@ -438,13 +438,13 @@
                                 </imageView>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="72L-OQ-JDZ">
-                                <rect key="frame" x="12" y="83" width="41" height="37"/>
+                                <rect key="frame" x="12" y="127" width="41" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="41" id="Fna-df-1yw"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K32-zU-bUq">
-                                <rect key="frame" x="61" y="86" width="46" height="30"/>
+                                <rect key="frame" x="61" y="130" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="46" id="uJB-Zd-YnB"/>
                                 </constraints>
@@ -580,12 +580,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mtj-cC-kYT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3201" y="-2604"/>
+            <point key="canvasLocation" x="3137" y="-2606"/>
         </scene>
         <!--Group Name-->
         <scene sceneID="elb-lE-yaD">
             <objects>
-                <viewController id="zMU-GR-fPQ" customClass="FeedViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FeedViewController" id="zMU-GR-fPQ" customClass="FeedViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6jp-AK-FcF"/>
                         <viewControllerLayoutGuide type="bottom" id="slg-55-yjJ"/>
@@ -593,9 +593,23 @@
                     <view key="view" contentMode="scaleToFill" id="Tns-3U-FVD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XqT-0s-AFh">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Group Name" id="Rer-vm-6y0">
+                        <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="hK7-Jw-Zcq">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eik-EX-bGi">
+                                <rect key="frame" x="16" y="11" width="67" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="WhiteArrow"/>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="DXj-08-TMP">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SBJ-9F-oy1">
                                 <rect key="frame" x="276" y="7" width="83" height="30"/>
@@ -991,7 +1005,6 @@
                             <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="backPage:" destination="ZLj-Cl-JuV" id="hWp-hN-ETr"/>
-                                <segue destination="5QM-Ue-Ase" kind="presentation" id="Ssk-qF-9Pg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1587,9 +1600,8 @@
         <image name="WhiteArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ssk-qF-9Pg"/>
+        <segue reference="Ay0-G9-Vsn"/>
         <segue reference="Psp-Mj-m5z"/>
-        <segue reference="hDk-t3-cDx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
