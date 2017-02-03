@@ -85,6 +85,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     */
 }
 
+//place this in all of the view controllers that require the use of a textfield
+//as well as adding self.hideKeyboardWhenTappedAround() in viewDidLoad
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))

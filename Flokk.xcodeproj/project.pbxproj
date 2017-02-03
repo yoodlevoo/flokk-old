@@ -11,7 +11,6 @@
 		7F0666201E37BAAD003167AC /* FlokkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06661F1E37BAAD003167AC /* FlokkTests.swift */; };
 		7F06662B1E37BAAD003167AC /* FlokkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06662A1E37BAAD003167AC /* FlokkUITests.swift */; };
 		7F0666481E37BC00003167AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666391E37BC00003167AC /* AppDelegate.swift */; };
-		7F0666491E37BC00003167AC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663A1E37BC00003167AC /* ViewController.swift */; };
 		7F06664A1E37BC00003167AC /* TestViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663B1E37BC00003167AC /* TestViewViewController.swift */; };
 		7F06664B1E37BC00003167AC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663C1E37BC00003167AC /* LoginViewController.swift */; };
 		7F06664C1E37BC00003167AC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06663D1E37BC00003167AC /* SignUpViewController.swift */; };
@@ -27,6 +26,8 @@
 		7F0666561E37BC00003167AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666471E37BC00003167AC /* Assets.xcassets */; };
 		AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3B25361E3BE5E2006B92AC /* Group.swift */; };
 		ADC7B3C11E43CA8900F9ADFC /* FeedNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */; };
+		ADCF80CF1E451B9900047FE0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCF80CE1E451B9900047FE0 /* User.swift */; };
+		ADCF80D11E451EFE00047FE0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCF80D01E451EFE00047FE0 /* Post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +59,6 @@
 		7F06662C1E37BAAD003167AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F0666381E37BBFF003167AC /* Flokk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flokk-Bridging-Header.h"; sourceTree = "<group>"; };
 		7F0666391E37BC00003167AC /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
-		7F06663A1E37BC00003167AC /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../ViewController.swift; sourceTree = "<group>"; };
 		7F06663B1E37BC00003167AC /* TestViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestViewViewController.swift; path = ../TestViewViewController.swift; sourceTree = "<group>"; };
 		7F06663C1E37BC00003167AC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../LoginViewController.swift; sourceTree = "<group>"; };
 		7F06663D1E37BC00003167AC /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ../SignUpViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +74,8 @@
 		7F0666471E37BC00003167AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		AD3B25361E3BE5E2006B92AC /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = SOURCE_ROOT; };
 		ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedNavigationViewController.swift; sourceTree = SOURCE_ROOT; };
+		ADCF80CE1E451B9900047FE0 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = SOURCE_ROOT; };
+		ADCF80D01E451EFE00047FE0 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				7F0666391E37BC00003167AC /* AppDelegate.swift */,
-				7F06663A1E37BC00003167AC /* ViewController.swift */,
 				7F06663B1E37BC00003167AC /* TestViewViewController.swift */,
 				7F06663C1E37BC00003167AC /* LoginViewController.swift */,
 				7F06663D1E37BC00003167AC /* SignUpViewController.swift */,
@@ -140,6 +141,8 @@
 				7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */,
 				ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */,
 				AD3B25361E3BE5E2006B92AC /* Group.swift */,
+				ADCF80CE1E451B9900047FE0 /* User.swift */,
+				ADCF80D01E451EFE00047FE0 /* Post.swift */,
 				7F0666461E37BC00003167AC /* Main.storyboard */,
 				7F0666471E37BC00003167AC /* Assets.xcassets */,
 				7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */,
@@ -305,13 +308,14 @@
 				7F06664B1E37BC00003167AC /* LoginViewController.swift in Sources */,
 				7F06664F1E37BC00003167AC /* CreateGroupViewController.swift in Sources */,
 				7F0666501E37BC00003167AC /* GroupSettingsViewController.swift in Sources */,
+				ADCF80CF1E451B9900047FE0 /* User.swift in Sources */,
 				7F0666541E37BC00003167AC /* ProfileSettingsViewController.swift in Sources */,
 				7F0666511E37BC00003167AC /* GroupsViewController.swift in Sources */,
 				7F06664A1E37BC00003167AC /* TestViewViewController.swift in Sources */,
 				7F0666521E37BC00003167AC /* ProfileViewController.swift in Sources */,
-				7F0666491E37BC00003167AC /* ViewController.swift in Sources */,
 				AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */,
 				ADC7B3C11E43CA8900F9ADFC /* FeedNavigationViewController.swift in Sources */,
+				ADCF80D11E451EFE00047FE0 /* Post.swift in Sources */,
 				7F0666531E37BC00003167AC /* PasswordRecoveryViewController.swift in Sources */,
 				7F0666481E37BC00003167AC /* AppDelegate.swift in Sources */,
 				7F06664C1E37BC00003167AC /* SignUpViewController.swift in Sources */,

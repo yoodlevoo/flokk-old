@@ -9,23 +9,24 @@
 import UIKit
 
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet weak var imagePost: UITableView!
-
     var group: Group! //the group this feed is reading from
+    
+    var feedTestImages = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        //feedTestImages.append(UIImage)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
+        
+        
         
         return cell
     }
@@ -35,8 +36,11 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
+        
     }
+    
     @IBAction func backPage(_ sender: AnyObject) {
+        
     }
 }
 

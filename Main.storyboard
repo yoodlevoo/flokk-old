@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bJR-56-AxZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bJR-56-AxZ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -640,6 +640,9 @@
                                 <state key="normal" image="turquoiseArrow">
                                     <color key="titleColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="l32-fs-QFF" kind="presentation" id="K00-At-rdY"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="DXj-08-TMP">
@@ -1634,7 +1637,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ay0-G9-Vsn"/>
-        <segue reference="Psp-Mj-m5z"/>
+        <segue reference="K00-At-rdY"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
