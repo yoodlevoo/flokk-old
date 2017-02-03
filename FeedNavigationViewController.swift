@@ -13,7 +13,7 @@ class FeedNavigationViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationBar.barTintColor = UIColor.blue
+        //self.navigationBar.barTintColor = UIColor.darkGray
     }
 
     override func didReceiveMemoryWarning() {

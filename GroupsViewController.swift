@@ -54,7 +54,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //feedViewController.group = group //tell the feed controller which group it should use
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let feedViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewController")
+        let feedViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController")
         //feedViewController.group = group
         
         self.present(feedViewController, animated: true, completion: nil)
