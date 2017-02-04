@@ -9,7 +9,6 @@
 import UIKit
 
 class CreateGroupViewController: UIViewController {
-    @IBOutlet weak var groupPic: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +33,8 @@ class CreateGroupViewController: UIViewController {
     @IBAction func greyColor(_ sender: AnyObject) {
     }
     @IBAction func blueColor(_ sender: AnyObject) {
+    }
+    @IBAction func addGroupPicture(_ sender: Any) {
     }
     
     
