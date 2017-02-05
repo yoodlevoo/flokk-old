@@ -42,6 +42,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func backPage(_ sender: AnyObject) {
         
     }
+    @IBAction func groupSettings(_ sender: Any) {
+    }
 }
 
 class FeedTableViewCell: UITableViewCell {
