@@ -13,6 +13,8 @@ class Group {
     var groupName: String
     var groupIcon: UIImage
     
+    var participants = [User]() //the users that are in this group
+    
     init() {
         self.groupName = "filler"
         self.groupIcon = UIImage(named: "HOME ICON")! //just some filler image
@@ -22,6 +24,4 @@ class Group {
         self.groupName = text
         self.groupIcon = image
     }
-    
-    
 }

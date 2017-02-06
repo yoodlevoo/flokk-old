@@ -54,25 +54,16 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //feedViewController.group = group //tell the feed controller which group it should use
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let feedViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController")
-        //feedViewController.group = group
+        let feedNav:FeedNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController") as! FeedNavigationViewController
+        feedNav.groupToPass = group
         
-        self.present(feedViewController, animated: true, completion: nil)
+        self.present(feedNav, animated: true, completion: nil)
     }
-    
+
+    /*
     @IBAction func createGroup(_ sender: Any) {
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     */
 }
 
 class GroupTableViewCell: UITableViewCell {

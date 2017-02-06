@@ -15,7 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        //passing which group is pressed from the GroupsViewController to the FeedViewController
+        //the GroupsViewController(in didSelectRow) sets the group in FeedNavigationViewController
+        //and this passes it from the nav controller to the feed controller
+        if let navigationController = window?.rootViewController as? FeedNavigationViewController {
+            if let firstVC = navigationController.viewControllers[0] as? FeedViewController {
+                firstVC.group = navigationController.groupToPass
+            }
+        }
+        
         return true
     }
 

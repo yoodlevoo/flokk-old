@@ -132,14 +132,14 @@
 				7F06663C1E37BC00003167AC /* LoginViewController.swift */,
 				7F06663D1E37BC00003167AC /* SignUpViewController.swift */,
 				7F06663E1E37BC00003167AC /* GroupProfileViewController.swift */,
+				7F0666421E37BC00003167AC /* GroupsViewController.swift */,
 				7F06663F1E37BC00003167AC /* FeedViewController.swift */,
+				ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */,
 				7F0666401E37BC00003167AC /* CreateGroupViewController.swift */,
 				7F0666411E37BC00003167AC /* GroupSettingsViewController.swift */,
-				7F0666421E37BC00003167AC /* GroupsViewController.swift */,
 				7F0666431E37BC00003167AC /* ProfileViewController.swift */,
 				7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */,
 				7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */,
-				ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */,
 				AD3B25361E3BE5E2006B92AC /* Group.swift */,
 				ADCF80CE1E451B9900047FE0 /* User.swift */,
 				ADCF80D01E451EFE00047FE0 /* Post.swift */,
@@ -237,6 +237,7 @@
 				TargetAttributes = {
 					7F0666061E37BAAD003167AC = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = L4K4Q74X62;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -462,9 +463,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = L4K4Q74X62;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jaredheyen.Flokk;
+				PRODUCT_BUNDLE_IDENTIFIER = BundleID1234;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -477,9 +479,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = L4K4Q74X62;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.jaredheyen.Flokk;
+				PRODUCT_BUNDLE_IDENTIFIER = BundleID1234;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

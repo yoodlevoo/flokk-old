@@ -10,9 +10,13 @@ import UIKit
 
 //basically only used to change the navigation bar's color
 class FeedNavigationViewController: UINavigationController {
+    var groupToPass: Group!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = groupToPass.groupName
+        
         //self.navigationBar.barTintColor = UIColor.darkGray
     }
 

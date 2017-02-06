@@ -11,7 +11,7 @@ import UIKit
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var group: Group! //the group this feed is reading from
     
-    var feedTestImages = [UIImage]()
+    var feedTestImages = [UIImage]() //for testing 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
         
-        
+        print(group.groupName)
         
         return cell
     }
@@ -42,7 +42,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func backPage(_ sender: AnyObject) {
         
     }
+    
     @IBAction func groupSettings(_ sender: Any) {
+        
     }
 }
 
