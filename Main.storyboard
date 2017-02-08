@@ -1171,9 +1171,9 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="19" id="Sp0-mx-gjU"/>
                                 </constraints>
-                                <color key="textColor" red="0.069421157240000003" green="0.069742165509999995" blue="0.1379233003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TMV-Fx-yWV">
                                 <rect key="frame" x="105" y="265" width="168" height="19"/>
@@ -1182,10 +1182,10 @@
                                 </constraints>
                                 <color key="textColor" red="0.069421157240000003" green="0.069742165509999995" blue="0.1379233003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zpr-gL-CDH">
-                                <rect key="frame" x="125" y="394" width="129" height="30"/>
+                                <rect key="frame" x="125" y="404" width="129" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="129" id="3xa-mF-ybe"/>
                                 </constraints>
@@ -1231,7 +1231,7 @@
                             <constraint firstItem="Xg5-rX-0Km" firstAttribute="top" secondItem="sdh-iS-2U7" secondAttribute="bottom" constant="12" id="TBw-ed-P0s"/>
                             <constraint firstItem="sdh-iS-2U7" firstAttribute="centerX" secondItem="zpr-gL-CDH" secondAttribute="centerX" id="Tw3-aA-kSk"/>
                             <constraint firstItem="TMV-Fx-yWV" firstAttribute="top" secondItem="vAn-So-zoe" secondAttribute="bottom" constant="88" id="Wcz-kf-Poj"/>
-                            <constraint firstItem="zpr-gL-CDH" firstAttribute="top" secondItem="BK6-OL-q7h" secondAttribute="bottom" constant="374" id="YXU-8g-1WS"/>
+                            <constraint firstItem="zpr-gL-CDH" firstAttribute="top" secondItem="BK6-OL-q7h" secondAttribute="bottom" constant="384" id="YXU-8g-1WS"/>
                             <constraint firstItem="sdh-iS-2U7" firstAttribute="leading" secondItem="9QE-xg-D1Z" secondAttribute="leadingMargin" constant="57" id="kdA-Ve-AUT"/>
                             <constraint firstItem="cnI-0q-M1G" firstAttribute="top" secondItem="TMV-Fx-yWV" secondAttribute="bottom" constant="84" id="lHA-Nq-q9b"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Xg5-rX-0Km" secondAttribute="trailing" constant="81" id="mU8-CE-xiN"/>
