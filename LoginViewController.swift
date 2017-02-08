@@ -19,7 +19,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.delegate = self
         passwordTextField.delegate = self
         
-         self.hideKeyboardWhenTappedAround()
+        self.hideKeyboardWhenTappedAround()
+        
+        usernameTextField.attributedPlaceholder = NSAttributedString(string:"username ", attributes: [NSForegroundColorAttributeName: UIColor.white])
         
         // Do any additional setup after loading the view.
     }

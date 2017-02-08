@@ -20,7 +20,7 @@ class Group {
         self.groupIcon = UIImage(named: "HOME ICON")! //just some filler image
     }
     
-    init(text: String, image: UIImage) {
+    init(text: String, image: UIImage, users: [User]) {
         self.groupName = text
         self.groupIcon = image
     }

@@ -20,11 +20,13 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.delegate = self
         
-        defaultGroups.append(Group(text: "FPSF 2016", image: UIImage(named: "FPSF2016")!))
-        defaultGroups.append(Group(text: "Christmas 2016", image: UIImage(named: "Christmas2016")!))
-        defaultGroups.append(Group(text: "Ski Trip", image: UIImage(named: "SkiTrip")!))
+        var emptyUsers = [User]()
+        
+        defaultGroups.append(Group(text: "FPSF 2016", image: UIImage(named: "FPSF2016")!, users: emptyUsers))
+        defaultGroups.append(Group(text: "Christmas 2016", image: UIImage(named: "Christmas2016")!, users: emptyUsers))
+        defaultGroups.append(Group(text: "Ski Trip", image: UIImage(named: "SkiTrip")!, users: emptyUsers))
         //defaultGroups.append(Group(text: "The Heyen Men", image: UIImage(named: "HeyenMen")!))
-        defaultGroups.append(Group(text: "The Wedding", image: UIImage(named: "TheWedding")!))
+        defaultGroups.append(Group(text: "The Wedding", image: UIImage(named: "TheWedding")!, users: emptyUsers))
     }
 
     override func didReceiveMemoryWarning() {

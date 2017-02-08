@@ -12,11 +12,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var group: Group! //the group this feed is reading from
     
     var feedTestImages = [UIImage]() //for testing 
+    var posts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //feedTestImages.append(UIImage)
+        feedTestImages.append(UIImage(named: "FPSF2016")!)
+        
+        //posts.append(Post(poster: <#T##User#>, image: <#T##UIImage#>)
     }
 
     override func didReceiveMemoryWarning() {
