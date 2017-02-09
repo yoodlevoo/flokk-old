@@ -23,5 +23,6 @@ class Group {
     init(text: String, image: UIImage, users: [User]) {
         self.groupName = text
         self.groupIcon = image
+        self.participants = users
     }
 }

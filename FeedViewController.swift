@@ -19,7 +19,13 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         feedTestImages.append(UIImage(named: "FPSF2016")!)
         
-        //posts.append(Post(poster: <#T##User#>, image: <#T##UIImage#>)
+        loadPosts()
+    }
+    
+    //load the posts in from the JSON file
+    func loadPosts() {
+        let user = group.participants[0]
+        posts.append(Post(poster: user, image: UIImage(named: "FPSF2016")!))
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,6 +35,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
         
+        let user: User = posts[indexPath.row].poster
+        cell.userImage.image = user.profilePhoto
+        cell.postedImage.image = posts[indexPath.row].image
+
         print(group.groupName)
         
         return cell

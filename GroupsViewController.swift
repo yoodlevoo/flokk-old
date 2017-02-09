@@ -20,13 +20,15 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.delegate = self
         
-        var emptyUsers = [User]()
+        //let emptyUsers = [User]() //this won't be needed in the future, just so Group.init will work
+        var fpsfUsers = [User]()
+        fpsfUsers.append(User(usernameHandle: "gannonprudhomme", fullName: "Gannon Prudhomme"))
+        fpsfUsers.append(User(usernameHandle: "jaredheyen", fullName: "Jared Heyen"))
         
-        defaultGroups.append(Group(text: "FPSF 2016", image: UIImage(named: "FPSF2016")!, users: emptyUsers))
-        defaultGroups.append(Group(text: "Christmas 2016", image: UIImage(named: "Christmas2016")!, users: emptyUsers))
-        defaultGroups.append(Group(text: "Ski Trip", image: UIImage(named: "SkiTrip")!, users: emptyUsers))
-        //defaultGroups.append(Group(text: "The Heyen Men", image: UIImage(named: "HeyenMen")!))
-        defaultGroups.append(Group(text: "The Wedding", image: UIImage(named: "TheWedding")!, users: emptyUsers))
+        defaultGroups.append(Group(text: "FPSF 2016", image: UIImage(named: "FPSF2016")!, users: fpsfUsers))
+        defaultGroups.append(Group(text: "Christmas 2016", image: UIImage(named: "Christmas2016")!, users: fpsfUsers))
+        defaultGroups.append(Group(text: "Ski Trip", image: UIImage(named: "SkiTrip")!, users: fpsfUsers))
+        defaultGroups.append(Group(text: "The Wedding", image: UIImage(named: "TheWedding")!, users: fpsfUsers))
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,6 +60,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let feedNav:FeedNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController") as! FeedNavigationViewController
         feedNav.groupToPass = group
+        feedNav.passGroup()
         
         self.present(feedNav, animated: true, completion: nil)
     }

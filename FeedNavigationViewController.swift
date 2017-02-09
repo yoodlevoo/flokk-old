@@ -23,4 +23,10 @@ class FeedNavigationViewController: UINavigationController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    func passGroup() {
+        if let feedVC = self.viewControllers[0] as? FeedViewController {
+            feedVC.group = groupToPass
+        }
+    }
 }

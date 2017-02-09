@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let navigationController = window?.rootViewController as? FeedNavigationViewController {
             if let firstVC = navigationController.viewControllers[0] as? FeedViewController {
                 firstVC.group = navigationController.groupToPass
+                
+                print("app delegate setting thing")
             }
         }
         
