@@ -27,6 +27,7 @@ class FeedNavigationViewController: UINavigationController {
     func passGroup() {
         if let feedVC = self.viewControllers[0] as? FeedViewController {
             feedVC.group = groupToPass
+            self.title = groupToPass.groupName
         }
     }
 }

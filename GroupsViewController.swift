@@ -19,6 +19,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         
         tableView.delegate = self
+        tableView.dataSource = self
         
         //let emptyUsers = [User]() //this won't be needed in the future, just so Group.init will work
         var fpsfUsers = [User]()
