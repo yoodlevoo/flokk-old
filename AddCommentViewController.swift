@@ -1,5 +1,5 @@
 //
-//  CommentViewController.swift
+//  AddCommentViewController.swift
 //  Flokk
 //
 //  Created by Jared Heyen on 2/11/17.
@@ -8,10 +8,9 @@
 
 import UIKit
 
-class CommentViewController: UIViewController {
+class AddCommentViewController: UIViewController {
     @IBOutlet weak var post: UIImageView!
-    @IBOutlet weak var profileCommenterPic: UIImageView!
-    @IBOutlet weak var comment: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
