@@ -530,7 +530,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Groups" id="q9o-g9-gl1">
                         <barButtonItem key="rightBarButtonItem" image="AddBttn" id="N3l-b7-z9I">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="createGroup:" destination="KFV-bB-sMD" id="8dr-Tk-8mp"/>
                                 <segue destination="mtH-ru-S40" kind="presentation" id="Rxd-mZ-nZM"/>
@@ -858,7 +858,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="ibz-J0-4D7"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                    <color key="textColor" red="0.069421157240000003" green="0.069742165509999995" blue="0.1379233003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpD-Mr-BAT">
@@ -871,6 +871,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="FZp-KX-biu" firstAttribute="top" secondItem="mtr-G5-4VA" secondAttribute="topMargin" constant="1" id="0IB-c0-108"/>
                                                 <constraint firstItem="kVM-k4-0rT" firstAttribute="leading" secondItem="FZp-KX-biu" secondAttribute="trailing" constant="17" id="4ai-TQ-JmX"/>
@@ -894,18 +895,18 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
                             </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJv-g0-f9U">
-                                <rect key="frame" x="33" y="616" width="148" height="51"/>
+                                <rect key="frame" x="33" y="610" width="148" height="57"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="148" id="i5m-7O-ZHs"/>
                                 </constraints>
-                                <state key="normal" image="Cancel Button"/>
+                                <state key="normal" image="navyBorderedCancelBttn"/>
                                 <connections>
                                     <segue destination="x15-8V-ONQ" kind="presentation" id="Ly4-tv-MRN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGX-KM-sQ1">
-                                <rect key="frame" x="199" y="616" width="148" height="51"/>
-                                <state key="normal" image="Create Button"/>
+                                <rect key="frame" x="199" y="610" width="148" height="57"/>
+                                <state key="normal" image="turquoiseCreateBttn"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eq6-9f-UES">
                                 <rect key="frame" x="33" y="28" width="131" height="127"/>
@@ -913,7 +914,7 @@
                                     <constraint firstAttribute="width" constant="131" id="eqY-jZ-daE"/>
                                     <constraint firstAttribute="height" constant="127" id="glT-Nz-D26"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="addGroupPicture"/>
+                                <state key="normal" image="addGroupPicture"/>
                                 <connections>
                                     <action selector="addGroupPicture:" destination="mtH-ru-S40" eventType="touchUpInside" id="Lc9-a2-ZAe"/>
                                 </connections>
@@ -923,7 +924,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Zmy-vI-tQh"/>
                                 </constraints>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -931,7 +932,7 @@
                                 </connections>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Ang-yg-UCJ" firstAttribute="top" secondItem="EcG-B4-Tfg" secondAttribute="bottom" constant="82" id="0Va-V9-LTG"/>
                             <constraint firstItem="JGX-KM-sQ1" firstAttribute="leading" secondItem="FJv-g0-f9U" secondAttribute="trailing" constant="18" id="2HT-3e-RP1"/>
@@ -1778,7 +1779,6 @@
         <image name="Cancel Button" width="140" height="51"/>
         <image name="Cancel Button (Dark)" width="175" height="51"/>
         <image name="Create Account Button" width="140" height="51"/>
-        <image name="Create Button" width="140" height="51"/>
         <image name="Flokk Logo 1 NoBackGrnd" width="2287" height="931"/>
         <image name="FollowBttn" width="33" height="31"/>
         <image name="GROUPS ICON" width="25" height="25"/>
@@ -1795,13 +1795,15 @@
         <image name="WhiteArrow" width="13" height="20"/>
         <image name="addGroupPicture" width="123" height="123"/>
         <image name="ellipse-3" width="34" height="34"/>
+        <image name="navyBorderedCancelBttn" width="152" height="57"/>
         <image name="turquoiseArrow" width="13" height="20"/>
+        <image name="turquoiseCreateBttn" width="152" height="57"/>
         <image name="turquoiseRequestToBeAddedBttn" width="149" height="148"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="8cf-Zz-Qcb"/>
-        <segue reference="3gE-Vc-SI7"/>
         <segue reference="hDk-t3-cDx"/>
+        <segue reference="Ly4-tv-MRN"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
