@@ -504,7 +504,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="GreyArrowBttn" translatesAutoresizingMaskIntoConstraints="NO" id="Odc-mO-1ul">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="turquoiseGroupsArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Odc-mO-1ul">
                                                     <rect key="frame" x="346" y="62" width="16" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1782,7 +1782,6 @@
         <image name="Flokk Logo 1 NoBackGrnd" width="2287" height="931"/>
         <image name="FollowBttn" width="33" height="31"/>
         <image name="GROUPS ICON" width="25" height="25"/>
-        <image name="GreyArrowBttn" width="13" height="20"/>
         <image name="HOME ICON" width="25" height="25"/>
         <image name="LogOutBttn" width="111" height="35"/>
         <image name="ResortNavy" width="323" height="176"/>
@@ -1798,12 +1797,13 @@
         <image name="navyBorderedCancelBttn" width="152" height="57"/>
         <image name="turquoiseArrow" width="13" height="20"/>
         <image name="turquoiseCreateBttn" width="152" height="57"/>
+        <image name="turquoiseGroupsArrow" width="13" height="20"/>
         <image name="turquoiseRequestToBeAddedBttn" width="149" height="148"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8cf-Zz-Qcb"/>
         <segue reference="hDk-t3-cDx"/>
-        <segue reference="Ly4-tv-MRN"/>
+        <segue reference="3gE-Vc-SI7"/>
+        <segue reference="8cf-Zz-Qcb"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
