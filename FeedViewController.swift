@@ -27,7 +27,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         loadPosts()
     }
     
-    //load the posts in from the JSON file
+    //load the posts in from the JSON file - this is about to be replaced by posts being loaded in from the groups variable
     func loadPosts() {
         let user = group.participants[0]
         posts.append(Post(poster: user, image: UIImage(named: "FPSF2016")!))
@@ -60,6 +60,17 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     //if this works, transition to the comments view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("did select row at")
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let row = indexPath.row
+        
+        if row == 1 {
+            let image: UIImage = posts[row].image
+            return image.size.height
+        }
+        
+        return 100 //some random number cause i dont really know what the default height is
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
