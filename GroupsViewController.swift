@@ -54,10 +54,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //In the future, the feed should not be loaded each time
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let group = defaultGroups[indexPath.row] //get the specific group referred to by the pressed cell
-    
-        //let feedViewController = FeedViewController() //create a new feed controller
-        //feedViewController.group = group //tell the feed controller which group it should use
         
+        //then transition to the feedview controller through the Feed's navigation controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let feedNav:FeedNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController") as! FeedNavigationViewController
         feedNav.groupToPass = group
