@@ -65,12 +65,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = indexPath.row
         
-        if row == 1 {
+        if row == 0 {
             let image: UIImage = posts[row].image
             return image.size.height
         }
         
-        return 100 //some random number cause i dont really know what the default height is
+        return 500 //some random number cause i dont really know what the default height is
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
