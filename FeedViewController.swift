@@ -84,7 +84,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var userName: UIButton!
     @IBOutlet weak var postedImage: UIImageView!
     
     //internally calculate the constraint for this aspect fit
