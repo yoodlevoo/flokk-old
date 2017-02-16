@@ -29,6 +29,7 @@
 		7F88AC871E4F8B5400623143 /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F88AC831E4F8B5400623143 /* Quicksand-Medium.ttf */; };
 		7F88AC881E4F8B5400623143 /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F88AC841E4F8B5400623143 /* Quicksand-Regular.ttf */; };
 		7F88AC901E4FBAA300623143 /* AddCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */; };
+		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
 		AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3B25361E3BE5E2006B92AC /* Group.swift */; };
 		AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */ = {isa = PBXBuildFile; fileRef = AD5C0FC01E4A62F200272FD0 /* comments.json */; };
 		ADC7B3C11E43CA8900F9ADFC /* FeedNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */; };
@@ -83,6 +84,7 @@
 		7F88AC831E4F8B5400623143 /* Quicksand-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Medium.ttf"; sourceTree = "<group>"; };
 		7F88AC841E4F8B5400623143 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Regular.ttf"; sourceTree = "<group>"; };
 		7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentViewController.swift; sourceTree = SOURCE_ROOT; };
+		AD2236981E563E4500112715 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = SOURCE_ROOT; };
 		AD3B25361E3BE5E2006B92AC /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = SOURCE_ROOT; };
 		AD5C0FC01E4A62F200272FD0 /* comments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = comments.json; sourceTree = SOURCE_ROOT; };
 		ADC7B3C01E43CA8900F9ADFC /* FeedNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedNavigationViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -162,6 +164,7 @@
 				7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */,
 				7F0666161E37BAAD003167AC /* Info.plist */,
 				AD5C0FC01E4A62F200272FD0 /* comments.json */,
+				AD2236981E563E4500112715 /* posts.json */,
 			);
 			path = Flokk;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				7F0666561E37BC00003167AC /* Assets.xcassets in Resources */,
 				7F88AC871E4F8B5400623143 /* Quicksand-Medium.ttf in Resources */,
 				7F88AC881E4F8B5400623143 /* Quicksand-Regular.ttf in Resources */,
+				AD2236991E563E4500112715 /* posts.json in Resources */,
 				7F0666551E37BC00003167AC /* Main.storyboard in Resources */,
 				7F88AC861E4F8B5400623143 /* Quicksand-Light.ttf in Resources */,
 				AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */,
