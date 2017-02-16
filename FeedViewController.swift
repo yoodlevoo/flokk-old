@@ -13,7 +13,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var group: Group! //the group this feed is reading from
     
-    var feedTestImages = [UIImage]() //for testing 
     var posts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
     
     override func viewDidLoad() {
@@ -22,15 +21,20 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         
-        feedTestImages.append(UIImage(named: "FPSF2016")!)
-        
         loadPosts()
+        
+        tableView.estimatedRowHeight = 200
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
     
     //load the posts in from the JSON file - this is about to be replaced by posts being loaded in from the groups variable
     func loadPosts() {
-        let user = group.participants[0]
-        posts.append(Post(poster: user, image: UIImage(named: "FPSF2016")!))
+        //all just for testing
+        let userGannon = group.participants[0]
+        posts.append(Post(poster: userGannon, image: UIImage(named: "FPSF2016")!))
+        
+        let userJared = group.participants[1]
+        posts.append(Post(poster: userJared, image: UIImage(named: "TheWedding")!))
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +47,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let user: User = posts[indexPath.row].poster
         cell.userImage.image = user.profilePhoto
-        cell.postedImage.image = posts[indexPath.row].image
+        cell.setCustomImage(image: posts[indexPath.row].image)
         
         //then adjust the size of the cell according to the photos
         
@@ -53,24 +57,13 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 1 //this number will be loaded in later on
+        return posts.count //this number will be loaded in later on
     }
     
-    //if this works, transition to the comments view
+    //Once the post is pressed, go to the comments
+    //in the future this may change to a swipe on the post instead of a tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("did select row at")
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let row = indexPath.row
         
-        if row == 0 {
-            let image: UIImage = posts[row].image
-            return image.size.height
-        }
-        
-        return 500 //some random number cause i dont really know what the default height is
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
@@ -78,7 +71,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func backPage(_ sender: AnyObject) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let groupNav = storyboard.instantiateViewController(withIdentifier: "GroupsNavController")
         
+        self.present(groupNav, animated: true, completion: nil)
     }
     
     @IBAction func groupSettings(_ sender: Any) {
@@ -90,4 +86,32 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userName: UIButton!
     @IBOutlet weak var postedImage: UIImageView!
+    
+    //internally calculate the constraint for this aspect fit
+    internal var aspectConstraint : NSLayoutConstraint? {
+        didSet {
+            if oldValue != nil {
+                postedImage.removeConstraint(oldValue!)
+            }
+            
+            if aspectConstraint != nil {
+                postedImage.addConstraint(aspectConstraint!)
+            }
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        aspectConstraint = nil
+    }
+    
+    func setCustomImage(image: UIImage) {
+        let aspect = image.size.width / image.size.height
+        let constraint = NSLayoutConstraint(item: postedImage, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: postedImage, attribute: NSLayoutAttribute.height, multiplier: aspect, constant: 0.0)
+        constraint.priority = 999
+        
+        aspectConstraint = constraint
+        
+        postedImage.image = image
+    }
 }
