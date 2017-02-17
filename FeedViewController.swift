@@ -31,10 +31,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func loadPosts() {
         //all just for testing
         let userGannon = group.participants[0]
-        posts.append(Post(poster: userGannon, image: UIImage(named: "FPSF2016")!))
+        posts.append(Post(poster: userGannon, image: UIImage(named: "FPSF2016")!, postedGroup: group))
         
         let userJared = group.participants[1]
-        posts.append(Post(poster: userJared, image: UIImage(named: "TheWedding")!))
+        posts.append(Post(poster: userJared, image: UIImage(named: "TheWedding")!, postedGroup: group))
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,6 +63,11 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Once the post is pressed, go to the comments
     //in the future this may change to a swipe on the post instead of a tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row] //get the specific post referred to by the pressed cell
+        
+        //then transition to the comment view through the comment's navigation controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let commentNav:FeedNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController") as! FeedNavigationViewController
         
     }
     

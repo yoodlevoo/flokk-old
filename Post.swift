@@ -16,45 +16,86 @@ class Post {
     var image: UIImage //the image posted
     
     var comments = [Comment]() //holds all the comments, hopefully stored in order
+    var postedGroup: Group
     
-    init(poster: User, image: UIImage) {
+    init(poster: User, image: UIImage, postedGroup: Group) {
         self.poster = poster
         self.image = image
+        self.postedGroup = postedGroup
         
-        loadComments()
+        loadCommentsLocally()
+    }
+    
+    func loadCommentsLocally() {
+        if let path = Bundle.main.url(forResource: "comments", withExtension:"json") {
+            do {
+                let data = try Data(contentsOf: path, options: .mappedIfSafe)
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    
+                    if let jsonData = json as? [String: Any] {
+                        if let comments = jsonData["comments"] as? [[String: Any]] {
+                            for comment in comments {
+                                if let handle = comment["handle"] as? String{
+                                    if let content = comment["content"] as? String {
+                                        print("\(handle) said: \(content)")
+                                        //comments.append(Comment(user: , comment: <#T##String#>)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch let error as NSError {
+                    print("Error: \(error)")
+                }
+            } catch let error as NSError {
+                print("Error: \(error)")
+            }
+        }
     }
     
     //loads the comments from the relevant JSON file
     //how should we decide how to store each post's comment(ie the file name)
-    func loadComments() {
+    func loadCommentsNetwork() {
         //this is a URL to my dropbox, where a JSON file is located
         /*
-        let requestUrl: URL = URL(string: "https://www.dropbox.com/scl/fi/lgu88p1win7moqdkmas77/comments.json?dl=0&oref=e&r=AAUB1tJJJRvx8G1gO2WAp0H2Hpvn3sQ0qL8yVUg1nn0zD6CyMq0Sh3H_5j7g5chi-vG3ZncRmFicnfrdh30eN0dbRbsmvanFMbtQZSXPL_XUcjda2LVaXXWEr_SXtDe_GybrZmKTFhpBIkgpksBbZvczbBAG5JgIBNMEmJQg7StHx0gmluJPE4vP5nt5sBFjE1A&sm=1")!
+        //let requestUrl: URL = URL(string: "https://www.dropbox.com/scl/fi/lgu88p1win7moqdkmas77/comments.json?dl=0&oref=e&r=AAUB1tJJJRvx8G1gO2WAp0H2Hpvn3sQ0qL8yVUg1nn0zD6CyMq0Sh3H_5j7g5chi-vG3ZncRmFicnfrdh30eN0dbRbsmvanFMbtQZSXPL_XUcjda2LVaXXWEr_SXtDe_GybrZmKTFhpBIkgpksBbZvczbBAG5JgIBNMEmJQg7StHx0gmluJPE4vP5nt5sBFjE1A&sm=1")!
+        
+        let requestUrl: URL = URL(string:"https://drive.google.com/open?id=0B8LqqTFmYrTsa0JzeUg5Z2RSSVk")!
+        
+        //let requestUrl: URL = URL(string: "https://www.learnswiftonline.com/Samples/subway.json")!
         
         let urlRequest: URLRequest = URLRequest(url: requestUrl as URL)
         let task = URLSession.shared.dataTask(with: urlRequest as URLRequest){ data,response,error in
         
-            let httpResponse = response as! HTTPURLResponse
-            let statusCode = httpResponse.statusCode
+        let httpResponse = response as! HTTPURLResponse
+        let statusCode = httpResponse.statusCode
             
             if(statusCode == 200) { //if the resource was accessed correctly and exists, etc
                 do {
                     let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments)
                     
-                    if let jsondata = json as? [String, Any] {
-                        let data = jsondata["data"]
+                    if let jsonData = json as? [String: Any] {
+                        if let comments = jsonData["comments"] as? [[String: Any]] { //double square bracket means array of dicts
+                            for comment in comments {
+                                if let handle = comment["handle"] as? String {
+                                    if let content = comment["content"] as? String {
+                                        print("\(handle) said: \(content)")
+                                    }
+                                }
+                            }
+                        }
                     }
-                    
                 } catch let error as NSError {
-                    
+                    print("Error with JSON: \(error)")
                 }
             }
         }
         
         task.resume()
-    }
  
- */
+    */
+    }
 }
 
 //A class that holds the values for comments on Posts
