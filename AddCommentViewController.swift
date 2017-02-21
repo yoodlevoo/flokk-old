@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddCommentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AddCommentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var postView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -19,6 +19,8 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
 
         tableView.delegate = self
         tableView.dataSource = self
+        
+        postView.image = post.image
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,18 +31,26 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CommentsTableViewController
         
+        let comment = post.comments[indexPath.row]
+        cell.userPhotoView.image = comment.user.profilePhoto
+        cell.contentTextView.text = comment.content
         
+        cell.contentTextView.isUserInteractionEnabled = false
+        cell.contentTextView.isEditable = false
         
         return cell
     }
     
+    //the number of rows depends on how many comments there are
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return post.comments.count
     }
     
+    /*
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+     */
 }
 
 class CommentsTableViewController: UITableViewCell {

@@ -67,19 +67,24 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //then transition to the comment view through the comment's navigation controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let commentNav:FeedNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController") as! FeedNavigationViewController
+        let commentNav:AddCommentNavigationViewController = storyboard.instantiateViewController(withIdentifier: "AddCommentNavigationController") as! AddCommentNavigationViewController
         
+        commentNav.postToPass = post
+        commentNav.passPost()
+        
+        self.present(commentNav, animated: true, completion: nil)
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
         
     }
     
+    //manually segue back to the tab bar controller
     @IBAction func backPage(_ sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let groupNav = storyboard.instantiateViewController(withIdentifier: "GroupsNavController")
+        let tabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
         
-        self.present(groupNav, animated: true, completion: nil)
+        self.present(tabBarController, animated: true, completion: nil)
     }
     
     @IBAction func groupSettings(_ sender: Any) {

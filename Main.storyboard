@@ -107,7 +107,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="113" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QT0-Ff-i1W">
-                                <rect key="frame" x="0.0" y="196.5" width="375" height="470.5"/>
+                                <rect key="frame" x="0.0" y="196.5" width="375" height="421.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="113" id="VGy-Oy-NC1">
@@ -383,7 +383,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lw1-Zo-Fpf">
-                                <rect key="frame" x="139" y="437" width="106" height="32"/>
+                                <rect key="frame" x="139" y="437" width="106" height="31.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="lw1-Zo-Fpf" secondAttribute="height" multiplier="117:35" id="lXQ-jA-fJP"/>
                                 </constraints>
@@ -1277,7 +1277,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ge-gQ-cJ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1292" y="-2197.1514242878561"/>
+            <point key="canvasLocation" x="-1292" y="-2197"/>
         </scene>
         <!--Password Recovery-->
         <scene sceneID="gVs-HU-3aa">
@@ -1591,9 +1591,9 @@
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="66" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wkr-bc-EJg">
                                 <rect key="frame" x="0.0" y="164" width="375" height="439"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="default" rowHeight="66" id="IWe-nn-AwR" customClass="CommentsTableViewController" customModule="Flokk" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="default" rowHeight="66" id="IWe-nn-AwR" customClass="CommentsTableViewController" customModule="Flokk" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IWe-nn-AwR" id="MCj-mD-7Yf">
@@ -1764,7 +1764,7 @@
         <!--Comment NavControl-->
         <scene sceneID="wCo-YS-FOx">
             <objects>
-                <navigationController title="Comment NavControl" automaticallyAdjustsScrollViewInsets="NO" id="VEe-uv-Q2H" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AddCommentNavigationController" title="Comment NavControl" automaticallyAdjustsScrollViewInsets="NO" id="VEe-uv-Q2H" customClass="AddCommentNavigationViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="ieE-xw-Hib">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1812,9 +1812,9 @@
         <image name="turquoiseRequestToBeAddedBttn" width="149" height="148"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hDk-t3-cDx"/>
-        <segue reference="Ly4-tv-MRN"/>
         <segue reference="8cf-Zz-Qcb"/>
+        <segue reference="3gE-Vc-SI7"/>
+        <segue reference="lpy-gb-OxK"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

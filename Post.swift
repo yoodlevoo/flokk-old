@@ -34,12 +34,12 @@ class Post {
                     let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     
                     if let jsonData = json as? [String: Any] {
-                        if let comments = jsonData["comments"] as? [[String: Any]] {
-                            for comment in comments {
+                        if let commentsJSON = jsonData["comments"] as? [[String: Any]] {
+                            for comment in commentsJSON {
                                 if let handle = comment["handle"] as? String{
                                     if let content = comment["content"] as? String {
-                                        print("\(handle) said: \(content)")
-                                        //comments.append(Comment(user: , comment: <#T##String#>)
+                                        //print("\(handle) said: \(content)")
+                                        comments.append(Comment(user: findUserInGroupWith(handle: handle), content: content))
                                     }
                                 }
                             }
@@ -52,6 +52,19 @@ class Post {
                 print("Error: \(error)")
             }
         }
+    }
+    
+    //find the user from the participants in this group just by using their handle
+    //when we have the database we can reduce storage by getting this frk
+    func findUserInGroupWith(handle: String) -> User {
+        for user in postedGroup.participants {
+            if user.usernameHandle == handle {
+                return user
+            }
+        }
+        
+        print("user with handle \(handle) is not listed in the participants group")
+        return User(usernameHandle: "nil", fullName: "Nil Nil")
     }
     
     //loads the comments from the relevant JSON file
@@ -102,12 +115,12 @@ class Post {
 //I'm not happy this has to be a separate class lol
 class Comment {
     var user: User //the user who posted the comment
-    var comment: String //the text of the comment
+    var content: String //the text of the comment
     var date: Date
     
-    init(user: User, comment: String) {
+    init(user: User, content: String) {
         self.user = user
-        self.comment = comment
+        self.content = content
         self.date = Date() //later this needs to be loaded alongside the rest of the data, not created here
     }
 }

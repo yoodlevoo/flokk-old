@@ -9,7 +9,8 @@
 import UIKit
 
 class AddCommentNavigationViewController: UINavigationController {
-
+    var postToPass: Post!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,18 +19,12 @@ class AddCommentNavigationViewController: UINavigationController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func passPost() {
+        if let commentVC = self.viewControllers[0] as? AddCommentViewController {
+            commentVC.post = postToPass
+        }
     }
-    */
-
 }
