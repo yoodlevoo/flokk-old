@@ -31,10 +31,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func loadPosts() {
         //all just for testing
         let userGannon = group.participants[0]
-        posts.append(Post(poster: userGannon, image: UIImage(named: "FPSF2016")!))
+        posts.append(Post(poster: userGannon, image: UIImage(named: "FPSF2016")!, postedGroup: group))
         
         let userJared = group.participants[1]
-        posts.append(Post(poster: userJared, image: UIImage(named: "TheWedding")!))
+        posts.append(Post(poster: userJared, image: UIImage(named: "TheWedding")!, postedGroup: group))
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,18 +63,28 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Once the post is pressed, go to the comments
     //in the future this may change to a swipe on the post instead of a tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let post = posts[indexPath.row] //get the specific post referred to by the pressed cell
         
+        //then transition to the comment view through the comment's navigation controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let commentNav:AddCommentNavigationViewController = storyboard.instantiateViewController(withIdentifier: "AddCommentNavigationController") as! AddCommentNavigationViewController
+        
+        commentNav.postToPass = post
+        commentNav.passPost()
+        
+        self.present(commentNav, animated: true, completion: nil)
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
         
     }
     
+    //manually segue back to the tab bar controller
     @IBAction func backPage(_ sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let groupNav = storyboard.instantiateViewController(withIdentifier: "GroupsNavController")
+        let tabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
         
-        self.present(groupNav, animated: true, completion: nil)
+        self.present(tabBarController, animated: true, completion: nil)
     }
     
     @IBAction func groupSettings(_ sender: Any) {

@@ -58,6 +58,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //then transition to the feedview controller through the Feed's navigation controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let feedNav:FeedNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController") as! FeedNavigationViewController
+        
         feedNav.groupToPass = group
         feedNav.passGroup()
         

@@ -16,6 +16,7 @@ class FeedNavigationViewController: UINavigationController {
         super.viewDidLoad()
 
         self.navigationItem.title = groupToPass.groupName
+        print("view did load feed nav")
         
         //self.navigationBar.barTintColor = UIColor.darkGray
     }
@@ -28,6 +29,8 @@ class FeedNavigationViewController: UINavigationController {
         if let feedVC = self.viewControllers[0] as? FeedViewController {
             feedVC.group = groupToPass
             self.navigationItem.title = groupToPass.groupName
+            
+            print("pass to group feed nav")
         }
     }
 }
