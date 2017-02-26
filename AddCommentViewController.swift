@@ -11,16 +11,23 @@ import UIKit
 class AddCommentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var postView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var textField: UITextField!
+    @IBOutlet var keyboardHeightLayoutConstraint : NSLayoutConstraint?
     
     var post: Post!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.hideKeyboardWhenTappedAround()
+        
         tableView.delegate = self
         tableView.dataSource = self
+        textField.delegate = self
         
         postView.image = post.image
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,10 +54,40 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     /*
+    //what should we do when a comment is selected?
+    //have a way to reply to it or a way to go to the user's profile?
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
      */
+
+    //so the text field doesnt try to line break when we press enter
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    //whenever the keyboard is activated, this notifies the textField to shift upward with the keyboard
+    //i got this entire code somewhere from satack overflow
+    func keyboardNotification(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
+            let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+            if (endFrame?.origin.y)! >= UIScreen.main.bounds.size.height {
+                self.keyboardHeightLayoutConstraint?.constant = 0.0
+            } else {
+                self.keyboardHeightLayoutConstraint?.constant = endFrame?.size.height ?? 0.0
+            }
+            UIView.animate(withDuration: duration,
+                           delay: TimeInterval(0),
+                           options: animationCurve,
+                           animations: { self.view.layoutIfNeeded() },
+                           completion: nil)
+        }
+    }
 }
 
 class CommentsTableViewController: UITableViewCell {
