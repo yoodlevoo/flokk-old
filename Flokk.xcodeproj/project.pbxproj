@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15309E7A1E6494C000D1DFA1 /* group.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E791E6494C000D1DFA1 /* group.json */; };
+		15309E7D1E6494F200D1DFA1 /* gannonprudhomme.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */; };
+		15309E7F1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */; };
 		7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */; };
 		7F0666201E37BAAD003167AC /* FlokkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06661F1E37BAAD003167AC /* FlokkTests.swift */; };
 		7F06662B1E37BAAD003167AC /* FlokkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06662A1E37BAAD003167AC /* FlokkUITests.swift */; };
@@ -57,6 +60,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15309E791E6494C000D1DFA1 /* group.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = group.json; sourceTree = SOURCE_ROOT; };
+		15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhomme.json; sourceTree = SOURCE_ROOT; };
+		15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeFPSF2016.json; sourceTree = "<group>"; };
 		7F0666071E37BAAD003167AC /* Flokk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flokk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F0666141E37BAAD003167AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F0666161E37BAAD003167AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -171,6 +177,9 @@
 				7F0666161E37BAAD003167AC /* Info.plist */,
 				AD5C0FC01E4A62F200272FD0 /* comments.json */,
 				AD2236981E563E4500112715 /* posts.json */,
+				15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */,
+				15309E791E6494C000D1DFA1 /* group.json */,
+				15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */,
 			);
 			path = Flokk;
 			sourceTree = "<group>";
@@ -316,12 +325,15 @@
 			files = (
 				7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */,
 				7F0666561E37BC00003167AC /* Assets.xcassets in Resources */,
+				15309E7A1E6494C000D1DFA1 /* group.json in Resources */,
 				7F88AC871E4F8B5400623143 /* Quicksand-Medium.ttf in Resources */,
 				7F88AC881E4F8B5400623143 /* Quicksand-Regular.ttf in Resources */,
 				AD2236991E563E4500112715 /* posts.json in Resources */,
 				7F0666551E37BC00003167AC /* Main.storyboard in Resources */,
 				7F88AC861E4F8B5400623143 /* Quicksand-Light.ttf in Resources */,
+				15309E7D1E6494F200D1DFA1 /* gannonprudhomme.json in Resources */,
 				AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */,
+				15309E7F1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json in Resources */,
 				7F88AC851E4F8B5400623143 /* Quicksand-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

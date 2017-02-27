@@ -27,6 +27,7 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
         
         postView.image = post.image
         
+        //tells the notification to
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
 
@@ -87,6 +88,21 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
                            animations: { self.view.layoutIfNeeded() },
                            completion: nil)
         }
+    }
+
+    //functionality to segue back to the feed view for the back button
+    @IBAction func backPage(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let feedNav:FeedNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController") as! FeedNavigationViewController
+        
+        feedNav.groupToPass = post.postedGroup
+        feedNav.passGroup()
+        
+        self.present(feedNav, animated: true, completion: nil)
+    }
+    
+    @IBAction func posterProfile(_ sender: Any) {
+    
     }
 }
 

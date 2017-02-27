@@ -23,17 +23,23 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         //let emptyUsers = [User]() //this won't be needed in the future, just so Group.init will work
         var fpsfUsers = [User]()
-        fpsfUsers.append(User(usernameHandle: "gannonprudhomme", fullName: "Gannon Prudhomme"))
-        fpsfUsers.append(User(usernameHandle: "jaredheyen", fullName: "Jared Heyen"))
+        fpsfUsers.append(User(handle: "gannonprudhomme", fullName: "Gannon Prudhomme"))
+        fpsfUsers.append(User(handle: "jaredheyen", fullName: "Jared Heyen"))
         
-        defaultGroups.append(Group(text: "FPSF 2016", image: UIImage(named: "FPSF2016")!, users: fpsfUsers))
-        defaultGroups.append(Group(text: "Christmas 2016", image: UIImage(named: "Christmas2016")!, users: fpsfUsers))
-        defaultGroups.append(Group(text: "Ski Trip", image: UIImage(named: "SkiTrip")!, users: fpsfUsers))
-        defaultGroups.append(Group(text: "The Wedding", image: UIImage(named: "TheWedding")!, users: fpsfUsers))
+        defaultGroups.append(Group(groupName: "FPSF 2016", image: UIImage(named: "FPSF2016")!, users: fpsfUsers, creator: fpsfUsers[0]))
+        defaultGroups.append(Group(groupName: "Christmas 2016", image: UIImage(named: "Christmas2016")!, users: fpsfUsers, creator: fpsfUsers[0]))
+        defaultGroups.append(Group(groupName: "Ski Trip", image: UIImage(named: "SkiTrip")!, users: fpsfUsers, creator: fpsfUsers[0]))
+        defaultGroups.append(Group(groupName: "The Wedding", image: UIImage(named: "TheWedding")!, users: fpsfUsers, creator: fpsfUsers[0]))
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        
+    }
+    
+    //Load all about this user and what group(the handles) they're in
+    //use these handles to further load the groups from there separate files
+    func loadGroups() {
         
     }
     
@@ -47,7 +53,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4 //this number will be loaded in later on
+        return defaultGroups.count //this number will be loaded in later on
     }
     
     //When one of the cells is selected

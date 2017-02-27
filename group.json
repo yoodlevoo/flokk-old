@@ -1,0 +1,23 @@
+{
+    "group": {
+        "creator": "gannonprudhomme",
+        
+        "users": [
+                  "gannonprudhomme",
+                  "jaredheyen"
+        ]
+  
+        "posts": [
+        {
+            "handle": "gannonprudhomme"
+            "image": "FPSF2016"
+            "date": "12341234"
+        },
+        {
+            "handle": "jaredheyan"
+            "image": "TheWedding"
+            "date": "12341234"
+        }
+        ]
+    }
+}

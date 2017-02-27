@@ -13,6 +13,6 @@ import Foundation
 class Database {
     static func loadUserWith(handle: String) -> User {
         //implement later
-        return User(usernameHandle: "filler", fullName: "Filler Name")
+        return User(handle: "filler", fullName: "Filler Name")
     }
 }

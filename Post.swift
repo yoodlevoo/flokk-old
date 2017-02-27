@@ -58,13 +58,13 @@ class Post {
     //when we have the database we can reduce storage by getting this frk
     func findUserInGroupWith(handle: String) -> User {
         for user in postedGroup.participants {
-            if user.usernameHandle == handle {
+            if user.handle == handle {
                 return user
             }
         }
         
         print("user with handle \(handle) is not listed in the participants group")
-        return User(usernameHandle: "nil", fullName: "Nil Nil")
+        return User(handle: "nil", fullName: "Nil Nil")
     }
     
     //loads the comments from the relevant JSON file

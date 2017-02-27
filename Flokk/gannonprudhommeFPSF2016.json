@@ -1,0 +1,25 @@
+{
+    "group": {
+        "groupName": "FPSF2016",
+        "groupIcon": "FPSF2016",
+        "creator": "gannonprudhomme",
+        
+        "users": [
+                  {  "handle": "gannonprudhomme"},
+                  {  "handle": "jaredheyen"}
+        ]
+        
+        "posts": [
+                {
+            "handle": "gannonprudhomme"
+            "image": "FPSF2016"
+            "date": "12341234"
+        },
+        {
+            "handle": "jaredheyan"
+            "image": "TheWedding"
+            "date": "12341234"
+        }
+        ]
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "user": {
+        "handle": "gannonprudhomme"
+        "fullname": "Gannon Prudhomme"
+        "profilePhoto": "ellipse-3"
+        
+        "groups": [
+            {"groupHandle": "gannonprudhommeFPSF2016"},
+            {"groupHandle": "jaredheyenSkiTrip"}
+        ]
+    }
+}

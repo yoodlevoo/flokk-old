@@ -13,7 +13,7 @@ import UIKit
 //There will be a user clas created for the main user(the one that is logged in and using the local app),
 //as well as each user the main user interacts with.
 class User/*: Hashable*/ { //hashable so it can be used as a key in a dictionary(for comments)
-    var usernameHandle: String //a completely unique identifier(ie. @gannonprudhomme)
+    var handle: String //a completely unique identifier(ie. @gannonprudhomme)
     var fullName: String
     var profilePhoto: UIImage
     
@@ -21,8 +21,8 @@ class User/*: Hashable*/ { //hashable so it can be used as a key in a dictionary
     
     var mainUser: Bool! //is it the main/local user - not sure if I want this or not.
     
-    init(usernameHandle: String, fullName: String) {
-        self.usernameHandle = usernameHandle
+    init(handle: String, fullName: String) {
+        self.handle = handle
         self.fullName = fullName
         self.profilePhoto = UIImage(named: "AddProfilePic")! //temporary
         
@@ -37,9 +37,9 @@ class User/*: Hashable*/ { //hashable so it can be used as a key in a dictionary
     func loadPicture() {
         //var ret: UIImage
         
-        if(usernameHandle == "gannonprudhomme") {
+        if(handle == "gannonprudhomme") {
             profilePhoto = UIImage(named: "ellipse-4")!
-        } else if(usernameHandle == "jaredheyen") {
+        } else if(handle == "jaredheyen") {
             profilePhoto = UIImage(named: "ellipse-3")!
         } else {
             profilePhoto = UIImage(named: "ellipse-2")!
