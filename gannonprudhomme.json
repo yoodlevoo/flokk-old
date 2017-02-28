@@ -1,12 +1,13 @@
 {
     "user": {
-        "handle": "gannonprudhomme"
-        "fullname": "Gannon Prudhomme"
-        "profilePhoto": "ellipse-3"
+        "handle": "gannonprudhomme",
+        "fullname": "Gannon Prudhomme",
+        "profilePhoto": "gannonprudhommeProfilePhoto",
         
         "groups": [
             {"groupHandle": "gannonprudhommeFPSF2016"},
-            {"groupHandle": "jaredheyenSkiTrip"}
+            {"groupHandle": "jaredheyenSki_Trip"},
+            {"groupHandle": "jaredheyenCouples"}
         ]
     }
 }

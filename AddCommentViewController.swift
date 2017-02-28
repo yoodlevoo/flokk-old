@@ -41,6 +41,9 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let comment = post.comments[indexPath.row]
         cell.userPhotoView.image = comment.user.profilePhoto
+        cell.userPhotoView.layer.cornerRadius = cell.userPhotoView.frame.size.width / 2
+        cell.userPhotoView.clipsToBounds = true
+        
         cell.contentTextView.text = comment.content
         
         cell.contentTextView.isUserInteractionEnabled = false
