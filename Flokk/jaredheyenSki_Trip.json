@@ -1,8 +1,8 @@
 {
     "group": {
-        "groupName": "FPSF2016",
-        "groupIcon": "FPSF2016",
-        "creator": "gannonprudhomme",
+        "groupName": "Ski Trip",
+        "groupIcon": "SkiTrip",
+        "creator": "jaredheyen",
         
         "users": [
                   {  "handle": "gannonprudhomme"},
@@ -10,16 +10,16 @@
         ],
         
         "posts": [
-            {
-                  "handle": "gannonprudhomme",
-                  "imageName": "FPSF2016",
-                  "date": "12341234"
-            },
-            {
+                  {
                   "handle": "jaredheyen",
-                  "imageName": "TheWedding",
+                  "imageName": "SleighRide",
                   "date": "12341234"
-            }
+                  },
+                  {
+                  "handle": "jaredheyen",
+                  "imageName": "Christmas2016",
+                  "date": "12341234"
+        }
         ]
     }
 }

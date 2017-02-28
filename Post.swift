@@ -38,7 +38,6 @@ class Post {
                             for comment in commentsJSON {
                                 if let handle = comment["handle"] as? String{
                                     if let content = comment["content"] as? String {
-                                        //print("\(handle) said: \(content)")
                                         comments.append(Comment(user: findUserInGroupWith(handle: handle), content: content))
                                     }
                                 }
@@ -72,11 +71,7 @@ class Post {
     func loadCommentsNetwork() {
         //this is a URL to my dropbox, where a JSON file is located
         /*
-        //let requestUrl: URL = URL(string: "https://www.dropbox.com/scl/fi/lgu88p1win7moqdkmas77/comments.json?dl=0&oref=e&r=AAUB1tJJJRvx8G1gO2WAp0H2Hpvn3sQ0qL8yVUg1nn0zD6CyMq0Sh3H_5j7g5chi-vG3ZncRmFicnfrdh30eN0dbRbsmvanFMbtQZSXPL_XUcjda2LVaXXWEr_SXtDe_GybrZmKTFhpBIkgpksBbZvczbBAG5JgIBNMEmJQg7StHx0gmluJPE4vP5nt5sBFjE1A&sm=1")!
-        
-        let requestUrl: URL = URL(string:"https://drive.google.com/open?id=0B8LqqTFmYrTsa0JzeUg5Z2RSSVk")!
-        
-        //let requestUrl: URL = URL(string: "https://www.learnswiftonline.com/Samples/subway.json")!
+        let requestUrl: URL = URL(string: "https://www.learnswiftonline.com/Samples/subway.json")!
         
         let urlRequest: URLRequest = URLRequest(url: requestUrl as URL)
         let task = URLSession.shared.dataTask(with: urlRequest as URLRequest){ data,response,error in
@@ -108,6 +103,10 @@ class Post {
         task.resume()
  
     */
+    }
+    
+    func getUniqueName() {
+        
     }
 }
 

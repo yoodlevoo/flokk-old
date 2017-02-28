@@ -26,14 +26,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
     }
-    
-    func loadGroup() {
-        var groupName: String!
-        var groupIconName: String! //the groups "profile" photo's name
-        var participants = [User]()
-        var groupCreator: User!
-        
-        //find the file on disk
+
+    //load the posts in from the JSON file - this is about to be replaced by posts being loaded in from the groups variable
+    func loadPosts() {
         if let path = Bundle.main.url(forResource: group.getUniqueName(), withExtension:"json") {
             do {
                 //load the file
@@ -42,25 +37,25 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                     //load the contents of the file into a JSON object
                     let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     
+                    //parse the json
                     if let jsonData = json as? [String: Any] {
                         if let groupJSON = jsonData["group"] as? [String: Any] {
-                            if let creator = groupJSON["creator"] as? String {
-                                groupCreator = User(handle: creator, fullName: "filler")
-                            }
-                            
-                            if let groupNameJSON = groupJSON["groupName"] as? String {
-                                groupName = groupNameJSON
-                            }
-                            
-                            if let groupIconNameJSON = groupJSON[""] as? String {
-                                groupIconName = groupIconNameJSON
-                            }
-                            
-                            if let users = groupJSON["users"] as? [[String: Any]] {
-                                for user in users {
-                                    if let handle = user["handle"] as? String {
-                                        participants.append(User(handle: handle, fullName: "filler"))
+                            if let posts = groupJSON["posts"] as? [[String: Any]] {
+                                for post in posts {
+                                    var userHandle: String!
+                                    var imageName: String!
+                                    
+                                    if let userHandleJSON = post["handle"] as? String {
+                                        userHandle = userHandleJSON
                                     }
+                                    
+                                    if let imageNameJSON = post["imageName"] as? String {
+                                        imageName = imageNameJSON
+                                    }
+                                    
+                                    //load the date
+                                    
+                                    self.posts.append(Post(poster: group.findUserWithHandle(handle: userHandle), image: UIImage(named: imageName)!, postedGroup: group))
                                 }
                             }
                         }
@@ -72,18 +67,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print("Error: \(error)")
             }
         }
-        
-        self.group = Group(groupName: groupName, image: UIImage(named: groupIconName)!, users: participants, creator: groupCreator)
-    }
-    
-    //load the posts in from the JSON file - this is about to be replaced by posts being loaded in from the groups variable
-    func loadPosts() {
-        //all just for testing
-        let userGannon = group.participants[0]
-        posts.append(Post(poster: userGannon, image: UIImage(named: "FPSF2016")!, postedGroup: group))
-        
-        let userJared = group.participants[1]
-        posts.append(Post(poster: userJared, image: UIImage(named: "TheWedding")!, postedGroup: group))
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,6 +80,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let user: User = posts[indexPath.row].poster
         cell.userImage.image = user.profilePhoto
         cell.setCustomImage(image: posts[indexPath.row].image)
+        
+        //self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
+        //self.profileImageView.clipsToBounds = YES;
+        
+        cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
+        cell.userImage.clipsToBounds = true
         
         //then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
         

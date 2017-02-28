@@ -37,12 +37,10 @@ class User/*: Hashable*/ { //hashable so it can be used as a key in a dictionary
     func loadPicture() {
         //var ret: UIImage
         
-        if(handle == "gannonprudhomme") {
-            profilePhoto = UIImage(named: "ellipse-4")!
-        } else if(handle == "jaredheyen") {
-            profilePhoto = UIImage(named: "ellipse-3")!
+        if let image = UIImage(named: handle + "ProfilePhoto") {
+            self.profilePhoto = image
         } else {
-            profilePhoto = UIImage(named: "ellipse-2")!
+            self.profilePhoto = UIImage(named: "AddProfilePic")!
         }
         
         //return ret
