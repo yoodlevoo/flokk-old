@@ -15,9 +15,13 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var groups: UILabel!
     @IBOutlet weak var groupNumber: UILabel!
 
+    var mainUser: User
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
         // Do any additional setup after loading the view.
     }
 

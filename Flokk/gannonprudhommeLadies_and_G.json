@@ -1,29 +1,29 @@
 {
     "group": {
-        "groupName": "Ski Trip",
-        "groupIcon": "SkiTrip",
-        "creator": "jaredheyen",
+        "groupName": "Ladies and G",
+        "groupIcon": "Ladies and G",
+        "creator": "gannonprudhomme",
         
         "users": [
                   {  "handle": "gannonprudhomme"},
                   {  "handle": "jaredheyen"}
-        ],
+                  ],
         
         "posts": [
-                  {
-                  "handle": "jaredheyen",
-                  "imageName": "SleighRide",
+                {
+                  "handle": "gannonprudhomme",
+                  "imageName": "FPSF2016",
                   "date": "12341234",
                   "comments": [
                   ]
-                  },
-                  {
+                },
+                {
                   "handle": "jaredheyen",
-                  "imageName": "Christmas2016",
+                  "imageName": "TheWedding",
                   "date": "12341234",
                   "comments": [
                   ]
-                  }
+                }
         ]
     }
 }

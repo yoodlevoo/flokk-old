@@ -13,12 +13,16 @@
             {
                   "handle": "gannonprudhomme",
                   "imageName": "FPSF2016",
-                  "date": "12341234"
+                  "date": "12341234",
+                  "comments": [
+                  ]
             },
             {
                   "handle": "jaredheyen",
                   "imageName": "TheWedding",
-                  "date": "12341234"
+                  "date": "12341234",
+                  "comments": [
+                  ]
             }
         ]
     }

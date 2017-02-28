@@ -53,6 +53,10 @@ class Post {
         }
     }
     
+    func loadCommentsLocallySwifty() {
+        
+    }
+    
     //find the user from the participants in this group just by using their handle
     //when we have the database we can reduce storage by getting this frk
     func findUserInGroupWith(handle: String) -> User {
