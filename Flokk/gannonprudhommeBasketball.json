@@ -1,0 +1,60 @@
+{
+    "group": {
+        "groupName": "Basketball",
+        "groupIcon": "BasketballGroupPhoto",
+        "creator": "gannonprudhomme",
+        
+        "users": [
+                  {  "handle": "gannonprudhomme"},
+                  {  "handle": "jaredheyen"}
+                  ],
+        
+        "posts": [
+                  {
+                  "handle": "gannonprudhomme",
+                  "imageName": "BasketballPortrait",
+                  "date": "12341234"
+                  },
+                  {
+                  "handle": "gannonprudhomme",
+                  "imageName": "BasketballOnCourt",
+                  "date": "12341234"
+                  },
+                  {
+                  "handle": "gannonprudhomme",
+                  "imageName": "BasketballHuddle",
+                  "date": "12341234"
+                  },
+                  {
+                  "handle": "gannonprudhomme",
+                  "imageName": "BasketballHuddle2",
+                  "date": "12341234"
+                  },
+                  {
+                  "handle": "gannonprudhomme",
+                  "imageName": "BasketballFreethrow",
+                  "date": "12341234"
+                  },
+                  {
+                  "handle": "gannonprudhomme",
+                  "imageName": "BasketballMob",
+                  "date": "12341234"
+                  },
+                  {
+                  "handle": "gannonprudhomme",
+                  "imageName": "BasketballMob2",
+                  "date": "12341234"
+                  },
+                  {
+                  "handle": "gannonprudhomme",
+                  "imageName": "BasketballMobRollercoaster",
+                  "date": "12341234"
+                  },
+                  {
+                  "handle": "gannonprudhomme",
+                  "imageName": "BasketballCoachBrayton",
+                  "date": "12341234"
+                  },
+        ]
+    }
+}
