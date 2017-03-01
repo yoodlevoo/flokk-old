@@ -13,7 +13,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var group: Group! //the group this feed is reading from
     
-    var posts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
+    //var loadedPosts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
+    
+    static let initialPostCount = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,35 +23,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         
-        loadPosts()
+        group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
         
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
-    }
-    
-    //using SwiftyJSON
-    func loadPosts() {
-        //load the file
-        let path = Bundle.main.url(forResource: group.getUniqueName(), withExtension: "json")
-        do {
-            //load the contents of the file
-            let data = try Data(contentsOf: path!, options: .mappedIfSafe)
-            
-            //parse the JSON
-            let json = JSON(data: data)
-            
-            for (key, post) in json["group"]["posts"] {
-                let userHandle = post["handle"].string
-                let imageName = post["imageName"].string
-                
-                self.posts.append(Post(poster: group.findUserWithHandle(handle: userHandle!), image: UIImage(named: imageName!)!, postedGroup: group))
-            }
-            
-        } catch let error as NSError {
-            print("Error: \(error)")
-        }
-        //let json = JSON(data: data)
-        //let handle = json["group"]
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,28 +37,26 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
         
-        let user: User = posts[indexPath.row].poster
+        let user: User = group.posts[indexPath.row].poster
         cell.userImage.image = user.profilePhoto
-        cell.setCustomImage(image: posts[indexPath.row].image)
+        cell.setCustomImage(image: group.posts[indexPath.row].image)
         
         cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage.clipsToBounds = true
         
         //then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
         
-        //print(group.groupName)
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count //this number will be loaded in later on
+        return group.posts.count
     }
     
     //Once the post is pressed, go to the comments
     //in the future this may change to a swipe on the post instead of a tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let post = posts[indexPath.row] //get the specific post referred to by the pressed cell
+        let post = group.posts[indexPath.row] //get the specific post referred to by the pressed cell
         
         //then transition to the comment view through the comment's navigation controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -94,7 +69,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
-        
     }
     
     //manually segue back to the tab bar controller

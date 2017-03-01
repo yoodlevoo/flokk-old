@@ -56,7 +56,7 @@ class UploadPhotoViewController: UIViewController, UIImagePickerControllerDelega
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         var docs: NSString = paths[0] as NSString
         let fullPath = NSURL(fileURLWithPath: docs as String).appendingPathComponent("cache.png")
-        print(fullPath?.absoluteString)
+        //print(fullPath?.absoluteString)
         let result = imageData.write(to: fullPath!, atomically: true)
         
         print(result)
@@ -67,12 +67,12 @@ class UploadPhotoViewController: UIViewController, UIImagePickerControllerDelega
         if paths.count > 0 {
             let dirPath = paths[0]
             let readPath = NSURL(fileURLWithPath: dirPath as String).appendingPathComponent("cache.png")
-            print(readPath?.absoluteString)
+            //print(readPath?.absoluteString)
             do {
                 let image = try UIImage(data: Data(contentsOf: readPath!))
                 imageView.image = image
             } catch let error as NSError {
-                print(error.localizedDescription)
+                print("Error " + error.localizedDescription)
             }
         }
     }

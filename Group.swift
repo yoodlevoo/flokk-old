@@ -34,10 +34,40 @@ class Group {
         self.internalGroupName = createFriendlyGroupName(name: groupName)
     }
     
-    //Load all of the most recent Posts from this group
-    func loadPosts() {
-        //for now just have some temporary posts
-        //does this need to happen inside this class?
+    //Load all of the most recent Posts from this group - uses SwiftyJSON
+    func loadPosts(numPostsToLoad: Int) {
+        if(numPostsToLoad <= 0) { //preventive error checking
+            print("Num posts to load is <= 0")
+            return
+        }
+        
+        //load the file
+        let path = Bundle.main.url(forResource: getUniqueName(), withExtension: "json")
+        do {
+            //load the contents of the file
+            let data = try Data(contentsOf: path!, options: .mappedIfSafe)
+            
+            //parse the JSON
+            let json = JSON(data: data)
+            
+            var index: Int = 0
+            for (_, post) in json["group"]["posts"] {
+                if index < FeedViewController.initialPostCount - 1 { //subtract 1 b/c index starts at 0
+                    let userHandle = post["handle"].string
+                    let imageName = post["imageName"].string
+                    
+                    posts.append(Post(poster: findUserWithHandle(handle: userHandle!), image: UIImage(named: imageName!)!, postedGroup: self, index: index))
+                    index += 1
+                } else { //stop loading after the right amount of posts have been loaded
+                    break
+                }
+            }
+            
+        } catch let error as NSError {
+            print("Error: \(error)")
+        }
+        //let json = JSON(data: data)
+        //let handle = json["group"]
     }
     
     //find the user with the specified handle
