@@ -26,47 +26,30 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
     }
-
-    //load the posts in from the JSON file - this is about to be replaced by posts being loaded in from the groups variable
+    
+    //using SwiftyJSON
     func loadPosts() {
-        if let path = Bundle.main.url(forResource: group.getUniqueName(), withExtension:"json") {
-            do {
-                //load the file
-                let data = try Data(contentsOf: path, options: .mappedIfSafe)
-                do {
-                    //load the contents of the file into a JSON object
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    
-                    //parse the json
-                    if let jsonData = json as? [String: Any] {
-                        if let groupJSON = jsonData["group"] as? [String: Any] {
-                            if let posts = groupJSON["posts"] as? [[String: Any]] {
-                                for post in posts {
-                                    var userHandle: String!
-                                    var imageName: String!
-                                    
-                                    if let userHandleJSON = post["handle"] as? String {
-                                        userHandle = userHandleJSON
-                                    }
-                                    
-                                    if let imageNameJSON = post["imageName"] as? String {
-                                        imageName = imageNameJSON
-                                    }
-                                    
-                                    //load the date
-                                    
-                                    self.posts.append(Post(poster: group.findUserWithHandle(handle: userHandle), image: UIImage(named: imageName)!, postedGroup: group))
-                                }
-                            }
-                        }
-                    }
-                } catch let error as NSError {
-                    print("Error: \(error)")
-                }
-            } catch let error as NSError {
-                print("Error: \(error)")
+        //load the file
+        let path = Bundle.main.url(forResource: group.getUniqueName(), withExtension: "json")
+        do {
+            //load the contents of the file
+            let data = try Data(contentsOf: path!, options: .mappedIfSafe)
+            
+            //parse the JSON
+            let json = JSON(data: data)
+            
+            for (key, post) in json["group"]["posts"] {
+                let userHandle = post["handle"].string
+                let imageName = post["imageName"].string
+                
+                self.posts.append(Post(poster: group.findUserWithHandle(handle: userHandle!), image: UIImage(named: imageName!)!, postedGroup: group))
             }
+            
+        } catch let error as NSError {
+            print("Error: \(error)")
         }
+        //let json = JSON(data: data)
+        //let handle = json["group"]
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,9 +63,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let user: User = posts[indexPath.row].poster
         cell.userImage.image = user.profilePhoto
         cell.setCustomImage(image: posts[indexPath.row].image)
-        
-        //self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
-        //self.profileImageView.clipsToBounds = YES;
         
         cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage.clipsToBounds = true

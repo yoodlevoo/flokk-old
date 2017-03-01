@@ -25,7 +25,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
         
-        loadGroupsFromHandles(handles: findGroupHandles())
+        loadGroups(handles: findGroupHandles())
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,92 +36,49 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //Load all about this user and what group(the handles) they're in
     //use these handles to further load the groups from there separate files
     func findGroupHandles() -> [String] {
-        //the handles of all of the groups this user is in
-        //use these to load 
         var groupHandles = [String]()
         
-        if let path = Bundle.main.url(forResource: mainUser.handle, withExtension:"json") {
-            do {
-                //load the file
-                let data = try Data(contentsOf: path, options: .mappedIfSafe)
-                do {
-                    //load the contents of the file into a JSON object
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    
-                    //then parse the json
-                    if let jsonData = json as? [String: Any] {
-                        if let userJSON = jsonData["user"] as? [String: Any] {
-                            if let groupsJSON = userJSON["groups"] as? [[String: Any]] {
-                                for groupName in groupsJSON {
-                                    if let groupHandle = groupName["groupHandle"] as? String {
-                                        groupHandles.append(groupHandle)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch let error as NSError {
-                    print("Error: \(error)")
-                }
-            } catch let error as NSError {
-                print("Error: \(error)")
+        let path = Bundle.main.url(forResource: mainUser.handle, withExtension: "json")
+        do {
+            let data = try Data(contentsOf: path!, options: .mappedIfSafe)
+            
+            let json = JSON(data: data)
+            
+            //iterate through all of the groups and to find the internal handles of the groups
+            //so we know which ones to load
+            for (key, group) in json["user"]["groups"] {
+                groupHandles.append(group["groupHandle"].string!)
             }
+        }  catch let error as NSError {
+            print("Error: \(error)")
         }
         
         return groupHandles
     }
     
-    func loadGroupsFromHandles(handles: [String]) {
-        for handle in handles { //for ever different group handle given
-            var group: Group
-            
-            var groupName: String!
-            var groupIconName: String! //the groups "profile" photo's name
-            var participants = [User]()
-            var groupCreator: User!
-            
-            //find the file on disk
-            if let path = Bundle.main.url(forResource: handle, withExtension:"json") {
-                do {
-                    //load the file
-                    let data = try Data(contentsOf: path, options: .mappedIfSafe)
-                    do {
-                        //load the contents of the file into a JSON object
-                        let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                        
-                        if let jsonData = json as? [String: Any] {
-                            if let groupJSON = jsonData["group"] as? [String: Any] {
-                                if let creator = groupJSON["creator"] as? String {
-                                    groupCreator = User(handle: creator, fullName: "filler")
-                                }
-                                
-                                if let groupNameJSON = groupJSON["groupName"] as? String {
-                                    groupName = groupNameJSON
-                                }
-                                
-                                if let groupIconNameJSON = groupJSON["groupIcon"] as? String {
-                                    groupIconName = groupIconNameJSON
-                                }
-                                
-                                if let users = groupJSON["users"] as? [[String: Any]] {
-                                    for user in users {
-                                        if let handle = user["handle"] as? String {
-                                            participants.append(User(handle: handle, fullName: "filler"))
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } catch let error as NSError {
-                        print("Error: \(error)")
+    func loadGroups(handles: [String]) {
+        for groupHandle in handles {
+            let path = Bundle.main.url(forResource: groupHandle, withExtension: "json")
+            do {
+                let data = try Data(contentsOf: path!, options: .mappedIfSafe)
+                
+                let json = JSON(data: data)
+                let creator = json["group"]["creator"].string
+                let groupName = json["group"]["groupName"].string
+                let groupIconName = json["group"]["groupIcon"].string
+                
+                var users = [User]()
+                for(key, subJSON) in json["group"]["users"] {
+                    if let userHandle = subJSON["handle"].string {
+                        users.append(User(handle: userHandle, fullName:"filler"))
                     }
-                } catch let error as NSError {
-                    print("Error: \(error)")
                 }
+                
+                defaultGroups.append(Group(groupName: groupName!, image: UIImage(named: groupIconName!)!, users: users, creator: User(handle: creator!, fullName: "filler")))
+                
+            } catch let error as NSError {
+                print("Error: \(error)")
             }
-            
-            group = Group(groupName: groupName, image: UIImage(named: groupIconName)!, users: participants, creator: groupCreator)
-            defaultGroups.append(group)
         }
     }
     
