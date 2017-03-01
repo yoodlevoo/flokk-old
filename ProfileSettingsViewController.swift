@@ -17,6 +17,9 @@ class ProfileSettingsViewController: UIViewController {
     @IBOutlet weak var editPassword: UITextField!
     @IBOutlet weak var editUsername: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
+    
+    var mainUser: User!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,21 +32,23 @@ class ProfileSettingsViewController: UIViewController {
     }
     @IBAction func backPage(_ sender: AnyObject) {
     }
+    /*
     @IBAction func logoutBttn(_ sender: AnyObject) {
-    }
+    } */
     
     @IBAction func saveBttn(_ sender: AnyObject) {
     }
     
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //USE SEGUE IDENTIFIERS
+        if let tabBar = segue.destination as? UITabBarController {
+            if let profileView = tabBar.viewControllers?[2] as? ProfileViewController {
+                profileView.mainUser = mainUser
+            }
+            
+            tabBar.selectedIndex = 2
+        }
     }
-    */
-
 }

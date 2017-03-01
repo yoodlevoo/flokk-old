@@ -37,6 +37,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
         
+        cell.tag = indexPath.row //set the tag so prepare for segue can recognize which post was selected
+        
         let user: User = group.posts[indexPath.row].poster
         cell.userImage.image = user.profilePhoto
         cell.setCustomImage(image: group.posts[indexPath.row].image)
@@ -71,16 +73,18 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func uploadPic(_ sender: AnyObject) {
     }
     
-    //manually segue back to the tab bar controller
-    @IBAction func backPage(_ sender: AnyObject) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let tabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
-        
-        self.present(tabBarController, animated: true, completion: nil)
-    }
-    
     @IBAction func groupSettings(_ sender: Any) {
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let commentNav = segue.destination as? AddCommentNavigationViewController {
+            if let tag = (sender as? FeedTableViewCell)?.tag {
+                let post = group.posts[tag]
+                
+                commentNav.postToPass = post
+            }
+        }
     }
 }
 

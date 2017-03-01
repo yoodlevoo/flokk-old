@@ -22,8 +22,12 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.delegate = self
         tableView.dataSource = self
-        
+                
         mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
+        
+        if let profileView = tabBarController?.viewControllers?[2] as? ProfileViewController {
+            profileView.mainUser = mainUser
+        }
         
         loadGroups(handles: findGroupHandles())
     }
@@ -31,6 +35,10 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     //Load all about this user and what group(the handles) they're in
@@ -87,6 +95,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         cell.groupTitleLabel?.text = defaultGroups[indexPath.row].groupName
         cell.groupImageView?.image = defaultGroups[indexPath.row].groupIcon
+        cell.tag = indexPath.row //or do i do indexPath.item
         
         return cell
     }
@@ -98,7 +107,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //When one of the cells is selected
     //In the future, the feed should not be loaded each time
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*
         let group = defaultGroups[indexPath.row] //get the specific group referred to by the pressed cell
+        
         
         //then transition to the feedview controller through the Feed's navigation controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -107,9 +118,26 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         feedNav.groupToPass = group
         feedNav.passGroup()
         
-        self.present(feedNav, animated: true, completion: nil)
+        self.present(feedNav, animated: true, completion: nil) */
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let feedNav = segue.destination as? FeedNavigationViewController {
+            if let tag = (sender as? GroupTableViewCell)?.tag {
+                let group = defaultGroups[tag]
+                
+                feedNav.groupToPass = group
+                //feedNav.passGroup()
+            }
+        } else if let feedView = segue.destination as? FeedViewController {
+            if let tag = (sender as? GroupTableViewCell)?.tag {
+                let group = defaultGroups[tag]
+                
+                feedView.group = group
+            }
+        }
+    }
+    
     /*
     @IBAction func createGroup(_ sender: Any) {
     }

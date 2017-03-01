@@ -16,6 +16,8 @@ class FeedNavigationViewController: UINavigationController {
         super.viewDidLoad()
 
         self.navigationItem.title = groupToPass.groupName
+        let feedVC = self.viewControllers[0] as! FeedViewController
+        feedVC.group = groupToPass
         //print("view did load feed nav")
         
         //self.navigationBar.barTintColor = UIColor.darkGray
@@ -23,14 +25,5 @@ class FeedNavigationViewController: UINavigationController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    func passGroup() {
-        if let feedVC = self.viewControllers[0] as? FeedViewController {
-            feedVC.group = groupToPass
-            self.navigationItem.title = groupToPass.groupName
-            
-            //print("pass to group feed nav")
-        }
     }
 }
