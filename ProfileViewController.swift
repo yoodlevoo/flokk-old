@@ -15,14 +15,23 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var groups: UILabel!
     @IBOutlet weak var groupNumber: UILabel!
 
-    var mainUser: User!
+    //var mainUser: User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        profilePic.image = mainUser.profilePhoto
+        profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
+        profilePic.clipsToBounds = true
+        
+        username.text = mainUser.handle
         
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,16 +42,13 @@ class ProfileViewController: UIViewController {
     }
     @IBAction func profileSettings(_ sender: AnyObject) {
     }
-    
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let profileSettingsView = segue.destination as? ProfileSettingsViewController {
+            profileSettingsView.mainUser = mainUser
+        }
     }
-    */
-
 }

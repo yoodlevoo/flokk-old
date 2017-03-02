@@ -92,20 +92,15 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
                            completion: nil)
         }
     }
-
-    //functionality to segue back to the feed view for the back button
-    @IBAction func backPage(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let feedNav:FeedNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController") as! FeedNavigationViewController
-        
-        feedNav.groupToPass = post.postedGroup
-        feedNav.passGroup()
-        
-        self.present(feedNav, animated: true, completion: nil)
-    }
     
     @IBAction func posterProfile(_ sender: Any) {
     
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let feedNav = segue.destination as? FeedNavigationViewController {
+            feedNav.groupToPass = post.postedGroup
+        }
     }
 }
 

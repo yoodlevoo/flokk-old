@@ -16,7 +16,9 @@ class UploadPhotoViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        imageView.contentMode = .scaleAspectFit
         imagePicker.delegate = self
+        getLastImage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,10 +26,19 @@ class UploadPhotoViewController: UIViewController, UIImagePickerControllerDelega
         // Dispose of any resources that can be recreated.
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            
+            //imageView.contentMode = .scaleAspectFit
+            imageView.image = pickedImage
+        } else {
+            print("Something went wrong")
         }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func choosePhoto(_ sender: Any) {
@@ -39,7 +50,23 @@ class UploadPhotoViewController: UIViewController, UIImagePickerControllerDelega
     
     
     @IBAction func uploadPhoto(_ sender: Any) {
-        
+        print("Upload Photo")
+
+    }
+    
+    func getLastImage() {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        if paths.count > 0 {
+            let dirPath = paths[0]
+            let readPath = NSURL(fileURLWithPath: dirPath as String).appendingPathComponent("cache.png")
+            //print(readPath?.absoluteString)
+            do {
+                let image = try UIImage(data: Data(contentsOf: readPath!))
+                imageView.image = image
+            } catch let error as NSError {
+                print("Error " + error.localizedDescription)
+            }
+        }
     }
     
     /*

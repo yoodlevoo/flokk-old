@@ -14,6 +14,9 @@ class AddCommentNavigationViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let commentVC = self.viewControllers[0] as! AddCommentViewController
+        commentVC.post = postToPass
+        
         // Do any additional setup after loading the view.
     }
 

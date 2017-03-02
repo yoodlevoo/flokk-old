@@ -18,12 +18,15 @@ class Post {
     var comments = [Comment]() //holds all the comments, hopefully stored in order
     var postedGroup: Group
     
-    init(poster: User, image: UIImage, postedGroup: Group) {
+    var index: Int //represents this posts position in the post array from the group
+    
+    init(poster: User, image: UIImage, postedGroup: Group, index: Int) {
         self.poster = poster
         self.image = image
         self.postedGroup = postedGroup
+        self.index = index
         
-        loadCommentsLocally()
+        loadCommentsLocallySwifty()
     }
     
     func loadCommentsLocally() {
@@ -54,7 +57,21 @@ class Post {
     }
     
     func loadCommentsLocallySwifty() {
-        
+        if let path = Bundle.main.url(forResource: postedGroup.getUniqueName(), withExtension:"json") {
+            do {
+                let data = try Data(contentsOf: path, options: .mappedIfSafe)
+                
+                let json = JSON(data: data)
+                for (_, comment) in json["comments"] {
+                    let handle = comment["handle"].string
+                    let content = comment["content"].string
+                    
+                    comments.append(Comment(user: findUserInGroupWith(handle: handle!), content: content!))
+                }
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     //find the user from the participants in this group just by using their handle
@@ -70,47 +87,32 @@ class Post {
         return User(handle: "nil", fullName: "Nil Nil")
     }
     
-    //loads the comments from the relevant JSON file
-    //how should we decide how to store each post's comment(ie the file name)
-    func loadCommentsNetwork() {
-        //this is a URL to my dropbox, where a JSON file is located
-        /*
-        let requestUrl: URL = URL(string: "https://www.learnswiftonline.com/Samples/subway.json")!
-        
-        let urlRequest: URLRequest = URLRequest(url: requestUrl as URL)
-        let task = URLSession.shared.dataTask(with: urlRequest as URLRequest){ data,response,error in
-        
-        let httpResponse = response as! HTTPURLResponse
-        let statusCode = httpResponse.statusCode
-            
-            if(statusCode == 200) { //if the resource was accessed correctly and exists, etc
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data!, options:.allowFragments)
-                    
-                    if let jsonData = json as? [String: Any] {
-                        if let comments = jsonData["comments"] as? [[String: Any]] { //double square bracket means array of dicts
-                            for comment in comments {
-                                if let handle = comment["handle"] as? String {
-                                    if let content = comment["content"] as? String {
-                                        print("\(handle) said: \(content)")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch let error as NSError {
-                    print("Error with JSON: \(error)")
-                }
-            }
-        }
-        
-        task.resume()
- 
-    */
+    func getUniqueName() -> String {
+        return postedGroup.getUniqueName() + poster.handle + "\(index)"
     }
     
-    func getUniqueName() {
+    func uploadPostToJSON() {
+        let imageName = getUniqueName()
+        let postData: JSON = [
+            "handle": "gannonprudhomme",
+            "imageName": imageName,
+            "date": "12341234",
+            "comments": []
+        ]
         
+        if let path = Bundle.main.url(forResource: postedGroup.getUniqueName(), withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: path, options: .mappedIfSafe)
+                
+                var json = JSON(data: data)
+                
+                json["group"]["posts"].appendIfArray(json: postData)
+                
+                
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
