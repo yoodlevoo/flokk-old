@@ -28,10 +28,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="edb-AX-5Mq" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="178" id="SVO-n3-glQ"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="edb-AX-5Mq" secondAttribute="bottom" constant="251" id="U6h-Ki-6It"/>
-                            <constraint firstItem="edb-AX-5Mq" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="25" id="VKZ-Fa-biE"/>
-                            <constraint firstItem="edb-AX-5Mq" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="sPU-xH-O5a"/>
+                            <constraint firstItem="PmU-Wr-je5" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" constant="8.5" id="1xo-Hl-8DB"/>
+                            <constraint firstItem="PmU-Wr-je5" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="9gf-KN-dkK"/>
+                            <constraint firstItem="PmU-Wr-je5" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="167" id="PT0-Z0-SQY"/>
+                            <constraint firstItem="PmU-Wr-je5" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="60" id="VJR-rO-IDe"/>
                         </constraints>
                     </view>
                 </viewController>

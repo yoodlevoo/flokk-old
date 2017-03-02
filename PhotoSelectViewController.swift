@@ -35,8 +35,8 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         let screenHeight = UIScreen.main.bounds.height
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 4
-        layout.minimumInteritemSpacing = 4
+        layout.minimumLineSpacing = 2
+        layout.minimumInteritemSpacing = 2
         layout.itemSize = CGSize(width: screenWidth / 3 - 4, height: screenWidth / 3 - 4)
         
         let scale = UIScreen.main.scale
