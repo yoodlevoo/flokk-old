@@ -29,6 +29,10 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             //profileView.mainUser = mainUser
         }
         
+        //if defaultGroups.count > 0 {
+            //loadGroupsNew(handles: ["group"])
+        //}
+        
         loadGroups(handles: findGroupHandles())
     }
 
@@ -76,8 +80,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let groupIconName = json["group"]["groupIcon"].string
                 
                 var users = [User]()
-                for(key, subJSON) in json["group"]["users"] {
-                    if let userHandle = subJSON["handle"].string {
+                for(_, subJSON) in json["group"]["users"] {
+                    if let userHandle = subJSON.string {
                         users.append(User(handle: userHandle, fullName:"filler"))
                     }
                 }
@@ -86,6 +90,38 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
             } catch let error as NSError {
                 print("Error: \(error)")
+            }
+        }
+    }
+    
+    func loadGroupsNew(handles: [String]) {
+        for groupHandle in handles {
+            let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+            
+            let groupURL = documentsURL?.appendingPathComponent(groupHandle)
+            let jsonURL = groupURL?.appendingPathComponent(groupHandle + ".json")
+            let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
+            
+            do {
+                let data = try Data(contentsOf: jsonFile, options: .mappedIfSafe)
+                
+                let json = JSON(data: data)
+                
+                let creator = json["creator"].string
+                let groupName = json["groupName"].string
+                let groupIconName = json["groupIcon"].string
+                
+                var users = [User]()
+                for(_, subJSON) in json["users"] {
+                    if let userHandle = subJSON.string {
+                        users.append(User(handle: userHandle, fullName:"filler"))
+                    }
+                }
+                
+                defaultGroups.append(Group(groupName: groupName!, image: UIImage(named: groupIconName!)!, users: users, creator: User(handle: creator!, fullName: "filler")))
+                
+            } catch let error as NSError {
+                print(error.localizedDescription)
             }
         }
     }

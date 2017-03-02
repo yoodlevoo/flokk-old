@@ -13,24 +13,24 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView: UITableView!
     
     var searchedUsers = [User]() //ill do this search thing later
-    var selectedUsers: [User : Bool] = [:]
+    var selectedUsers = [User]()
+    //var selectedUsers: [User : Bool] = [:]
     
     private var groupName: String!
+    private var groupPhoto: UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //hard code in the users just for testing
-        searchedUsers.append(User(handle: "gannonprudhomme", fullName: "Gannon Prudhomme"))
+        searchedUsers.append(User(handle: "taviansims", fullName: "Tavian Sims"))
         searchedUsers.append(User(handle: "jaredheyen", fullName:"Jared Heyen"))
-        
-        selectedUsers[searchedUsers[0]] = false
-        selectedUsers[searchedUsers[1]] = false
         
         tableView.delegate = self
         tableView.dataSource = self
         
         groupNameTextField.delegate = self
+        groupPhoto = UIImage(named: "gannonprudhommeProfilePhoto")
         
         self.hideKeyboardWhenTappedAround()
     }
@@ -46,11 +46,13 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         let user = searchedUsers[indexPath.row]
         
         cell.profilePicture.image = user.profilePhoto
+        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
+        cell.profilePicture.clipsToBounds = true
         
         cell.fullNameLabel.text = user.fullName
         cell.usernameLabel.text = user.handle
         
-        if selectedUsers[user] == true {
+        if selectedUsers.contains(user) {
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
         } else {
             cell.accessoryType = UITableViewCellAccessoryType.none
@@ -67,7 +69,11 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //toggle it
         let user = searchedUsers[indexPath.row]
         
-        selectedUsers[user] = !selectedUsers[user]!
+        if selectedUsers.contains(user) {
+            selectedUsers.remove(at: selectedUsers.index(of: user)!)
+        } else {
+            selectedUsers.append(user)
+        }
         
         DispatchQueue.main.async{
             tableView.reloadData()
@@ -91,18 +97,48 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         return true
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        groupName = textField.text
+        
+        textField.endEditing(true)
+        
+        return false
+    }
+    
     @IBAction func addGroupPicture(_ sender: Any) {
         
     }
     
-    // MARK: - Navigation
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "segueCreateGroup" {
+            if groupName == nil || groupName == "" { //add more exceptions here, like just spaces and stuff
+                return false
+            }
+        }
+        
+        return true
+    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueCancelCreateGroup" {
+            //shouldnt need to do anything here
+        } else if segue.identifier == "segueCreateGroup" { //then create the group and save it as a JSON file
+            var users = selectedUsers //the selected users + main user
+            users.append(mainUser)
             
-        } else if segue.identifier == "segueCreateGroup" {
+            var group = Group(groupName: groupName, image: groupPhoto, users: users, creator: mainUser)
+            var json: JSON = group.convertToJSON()
             
+            if let tabBar = segue.destination as? UITabBarController {
+                if let groupsNav = tabBar.viewControllers![0] as? UINavigationController {
+                    if let groupsView = groupsNav.viewControllers[0] as? GroupsViewController {
+                        groupsView.defaultGroups.append(group)
+                        
+                        FileUtils.saveGroupJSON(json: json, groupName: groupName)
+                    }
+                }
+            }
         }
     }
 }

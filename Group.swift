@@ -112,4 +112,22 @@ class Group {
     static func createUniqueName(creatorsHandle:String, groupName:String) -> String {
          return creatorsHandle + groupName
     }
+    
+    func convertToJSON() -> JSON {
+        var users = [String]()
+        
+        for user in participants {
+            users.append(user.handle)
+        }
+        
+        let json: JSON = [
+            "groupName": groupName,
+            "groupIcon": groupName + "Photo",
+            "creator": mainUser.handle,
+            "users": users,
+            "posts": [ ] //fill this in later
+        ]
+        
+        return json
+    }
 }

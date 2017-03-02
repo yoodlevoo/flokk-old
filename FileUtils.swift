@@ -38,9 +38,36 @@ class FileUtils {
         return result
     }
     
-    static func saveJSON(json: JSON, name: String) -> Bool {
-        //let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+    static func saveGroupJSON(json: JSON, groupName: String) -> Bool {
+        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         
+        let groupURL = documentsURL?.appendingPathComponent(groupName)
+        let jsonURL = groupURL?.appendingPathComponent(groupName + ".json")
+        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
+        
+        do {
+            let dirExists = FileManager.default.fileExists(atPath: (groupURL?.absoluteString)!)
+            if !dirExists {
+                try FileManager.default.createDirectory(atPath: ((groupURL)?.absoluteString)!, withIntermediateDirectories: false, attributes: nil)
+            }
+            
+            let data = try json.rawData()
+            try data.write(to: jsonFile, options: .atomic)
+            return true
+        } catch let error as NSError {
+            print("Error " + error.localizedDescription)
+            return false
+        }
+    }
+    
+    static func saveJSON(json: JSON, name: String) -> Bool {
+        //let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        //let groupURL = documentsURL?.appendingPathComponent(APP_DISTINGUISHED_NAME)
+        
+        return false
+    }
+    
+    static func deleteGroupJSON(json: JSON, groupName: String) -> Bool {
         return false
     }
 }

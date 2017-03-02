@@ -106,7 +106,7 @@ class Post {
                 
                 var json = JSON(data: data)
                 
-                json["group"]["posts"].appendIfArray(json: postData)
+                //json["group"]["posts"].appendIfArray(json: postData)
                 
                 
             } catch let error as NSError {

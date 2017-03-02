@@ -537,7 +537,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="ff4-SJ-RiX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="zMU-GR-fPQ" kind="relationship" relationship="rootViewController" id="GY4-rX-LQj"/>
@@ -604,21 +604,21 @@
                     </view>
                     <navigationItem key="navigationItem" title="Group Name" id="Rer-vm-6y0">
                         <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="hK7-Jw-Zcq" userLabel="Back Arrow">
-                            <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="x15-8V-ONQ" kind="presentation" id="iPI-bi-wYv"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem style="plain" systemItem="add" id="DXj-08-TMP">
-                                <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="uploadPic:" destination="zMU-GR-fPQ" id="a5z-PJ-Ml5"/>
                                     <segue destination="1S1-oP-HML" kind="presentation" identifier="segueFromFeedToUploadImage" id="6DE-FP-yyZ"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="Settings Button (Green)" id="r70-je-Mcs" userLabel="Settings">
-                                <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <barButtonItem title="Item" image="Settings Button (Green)" id="r70-je-Mcs" userLabel="Settings">
+                                <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="groupSettings:" destination="zMU-GR-fPQ" id="ooS-py-VYC"/>
                                 </connections>
@@ -984,7 +984,7 @@
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1687,7 +1687,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Name" id="oT3-g3-95p">
                         <barButtonItem key="leftBarButtonItem" image="turquoiseArrow" id="TxD-9M-ixl">
-                            <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="backPage:" destination="n5W-Aj-Eyg" id="0To-g4-tNw"/>
                                 <segue destination="nKl-w0-RhZ" kind="presentation" id="hWc-jq-9MM"/>
@@ -1803,6 +1803,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="eIZ-y0-6Jq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="UNJ-Pi-iNs" kind="relationship" relationship="rootViewController" id="g5q-xK-cZ4"/>
@@ -1842,12 +1843,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="WT0-vt-4kn">
                         <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="5jp-aw-VgK" userLabel="Back Arrow">
-                            <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="1S1-oP-HML" kind="presentation" id="6Us-gJ-BYB"/>
+                                <segue destination="1S1-oP-HML" kind="presentation" identifier="segueBackFromConfirmedImageToPhotoSelect" id="6Us-gJ-BYB"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Check" id="N36-Ye-580">
+                            <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="nKl-w0-RhZ" kind="presentation" identifier="segueFromConfirmedImageToFeed" id="F8l-aN-x6i"/>
                             </connections>
@@ -1911,6 +1913,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Zuj-kY-J1q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="ZUG-83-qEb" kind="relationship" relationship="rootViewController" id="taO-iQ-et8"/>
@@ -1926,6 +1929,7 @@
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="ZUG-83-qEb" customClass="PhotoUploadPageViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="ObR-nW-dwj">
                         <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="dVa-He-TTT">
+                            <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="nKl-w0-RhZ" kind="presentation" identifier="segueFromPhotoSelectPageToFeed" id="pD6-xj-Hkh"/>
                             </connections>
@@ -1949,7 +1953,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rP2-5M-2f6">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="78" width="375" height="589"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="R4U-x7-fhL">
@@ -1988,7 +1992,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I0z-2D-QNY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4846" y="-3752"/>
+            <point key="canvasLocation" x="4845.6000000000004" y="-3752.4737631184412"/>
         </scene>
         <!--Comment NavControl-->
         <scene sceneID="wCo-YS-FOx">
@@ -1998,7 +2002,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="ieE-xw-Hib">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </textAttributes>
@@ -2118,10 +2122,10 @@
         <image name="turquoiseRequestToBeAddedBttn" width="149" height="148"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Rw6-mP-rPb"/>
-        <segue reference="JZV-TG-MCh"/>
+        <segue reference="ME7-O5-4bK"/>
+        <segue reference="F8l-aN-x6i"/>
         <segue reference="6Us-gJ-BYB"/>
-        <segue reference="pD6-xj-Hkh"/>
+        <segue reference="JZV-TG-MCh"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

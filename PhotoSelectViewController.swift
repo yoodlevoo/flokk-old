@@ -99,8 +99,6 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         let asset = fetchResult.object(at: index)
         imageManager.requestImage(for: asset, targetSize: CGSize(width: screenWidth * 2, height: screenHeight * 2), contentMode: .default, options: nil, resultHandler: { image, _ in
             
-            print("requested image")
-            
             selected = image
         })
     

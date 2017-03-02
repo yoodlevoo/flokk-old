@@ -5,8 +5,7 @@
         "creator": "gannonprudhomme",
         
         "users": [
-                  {  "handle": "gannonprudhomme"},
-                  {  "handle": "jaredheyen"}
+                  "gannonprudhomme", "jaredheyen"
         ],
         
         "posts": [

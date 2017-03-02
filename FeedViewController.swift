@@ -23,7 +23,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         
-        group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
+        //dont load the posts if there are already posts stored
+        if group.posts.count == 0 {
+            group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
+        }
         
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -39,9 +42,11 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.tag = indexPath.row //set the tag so prepare for segue can recognize which post was selected
         
-        let user: User = group.posts[indexPath.row].poster
+        let index = group.posts.count - 1 - indexPath.row
+        
+        let user: User = group.posts[index].poster
         cell.userImage.image = user.profilePhoto
-        cell.setCustomImage(image: group.posts[indexPath.row].image)
+        cell.setCustomImage(image: group.posts[index].image)
         
         cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage.clipsToBounds = true
