@@ -30,12 +30,13 @@ class ConfirmUploadViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromConfirmedImageToFeed" {
             if let feedNav = segue.destination as? FeedNavigationViewController {
-                let post = Post(poster: mainUser, image: image, postedGroup: forGroup, index: forGroup.posts.count)
-                forGroup.posts.append(post)
+                //use the imageView because it might be changed asynchronously
+                let post = Post(poster: mainUser, image: imageView.image!, postedGroup: forGroup, index: forGroup.posts.count)
+                //forGroup.posts.append(post)
                 
-                //post.uploadPostToJSON()
+                post.uploadPostToJSONNew()
                 
-                //FileUtils.saveImage(image: image, name: post.getUniqueName())
+                FileUtils.savePostImage(post: post)
                 
                 feedNav.groupToPass = forGroup
             }

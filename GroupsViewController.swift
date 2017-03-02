@@ -29,11 +29,14 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             //profileView.mainUser = mainUser
         }
         
-        //if defaultGroups.count > 0 {
-            //loadGroupsNew(handles: ["group"])
-        //}
+        if defaultGroups.count == 0 {
+            loadGroupsNew(handles: ["group", "group2"])
+        } else {
+            defaultGroups.removeAll()
+            loadGroupsNew(handles: ["group", "group2"])
+        }
         
-        loadGroups(handles: findGroupHandles())
+        //loadGroups(handles: findGroupHandles())
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,10 +97,13 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    //put this in FileUtils later
     func loadGroupsNew(handles: [String]) {
         for groupHandle in handles {
             let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
             
+            // 'groupHandle' should already be a "friendly" group handle
+            // b/c it is coming from the user's .json file
             let groupURL = documentsURL?.appendingPathComponent(groupHandle)
             let jsonURL = groupURL?.appendingPathComponent(groupHandle + ".json")
             let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
@@ -118,7 +124,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 
-                defaultGroups.append(Group(groupName: groupName!, image: UIImage(named: groupIconName!)!, users: users, creator: User(handle: creator!, fullName: "filler")))
+                var groupIconPhoto = UIImage(named: groupIconName!)
+                
+                defaultGroups.append(Group(groupName: groupName!, image: groupIconPhoto!, users: users, creator: User(handle: creator!, fullName: "filler")))
                 
             } catch let error as NSError {
                 print(error.localizedDescription)

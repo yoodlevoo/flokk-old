@@ -8,16 +8,18 @@
 
 import UIKit
 
-class CreateGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+class CreateGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var groupNameTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var addGroupPictureButton: UIButton!
     
     var searchedUsers = [User]() //ill do this search thing later
     var selectedUsers = [User]()
-    //var selectedUsers: [User : Bool] = [:]
     
     private var groupName: String!
     private var groupPhoto: UIImage!
+    
+    private let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,8 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         
         groupNameTextField.delegate = self
         groupPhoto = UIImage(named: "gannonprudhommeProfilePhoto")
+        
+        imagePicker.delegate = self
         
         self.hideKeyboardWhenTappedAround()
     }
@@ -105,9 +109,31 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         return false
     }
     
+    // MARK: Add Group Picture image picker functions
+    
     @IBAction func addGroupPicture(_ sender: Any) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
         
+        present(imagePicker, animated: true, completion: nil)
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            //imageView.contentMode = .scaleAspectFit
+            addGroupPictureButton.setImage(pickedImage, for: UIControlState.normal)
+        } else {
+            print("Something went wrong")
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: Navigation
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "segueCreateGroup" {
@@ -133,9 +159,9 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
             if let tabBar = segue.destination as? UITabBarController {
                 if let groupsNav = tabBar.viewControllers![0] as? UINavigationController {
                     if let groupsView = groupsNav.viewControllers[0] as? GroupsViewController {
-                        groupsView.defaultGroups.append(group)
+                        //groupsView.defaultGroups.append(group)
                         
-                        FileUtils.saveGroupJSON(json: json, groupName: groupName)
+                        FileUtils.saveGroupJSON(json: json, group: group)
                     }
                 }
             }

@@ -88,10 +88,10 @@ class Post {
     }
     
     func getUniqueName() -> String {
-        return postedGroup.getUniqueName() + poster.handle + "\(index)"
+        return poster.handle + "\(index)"
     }
     
-    func uploadPostToJSON() {
+    func convertToJSON() -> JSON {
         let imageName = getUniqueName()
         let postData: JSON = [
             "handle": "gannonprudhomme",
@@ -100,19 +100,37 @@ class Post {
             "comments": []
         ]
         
+        return postData
+    }
+    
+    func uploadPostToJSON() {
+        let imageName = getUniqueName()
+        let postData = convertToJSON()
+        
         if let path = Bundle.main.url(forResource: postedGroup.getUniqueName(), withExtension: "json") {
             do {
                 let data = try Data(contentsOf: path, options: .mappedIfSafe)
                 
                 var json = JSON(data: data)
                 
-                //json["group"]["posts"].appendIfArray(json: postData)
-                
+                json["posts"].appendIfArray(json: postData)
                 
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func uploadPostToJSONNew() {
+        let imageName = getUniqueName()
+        let postData = convertToJSON()
+        
+        var groupJSON = postedGroup.convertToJSON()
+        
+        groupJSON["posts"].appendIfArray(json: convertToJSON())
+        
+        //write over the file
+        FileUtils.saveGroupJSON(json: groupJSON, group: postedGroup)
     }
 }
 

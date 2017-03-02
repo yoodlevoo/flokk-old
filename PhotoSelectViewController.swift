@@ -99,9 +99,13 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         let asset = fetchResult.object(at: index)
         imageManager.requestImage(for: asset, targetSize: CGSize(width: screenWidth * 2, height: screenHeight * 2), contentMode: .default, options: nil, resultHandler: { image, _ in
             
+            if selected != nil {
+                //ret = image
+            }
+            
             selected = image
         })
-    
+        
         return selected
     }
     
@@ -109,7 +113,20 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         if segue.identifier == "segueFromPhotoSelectToConfirmImage" {
             if let confirmUploadNav = segue.destination as? ConfirmUploadNavigationViewController {
                 if let tag = (sender as? PhotoSelectCell)?.tag {
-                    confirmUploadNav.imageToPass = getSelectedImage(index: tag)
+                    let screenWidth = UIScreen.main.bounds.width
+                    let screenHeight = UIScreen.main.bounds.height
+                    
+                    let asset = fetchResult.object(at: tag)
+                    imageManager.requestImage(for: asset, targetSize: CGSize(width: screenWidth * 2, height: screenHeight * 2), contentMode: .default, options: nil, resultHandler: { image, _ in
+                        
+                        if confirmUploadNav.imageToPass != nil {
+                            let confirmUpload = confirmUploadNav.viewControllers[0] as! ConfirmUploadViewController
+                            confirmUpload.imageView.image = image
+                        }
+                        
+                        confirmUploadNav.imageToPass = image
+                    })
+                    
                     confirmUploadNav.groupToPass = forGroup
                 }
             }

@@ -70,6 +70,37 @@ class Group {
         //let handle = json["group"]
     }
     
+    func loadPostsNew(numPostsToLoad: Int) {
+        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        
+        let groupURL = documentsURL?.appendingPathComponent(groupName)
+        let jsonURL = groupURL?.appendingPathComponent(groupName + ".json")
+        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
+        
+        do {
+            let data = try Data(contentsOf: jsonFile, options: .mappedIfSafe)
+            
+            let json = JSON(data: data)
+            
+            var index: Int = 0
+            for (_, post) in json["posts"] {
+                if index < FeedViewController.initialPostCount - 1 {
+                    let userHandle = post["handle"].string
+                    let imageName = post["imageName"].string
+                
+                    let image = FileUtils.loadPostImage(group: self, fileName: imageName!)
+                
+                    posts.append(Post(poster: findUserWithHandle(handle: userHandle!), image: image, postedGroup: self, index: index))
+                    index += 1
+                } else {
+                    break
+                }
+            }
+        } catch let error as NSError {
+            print("Error: \(error)")
+        }
+    }
+    
     //find the user with the specified handle
     //in the future use a more efficient search
     func findUserWithHandle(handle: String) -> User {
@@ -120,13 +151,17 @@ class Group {
             users.append(user.handle)
         }
         
-        let json: JSON = [
+        var json: JSON = [
             "groupName": groupName,
             "groupIcon": groupName + "Photo",
             "creator": mainUser.handle,
             "users": users,
-            "posts": [ ] //fill this in later
+            "posts": [] //fill this in later
         ]
+        
+        for post in posts {
+            json["posts"].appendIfArray(json: post.convertToJSON())
+        }
         
         return json
     }

@@ -25,7 +25,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //dont load the posts if there are already posts stored
         if group.posts.count == 0 {
-            group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
+            // group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
+        }
+        
+        if group.posts.count == 0 {
+            group.loadPostsNew(numPostsToLoad: FeedViewController.initialPostCount)
+        } else {
+            group.posts.removeAll()
+            group.loadPostsNew(numPostsToLoad: FeedViewController.initialPostCount)
         }
         
         tableView.estimatedRowHeight = 200
@@ -40,9 +47,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
         
-        cell.tag = indexPath.row //set the tag so prepare for segue can recognize which post was selected
-        
         let index = group.posts.count - 1 - indexPath.row
+        cell.tag = index //set the tag so prepare for segue can recognize which post was selected
         
         let user: User = group.posts[index].poster
         cell.userImage.image = user.profilePhoto
@@ -63,7 +69,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Once the post is pressed, go to the comments
     //in the future this may change to a swipe on the post instead of a tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let post = group.posts[indexPath.row] //get the specific post referred to by the pressed cell
+        let index = group.posts.count - 1 - indexPath.row
+        
+        let post = group.posts[index] //get the specific post referred to by the pressed cell
         
         //then transition to the comment view through the comment's navigation controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -129,21 +137,5 @@ class FeedTableViewCell: UITableViewCell {
         aspectConstraint = constraint
         
         postedImage.image = image
-    }
-}
-
-extension JSON {
-    mutating func appendIfArray(json:JSON){
-        if var arr = self.array{
-            arr.append(json)
-            self = JSON(arr);
-        }
-    }
-    
-    mutating func appendIfDictionary(key:String,json:JSON){
-        if var dict = self.dictionary{
-            dict[key] = json;
-            self = JSON(dict);
-        }
     }
 }
