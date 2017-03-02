@@ -78,11 +78,17 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let commentNav = segue.destination as? AddCommentNavigationViewController {
-            if let tag = (sender as? FeedTableViewCell)?.tag {
-                let post = group.posts[tag]
-                
-                commentNav.postToPass = post
+        if segue.identifier == "segueFromFeedToComment" {
+            if let commentNav = segue.destination as? AddCommentNavigationViewController {
+                if let tag = (sender as? FeedTableViewCell)?.tag {
+                    let post = group.posts[tag]
+                    
+                    commentNav.postToPass = post
+                }
+            }
+        } else if segue.identifier == "segueFromFeedToUploadImage" {
+            if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
+                photoUploadPageNav.groupToPass = group
             }
         }
     }
@@ -118,5 +124,21 @@ class FeedTableViewCell: UITableViewCell {
         aspectConstraint = constraint
         
         postedImage.image = image
+    }
+}
+
+extension JSON {
+    mutating func appendIfArray(json:JSON){
+        if var arr = self.array{
+            arr.append(json)
+            self = JSON(arr);
+        }
+    }
+    
+    mutating func appendIfDictionary(key:String,json:JSON){
+        if var dict = self.dictionary{
+            dict[key] = json;
+            self = JSON(dict);
+        }
     }
 }

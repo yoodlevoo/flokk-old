@@ -15,7 +15,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var groups: UILabel!
     @IBOutlet weak var groupNumber: UILabel!
 
-    var mainUser: User!
+    //var mainUser: User!
     
     override func viewDidLoad() {
         super.viewDidLoad()

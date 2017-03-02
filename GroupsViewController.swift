@@ -12,7 +12,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    var mainUser: User! //the user who is currently running the app
+    //var mainUser: User! //the user who is currently running the app
     
     //var defaultGroups: [Group: UIImage] = [:] //makes an empty dictionary
     var defaultGroups = [Group]() //an emptyarray of Groups
@@ -26,7 +26,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
         
         if let profileView = tabBarController?.viewControllers?[2] as? ProfileViewController {
-            profileView.mainUser = mainUser
+            //profileView.mainUser = mainUser
         }
         
         loadGroups(handles: findGroupHandles())

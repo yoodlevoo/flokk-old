@@ -51,15 +51,7 @@ class UploadPhotoViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func uploadPhoto(_ sender: Any) {
         print("Upload Photo")
-        
-        let imageData = NSData(data: UIImagePNGRepresentation(imageView.image!)!)
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        var docs: NSString = paths[0] as NSString
-        let fullPath = NSURL(fileURLWithPath: docs as String).appendingPathComponent("cache.png")
-        //print(fullPath?.absoluteString)
-        let result = imageData.write(to: fullPath!, atomically: true)
-        
-        print(result)
+
     }
     
     func getLastImage() {

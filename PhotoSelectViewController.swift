@@ -19,21 +19,31 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     let imageManager = PHCachingImageManager()
     var thumbnailSize: CGSize!
     
+    var forGroup: Group! //just passing this around so we can return it to the feed
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         collectionView?.delegate = self
         collectionView?.dataSource = self
         
-        //PHPhotoLibrary.shared().register(self as! PHPhotoLibraryChangeObserver)
-        
         let allPhotoOptions = PHFetchOptions()
         allPhotoOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         fetchResult = PHAsset.fetchAssets(with: allPhotoOptions)
         
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 4
+        layout.minimumInteritemSpacing = 4
+        layout.itemSize = CGSize(width: screenWidth / 3 - 4, height: screenWidth / 3 - 4)
+        
         let scale = UIScreen.main.scale
-        let cellSize = (collectionView?.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
-        thumbnailSize = CGSize(width: cellSize.width * scale, height: cellSize.height * scale)
+        //let cellSize = (collectionView?.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
+        thumbnailSize = CGSize(width: screenWidth / 3 * scale, height: screenWidth / 3 * scale)
+        
+        collectionView.collectionViewLayout = layout
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,19 +51,8 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return 50
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -61,10 +60,17 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         
         //cell.repres
         let asset = fetchResult.object(at: indexPath.item)
-        imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: PHImageContentMode.default, options: nil, resultHandler: { image, _ in
+        imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: PHImageContentMode.aspectFill, options: nil, resultHandler: { image, _ in
             cell.imageView.image = image
         })
         
+        //let screenWidth = UIScreen.main.bounds.width
+        
+        cell.layer.borderColor = UIColor.black.cgColor
+        cell.layer.borderWidth = 1
+        cell.tag = indexPath.item
+        //cell.frame.size.width = screenWidth / 3
+        //cell.frame.size.height = screenWidth / 3
         
         return cell
     }
@@ -73,8 +79,43 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         return 1
     }
     
+    /*
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        var selected: UIImage!
+        
+        let asset = fetchResult.object(at: indexPath.item)
+        imageManager.requestImage(for: asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .default, options: nil, resultHandler: { image, _ in
+    
+            selected = image
+        })
+    } */
+    
+    private func getSelectedImage(index: Int) -> UIImage {
+        var selected: UIImage!
+        
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        
+        let asset = fetchResult.object(at: index)
+        imageManager.requestImage(for: asset, targetSize: CGSize(width: screenWidth * 2, height: screenHeight * 2), contentMode: .default, options: nil, resultHandler: { image, _ in
+            
+            print("requested image")
+            
+            selected = image
+        })
+    
+        return selected
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueFromPhotoSelectToConfirmImage" {
+            if let confirmUploadNav = segue.destination as? ConfirmUploadNavigationViewController {
+                if let tag = (sender as? PhotoSelectCell)?.tag {
+                    confirmUploadNav.imageToPass = getSelectedImage(index: tag)
+                    confirmUploadNav.groupToPass = forGroup
+                }
+            }
+        }
     }
 }
 

@@ -26,7 +26,7 @@ class Post {
         self.postedGroup = postedGroup
         self.index = index
         
-        loadCommentsLocally()
+        loadCommentsLocallySwifty()
     }
     
     func loadCommentsLocally() {
@@ -89,6 +89,30 @@ class Post {
     
     func getUniqueName() -> String {
         return postedGroup.getUniqueName() + poster.handle + "\(index)"
+    }
+    
+    func uploadPostToJSON() {
+        let imageName = getUniqueName()
+        let postData: JSON = [
+            "handle": "gannonprudhomme",
+            "imageName": imageName,
+            "date": "12341234",
+            "comments": []
+        ]
+        
+        if let path = Bundle.main.url(forResource: postedGroup.getUniqueName(), withExtension: "json") {
+            do {
+                let data = try Data(contentsOf: path, options: .mappedIfSafe)
+                
+                var json = JSON(data: data)
+                
+                json["group"]["posts"].appendIfArray(json: postData)
+                
+                
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 

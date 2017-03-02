@@ -45,7 +45,7 @@ class ProfileSettingsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //USE SEGUE IDENTIFIERS
         if let tabBar = segue.destination as? UITabBarController {
             if let profileView = tabBar.viewControllers?[2] as? ProfileViewController {
-                profileView.mainUser = mainUser
+                //profileView.mainUser = mainUser
             }
             
             tabBar.selectedIndex = 2

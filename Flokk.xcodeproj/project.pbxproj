@@ -16,7 +16,10 @@
 		159ACA221E661282004E410B /* UploadPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159ACA211E661282004E410B /* UploadPhotoViewController.swift */; };
 		15B672741E671C1200B37CBC /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B672731E671C1200B37CBC /* FileUtils.swift */; };
 		15B6727A1E6737F000B37CBC /* PhotoSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B672791E6737F000B37CBC /* PhotoSelectViewController.swift */; };
-		15B6727C1E67386900B37CBC /* testCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B6727B1E67386900B37CBC /* testCollectionViewController.swift */; };
+		15B672821E67976D00B37CBC /* PhotoUploadPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B672811E67976D00B37CBC /* PhotoUploadPageViewController.swift */; };
+		15B672841E679F4A00B37CBC /* ConfirmUploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B672831E679F4A00B37CBC /* ConfirmUploadViewController.swift */; };
+		15B672861E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B672851E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift */; };
+		15B672881E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B672871E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift */; };
 		15F998171E65525C003F1773 /* gannonprudhommeBasketball.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */; };
 		15F9981D1E655562003F1773 /* gannonprudhommeLadies_and_G.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */; };
 		7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */; };
@@ -80,7 +83,10 @@
 		159ACA211E661282004E410B /* UploadPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadPhotoViewController.swift; sourceTree = SOURCE_ROOT; };
 		15B672731E671C1200B37CBC /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = SOURCE_ROOT; };
 		15B672791E6737F000B37CBC /* PhotoSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectViewController.swift; sourceTree = SOURCE_ROOT; };
-		15B6727B1E67386900B37CBC /* testCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testCollectionViewController.swift; sourceTree = "<group>"; };
+		15B672811E67976D00B37CBC /* PhotoUploadPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoUploadPageViewController.swift; sourceTree = SOURCE_ROOT; };
+		15B672831E679F4A00B37CBC /* ConfirmUploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmUploadViewController.swift; sourceTree = SOURCE_ROOT; };
+		15B672851E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmUploadNavigationViewController.swift; sourceTree = SOURCE_ROOT; };
+		15B672871E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoUploadPageNavigationViewController.swift; sourceTree = SOURCE_ROOT; };
 		15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeBasketball.json; sourceTree = "<group>"; };
 		15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeLadies_and_G.json; sourceTree = "<group>"; };
 		7F0666071E37BAAD003167AC /* Flokk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flokk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,9 +184,9 @@
 			children = (
 				7F88AC801E4F8B2500623143 /* Resources */,
 				7F0666091E37BAAD003167AC /* Flokk */,
-				7F06661E1E37BAAD003167AC /* FlokkTests */,
 				7F0666291E37BAAD003167AC /* FlokkUITests */,
 				7F0666081E37BAAD003167AC /* Products */,
+				7F06661E1E37BAAD003167AC /* FlokkTests */,
 				7F0666381E37BBFF003167AC /* Flokk-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
@@ -209,7 +215,10 @@
 				AD60768C1E579F690026E3AC /* AddCommentNavigationViewController.swift */,
 				159ACA211E661282004E410B /* UploadPhotoViewController.swift */,
 				15B672791E6737F000B37CBC /* PhotoSelectViewController.swift */,
-				15B6727B1E67386900B37CBC /* testCollectionViewController.swift */,
+				15B672811E67976D00B37CBC /* PhotoUploadPageViewController.swift */,
+				15B672871E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift */,
+				15B672831E679F4A00B37CBC /* ConfirmUploadViewController.swift */,
+				15B672851E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift */,
 				7F0666431E37BC00003167AC /* ProfileViewController.swift */,
 				7F0666401E37BC00003167AC /* CreateGroupViewController.swift */,
 				7F0666411E37BC00003167AC /* GroupSettingsViewController.swift */,
@@ -240,7 +249,7 @@
 				7F0666211E37BAAD003167AC /* Info.plist */,
 			);
 			path = FlokkTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		7F0666291E37BAAD003167AC /* FlokkUITests */ = {
 			isa = PBXGroup;
@@ -412,6 +421,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15B672861E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift in Sources */,
 				7F06664D1E37BC00003167AC /* GroupProfileViewController.swift in Sources */,
 				7F06664B1E37BC00003167AC /* LoginViewController.swift in Sources */,
 				7F06664F1E37BC00003167AC /* CreateGroupViewController.swift in Sources */,
@@ -421,12 +431,14 @@
 				ADCF80CF1E451B9900047FE0 /* User.swift in Sources */,
 				15B6727A1E6737F000B37CBC /* PhotoSelectViewController.swift in Sources */,
 				AD60768D1E579F690026E3AC /* AddCommentNavigationViewController.swift in Sources */,
+				15B672821E67976D00B37CBC /* PhotoUploadPageViewController.swift in Sources */,
 				7F8FB8C71E653FF400EDBA02 /* TakePictureViewController.swift in Sources */,
+				15B672841E679F4A00B37CBC /* ConfirmUploadViewController.swift in Sources */,
 				7F0666541E37BC00003167AC /* ProfileSettingsViewController.swift in Sources */,
 				AD22369B1E57983B00112715 /* Database.swift in Sources */,
 				7F88AC901E4FBAA300623143 /* AddCommentViewController.swift in Sources */,
+				15B672881E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift in Sources */,
 				7F0666511E37BC00003167AC /* GroupsViewController.swift in Sources */,
-				15B6727C1E67386900B37CBC /* testCollectionViewController.swift in Sources */,
 				7F06664A1E37BC00003167AC /* TestViewViewController.swift in Sources */,
 				7F0666521E37BC00003167AC /* ProfileViewController.swift in Sources */,
 				AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */,

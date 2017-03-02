@@ -37,4 +37,10 @@ class FileUtils {
         
         return result
     }
+    
+    static func saveJSON(json: JSON, name: String) -> Bool {
+        //let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        
+        return false
+    }
 }
