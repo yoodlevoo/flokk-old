@@ -2,7 +2,7 @@
 //  FileUtils.swift
 //  Flokk
 //
-//  Created by Jared Heyen on 3/1/17.
+//  Created by Gannon Prudhomme on 3/1/17.
 //  Copyright © 2017 Heyen Enterprises. All rights reserved.
 //
 
@@ -31,9 +31,11 @@ class FileUtils {
     static func loadPostImage(group: Group, fileName: String) -> UIImage {
         var image: UIImage!
         
+        let groupName = group.getFriendlyGroupName()
+        
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         
-        let groupDirectory = documentsURL?.appendingPathComponent(group.createFriendlyGroupName(name: group.groupName))
+        let groupDirectory = documentsURL?.appendingPathComponent(groupName)
         let imageURL = groupDirectory?.appendingPathComponent(fileName + ".png")
         let absoluteImageURL = URL(fileURLWithPath: (imageURL?.absoluteString)!)
         
@@ -48,10 +50,34 @@ class FileUtils {
         return image
     }
     
-    static func savePostImage(post: Post) -> Bool {
+    static func loadGroupIcon(groupName: String) -> UIImage {
+        var image: UIImage!
+        
+        //should this be just be inputted in the correct format(as in the groupName is already friendly)
+        //or should i do this in this function like I am now
+        let groupName = Group.createFriendlyGroupName(name: groupName)
+        
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         
-        let groupDirectory = documentsURL?.appendingPathComponent(post.postedGroup.createFriendlyGroupName(name: post.postedGroup.groupName))
+        let groupDirectory = documentsURL?.appendingPathComponent(groupName)
+        let imageURL = groupDirectory?.appendingPathComponent(groupName + "Icon.png")
+        let absoluteImageURL = URL(fileURLWithPath: (imageURL?.absoluteString)!)
+        
+        do {
+            image = try UIImage(data: Data(contentsOf: absoluteImageURL))!
+        } catch let error as NSError {
+            print("Error loading image: " + error.localizedDescription)
+        }
+        
+        return image
+    }
+    
+    static func savePostImage(post: Post) -> Bool {
+        let groupName = post.postedGroup.getFriendlyGroupName()
+        
+        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        
+        let groupDirectory = documentsURL?.appendingPathComponent(groupName)
         let imageURL = groupDirectory?.appendingPathComponent(post.getUniqueName() + ".png")
         let absoluteImageURL = URL(fileURLWithPath: (imageURL?.absoluteString)!)
         
@@ -67,7 +93,7 @@ class FileUtils {
         
         do {
             //print(absoluteImageURL.absoluteString + " save post")
-            try imageData?.write(to: absoluteImageURL)
+            //try imageData?.write(to: absoluteImageURL)
             return data.write(to: absoluteImageURL, atomically: true)
             
             //return true
@@ -80,7 +106,7 @@ class FileUtils {
     static func saveGroupJSON(json: JSON, group: Group) -> Bool {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         
-        let groupName = group.createFriendlyGroupName(name: group.groupName)
+        let groupName = group.getFriendlyGroupName()
         
         let groupURL = documentsURL?.appendingPathComponent(groupName)
         let jsonURL = groupURL?.appendingPathComponent(groupName + ".json")
@@ -100,6 +126,57 @@ class FileUtils {
         } catch let error as NSError {
             print("Error saving group json" + error.localizedDescription)
             return false
+        }
+    }
+    
+    static func saveGroupIcon(group: Group) -> Bool {
+        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        
+        let groupName = group.getFriendlyGroupName()
+        
+        let groupURL = documentsURL?.appendingPathComponent(groupName)
+        let picURL = groupURL?.appendingPathComponent(groupName + "Icon.png")
+        let absolutePicURL = URL(fileURLWithPath: (picURL?.absoluteString)!)
+        
+        let image = group.groupIcon
+        
+        UIGraphicsBeginImageContext(image.size)
+        image.draw(in: CGRect(x: 0, y:0, width:image.size.width, height:image.size.height))
+        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        let imageData = UIImagePNGRepresentation(newImage!)
+        let data = NSData(data: imageData!)
+        
+        return data.write(to: absolutePicURL, atomically: true)
+    }
+    
+    static func saveUserJSON(json: JSON, user: User) -> Bool {
+        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        
+        let jsonURL = documentsURL?.appendingPathComponent(user.handle + ".json")
+        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
+        
+        do {
+            let data = try json.rawData()
+            try data.write(to: jsonFile, options: .atomic)
+            
+            return true
+        } catch let error as NSError {
+            print("Error saving group json" + error.localizedDescription)
+            return false
+        }
+    }
+    
+    
+    static func saveUserJSONOld(json: JSON, user: User) {
+        let path = Bundle.main.url(forResource: user.handle, withExtension: "json")
+        
+        do {
+            let data = try json.rawData()
+            try data.write(to: path!, options: .atomic)
+        } catch let error as NSError {
+            print("Error saving group json" + error.localizedDescription)
         }
     }
     
@@ -124,6 +201,18 @@ class FileUtils {
             print(error.localizedDescription)
             
             return false
+        }
+    }
+    
+    static func deleteUserJSON(user: User) {
+        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        let jsonURL = documentsURL?.appendingPathComponent(user.handle + ".json") //json file for this group stored in the relative directory
+        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
+        
+        do {
+            var success = try FileManager.default.removeItem(at: jsonFile)
+        } catch let error as NSError {
+            print(error.localizedDescription)
         }
     }
     

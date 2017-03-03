@@ -2,7 +2,7 @@
 //  PhotoUploadPageViewController.swift
 //  Flokk
 //
-//  Created by Jared Heyen on 3/1/17.
+//  Created by Gannon Prudhomme on 3/1/17.
 //  Copyright © 2017 Heyen Enterprises. All rights reserved.
 //
 

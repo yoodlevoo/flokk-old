@@ -1,14 +1,9 @@
 {
-    "user": {
-        "handle": "gannonprudhomme",
-        "fullname": "Gannon Prudhomme",
-        "profilePhoto": "gannonprudhommeProfilePhoto",
+    "handle": "gannonprudhomme",
+    "fullname": "Gannon Prudhomme",
+    "profilePhoto": "gannonprudhommeProfilePhoto",
         
-        "groups": [
-            {"groupHandle": "gannonprudhommeFPSF2016"},
-            {"groupHandle": "gannonprudhommeBasketball"},
-            {"groupHandle": "jaredheyenSki_Trip"},
-            {"groupHandle": "jaredheyenCouples"}
-        ]
-    }
+    "groups": [
+        "Basketball"
+    ]
 }

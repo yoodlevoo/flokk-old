@@ -1,6 +1,6 @@
 //
 //  FeedViewController.swift
-//  Resort
+//  Flokk
 //
 //  Created by Jared Heyen on 11/3/16.
 //  Copyright © 2016 Heyen Enterprises. All rights reserved.
