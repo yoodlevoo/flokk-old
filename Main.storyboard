@@ -372,7 +372,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vR-uX-ahz">
-                                <rect key="frame" x="72" y="595" width="230" height="57"/>
+                                <rect key="frame" x="72" y="546" width="230" height="57"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="230" id="KWn-dB-hhm"/>
                                 </constraints>
@@ -1835,10 +1835,11 @@
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem title="Crop" width="100" id="RD5-69-Qbp"/>
-                                    <barButtonItem title="Add Filter" width="100" id="zxd-Ss-9ef"/>
-                                    <barButtonItem title="Rotate" width="100" id="Vas-bx-LvO"/>
+                                    <barButtonItem image="Crop Icon" width="100" id="RD5-69-Qbp"/>
+                                    <barButtonItem image="Add Filter Icon" width="117" id="zxd-Ss-9ef"/>
+                                    <barButtonItem image="Rotate Photo " width="121" id="Vas-bx-LvO"/>
                                 </items>
+                                <color key="barTintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1850,8 +1851,8 @@
                                 <segue destination="1S1-oP-HML" kind="presentation" identifier="segueBackFromConfirmedImageToPhotoSelect" id="6Us-gJ-BYB"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Check" id="N36-Ye-580">
-                            <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem key="rightBarButtonItem" image="Small White Check Icon" id="N36-Ye-580">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="nKl-w0-RhZ" kind="presentation" identifier="segueFromConfirmedImageToFeed" id="F8l-aN-x6i"/>
                             </connections>
@@ -2104,11 +2105,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Add Filter Icon" width="26" height="24"/>
         <image name="AddBttn" width="21" height="21"/>
         <image name="AddProfilePic" width="110" height="116"/>
         <image name="Cancel Button" width="140" height="51"/>
         <image name="Cancel Button (Dark)" width="175" height="51"/>
         <image name="Create Account Button" width="140" height="51"/>
+        <image name="Crop Icon" width="26" height="26"/>
         <image name="Flokk Logo" width="336" height="121"/>
         <image name="Flokk of Birds-1" width="25" height="30"/>
         <image name="FollowBttn" width="33" height="31"/>
@@ -2117,10 +2120,12 @@
         <image name="LogOutBttn" width="111" height="35"/>
         <image name="ResortNavy" width="323" height="176"/>
         <image name="ResortNewColor" width="375" height="216"/>
+        <image name="Rotate Photo " width="23" height="24"/>
         <image name="SIgn Up (Green)" width="175" height="51"/>
         <image name="Send Button" width="175" height="51"/>
         <image name="Settings Button (Green)" width="18" height="18"/>
         <image name="Sign In (Dark)" width="175" height="51"/>
+        <image name="Small White Check Icon" width="29" height="21"/>
         <image name="TurquoiseSaveBttn" width="230" height="57"/>
         <image name="WhiteArrow" width="13" height="20"/>
         <image name="addGroupPicture" width="123" height="123"/>
