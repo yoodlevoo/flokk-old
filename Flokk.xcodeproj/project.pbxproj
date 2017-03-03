@@ -39,13 +39,10 @@
 		7F0666541E37BC00003167AC /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */; };
 		7F0666551E37BC00003167AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666461E37BC00003167AC /* Main.storyboard */; };
 		7F0666561E37BC00003167AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666471E37BC00003167AC /* Assets.xcassets */; };
-		7F88AC851E4F8B5400623143 /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F88AC811E4F8B5400623143 /* Quicksand-Bold.ttf */; };
-		7F88AC861E4F8B5400623143 /* Quicksand-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F88AC821E4F8B5400623143 /* Quicksand-Light.ttf */; };
-		7F88AC871E4F8B5400623143 /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F88AC831E4F8B5400623143 /* Quicksand-Medium.ttf */; };
-		7F88AC881E4F8B5400623143 /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F88AC841E4F8B5400623143 /* Quicksand-Regular.ttf */; };
 		7F88AC901E4FBAA300623143 /* AddCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */; };
 		7F8FB8C31E65353300EDBA02 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */; };
 		7F8FB8C71E653FF400EDBA02 /* TakePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */; };
+		7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */; };
 		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
 		AD22369B1E57983B00112715 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22369A1E57983B00112715 /* Database.swift */; };
 		AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3B25361E3BE5E2006B92AC /* Group.swift */; };
@@ -113,13 +110,10 @@
 		7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileSettingsViewController.swift; path = ../ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		7F0666461E37BC00003167AC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		7F0666471E37BC00003167AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
-		7F88AC811E4F8B5400623143 /* Quicksand-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Bold.ttf"; sourceTree = "<group>"; };
-		7F88AC821E4F8B5400623143 /* Quicksand-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Light.ttf"; sourceTree = "<group>"; };
-		7F88AC831E4F8B5400623143 /* Quicksand-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Medium.ttf"; sourceTree = "<group>"; };
-		7F88AC841E4F8B5400623143 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Regular.ttf"; sourceTree = "<group>"; };
 		7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentViewController.swift; sourceTree = SOURCE_ROOT; };
 		7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakePictureViewController.swift; sourceTree = "<group>"; };
+		7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		AD2236981E563E4500112715 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = SOURCE_ROOT; };
 		AD22369A1E57983B00112715 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = SOURCE_ROOT; };
 		AD3B25361E3BE5E2006B92AC /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = SOURCE_ROOT; };
@@ -263,10 +257,7 @@
 		7F88AC801E4F8B2500623143 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7F88AC811E4F8B5400623143 /* Quicksand-Bold.ttf */,
-				7F88AC821E4F8B5400623143 /* Quicksand-Light.ttf */,
-				7F88AC831E4F8B5400623143 /* Quicksand-Medium.ttf */,
-				7F88AC841E4F8B5400623143 /* Quicksand-Regular.ttf */,
+				7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */,
 			);
 			name = Resources;
 			path = Flokk;
@@ -383,20 +374,17 @@
 			files = (
 				7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */,
 				7F0666561E37BC00003167AC /* Assets.xcassets in Resources */,
-				7F88AC871E4F8B5400623143 /* Quicksand-Medium.ttf in Resources */,
 				15309E811E65068100D1DFA1 /* jaredheyenSki_Trip.json in Resources */,
 				15309E871E6541EE00D1DFA1 /* jaredheyenCouples.json in Resources */,
-				7F88AC881E4F8B5400623143 /* Quicksand-Regular.ttf in Resources */,
+				7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */,
 				15309E891E65430E00D1DFA1 /* jaredheyen.json in Resources */,
 				AD2236991E563E4500112715 /* posts.json in Resources */,
 				15F9981D1E655562003F1773 /* gannonprudhommeLadies_and_G.json in Resources */,
 				15F998171E65525C003F1773 /* gannonprudhommeBasketball.json in Resources */,
 				7F0666551E37BC00003167AC /* Main.storyboard in Resources */,
-				7F88AC861E4F8B5400623143 /* Quicksand-Light.ttf in Resources */,
 				15309E7D1E6494F200D1DFA1 /* gannonprudhomme.json in Resources */,
 				AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */,
 				15309E7F1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json in Resources */,
-				7F88AC851E4F8B5400623143 /* Quicksand-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
