@@ -1,6 +1,6 @@
 //
 //  PasswordRecoveryViewController.swift
-//  Resort
+//  Flokk
 //
 //  Created by Jared Heyen on 1/2/17.
 //  Copyright © 2017 Heyen Enterprises. All rights reserved.

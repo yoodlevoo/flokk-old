@@ -2,7 +2,7 @@
 //  AddCommentNavigationViewController.swift
 //  Flokk
 //
-//  Created by Taylor High School on 2/17/17.
+//  Created by Gannon Prudhomme on 2/17/17.
 //  Copyright © 2017 Heyen Enterprises. All rights reserved.
 //
 

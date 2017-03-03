@@ -8,7 +8,7 @@
 
 import UIKit
 
-var mainUser: User!
+var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

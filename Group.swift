@@ -14,7 +14,7 @@ class Group {
     var groupCreator: User! //whoever created the group, has all the "admin" rights on it
     
     var groupName: String
-    var internalGroupName: String! //this could still be the same as the groupName sometimes
+    //var internalGroupName: String! //this could still be the same as the groupName sometimes
     var groupIcon: UIImage
     
     var participants = [User]() //the users that are in this group
@@ -31,7 +31,7 @@ class Group {
         self.participants = users
         self.groupCreator = creator
         
-        self.internalGroupName = createFriendlyGroupName(name: groupName)
+        //self.internalGroupName = Group.createFriendlyGroupName(name: groupName)
     }
     
     //Load all of the most recent Posts from this group - uses SwiftyJSON
@@ -116,7 +116,7 @@ class Group {
     //create an internal group name from the original group name
     //which is fixed so there are no characters that will cause errors(eg. spaces)
     //for things like file storing and such
-    func createFriendlyGroupName(name: String) -> String {
+    static func createFriendlyGroupName(name: String) -> String {
         var usableName = name
         
         if usableName.contains(" ") {
@@ -137,7 +137,11 @@ class Group {
     
     //A unique name used for storing and sorting
     func getUniqueName() -> String {
-        return groupCreator.handle + internalGroupName
+        return groupCreator.handle + getFriendlyGroupName()
+    }
+    
+    func getFriendlyGroupName() -> String {
+        return Group.createFriendlyGroupName(name: self.groupName)
     }
     
     static func createUniqueName(creatorsHandle:String, groupName:String) -> String {

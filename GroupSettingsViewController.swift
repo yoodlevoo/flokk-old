@@ -1,6 +1,6 @@
 //
 //  GroupSettingsViewController.swift
-//  Resort
+//  Flokk
 //
 //  Created by Jared Heyen on 11/4/16.
 //  Copyright © 2016 Heyen Enterprises. All rights reserved.

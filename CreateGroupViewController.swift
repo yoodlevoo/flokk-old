@@ -1,6 +1,6 @@
 //
 //  CreateGroupViewController.swift
-//  Resort
+//  Flokk
 //
 //  Created by Jared Heyen on 11/4/16.
 //  Copyright © 2016 Heyen Enterprises. All rights reserved.
@@ -16,8 +16,8 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     var searchedUsers = [User]() //ill do this search thing later
     var selectedUsers = [User]()
     
-    private var groupName: String!
-    private var groupPhoto: UIImage!
+    //private var groupName: String!
+    //private var groupPhoto: UIImage!
     
     private let imagePicker = UIImagePickerController()
     
@@ -32,7 +32,6 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         tableView.dataSource = self
         
         groupNameTextField.delegate = self
-        groupPhoto = UIImage(named: "gannonprudhommeProfilePhoto")
         
         imagePicker.delegate = self
         
@@ -102,7 +101,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        groupName = textField.text
+        //groupName = textField.text
         
         textField.endEditing(true)
         
@@ -137,6 +136,8 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "segueCreateGroup" {
+            var groupName = groupNameTextField.text
+            
             if groupName == nil || groupName == "" { //add more exceptions here, like just spaces and stuff
                 return false
             }
@@ -153,15 +154,21 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
             var users = selectedUsers //the selected users + main user
             users.append(mainUser)
             
-            var group = Group(groupName: groupName, image: groupPhoto, users: users, creator: mainUser)
+            var buttonImage = addGroupPictureButton.imageView?.image
+            var groupName = groupNameTextField.text
+            
+            var group = Group(groupName: groupName!, image: buttonImage!, users: users, creator: mainUser)
             var json: JSON = group.convertToJSON()
             
             if let tabBar = segue.destination as? UITabBarController {
                 if let groupsNav = tabBar.viewControllers![0] as? UINavigationController {
                     if let groupsView = groupsNav.viewControllers[0] as? GroupsViewController {
-                        //groupsView.defaultGroups.append(group)
+                        groupsView.defaultGroups.append(group)
                         
                         FileUtils.saveGroupJSON(json: json, group: group)
+                        FileUtils.saveGroupIcon(group: group)
+                        
+                        mainUser.addNewGroup(group: group)
                     }
                 }
             }

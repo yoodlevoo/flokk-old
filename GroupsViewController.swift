@@ -1,6 +1,6 @@
 //
 //  GroupsViewController.swift
-//  Resort
+//  Flokk
 //
 //  Created by Jared Heyen on 12/21/16.
 //  Copyright © 2016 Heyen Enterprises. All rights reserved.
@@ -9,6 +9,8 @@
 import UIKit
 
 class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    //var cache: Cache
+    
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
@@ -23,20 +25,18 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         tableView.dataSource = self
                 
-        mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
+        //mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
         
-        if let profileView = tabBarController?.viewControllers?[2] as? ProfileViewController {
-            //profileView.mainUser = mainUser
-        }
+        //FileUtils.deleteUserJSON(user: mainUser)
         
         if defaultGroups.count == 0 {
-            loadGroupsNew(handles: ["group", "group2"])
+            print(findGroupHandlesNew())
+            loadGroupsNew(handles: findGroupHandlesNew())
         } else {
-            defaultGroups.removeAll()
-            loadGroupsNew(handles: ["group", "group2"])
+            //commented this out cause i dont want to reload each time
+            //defaultGroups.removeAll()
+            //loadGroupsNew(handles: findGroupHandles())
         }
-        
-        //loadGroups(handles: findGroupHandles())
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,7 +50,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //Load all about this user and what group(the handles) they're in
     //use these handles to further load the groups from there separate files
-    func findGroupHandles() -> [String] {
+    func findGroupHandles() -> [String] { //this will be removed later ons
         var groupHandles = [String]()
         
         let path = Bundle.main.url(forResource: mainUser.handle, withExtension: "json")
@@ -61,8 +61,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             //iterate through all of the groups and to find the internal handles of the groups
             //so we know which ones to load
-            for (key, group) in json["user"]["groups"] {
-                groupHandles.append(group["groupHandle"].string!)
+            for (_, group) in json["groups"] {
+                groupHandles.append(group.string!)
             }
         }  catch let error as NSError {
             print("Error: \(error)")
@@ -71,32 +71,31 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return groupHandles
     }
     
-    func loadGroups(handles: [String]) {
-        for groupHandle in handles {
-            let path = Bundle.main.url(forResource: groupHandle, withExtension: "json")
-            do {
-                let data = try Data(contentsOf: path!, options: .mappedIfSafe)
-                
-                let json = JSON(data: data)
-                let creator = json["group"]["creator"].string
-                let groupName = json["group"]["groupName"].string
-                let groupIconName = json["group"]["groupIcon"].string
-                
-                var users = [User]()
-                for(_, subJSON) in json["group"]["users"] {
-                    if let userHandle = subJSON.string {
-                        users.append(User(handle: userHandle, fullName:"filler"))
-                    }
-                }
-                
-                defaultGroups.append(Group(groupName: groupName!, image: UIImage(named: groupIconName!)!, users: users, creator: User(handle: creator!, fullName: "filler")))
-                
-            } catch let error as NSError {
-                print("Error: \(error)")
+    func findGroupHandlesNew() -> [String] {
+        var groupHandles = [String]()
+        
+        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        
+        let jsonURL = documentsURL?.appendingPathComponent(mainUser.handle + ".json")
+        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
+        
+        do {
+            let data = try Data(contentsOf: jsonFile, options: .mappedIfSafe)
+            
+            let json = JSON(data: data)
+            
+            //iterate through all of the groups and to find the internal handles of the groups
+            //so we know which ones to load
+            for (_, group) in json["groups"] {
+                groupHandles.append(group.string!)
             }
+        }  catch let error as NSError {
+            print("Error: \(error)")
         }
+        
+        return groupHandles
     }
-    
+
     //put this in FileUtils later
     func loadGroupsNew(handles: [String]) {
         for groupHandle in handles {
@@ -124,9 +123,12 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 
-                var groupIconPhoto = UIImage(named: groupIconName!)
+                var groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
                 
-                defaultGroups.append(Group(groupName: groupName!, image: groupIconPhoto!, users: users, creator: User(handle: creator!, fullName: "filler")))
+                var group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
+                
+                defaultGroups.append(group)
+                mainUser.groups.append(group) //this won't be located here in the future
                 
             } catch let error as NSError {
                 print(error.localizedDescription)

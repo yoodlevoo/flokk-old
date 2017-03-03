@@ -32,9 +32,18 @@ class User: Hashable { //hashable so it can be used as a key in a dictionary(for
         //self.groups = ??
     }
     
+    func addNewGroup(group: Group) {
+        var json = convertToJSON()
+        json["groups"].appendIfArray(json: JSON(group.getFriendlyGroupName()))
+        
+        FileUtils.saveUserJSON(json: json, user: self)
+        
+        groups.append(group)
+    }
+    
     //load in this user's profile photo from the database
     //for now just set it manually
-    func loadPicture() {
+    private func loadPicture() {
         //var ret: UIImage
         
         if let image = UIImage(named: handle + "ProfilePhoto") {
@@ -44,6 +53,22 @@ class User: Hashable { //hashable so it can be used as a key in a dictionary(for
         }
         
         //return ret
+    }
+    
+    func convertToJSON() -> JSON {
+        var json: JSON = [
+            "handle": handle,
+            "fullName": fullName,
+            "profilePhoto": handle + "ProfilePhoto",
+            
+            "groups": [ ]
+        ]
+        
+        for group in groups {
+            json["groups"].appendIfArray(json: JSON(group.getFriendlyGroupName()))
+        }
+        
+        return json
     }
     
     
