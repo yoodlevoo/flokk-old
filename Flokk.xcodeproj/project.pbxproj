@@ -43,6 +43,10 @@
 		7F8FB8C31E65353300EDBA02 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */; };
 		7F8FB8C71E653FF400EDBA02 /* TakePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */; };
 		7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */; };
+		7FD4D7791E6A6B8000922724 /* OpenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4D7781E6A6B7F00922724 /* OpenViewController.swift */; };
+		7FD4D77B1E6A6BB500922724 /* NewSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4D77A1E6A6BB500922724 /* NewSignInViewController.swift */; };
+		7FD4D77D1E6A6BC700922724 /* 1stSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4D77C1E6A6BC700922724 /* 1stSignUpViewController.swift */; };
+		7FD4D77F1E6A6BE300922724 /* 2ndSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4D77E1E6A6BE300922724 /* 2ndSignUpViewController.swift */; };
 		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
 		AD22369B1E57983B00112715 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22369A1E57983B00112715 /* Database.swift */; };
 		AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3B25361E3BE5E2006B92AC /* Group.swift */; };
@@ -114,6 +118,10 @@
 		7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakePictureViewController.swift; sourceTree = "<group>"; };
 		7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
+		7FD4D7781E6A6B7F00922724 /* OpenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenViewController.swift; sourceTree = "<group>"; };
+		7FD4D77A1E6A6BB500922724 /* NewSignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewSignInViewController.swift; sourceTree = "<group>"; };
+		7FD4D77C1E6A6BC700922724 /* 1stSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 1stSignUpViewController.swift; sourceTree = "<group>"; };
+		7FD4D77E1E6A6BE300922724 /* 2ndSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 2ndSignUpViewController.swift; sourceTree = "<group>"; };
 		AD2236981E563E4500112715 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = SOURCE_ROOT; };
 		AD22369A1E57983B00112715 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = SOURCE_ROOT; };
 		AD3B25361E3BE5E2006B92AC /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = SOURCE_ROOT; };
@@ -213,6 +221,10 @@
 				15B672831E679F4A00B37CBC /* ConfirmUploadViewController.swift */,
 				15B672851E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift */,
 				7F0666431E37BC00003167AC /* ProfileViewController.swift */,
+				7FD4D7781E6A6B7F00922724 /* OpenViewController.swift */,
+				7FD4D77E1E6A6BE300922724 /* 2ndSignUpViewController.swift */,
+				7FD4D77A1E6A6BB500922724 /* NewSignInViewController.swift */,
+				7FD4D77C1E6A6BC700922724 /* 1stSignUpViewController.swift */,
 				7F0666401E37BC00003167AC /* CreateGroupViewController.swift */,
 				7F0666411E37BC00003167AC /* GroupSettingsViewController.swift */,
 				7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */,
@@ -414,6 +426,7 @@
 				7F06664B1E37BC00003167AC /* LoginViewController.swift in Sources */,
 				7F06664F1E37BC00003167AC /* CreateGroupViewController.swift in Sources */,
 				15B672741E671C1200B37CBC /* FileUtils.swift in Sources */,
+				7FD4D77D1E6A6BC700922724 /* 1stSignUpViewController.swift in Sources */,
 				159ACA1E1E65E3E6004E410B /* SwiftyJSON.swift in Sources */,
 				7F0666501E37BC00003167AC /* GroupSettingsViewController.swift in Sources */,
 				ADCF80CF1E451B9900047FE0 /* User.swift in Sources */,
@@ -429,11 +442,14 @@
 				7F0666511E37BC00003167AC /* GroupsViewController.swift in Sources */,
 				7F0666521E37BC00003167AC /* ProfileViewController.swift in Sources */,
 				AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */,
+				7FD4D7791E6A6B8000922724 /* OpenViewController.swift in Sources */,
 				ADC7B3C11E43CA8900F9ADFC /* FeedNavigationViewController.swift in Sources */,
+				7FD4D77B1E6A6BB500922724 /* NewSignInViewController.swift in Sources */,
 				159ACA221E661282004E410B /* UploadPhotoViewController.swift in Sources */,
 				ADCF80D11E451EFE00047FE0 /* Post.swift in Sources */,
 				7F8FB8C31E65353300EDBA02 /* NotificationsViewController.swift in Sources */,
 				7F0666531E37BC00003167AC /* PasswordRecoveryViewController.swift in Sources */,
+				7FD4D77F1E6A6BE300922724 /* 2ndSignUpViewController.swift in Sources */,
 				15E481551E691FF400E9668C /* Notification.swift in Sources */,
 				7F0666481E37BC00003167AC /* AppDelegate.swift in Sources */,
 				7F06664C1E37BC00003167AC /* SignUpViewController.swift in Sources */,
