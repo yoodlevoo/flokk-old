@@ -9,7 +9,8 @@
 import UIKit
 
 class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    //var cache: Cache
+    //should probably only use this cache for feed view
+    //static var groupCache: NSCache<NSString, Group> = NSCache() //i want this to be static so it doesnt go away on re-initialization
     
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -17,10 +18,13 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //var mainUser: User! //the user who is currently running the app
     
     //var defaultGroups: [Group: UIImage] = [:] //makes an empty dictionary
-    var defaultGroups = [Group]() //an emptyarray of Groups
+    var defaultGroups = [Group]() //an emptyarray of Groups - this is going to be a priorityqueue in a bit
+    var groupQueue = PriorityQueue<Group>(sortedBy: <) //hopefully this doesn't get reset each time
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //print(defaultGroups.count) //at this point is this ever not at 0 or is a new array created each time
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -28,15 +32,41 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
         
         //FileUtils.deleteUserJSON(user: mainUser)
+        //FileUtils.deleteGroupJSON(groupName: "Basketball")
         
         if defaultGroups.count == 0 {
+            //print("Loading groups")
+            
+            mainUser.groups.removeAll()
+            
+            for groupHandle in findGroupHandlesNew() {
+                let groupToLoad = loadGroup(groupHandle: groupHandle)
+                
+                //print(groupHandle)
+                defaultGroups.append(groupToLoad)
+                mainUser.groups.append(groupToLoad)
+            }
+            
+           // print("\n")
+        }
+        
+        /*
+        if defaultGroups.count == 0 {
             print(findGroupHandlesNew())
-            loadGroupsNew(handles: findGroupHandlesNew())
+            for groupHandle in findGroupHandlesNew() {
+                if let group = GroupsViewController.groupCache.object(forKey: groupHandle as NSString) {
+                    defaultGroups.append(group)
+                } else {
+                    let groupToLoad = loadGroup(groupHandle: groupHandle)
+                    GroupsViewController.groupCache.setObject(groupToLoad, forKey: groupHandle as NSString)
+                    defaultGroups.append(groupToLoad)
+                }
+            }
         } else {
             //commented this out cause i dont want to reload each time
             //defaultGroups.removeAll()
             //loadGroupsNew(handles: findGroupHandles())
-        }
+        } */
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,8 +127,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     //put this in FileUtils later
-    func loadGroupsNew(handles: [String]) {
-        for groupHandle in handles {
+    func loadGroup(groupHandle: String) -> Group {
+       // for groupHandle in handles {
             let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
             
             // 'groupHandle' should already be a "friendly" group handle
@@ -127,13 +157,14 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 var group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
                 
-                defaultGroups.append(group)
-                mainUser.groups.append(group) //this won't be located here in the future
-                
+                //defaultGroups.append(group)
+                //mainUser.groups.append(group) //this won't be located here in the future
+                return group
             } catch let error as NSError {
                 print(error.localizedDescription)
+                return Group()
             }
-        }
+        //}
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

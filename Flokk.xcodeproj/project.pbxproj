@@ -21,6 +21,8 @@
 		15B672861E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B672851E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift */; };
 		15B672881E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B672871E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift */; };
 		15E481551E691FF400E9668C /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E481541E691FF400E9668C /* Notification.swift */; };
+		15E481571E69BC7F00E9668C /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E481561E69BC7F00E9668C /* PriorityQueue.swift */; };
+		15E481591E69BCBA00E9668C /* BinaryHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E481581E69BCBA00E9668C /* BinaryHeap.swift */; };
 		15F998171E65525C003F1773 /* gannonprudhommeBasketball.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */; };
 		15F9981D1E655562003F1773 /* gannonprudhommeLadies_and_G.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */; };
 		7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */; };
@@ -88,6 +90,8 @@
 		15B672851E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmUploadNavigationViewController.swift; sourceTree = SOURCE_ROOT; };
 		15B672871E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoUploadPageNavigationViewController.swift; sourceTree = SOURCE_ROOT; };
 		15E481541E691FF400E9668C /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = SOURCE_ROOT; };
+		15E481561E69BC7F00E9668C /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = SOURCE_ROOT; };
+		15E481581E69BCBA00E9668C /* BinaryHeap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryHeap.swift; sourceTree = SOURCE_ROOT; };
 		15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeBasketball.json; sourceTree = "<group>"; };
 		15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeLadies_and_G.json; sourceTree = "<group>"; };
 		7F0666071E37BAAD003167AC /* Flokk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flokk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +163,8 @@
 			isa = PBXGroup;
 			children = (
 				159ACA1D1E65E3E6004E410B /* SwiftyJSON.swift */,
+				15E481561E69BC7F00E9668C /* PriorityQueue.swift */,
+				15E481581E69BCBA00E9668C /* BinaryHeap.swift */,
 			);
 			name = framework;
 			sourceTree = "<group>";
@@ -433,11 +439,13 @@
 				AD60768D1E579F690026E3AC /* AddCommentNavigationViewController.swift in Sources */,
 				15B672821E67976D00B37CBC /* PhotoUploadPageViewController.swift in Sources */,
 				7F8FB8C71E653FF400EDBA02 /* TakePictureViewController.swift in Sources */,
+				15E481591E69BCBA00E9668C /* BinaryHeap.swift in Sources */,
 				15B672841E679F4A00B37CBC /* ConfirmUploadViewController.swift in Sources */,
 				7F0666541E37BC00003167AC /* ProfileSettingsViewController.swift in Sources */,
 				AD22369B1E57983B00112715 /* Database.swift in Sources */,
 				7F88AC901E4FBAA300623143 /* AddCommentViewController.swift in Sources */,
 				15B672881E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift in Sources */,
+				15E481571E69BC7F00E9668C /* PriorityQueue.swift in Sources */,
 				7F0666511E37BC00003167AC /* GroupsViewController.swift in Sources */,
 				7F0666521E37BC00003167AC /* ProfileViewController.swift in Sources */,
 				AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */,

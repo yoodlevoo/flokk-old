@@ -31,14 +31,16 @@ class ConfirmUploadViewController: UIViewController {
         if segue.identifier == "segueFromConfirmedImageToFeed" {
             if let feedNav = segue.destination as? FeedNavigationViewController {
                 //use the imageView because it might be changed asynchronously
-                let post = Post(poster: mainUser, image: imageView.image!, postedGroup: forGroup, index: forGroup.posts.count)
+                let post = Post(poster: mainUser, image: imageView.image!, postedGroup: forGroup, index: forGroup.totalPostsCount)
                 //forGroup.posts.append(post)
                 
-                post.uploadPostToJSONNew()
+                post.uploadPostToFile()
                 
                 FileUtils.savePostImage(post: post)
                 
+                forGroup.totalPostsCount += 1
                 feedNav.groupToPass = forGroup
+                
             }
         } else if segue.identifier == "segueBackFromConfirmedImageToPhotoSelect" {
             if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {

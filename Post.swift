@@ -76,6 +76,7 @@ class Post {
     
     //find the user from the participants in this group just by using their handle
     //when we have the database we can reduce storage by getting this frk
+    //this should be in the Group class anyways
     func findUserInGroupWith(handle: String) -> User {
         for user in postedGroup.participants {
             if user.handle == handle {
@@ -88,7 +89,7 @@ class Post {
     }
     
     func getUniqueName() -> String {
-        return poster.handle + "\(index)"
+        return postedGroup.getUniqueName() + poster.handle + "\(index)"
     }
     
     func convertToJSON() -> JSON {
@@ -102,32 +103,15 @@ class Post {
         
         return postData
     }
-    
-    func uploadPostToJSON() {
+
+    //upload the post to the group's json file
+    func uploadPostToFile() {
         let imageName = getUniqueName()
         let postData = convertToJSON()
         
-        if let path = Bundle.main.url(forResource: postedGroup.getUniqueName(), withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: path, options: .mappedIfSafe)
-                
-                var json = JSON(data: data)
-                
-                json["posts"].appendIfArray(json: postData)
-                
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    func uploadPostToJSONNew() {
-        let imageName = getUniqueName()
-        let postData = convertToJSON()
+        var groupJSON = postedGroup.convertToJSONWithNewPost(post: self)
         
-        var groupJSON = postedGroup.convertToJSON()
-        
-        groupJSON["posts"].appendIfArray(json: convertToJSON())
+        //groupJSON["posts"].appendIfArray(json: convertToJSON())
         
         //write over the file
         FileUtils.saveGroupJSON(json: groupJSON, group: postedGroup)

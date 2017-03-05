@@ -11,11 +11,12 @@ import UIKit
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     
+    static var postsCache = NSCache<NSString, Post>()
+    
     var group: Group! //the group this feed is reading from
     
-    //var loadedPosts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
-    
-    static let initialPostCount = 10
+    static let initialPostCount = 10 //the initial amount of posts to load
+    var loadedPosts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,15 +25,21 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.dataSource = self
         
         //dont load the posts if there are already posts stored
-        if group.posts.count == 0 {
+        if loadedPosts.count == 0 {
             // group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
         }
         
-        if group.posts.count == 0 {
-            group.loadPostsNew(numPostsToLoad: FeedViewController.initialPostCount)
+        if loadedPosts.count == 0 {
+            loadedPosts = group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
+            for post in loadedPosts {
+                if let cachedObject = postsCache.object(forKey: post.getUniqueName()) { //if this posts exists in the cache
+                } else {
+                    loadedPosts.setObject(post, post.getUniqueName())
+                }
+            }
         } else {
-            group.posts.removeAll()
-            group.loadPostsNew(numPostsToLoad: FeedViewController.initialPostCount)
+            //loadedPosts.removeAll()
+            //loadedPosts = group.loadPostsNew(numPostsToLoad: FeedViewController.initialPostCount)
         }
         
         tableView.estimatedRowHeight = 200
@@ -47,12 +54,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
         
-        let index = group.posts.count - 1 - indexPath.row
+        let index = loadedPosts.count - 1 - indexPath.row
         cell.tag = index //set the tag so prepare for segue can recognize which post was selected
         
-        let user: User = group.posts[index].poster
+        let user: User = loadedPosts[index].poster
         cell.userImage.image = user.profilePhoto
-        cell.setCustomImage(image: group.posts[index].image)
+        cell.setCustomImage(image: loadedPosts[index].image)
         
         cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage.clipsToBounds = true
@@ -63,15 +70,15 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return group.posts.count
+        return loadedPosts.count
     }
     
     //Once the post is pressed, go to the comments
     //in the future this may change to a swipe on the post instead of a tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let index = group.posts.count - 1 - indexPath.row
+        let index = loadedPosts.count - 1 - indexPath.row
         
-        let post = group.posts[index] //get the specific post referred to by the pressed cell
+        let post = loadedPosts[index] //get the specific post referred to by the pressed cell
         
         //then transition to the comment view through the comment's navigation controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -81,6 +88,11 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         commentNav.passPost()
         
         self.present(commentNav, animated: true, completion: nil)
+    }
+    
+    private func searchedCachedPosts() -> [Post] {
+        var groupName = group.groupName
+        
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
@@ -94,7 +106,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == "segueFromFeedToComment" {
             if let commentNav = segue.destination as? AddCommentNavigationViewController {
                 if let tag = (sender as? FeedTableViewCell)?.tag {
-                    let post = group.posts[tag]
+                    let post = loadedPosts[tag]
                     
                     commentNav.postToPass = post
                 }
@@ -102,6 +114,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else if segue.identifier == "segueFromFeedToUploadImage" {
             if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
                 photoUploadPageNav.groupToPass = group
+                
+                var postsJSONToPass: JSON = []
+                
+                for post in loadedPosts {
+                    postsJSONToPass.appendIfArray(json: post.convertToJSON())
+                }
+                
+                group.setPostJSON(json: postsJSONToPass)
             }
         }
     }

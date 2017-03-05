@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class FileUtils {
+    //general load image
+    //currently unused
     static func loadImage(fileName: String) -> UIImage {
         var image: UIImage!
         
@@ -28,6 +30,7 @@ class FileUtils {
         return image
     }
     
+    //load an existing post's image form .../Documents/groupHandle/(post.uniqueName).png
     static func loadPostImage(group: Group, fileName: String) -> UIImage {
         var image: UIImage!
         
@@ -50,6 +53,7 @@ class FileUtils {
         return image
     }
     
+    //load the groups "profile" icon from .../Documents/groupHandle/groupIcon.png
     static func loadGroupIcon(groupName: String) -> UIImage {
         var image: UIImage!
         
@@ -72,7 +76,8 @@ class FileUtils {
         return image
     }
     
-    static func savePostImage(post: Post) -> Bool {
+    //save a new post's image to .../Documents/groupHandle/(post.uniqueName).png
+    @discardableResult static func savePostImage(post: Post) -> Bool {
         let groupName = post.postedGroup.getFriendlyGroupName()
         
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
@@ -103,7 +108,8 @@ class FileUtils {
         }
     }
     
-    static func saveGroupJSON(json: JSON, group: Group) -> Bool {
+    //save a groups main JSON file to .../Documents/groupHandle/groupHandle.json
+    @discardableResult static func saveGroupJSON(json: JSON, group: Group) -> Bool {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         
         let groupName = group.getFriendlyGroupName()
@@ -129,7 +135,9 @@ class FileUtils {
         }
     }
     
-    static func saveGroupIcon(group: Group) -> Bool {
+    //save the new created group's "profile" icon thats used when the group is being displayed
+    //to .../Documents/groupHandle/groupHandleIcon.png
+    @discardableResult static func saveGroupIcon(group: Group) -> Bool {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         
         let groupName = group.getFriendlyGroupName()
@@ -151,7 +159,10 @@ class FileUtils {
         return data.write(to: absolutePicURL, atomically: true)
     }
     
-    static func saveUserJSON(json: JSON, user: User) -> Bool {
+    //save the users's new json file
+    //mainly used when creating a new group and adding it to the main user's
+    //participating groups
+    @discardableResult static func saveUserJSON(json: JSON, user: User) -> Bool {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         
         let jsonURL = documentsURL?.appendingPathComponent(user.handle + ".json")
@@ -168,7 +179,8 @@ class FileUtils {
         }
     }
     
-    
+    //save the user's json file to the old filePath in /Flokk/JSON files/...
+    //unused and not working
     static func saveUserJSONOld(json: JSON, user: User) {
         let path = Bundle.main.url(forResource: user.handle, withExtension: "json")
         
@@ -180,6 +192,7 @@ class FileUtils {
         }
     }
     
+    //unused and unimplemented
     static func saveJSON(json: JSON, name: String) -> Bool {
         //let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         //let groupURL = documentsURL?.appendingPathComponent(APP_DISTINGUISHED_NAME)
@@ -187,6 +200,8 @@ class FileUtils {
         return false
     }
     
+    //delete a specific group's json file
+    //mainly used currently for testing purposes
     static func deleteGroupJSON(groupName: String) -> Bool {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         let groupURL = documentsURL?.appendingPathComponent(groupName) //directory for file storage for this specific group
@@ -204,6 +219,8 @@ class FileUtils {
         }
     }
     
+    //delete the mainUser's json file
+    //mainly used currently for testing purposes
     static func deleteUserJSON(user: User) {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         let jsonURL = documentsURL?.appendingPathComponent(user.handle + ".json") //json file for this group stored in the relative directory
