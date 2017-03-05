@@ -10,9 +10,8 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     @IBOutlet weak var profilePic: UIImageView!
-    @IBOutlet weak var name: UIButton!
+    @IBOutlet weak var name: UILabel!
     @IBOutlet weak var username: UILabel!
-    @IBOutlet weak var groups: UILabel!
     @IBOutlet weak var groupNumber: UILabel!
 
     //var mainUser: User!
