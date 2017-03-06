@@ -8,10 +8,11 @@
 
 import UIKit
 
-class CreateGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource/*, UICollectionViewDelegateFlowLayout*/ {
     @IBOutlet weak var groupNameTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addGroupPictureButton: UIButton!
+    @IBOutlet weak var selectedUsersCollectionView: UICollectionView!
     
     var searchedUsers = [User]() //ill do this search thing later
     var selectedUsers = [User]()
@@ -35,6 +36,15 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         
         imagePicker.delegate = self
         
+        selectedUsersCollectionView.delegate = self
+        selectedUsersCollectionView.dataSource = self
+        
+        //set the collection view so it scrolls sideways
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 3
+        selectedUsersCollectionView.collectionViewLayout = layout
+        
         self.hideKeyboardWhenTappedAround()
     }
 
@@ -42,6 +52,8 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         super.didReceiveMemoryWarning()
         
     }
+
+    // MARK: Searched Users table view functions
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CreateGroupUserCell
@@ -68,20 +80,23 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         return 2
     }
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //toggle it
         let user = searchedUsers[indexPath.row]
         
         if selectedUsers.contains(user) {
             selectedUsers.remove(at: selectedUsers.index(of: user)!)
+            
         } else {
             selectedUsers.append(user)
         }
         
         DispatchQueue.main.async{
             tableView.reloadData()
+            self.selectedUsersCollectionView.reloadData()
         }
     }
+    
+    // MARK: Group Name text field functions
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if(textField == groupNameTextField) {
@@ -132,11 +147,40 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         dismiss(animated: true, completion: nil)
     }
     
+    // MARK: Selected Users collection view functions
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return selectedUsers.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! SelectedUsersCell
+        
+        cell.profilePicture.image = selectedUsers[indexPath.row].profilePhoto
+        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
+        cell.profilePicture.clipsToBounds = true
+        
+        
+        
+        return cell
+    }
+    
+    /*
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        
+    }
+    */
+    
     // MARK: Navigation
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "segueCreateGroup" {
-            var groupName = groupNameTextField.text
+            let groupName = groupNameTextField.text
             
             if groupName == nil || groupName == "" { //add more exceptions here, like just spaces and stuff
                 return false
@@ -154,11 +198,11 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
             var users = selectedUsers //the selected users + main user
             users.append(mainUser)
             
-            var buttonImage = addGroupPictureButton.imageView?.image
-            var groupName = groupNameTextField.text
+            let buttonImage = addGroupPictureButton.imageView?.image
+            let groupName = groupNameTextField.text
             
-            var group = Group(groupName: groupName!, image: buttonImage!, users: users, creator: mainUser)
-            var json: JSON = group.convertToJSON()
+            let group = Group(groupName: groupName!, image: buttonImage!, users: users, creator: mainUser)
+            let json: JSON = group.convertToJSON()
             
             if let tabBar = segue.destination as? UITabBarController {
                 if let groupsNav = tabBar.viewControllers![0] as? UINavigationController {
@@ -182,4 +226,9 @@ class CreateGroupUserCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
 
     var selectedToAdd: Bool!
+}
+
+class SelectedUsersCell: UICollectionViewCell {
+    @IBOutlet weak var profilePicture: UIImageView!
+
 }

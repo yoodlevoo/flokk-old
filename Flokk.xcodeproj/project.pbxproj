@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		151430EF1E6D321A0036FA56 /* PhotoSelectLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151430EE1E6D321A0036FA56 /* PhotoSelectLayoutAttributes.swift */; };
 		15309E7D1E6494F200D1DFA1 /* gannonprudhomme.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */; };
 		15309E7F1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */; };
 		15309E811E65068100D1DFA1 /* jaredheyenSki_Trip.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */; };
@@ -77,6 +78,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		151430EE1E6D321A0036FA56 /* PhotoSelectLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectLayoutAttributes.swift; sourceTree = SOURCE_ROOT; };
 		15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhomme.json; sourceTree = SOURCE_ROOT; };
 		15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeFPSF2016.json; sourceTree = "<group>"; };
 		15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyenSki_Trip.json; sourceTree = "<group>"; };
@@ -221,18 +223,19 @@
 				7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */,
 				AD60768C1E579F690026E3AC /* AddCommentNavigationViewController.swift */,
 				159ACA211E661282004E410B /* UploadPhotoViewController.swift */,
+				151430EE1E6D321A0036FA56 /* PhotoSelectLayoutAttributes.swift */,
 				15B672791E6737F000B37CBC /* PhotoSelectViewController.swift */,
 				15B672811E67976D00B37CBC /* PhotoUploadPageViewController.swift */,
 				15B672871E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift */,
 				15B672831E679F4A00B37CBC /* ConfirmUploadViewController.swift */,
 				15B672851E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift */,
 				7F0666431E37BC00003167AC /* ProfileViewController.swift */,
+				7F0666401E37BC00003167AC /* CreateGroupViewController.swift */,
+				7F0666411E37BC00003167AC /* GroupSettingsViewController.swift */,
 				7FD4D7781E6A6B7F00922724 /* OpenViewController.swift */,
 				7FD4D77E1E6A6BE300922724 /* 2ndSignUpViewController.swift */,
 				7FD4D77A1E6A6BB500922724 /* NewSignInViewController.swift */,
 				7FD4D77C1E6A6BC700922724 /* 1stSignUpViewController.swift */,
-				7F0666401E37BC00003167AC /* CreateGroupViewController.swift */,
-				7F0666411E37BC00003167AC /* GroupSettingsViewController.swift */,
 				7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */,
 				7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */,
 				7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */,
@@ -349,7 +352,7 @@
 				TargetAttributes = {
 					7F0666061E37BAAD003167AC = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = XT8KNR7TY2;
+						DevelopmentTeam = L4K4Q74X62;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -436,6 +439,7 @@
 				159ACA1E1E65E3E6004E410B /* SwiftyJSON.swift in Sources */,
 				7F0666501E37BC00003167AC /* GroupSettingsViewController.swift in Sources */,
 				ADCF80CF1E451B9900047FE0 /* User.swift in Sources */,
+				151430EF1E6D321A0036FA56 /* PhotoSelectLayoutAttributes.swift in Sources */,
 				15B6727A1E6737F000B37CBC /* PhotoSelectViewController.swift in Sources */,
 				AD60768D1E579F690026E3AC /* AddCommentNavigationViewController.swift in Sources */,
 				15B672821E67976D00B37CBC /* PhotoUploadPageViewController.swift in Sources */,
@@ -605,10 +609,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = XT8KNR7TY2;
+				DEVELOPMENT_TEAM = L4K4Q74X62;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Gannon123;
+				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -622,10 +626,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = XT8KNR7TY2;
+				DEVELOPMENT_TEAM = L4K4Q74X62;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Gannon123;
+				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

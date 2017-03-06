@@ -32,7 +32,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
         
         //FileUtils.deleteUserJSON(user: mainUser)
-        //FileUtils.deleteGroupJSON(groupName: "Basketball")
+        //FileUtils.deleteGroupJSON(groupName: "lsd")
+        
+        //FileUtils.findAllFilesInDocuments()
         
         if defaultGroups.count == 0 {
             //print("Loading groups")

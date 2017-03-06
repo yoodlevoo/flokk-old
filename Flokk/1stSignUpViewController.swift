@@ -28,7 +28,6 @@ class _stSignUpViewController: UIViewController {
     @IBAction func backBttn(_ sender: Any) {
     }
     
-
     /*
     // MARK: - Navigation
 
