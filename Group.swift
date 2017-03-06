@@ -162,6 +162,7 @@ class Group {
         var postToArray: JSON = [post.convertToJSON().object]
         
         var postsData = JSON(postJSON.arrayObject! + postToArray.arrayObject!)
+        //totalPostsCount += 1
         
         var json: JSON = [
             "groupName": groupName,
