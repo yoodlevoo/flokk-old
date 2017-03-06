@@ -32,9 +32,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         if loadedPosts.count == 0 {
             loadedPosts = group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
             for post in loadedPosts {
-                if let cachedObject = postsCache.object(forKey: post.getUniqueName()) { //if this posts exists in the cache
-                } else {
-                    loadedPosts.setObject(post, post.getUniqueName())
+                if let cachedObject = FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString) { //if this posts exists in the cache
+                } else { //if it doesn't add it to the postsCache
+                    //priint(post.getUniqueName())
+                    FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString)
                 }
             }
         } else {
@@ -92,7 +93,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private func searchedCachedPosts() -> [Post] {
         var groupName = group.groupName
-        
+        return [Post]()
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {

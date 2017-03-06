@@ -9,16 +9,39 @@
 import UIKit
 
 class ProfileSettingsViewController: UIViewController {
-    @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var name: UILabel!
+
     @IBOutlet weak var editName: UITextField!
+    @IBOutlet weak var profilePictureOutlet: UIButton!
     
     @IBOutlet weak var editEmail: UITextField!
     @IBOutlet weak var editPassword: UITextField!
-    @IBOutlet weak var editUsername: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
     
     var mainUser: User!
+    
+    private let imagePicker = UIImagePickerController()
+
+    @IBAction func profilePicture(_ sender: Any) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            //imageView.contentMode = .scaleAspectFit
+            profilePictureOutlet.setImage(pickedImage, for: UIControlState.normal)
+        } else {
+            print("Something went wrong")
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
