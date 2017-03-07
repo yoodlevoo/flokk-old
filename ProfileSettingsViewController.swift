@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileSettingsViewController: UIViewController {
+class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var editName: UITextField!
     @IBOutlet weak var profilePictureOutlet: UIButton!
@@ -24,6 +24,8 @@ class ProfileSettingsViewController: UIViewController {
     @IBAction func profilePicture(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
+        
+        imagePicker.delegate = self
         
         present(imagePicker, animated: true, completion: nil)
     }

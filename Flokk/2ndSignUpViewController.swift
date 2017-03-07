@@ -8,7 +8,7 @@
 
 import UIKit
 
-class _ndSignUpViewController: UIViewController {
+class _ndSignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var usernameEntry: UITextField!
     @IBOutlet weak var passwordEntry: UITextField!
     @IBOutlet weak var addProfilePicOutlet: UIButton!
@@ -18,6 +18,8 @@ class _ndSignUpViewController: UIViewController {
      @IBAction func addProfilePic(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
+        
+        imagePicker.delegate = self
         
         present(imagePicker, animated: true, completion: nil)
     }
