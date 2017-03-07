@@ -36,7 +36,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if let cachedObject = FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString) { //if this posts exists in the cache
                 } else { //if it doesn't add it to the postsCache
                     //priint(post.getUniqueName())
-                    FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString)
+                    //FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString)
                 }
             }
         } else {
@@ -94,20 +94,11 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.present(commentNav, animated: true, completion: nil)
     }
     
-    /*
-    //tells the table view what actions to take when a cell is swiped
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let like = UITableViewRowAction(style: .normal, title: "Like") { action, index in
-            print("like tapped")
-        }
-        
-        return [like]
-    } */
-    
     //search through all of the saved posts
     //and load the ones with the key that start with this group's unique name
     private func searchedCachedPosts() -> [Post] {
         var groupName = group.groupName
+        
         return [Post]()
     }
     
@@ -144,21 +135,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
 }
 
 class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
-    //static var swipeableTableViewCellMaxCloseMilliseconds = 300
-    //static var swipeableTableViewCellOpenVelocityThreshold = 0.6
-    //static var swipeableTableViewCellCloseEvent = "SwipeableTableViewCellClose"
-    
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var postedImage: UIImageView!
-    //@IBOutlet weak var scrollView: UIScrollView!
-    
-    //the icons that will show when swiping right or left
-    //var leftIconView: UIView!
-    //var rightIconView: UIView!
-    
-    //var closed: Bool!
-    //var leftInset: CGFloat!
-    //var rightInset: CGFloat!
     
     //internally calculate the constraint for this aspect fit
     internal var aspectConstraint : NSLayoutConstraint? {
@@ -178,6 +156,7 @@ class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
         aspectConstraint = nil
     }
     
+    //sets the custom constraints for this
     func setCustomImage(image: UIImage) {
         let aspect = image.size.width / image.size.height
         let constraint = NSLayoutConstraint(item: postedImage, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: postedImage, attribute: NSLayoutAttribute.height, multiplier: aspect, constant: 0.0)
@@ -187,81 +166,6 @@ class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
         
         postedImage.image = image
     }
-    
-    // MARK: Swipe gesture methods
-    /*
-    
-    var leftInset: CGFloat {
-        get {
-            return CGFloat(0)
-        }
-    }
-    
-    var rightInset: CGFloat {
-        get {
-            return CGFloat(0)
-            //var view = self.buttonViews.
-            //return view.bounds.size.width
-        }
-    }
-    
-    func setup() {
-        //create the scroll view which enables horizontal scrolling
-        //let scrollView = UIScrollView(frame: self.contentView.bounds)
-        //scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight
-        //scrollView.contentSize = self.contentView.bounds.size
-        self.scrollView.delegate = self
-        self.scrollView.scrollsToTop = false
-        self.scrollView.showsHorizontalScrollIndicator = false
-        self.scrollView.showsVerticalScrollIndicator = false
-        //self.contentView.addSubview(scrollView)
-        //self.scrollView = scrollView
-        
-        //self.buttonViews = [
-        
-        //Set up main content area
-        //var contentView = UIView(frame: scrollView.bounds)
-        //contentView.autoresizingMask
-        //contentView.backgroundColor = UIColor.white
-        //scrollView.addSubview(contentView)
-        
-        // Listen for events that tell cells to hide their buttons.
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCloseEvent:) name:kSwipeableTableViewCellCloseEvent object:nil];
-        
-        //NotificationCenter.default.addObserver(self, selector: #selector(FeedTableViewCell.handleCloseEvent), name: NSNotification.Name(rawValue: FeedTableViewCell.swipeableTableViewCellCloseEvent), object: nil)
-    }
-    
-    func createSwipeIconViewWith(width: CGFloat, onSide: FeedTableViewCellSide) -> UIView {
-        var container
-        
-        return UIView()
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-    }
-    
-    /*
-    func handleCloseEvent(notification: Notification) {
-        if notification.object == self {
-            return
-        }
-        
-        
-    } */
-    
-    func close() {
-        self.scrollView.setContentOffset(CGPoint.zero, animated: true)
-    }
- */
 }
 
 enum FeedTableViewCellSide {

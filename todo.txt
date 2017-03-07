@@ -1,0 +1,7 @@
+TODO
+    - Create a crop view controller
+    - Photo select view aspect image height with constant width
+    - Image filters
+    - Nofications
+    - Firebase
+    - Caching posts/images or make it asynchronous so there's not a delay when seguing

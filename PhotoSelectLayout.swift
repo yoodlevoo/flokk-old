@@ -21,6 +21,7 @@ class PhotoSelectLayoutAttributes: UICollectionViewLayoutAttributes {
     override func copy(with zone: NSZone?) -> Any {
         let copy = super.copy(with: zone) as! PhotoSelectLayoutAttributes
         copy.photoHeight = photoHeight
+        
         return copy
     }
     

@@ -22,6 +22,8 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     
     private let imagePicker = UIImagePickerController()
     
+    var profilePicFromCrop: UIImage!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,6 +40,10 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         
         selectedUsersCollectionView.delegate = self
         selectedUsersCollectionView.dataSource = self
+        
+        if profilePicFromCrop != nil {
+            addGroupPictureButton.imageView?.image = profilePicFromCrop
+        }
         
         //set the collection view so it scrolls sideways
         let layout = UICollectionViewFlowLayout()
@@ -133,14 +139,26 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        //let selectedImage: UIImage!
+        
+        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            dismiss(animated: false, completion: nil)
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let cropView: CropGroupPhotoViewController = storyboard.instantiateViewController(withIdentifier: "CropGroupPhotoViewController") as! CropGroupPhotoViewController
+            
+            cropView.image = selectedImage
+            
+            self.present(cropView, animated: true, completion: nil)
+            
             //imageView.contentMode = .scaleAspectFit
-            addGroupPictureButton.setImage(pickedImage, for: UIControlState.normal)
+            //print("picked image size \(pickedImage.size)")
+            //addGroupPictureButton.setImage(pickedImage, for: UIControlState.normal)
         } else {
             print("Something went wrong")
+            
+            dismiss(animated: false, completion: nil)
         }
-        
-        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -149,6 +167,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: Selected Users collection view functions
     
+    //When the selected user's icon is pressed show options to remove the user
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
@@ -160,11 +179,11 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! SelectedUsersCell
         
-        cell.profilePicture.image = selectedUsers[indexPath.row].profilePhoto
+        cell.tag = indexPath.item
+        
+        cell.profilePicture.image = selectedUsers[indexPath.item].profilePhoto
         cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
         cell.profilePicture.clipsToBounds = true
-        
-        
         
         return cell
     }
