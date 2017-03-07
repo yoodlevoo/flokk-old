@@ -42,6 +42,7 @@
 		7F0666541E37BC00003167AC /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */; };
 		7F0666551E37BC00003167AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666461E37BC00003167AC /* Main.storyboard */; };
 		7F0666561E37BC00003167AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666471E37BC00003167AC /* Assets.xcassets */; };
+		7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */; };
 		7F6D9FCF1E6D21060016D748 /* PersonalProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6D9FCE1E6D21060016D748 /* PersonalProfileViewController.swift */; };
 		7F88AC901E4FBAA300623143 /* AddCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */; };
 		7F8FB8C31E65353300EDBA02 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */; };
@@ -121,6 +122,7 @@
 		7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileSettingsViewController.swift; path = ../ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		7F0666461E37BC00003167AC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		7F0666471E37BC00003167AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
+		7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		7F6D9FCE1E6D21060016D748 /* PersonalProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileViewController.swift; sourceTree = "<group>"; };
 		7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentViewController.swift; sourceTree = SOURCE_ROOT; };
 		7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -232,8 +234,6 @@
 				15B672831E679F4A00B37CBC /* ConfirmUploadViewController.swift */,
 				15B672851E67A14C00B37CBC /* ConfirmUploadNavigationViewController.swift */,
 				7F0666431E37BC00003167AC /* ProfileViewController.swift */,
-				7F0666401E37BC00003167AC /* CreateGroupViewController.swift */,
-				7F0666411E37BC00003167AC /* GroupSettingsViewController.swift */,
 				7FD4D7781E6A6B7F00922724 /* OpenViewController.swift */,
 				7FD4D77E1E6A6BE300922724 /* 2ndSignUpViewController.swift */,
 				7FD4D77A1E6A6BB500922724 /* NewSignInViewController.swift */,
@@ -246,6 +246,7 @@
 				7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */,
 				7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */,
 				7F06663E1E37BC00003167AC /* GroupProfileViewController.swift */,
+				7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */,
 				AD22369A1E57983B00112715 /* Database.swift */,
 				15B672731E671C1200B37CBC /* FileUtils.swift */,
 				AD3B25361E3BE5E2006B92AC /* Group.swift */,
@@ -357,7 +358,7 @@
 				TargetAttributes = {
 					7F0666061E37BAAD003167AC = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = L4K4Q74X62;
+						DevelopmentTeam = XT8KNR7TY2;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -467,6 +468,7 @@
 				7F8FB8C31E65353300EDBA02 /* NotificationsViewController.swift in Sources */,
 				7F0666531E37BC00003167AC /* PasswordRecoveryViewController.swift in Sources */,
 				7FD4D77F1E6A6BE300922724 /* 2ndSignUpViewController.swift in Sources */,
+				7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */,
 				15E481551E691FF400E9668C /* Notification.swift in Sources */,
 				7F0666481E37BC00003167AC /* AppDelegate.swift in Sources */,
 				7F06664C1E37BC00003167AC /* SignUpViewController.swift in Sources */,
@@ -615,10 +617,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = L4K4Q74X62;
+				DEVELOPMENT_TEAM = XT8KNR7TY2;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
+				PRODUCT_BUNDLE_IDENTIFIER = Flokk1234;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -632,10 +634,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = L4K4Q74X62;
+				DEVELOPMENT_TEAM = XT8KNR7TY2;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
+				PRODUCT_BUNDLE_IDENTIFIER = Flokk1234;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
