@@ -46,6 +46,7 @@
 		7F0666551E37BC00003167AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666461E37BC00003167AC /* Main.storyboard */; };
 		7F0666561E37BC00003167AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666471E37BC00003167AC /* Assets.xcassets */; };
 		7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */; };
+		7F68DE491E6F30E30067C5F4 /* LoadingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F68DE481E6F30E30067C5F4 /* LoadingTableView.swift */; };
 		7F6D9FCF1E6D21060016D748 /* PersonalProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6D9FCE1E6D21060016D748 /* PersonalProfileViewController.swift */; };
 		7F88AC901E4FBAA300623143 /* AddCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */; };
 		7F8FB8C31E65353300EDBA02 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */; };
@@ -129,6 +130,7 @@
 		7F0666461E37BC00003167AC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../Main.storyboard; sourceTree = "<group>"; };
 		7F0666471E37BC00003167AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		7F68DE481E6F30E30067C5F4 /* LoadingTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingTableView.swift; sourceTree = "<group>"; };
 		7F6D9FCE1E6D21060016D748 /* PersonalProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileViewController.swift; sourceTree = "<group>"; };
 		7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentViewController.swift; sourceTree = SOURCE_ROOT; };
 		7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */,
 				7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */,
 				7F06663E1E37BC00003167AC /* GroupProfileViewController.swift */,
+				7F68DE481E6F30E30067C5F4 /* LoadingTableView.swift */,
 				7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */,
 				AD22369A1E57983B00112715 /* Database.swift */,
 				15B672731E671C1200B37CBC /* FileUtils.swift */,
@@ -461,6 +464,7 @@
 				AD60768D1E579F690026E3AC /* AddCommentNavigationViewController.swift in Sources */,
 				15B672821E67976D00B37CBC /* PhotoUploadPageViewController.swift in Sources */,
 				7F8FB8C71E653FF400EDBA02 /* TakePictureViewController.swift in Sources */,
+				7F68DE491E6F30E30067C5F4 /* LoadingTableView.swift in Sources */,
 				151430F71E6E5C580036FA56 /* ImageScrollView.swift in Sources */,
 				15E481591E69BCBA00E9668C /* BinaryHeap.swift in Sources */,
 				15B672841E679F4A00B37CBC /* ConfirmUploadViewController.swift in Sources */,

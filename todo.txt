@@ -5,3 +5,20 @@ TODO
     - Nofications
     - Firebase
     - Caching posts/images or make it asynchronous so there's not a delay when seguing
+
+
+//use this text for firstSignUpView - for nextBttn
+@IBOutlet weak var nextBttn: UIButton!
+
+override func viewDidLoad() {
+super.viewDidLoad()
+nameEntry.becomeFirstResponder()
+
+nameEntry.delegate = self
+
+if (nameEntry.text?.isEmpty)! {
+nextBttn.isUserInteractionEnabled = false
+}
+}
+func textFieldDidBeginEditing(_ textField: UITextField) {
+nextBttn.isUserInteractionEnabled = true

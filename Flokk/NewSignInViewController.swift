@@ -8,15 +8,20 @@
 
 import UIKit
 
-class NewSignInViewController: UIViewController {
+class NewSignInViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameEntry: UITextField!
     @IBOutlet weak var passwordEntry: UITextField!
-
+    let myPassword = "1"
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameEntry.becomeFirstResponder()
 
-        // Do any additional setup after loading the view.
+        passwordEntry.delegate = self
+        
+        
+        
+// Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,10 +31,30 @@ class NewSignInViewController: UIViewController {
     @IBAction func forgotPassword(_ sender: Any) {
     }
     @IBAction func signInBttn(_ sender: Any) {
+        
+        if passwordEntry.text == myPassword {print("Welcome")
+        } else {
+            
+            UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+                
+                UIViewAnimationOptions.curveEaseIn, animations: { self.passwordEntry.center.x += 10}, completion: nil)
+            
+            UIView.animate(withDuration: 0.1, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+                
+                UIViewAnimationOptions.curveEaseIn, animations: { self.passwordEntry.center.x -= 20}, completion: nil)
+            
+            UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+                
+                UIViewAnimationOptions.curveEaseIn, animations: { self.passwordEntry.center.x += 10}, completion: nil)
+            
+        }
+        
     }
+    
     @IBAction func backBttn(_ sender: Any) {
     }
     
+ 
 
     /*
     // MARK: - Navigation

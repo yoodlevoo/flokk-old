@@ -1290,6 +1290,56 @@
             </objects>
             <point key="canvasLocation" x="8919" y="-2445"/>
         </scene>
+        <!--Loading Table View-->
+        <scene sceneID="wxl-cS-DGd">
+            <objects>
+                <viewController id="5nq-ZB-5hU" customClass="LoadingTableView" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ST7-Lz-VFF"/>
+                        <viewControllerLayoutGuide type="bottom" id="ehV-NK-qlc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lyE-sm-tQ4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Flokk of Geese" translatesAutoresizingMaskIntoConstraints="NO" id="r67-CO-gBH">
+                                <rect key="frame" x="136" y="225" width="110" height="132"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="132" id="sfk-X1-dqf"/>
+                                    <constraint firstAttribute="width" constant="110" id="veV-2m-RyP"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Some Flokking Groups!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMb-mt-Kf0">
+                                <rect key="frame" x="53" y="390" width="273" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="273" id="8ci-uT-6qp"/>
+                                    <constraint firstAttribute="height" constant="21" id="AKq-PV-ujI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="r67-CO-gBH" firstAttribute="centerX" secondItem="lyE-sm-tQ4" secondAttribute="centerX" constant="3.5" id="Gni-Kw-Yrp"/>
+                            <constraint firstItem="BMb-mt-Kf0" firstAttribute="centerY" secondItem="lyE-sm-tQ4" secondAttribute="centerY" constant="67" id="O4V-KP-LdJ"/>
+                            <constraint firstItem="r67-CO-gBH" firstAttribute="centerY" secondItem="lyE-sm-tQ4" secondAttribute="centerY" constant="-42.5" id="qo4-TB-8o9"/>
+                            <constraint firstItem="BMb-mt-Kf0" firstAttribute="centerX" secondItem="lyE-sm-tQ4" secondAttribute="centerX" constant="2" id="u9l-aU-I35"/>
+                        </constraints>
+                    </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <connections>
+                        <outlet property="fullView" destination="lyE-sm-tQ4" id="HeO-1a-hJz"/>
+                        <outlet property="image" destination="r67-CO-gBH" id="9Mq-DU-sKq"/>
+                        <outlet property="label" destination="BMb-mt-Kf0" id="u6w-t0-kGe"/>
+                        <outlet property="view" destination="lyE-sm-tQ4" id="a3z-td-jO0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AOV-1g-BaI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9117.6000000000004" y="-1287.7061469265368"/>
+        </scene>
         <!--SignIn-->
         <scene sceneID="lva-lG-FPZ">
             <objects>
@@ -1434,64 +1484,94 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="607-hG-CUF">
-                                <rect key="frame" x="100" y="452" width="175" height="51"/>
-                                <state key="normal" image="Send New"/>
-                                <connections>
-                                    <action selector="sendBttn:" destination="eHR-SA-YHx" eventType="touchUpInside" id="3Kl-T3-1Zn"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h5y-LY-XzL">
-                                <rect key="frame" x="100" y="547" width="175" height="51"/>
-                                <state key="normal" image="Cancel New"/>
-                                <connections>
-                                    <action selector="cancelBttn:" destination="eHR-SA-YHx" eventType="touchUpInside" id="nTt-uI-0Ne"/>
-                                    <segue destination="pO2-rs-4H0" kind="presentation" id="tAj-L8-ZJT"/>
-                                </connections>
+                                <rect key="frame" x="0.0" y="384" width="375" height="66"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="PcG-C6-LKm"/>
+                                </constraints>
+                                <state key="normal" image="Send Box Button"/>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YJD-Tt-8xS">
-                                <rect key="frame" x="71" y="353" width="233" height="22"/>
+                                <rect key="frame" x="-29" y="285" width="433" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="thL-P8-rU0"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
                                         <color key="value" red="0.66121901849999998" green="0.6677657414" blue="0.6677657414" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="emailTextBox:" destination="eHR-SA-YHx" eventType="editingDidEnd" id="AAf-AG-80n"/>
-                                </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P4d-Jl-FQn">
-                                <rect key="frame" x="71" y="373" width="233" height="3"/>
+                                <rect key="frame" x="71" y="305" width="233" height="3"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="3" id="NdS-kT-Pbu"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6qK-VC-9SF">
+                                <rect key="frame" x="16" y="28" width="70" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="BIp-ai-k1B"/>
+                                    <constraint firstAttribute="width" constant="70" id="DR9-I3-mrW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="17"/>
+                                <state key="normal" title="  Sign In" image="WhiteArrow"/>
+                                <connections>
+                                    <segue destination="pO2-rs-4H0" kind="presentation" id="j2M-gV-L9R"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter your username or email and we'll send a link to get back into your account" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gJL-XL-ben">
+                                <rect key="frame" x="67" y="150" width="240" height="55"/>
+                                <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="bDu-Bw-Qgc"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Forgot Password?" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QfU-gf-isW">
+                                <rect key="frame" x="108" y="114" width="158" height="28"/>
+                                <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="158" id="8bW-oT-Dqk"/>
+                                    <constraint firstAttribute="height" constant="28" id="zcl-ga-tj9"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="gJL-XL-ben" firstAttribute="top" secondItem="QfU-gf-isW" secondAttribute="bottom" constant="8" id="2wU-21-TZW"/>
                             <constraint firstItem="YJD-Tt-8xS" firstAttribute="leading" secondItem="607-hG-CUF" secondAttribute="leading" constant="-29" id="5ge-cK-Ryz"/>
+                            <constraint firstItem="QfU-gf-isW" firstAttribute="centerY" secondItem="NpR-Fj-XUU" secondAttribute="centerY" constant="-205.5" id="9zS-pU-Kzc"/>
                             <constraint firstItem="607-hG-CUF" firstAttribute="centerX" secondItem="NpR-Fj-XUU" secondAttribute="centerX" id="BGM-oU-yJg"/>
-                            <constraint firstItem="607-hG-CUF" firstAttribute="leading" secondItem="h5y-LY-XzL" secondAttribute="leading" id="CtD-EU-4hr"/>
+                            <constraint firstItem="gJL-XL-ben" firstAttribute="centerX" secondItem="NpR-Fj-XUU" secondAttribute="centerX" id="BeJ-Aa-Uo7"/>
                             <constraint firstItem="P4d-Jl-FQn" firstAttribute="top" secondItem="YJD-Tt-8xS" secondAttribute="bottom" constant="-2" id="JHv-Fh-MPo"/>
-                            <constraint firstItem="lox-5Q-rmu" firstAttribute="top" secondItem="h5y-LY-XzL" secondAttribute="bottom" constant="69" id="MYK-Qb-rYk"/>
+                            <constraint firstItem="6qK-VC-9SF" firstAttribute="leading" secondItem="NpR-Fj-XUU" secondAttribute="leading" constant="16" id="M66-xT-fI7"/>
                             <constraint firstItem="P4d-Jl-FQn" firstAttribute="leading" secondItem="NpR-Fj-XUU" secondAttribute="leadingMargin" constant="55" id="Nlp-Nu-oKf"/>
                             <constraint firstItem="YJD-Tt-8xS" firstAttribute="trailing" secondItem="607-hG-CUF" secondAttribute="trailing" constant="29" id="WdF-lh-JW1"/>
-                            <constraint firstItem="h5y-LY-XzL" firstAttribute="top" secondItem="607-hG-CUF" secondAttribute="bottom" constant="44" id="bTs-bi-rkw"/>
                             <constraint firstItem="607-hG-CUF" firstAttribute="top" secondItem="YJD-Tt-8xS" secondAttribute="bottom" constant="77" id="cfe-5e-OaW"/>
                             <constraint firstItem="P4d-Jl-FQn" firstAttribute="centerX" secondItem="YJD-Tt-8xS" secondAttribute="centerX" id="kdw-sq-WFU"/>
-                            <constraint firstItem="607-hG-CUF" firstAttribute="trailing" secondItem="h5y-LY-XzL" secondAttribute="trailing" id="zUX-V1-3PF"/>
+                            <constraint firstItem="lox-5Q-rmu" firstAttribute="top" secondItem="607-hG-CUF" secondAttribute="bottom" constant="217" id="lTi-cN-K6w"/>
+                            <constraint firstItem="QfU-gf-isW" firstAttribute="centerX" secondItem="NpR-Fj-XUU" secondAttribute="centerX" id="qQw-bh-tVm"/>
+                            <constraint firstItem="gJL-XL-ben" firstAttribute="centerY" secondItem="NpR-Fj-XUU" secondAttribute="centerY" constant="-156" id="qdx-BD-BYq"/>
+                            <constraint firstItem="6qK-VC-9SF" firstAttribute="top" secondItem="cbQ-S0-N07" secondAttribute="bottom" constant="8" id="qgC-hk-q56"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailEntry" destination="YJD-Tt-8xS" id="Co9-2A-m3h"/>
+                        <outlet property="sendBttn" destination="607-hG-CUF" id="pcG-CB-nXI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uew-OU-QkU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1695" y="-1416"/>
+            <point key="canvasLocation" x="-1695.2" y="-1416.3418290854574"/>
         </scene>
         <!--Open-->
         <scene sceneID="6rr-NR-XZR">
@@ -2555,7 +2635,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addProfilePicOutlet" destination="omY-iC-vla" id="ZJA-kW-yYA"/>
                         <outlet property="passwordEntry" destination="s3F-YA-NW2" id="dbD-aJ-1bS"/>
                         <outlet property="usernameEntry" destination="euL-qD-OKE" id="zvQ-l6-v5O"/>
                     </connections>
@@ -2819,7 +2898,6 @@
         <image name="AddProfilePic" width="110" height="116"/>
         <image name="Cancel Button" width="140" height="51"/>
         <image name="Cancel Button New" width="152" height="57"/>
-        <image name="Cancel New" width="175" height="51"/>
         <image name="Create Account Button" width="140" height="51"/>
         <image name="Create Button New" width="152" height="57"/>
         <image name="Crop Icon" width="26" height="26"/>
@@ -2827,6 +2905,7 @@
         <image name="Flokk Logo" width="336" height="121"/>
         <image name="Flokk Logo 1 NoBackGrnd" width="2287" height="931"/>
         <image name="Flokk of Birds-1" width="25" height="30"/>
+        <image name="Flokk of Geese" width="936" height="1139"/>
         <image name="Friends Icon" width="32" height="31"/>
         <image name="GROUPS ICON" width="25" height="25"/>
         <image name="HOME ICON" width="25" height="25"/>
@@ -2837,7 +2916,7 @@
         <image name="Request to be Added New" width="149" height="148"/>
         <image name="Rotate Photo " width="23" height="24"/>
         <image name="SIgn Up (Green)" width="175" height="51"/>
-        <image name="Send New" width="175" height="51"/>
+        <image name="Send Box Button" width="375" height="66"/>
         <image name="Settings Button (Green)" width="18" height="18"/>
         <image name="Sign In (Dark)" width="175" height="51"/>
         <image name="Sign In Box" width="375" height="66"/>
@@ -2853,13 +2932,13 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ScJ-J4-tRu"/>
-        <segue reference="FdN-S2-Bm6"/>
-        <segue reference="EsN-Kc-gWc"/>
-        <segue reference="Rw6-mP-rPb"/>
-        <segue reference="PZa-hH-YXx"/>
+        <segue reference="j2M-gV-L9R"/>
+        <segue reference="1no-Yl-8Fw"/>
+        <segue reference="akd-UB-fBK"/>
         <segue reference="Id1-38-A71"/>
         <segue reference="6DE-FP-yyZ"/>
+        <segue reference="PZa-hH-YXx"/>
+        <segue reference="lYZ-EY-6R1"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
