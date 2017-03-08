@@ -43,6 +43,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         
         if profilePicFromCrop != nil {
             addGroupPictureButton.imageView?.image = profilePicFromCrop
+            addGroupPictureButton.setImage(profilePicFromCrop, for: .normal)
         }
         
         //set the collection view so it scrolls sideways
@@ -190,7 +191,6 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     
     /*
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         
     }
     */

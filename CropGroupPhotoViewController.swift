@@ -24,6 +24,8 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
     
     var image: UIImage!
     
+    var cropSize: CGSize = CGSize(width: 100, height: 100)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +38,7 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
         scrollView.delegate = self
         scrollView.alwaysBounceVertical = false
         scrollView.alwaysBounceHorizontal = false
-        scrollView.maximumZoomScale = 10.0
+        scrollView.maximumZoomScale = 7.5
         //scrollView.minimumZoomScale = 1.0
         scrollView.showsVerticalScrollIndicator = true
         
@@ -117,13 +119,18 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
                 
                 let croppedSize = CGSize(width: (imageSize?.width)! / zoom, height: (imageSize?.height)! / zoom)
                 
-                let cropRect = CGRect(x: bounds.minX, y: bounds.minY, width: croppedSize.width, height: croppedSize.height)
-                let imageRef = imageView.image?.cgImage?.cropping(to: cropRect)
-                
-                let retImage = UIImage(cgImage: imageRef!)
+                let cropRect = CGRect(x: bounds.minX - ((imageSize?.width)! / 2), y: bounds.minY - ((imageSize?.height)! / 2), width: croppedSize.width, height: croppedSize.height)
+                if let imageRef = imageView.image?.cgImage?.cropping(to: cropRect) {
+                    let retImage = UIImage(cgImage: imageRef, scale: zoom, orientation: .up)
+                    
+                    createGroupView.profilePicFromCrop = retImage
+                } else {
+                    
+                    print("bounds: \(bounds) croppedSize: \(croppedSize)")
+                }
                 
                 //createGroupView.addGroupPictureButton.imageView?.image = retImage
-                createGroupView.profilePicFromCrop = retImage
+                
             }
         } else {
             
