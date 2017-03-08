@@ -1,22 +1,19 @@
 //
-//  PasswordRecoveryViewController.swift
+//  LoadingTableView.swift
 //  Flokk
 //
-//  Created by Jared Heyen on 1/2/17.
+//  Created by Jared Heyen on 3/7/17.
 //  Copyright © 2017 Heyen Enterprises. All rights reserved.
 //
 
 import UIKit
 
-class PasswordRecoveryViewController: UIViewController {
-    @IBOutlet weak var sendBttn: UIButton!
-    @IBOutlet weak var cancelBttn: UIButton!
-    @IBOutlet weak var emailEntry: UITextField!
-
+class LoadingTableView: UIViewController {
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var label: UILabel!
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        emailEntry.becomeFirstResponder()
 
         // Do any additional setup after loading the view.
     }
@@ -24,13 +21,7 @@ class PasswordRecoveryViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-   
     }
-    @IBAction func sendBttn(_ sender: Any) {
-    }
-    @IBAction func cancelBttn(_ sender: Any) {
-    }
-   
     
 
     /*
