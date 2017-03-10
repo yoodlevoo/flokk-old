@@ -51,6 +51,7 @@
 		7F88AC901E4FBAA300623143 /* AddCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */; };
 		7F8FB8C31E65353300EDBA02 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */; };
 		7F8FB8C71E653FF400EDBA02 /* TakePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */; };
+		7FCC126D1E7352E5004F2364 /* ImageTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCC126C1E7352E5004F2364 /* ImageTransition.swift */; };
 		7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */; };
 		7FD4D7791E6A6B8000922724 /* OpenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4D7781E6A6B7F00922724 /* OpenViewController.swift */; };
 		7FD4D77B1E6A6BB500922724 /* NewSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4D77A1E6A6BB500922724 /* NewSignInViewController.swift */; };
@@ -135,6 +136,7 @@
 		7F88AC8F1E4FBAA300623143 /* AddCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommentViewController.swift; sourceTree = SOURCE_ROOT; };
 		7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakePictureViewController.swift; sourceTree = "<group>"; };
+		7FCC126C1E7352E5004F2364 /* ImageTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTransition.swift; sourceTree = "<group>"; };
 		7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		7FD4D7781E6A6B7F00922724 /* OpenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenViewController.swift; sourceTree = "<group>"; };
 		7FD4D77A1E6A6BB500922724 /* NewSignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewSignInViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */,
 				7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */,
 				7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */,
+				7FCC126C1E7352E5004F2364 /* ImageTransition.swift */,
 				7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */,
 				7F06663E1E37BC00003167AC /* GroupProfileViewController.swift */,
 				7F68DE481E6F30E30067C5F4 /* LoadingTableView.swift */,
@@ -471,6 +474,7 @@
 				7F0666541E37BC00003167AC /* ProfileSettingsViewController.swift in Sources */,
 				AD22369B1E57983B00112715 /* Database.swift in Sources */,
 				7F88AC901E4FBAA300623143 /* AddCommentViewController.swift in Sources */,
+				7FCC126D1E7352E5004F2364 /* ImageTransition.swift in Sources */,
 				15B672881E67AEB500B37CBC /* PhotoUploadPageNavigationViewController.swift in Sources */,
 				15E481571E69BC7F00E9668C /* PriorityQueue.swift in Sources */,
 				7F0666511E37BC00003167AC /* GroupsViewController.swift in Sources */,
