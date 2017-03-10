@@ -103,6 +103,88 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
         updateConstraintsForSize(size: view.bounds.size)
     }
     
+    func getCGImageWithCorrectOrientation(_ image : UIImage) -> CGImage {
+        if (image.imageOrientation == UIImageOrientation.up) {
+            return image.cgImage!;
+        }
+        
+        var transform : CGAffineTransform = CGAffineTransform.identity;
+        
+        switch (image.imageOrientation) {
+        case UIImageOrientation.right, UIImageOrientation.rightMirrored:
+            transform = transform.translatedBy(x: 0, y: image.size.height);
+            transform = transform.rotated(by: CGFloat(-1.0 * M_PI_2));
+            break;
+        case UIImageOrientation.left, UIImageOrientation.leftMirrored:
+            transform = transform.translatedBy(x: image.size.width, y: 0);
+            transform = transform.rotated(by: CGFloat(M_PI_2));
+            break;
+        case UIImageOrientation.down, UIImageOrientation.downMirrored:
+            transform = transform.translatedBy(x: image.size.width, y: image.size.height);
+            transform = transform.rotated(by: CGFloat(M_PI));
+            break;
+        default:
+            break;
+        }
+        
+        switch (image.imageOrientation) {
+        case UIImageOrientation.rightMirrored, UIImageOrientation.leftMirrored:
+            transform = transform.translatedBy(x: image.size.height, y: 0);
+            transform = transform.scaledBy(x: -1, y: 1);
+            break;
+        case UIImageOrientation.downMirrored, UIImageOrientation.upMirrored:
+            transform = transform.translatedBy(x: image.size.width, y: 0);
+            transform = transform.scaledBy(x: -1, y: 1);
+            break;
+        default:
+            break;
+        }
+        
+        let contextWidth : Int;
+        let contextHeight : Int;
+        
+        switch (image.imageOrientation) {
+        case UIImageOrientation.left, UIImageOrientation.leftMirrored,
+             UIImageOrientation.right, UIImageOrientation.rightMirrored:
+            contextWidth = (image.cgImage?.height)!;
+            contextHeight = (image.cgImage?.width)!;
+            break;
+        default:
+            contextWidth = (image.cgImage?.width)!;
+            contextHeight = (image.cgImage?.height)!;
+            break;
+        }
+        
+        let context : CGContext = CGContext(data: nil, width: contextWidth, height: contextHeight,
+                                            bitsPerComponent: image.cgImage!.bitsPerComponent,
+                                            bytesPerRow: image.cgImage!.bytesPerRow,
+                                            space: image.cgImage!.colorSpace!,
+                                            bitmapInfo: image.cgImage!.bitmapInfo.rawValue)!;
+        
+        context.concatenate(transform);
+        context.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: CGFloat(contextWidth), height: CGFloat(contextHeight)));
+        
+        let cgImage = context.makeImage();
+        
+        return cgImage!;
+    }
+    
+    func getCroppedImage(image: UIImage) -> UIImage {
+        let cgImage = getCGImageWithCorrectOrientation(image)
+        let zoom = scrollView.zoomScale
+        let offset = scrollView.contentOffset
+        let frame = scrollView.frame
+        
+        let croppedImageRect = CGRect(x: offset.x / zoom, y: offset.y / zoom, width: frame.width, height: frame.height)
+        let imageRef = cgImage.cropping(to: croppedImageRect)
+        
+        print("scrollview crop rect \(croppedImageRect)")
+        
+        let retImage = UIImage(cgImage: imageRef!)
+        
+        return retImage
+    }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -113,24 +195,17 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
             }
         } else if segue.identifier == "segueChoseCropToCreateGroup" {
             if let createGroupView = segue.destination as? CreateGroupViewController {
-                let bounds = scrollView.bounds
-                let zoom = scrollView.zoomScale
-                let imageSize = imageView.image?.size
+                createGroupView.profilePicFromCrop = getCroppedImage(image: (imageView?.image)!)
                 
-                let croppedSize = CGSize(width: (imageSize?.width)! / zoom, height: (imageSize?.height)! / zoom)
+                //testing
+                /*
+                var offset = scrollView.contentOffset
+                var zoom = scrollView.zoomScale
                 
-                let cropRect = CGRect(x: bounds.minX - ((imageSize?.width)! / 2), y: bounds.minY - ((imageSize?.height)! / 2), width: croppedSize.width, height: croppedSize.height)
-                if let imageRef = imageView.image?.cgImage?.cropping(to: cropRect) {
-                    let retImage = UIImage(cgImage: imageRef, scale: zoom, orientation: .up)
-                    
-                    createGroupView.profilePicFromCrop = retImage
-                } else {
-                    
-                    print("bounds: \(bounds) croppedSize: \(croppedSize)")
-                }
-                
-                //createGroupView.addGroupPictureButton.imageView?.image = retImage
-                
+                var rect = CGRect(x: offset.x / zoom, y: offset.y / zoom, width: scrollView.frame.width / zoom, height: scrollView.frame.height / zoom)
+                print("scrollview crop rect \(rect)")
+                print("scrollview bounds \(scrollView.bounds)")
+                print("scrollview offset \(scrollView.contentOffset)") */
             }
         } else {
             
