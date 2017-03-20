@@ -193,7 +193,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6y-w1-Toh">
-                                                    <rect key="frame" x="106" y="36" width="166.5" height="18"/>
+                                                    <rect key="frame" x="106" y="36" width="167" height="18"/>
                                                     <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -235,7 +235,7 @@
         <!--ProfileSettings-->
         <scene sceneID="B8Q-oJ-LSi">
             <objects>
-                <viewController title="ProfileSettings" id="Gnc-hd-ZFe" customClass="ProfileSettingsViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ProfileSettings" modalTransitionStyle="crossDissolve" id="Gnc-hd-ZFe" customClass="ProfileSettingsViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WKg-f7-V3t"/>
                         <viewControllerLayoutGuide type="bottom" id="4YA-Td-Ff2"/>
@@ -564,7 +564,7 @@
                                 <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="uploadPic:" destination="zMU-GR-fPQ" id="a5z-PJ-Ml5"/>
-                                    <segue destination="1S1-oP-HML" kind="presentation" identifier="segueFromFeedToUploadImage" id="6DE-FP-yyZ"/>
+                                    <segue destination="1S1-oP-HML" kind="presentation" id="ouw-aL-F31"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem image="Settings Button (Green)" id="r70-je-Mcs" userLabel="Settings">
@@ -2692,9 +2692,6 @@
                                 <state key="normal" image="Navy Settings Icon">
                                     <color key="titleColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="Gnc-hd-ZFe" kind="presentation" id="Bls-dd-kUJ"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejG-Hf-25J">
                                 <rect key="frame" x="164" y="232" width="46" height="30"/>
@@ -2712,6 +2709,7 @@
                                 </state>
                                 <connections>
                                     <action selector="editProfile:" destination="My8-Ss-CJl" eventType="touchUpInside" id="S1Y-Ry-JrT"/>
+                                    <segue destination="Gnc-hd-ZFe" kind="presentation" id="2Pz-Yt-FTy"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mTt-YQ-p5F">
@@ -2741,7 +2739,7 @@
                                 <rect key="frame" x="16" y="245" width="32" height="31"/>
                                 <state key="normal" image="Friends Icon"/>
                                 <connections>
-                                    <segue destination="7OG-MU-Nvs" kind="presentation" id="uIu-zz-SEh"/>
+                                    <segue destination="7OG-MU-Nvs" kind="presentation" id="rf2-Jh-3bh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -2782,28 +2780,26 @@
         <!--Friends-->
         <scene sceneID="YqC-6R-qdk">
             <objects>
-                <viewController title="Friends" id="XjA-XV-lcK" sceneMemberID="viewController">
+                <viewController title="Friends" id="XjA-XV-lcK" customClass="FriendsViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uff-HS-moB"/>
                         <viewControllerLayoutGuide type="bottom" id="fnQ-tH-6yN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9OD-zD-yg6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="rbC-h3-Wrf">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="I4c-Ma-Fqj"/>
                                 </constraints>
+                                <color key="barTintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="82" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1Kk-un-VbA">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="559" id="tOQ-lf-7jg"/>
-                                </constraints>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="82" id="kol-lS-2YG">
@@ -2865,7 +2861,7 @@
                             <constraint firstItem="fnQ-tH-6yN" firstAttribute="top" secondItem="1Kk-un-VbA" secondAttribute="bottom" id="uvh-Bg-6e1"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="6bk-ct-jwr">
+                    <navigationItem key="navigationItem" title="Friends" id="6bk-ct-jwr">
                         <barButtonItem key="rightBarButtonItem" image="Inverse White Arrow" id="qMx-3Q-qZK">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
@@ -2937,12 +2933,12 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="iPI-bi-wYv"/>
+        <segue reference="hWc-jq-9MM"/>
+        <segue reference="ouw-aL-F31"/>
+        <segue reference="Rxd-mZ-nZM"/>
         <segue reference="j2M-gV-L9R"/>
-        <segue reference="1no-Yl-8Fw"/>
         <segue reference="akd-UB-fBK"/>
-        <segue reference="Id1-38-A71"/>
-        <segue reference="6DE-FP-yyZ"/>
-        <segue reference="PZa-hH-YXx"/>
         <segue reference="lYZ-EY-6R1"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
