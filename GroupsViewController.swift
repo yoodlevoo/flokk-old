@@ -32,7 +32,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
         
         //FileUtils.deleteUserJSON(user: mainUser)
-        //FileUtils.deleteGroupJSON(groupName: "lsd")
+        //FileUtils.deleteGroupJSON(groupName: "group")
+        //FileUtils.deleteGroupJSON(groupName: "basketball")
+        
         
         //FileUtils.findAllFilesInDocuments()
         
