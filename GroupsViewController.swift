@@ -22,6 +22,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
+    let transitionForward = SlideForwardAnimator(right: true)
+    let transitionDown = SlideDownAnimator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
