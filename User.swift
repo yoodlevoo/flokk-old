@@ -85,4 +85,10 @@ class User: Hashable { //hashable so it can be used as a key in a dictionary(for
     static func ==(lh: User, rh: User) -> Bool {
         return lh.handle == rh.handle //all handles are unique
     }
+    
+    //override the description variable to display information
+    //about this class when this class is printed - like Java's .toString() method
+    public var description: String {
+        return "User: handle: \(handle) full name: \(fullName)"
+    }
 }

@@ -21,7 +21,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var forGroup: Group! //just passing this around so we can return it to the feed
     
-    static let numPhotosToLoad = 200
+    static let numPhotosToLoad = 10
     
     var images = [UIImage]() //should i have this?
     
@@ -30,6 +30,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
 
         collectionView?.delegate = self
         collectionView?.dataSource = self
+        collectionView!.contentInset = UIEdgeInsets(top: 23, left: 5, bottom: 10, right: 5)
         
         if let layout = collectionView?.collectionViewLayout as? PhotoSelectLayout {
             layout.delegate = self
@@ -60,15 +61,21 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         
         //cell.repres
         let asset = fetchResult.object(at: indexPath.item)
-        imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: PHImageContentMode.aspectFill, options: nil, resultHandler: { image, _ in
+        imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: PHImageContentMode.aspectFit, options: nil, resultHandler: { image, _ in
             cell.imageView.image = image
         })
         
         //let screenWidth = UIScreen.main.bounds.width
         
+        //Attempt to change this imageView's bounds so the cell shows the full image
+        // cell.imageView.bounds.size = cell.bounds.size
+        cell.imageView.contentMode = .scaleAspectFit
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 1
+        //set the cells tag so prepare(for: segue) knows which celll was selected
         cell.tag = indexPath.item
+        
+        print("at index \(indexPath.item) cell: \(cell.bounds) imageView: \(cell.imageView.bounds) imageSize: \(cell.imageView.image?.size)")
         
         return cell
     }
@@ -90,7 +97,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
             height = rect.size.height
         })
         
-        print("heightForPhotoAtIndexPath: \(height) at index \(indexPath.item)")
+        //print("heightForPhotoAtIndexPath: \(height) at index \(indexPath.item)")
         return height
     }
     
@@ -125,9 +132,9 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
                         
                         if confirmUploadNav.imageToPass != nil {
                             if let confirmUpload = confirmUploadNav.viewControllers[0] as? ConfirmUploadViewController {
-                                //if confirmUpload.imageView != nil {
-                                    //confirmUpload.imageView.image = image
-                                //}
+                                if confirmUpload.imageView != nil {
+                                    confirmUpload.imageView.image = image
+                                }
                                 
                                 confirmUpload.image = image
                             }
@@ -147,5 +154,12 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
 class PhotoSelectCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     
-    //@IBOutlet weak var imageViewHeightLayoutConsraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewHeightLayoutConsraint: NSLayoutConstraint!
+    
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        if let attributes = layoutAttributes as? PhotoSelectLayoutAttributes {
+            imageViewHeightLayoutConsraint.constant = attributes.photoHeight
+        }
+    }
 }

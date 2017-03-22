@@ -24,6 +24,8 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     
     var profilePicFromCrop: UIImage!
     
+    let transitionDown = SlideDownAnimator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -212,7 +214,9 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueCancelCreateGroup" {
-            //shouldnt need to do anything here
+            if let tabBar = segue.destination as? UITabBarController {
+                tabBar.transitioningDelegate = transitionDown
+            }
         } else if segue.identifier == "segueCreateGroup" { //then create the group and save it as a JSON file
             var users = selectedUsers //the selected users + main user
             users.append(mainUser)
