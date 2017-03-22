@@ -21,8 +21,16 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var defaultGroups = [Group]() //an emptyarray of Groups - this is going to be a priorityqueue in a bit
     var groupQueue = PriorityQueue<Group>(sortedBy: <) //hopefully this doesn't get reset each time
     
+    var refreshControl: UIRefreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available (iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        }else {
+            tableView.addSubview(refreshControl)
+        }
         
         //print(defaultGroups.count) //at this point is this ever not at 0 or is a new array created each time
         

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class _ndSignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class _ndSignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var usernameEntry: UITextField!
     @IBOutlet weak var passwordEntry: UITextField!
     @IBOutlet weak var addProfilePicOutlet: UIButton!
@@ -47,11 +47,24 @@ class _ndSignUpViewController: UIViewController, UIImagePickerControllerDelegate
         // Do any additional setup after loading the view.
     }
     
+    
+    
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+
+}
+    @IBAction func backGesture(_ sender: Any) {
     }
+
+
+        
+        
+        // Dispose of any resources that can be recreated.
+
 
 
     /*
@@ -63,5 +76,6 @@ class _ndSignUpViewController: UIViewController, UIImagePickerControllerDelegate
         // Pass the selected object to the new view controller.
     }
     */
+
 
 }

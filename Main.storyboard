@@ -193,7 +193,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6y-w1-Toh">
-                                                    <rect key="frame" x="106" y="36" width="167" height="18"/>
+                                                    <rect key="frame" x="106" y="36" width="166.5" height="18"/>
                                                     <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -1019,6 +1019,11 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </textField>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xcn-Ch-ccS">
                                 <rect key="frame" x="14" y="149" width="361" height="50"/>
@@ -1496,7 +1501,7 @@
                                     <constraint firstAttribute="height" constant="22" id="thL-P8-rU0"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
@@ -1592,7 +1597,7 @@
                                     <constraint firstAttribute="width" constant="259" id="XCd-Iz-mx3"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2z5-nx-HO1">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2z5-nx-HO1" customClass="BounceButton" customModule="Flokk" customModuleProvider="target">
                                 <rect key="frame" x="57" y="345" width="261" height="51"/>
                                 <state key="normal" image="Sign Up New"/>
                                 <connections>
@@ -1600,7 +1605,7 @@
                                     <segue destination="u4h-64-2I7" kind="presentation" id="EsN-Kc-gWc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z26-1K-CLL">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z26-1K-CLL" customClass="BounceButton" customModule="Flokk" customModuleProvider="target">
                                 <rect key="frame" x="102" y="446" width="171" height="36"/>
                                 <state key="normal" image="Sign In Fix"/>
                                 <connections>
@@ -2107,6 +2112,12 @@
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="CrK-cU-Ivp">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </toolbar>
                     <connections>
                         <segue destination="KHR-sm-WyF" kind="relationship" relationship="rootViewController" id="9Ha-uJ-bnP"/>
                     </connections>
@@ -2592,9 +2603,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Cc-J9-cZ8">
-                                <rect key="frame" x="6" y="32" width="67" height="22"/>
+                                <rect key="frame" x="16" y="28" width="20" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="67" id="X97-9T-bg8"/>
+                                    <constraint firstAttribute="width" constant="20" id="X97-9T-bg8"/>
                                 </constraints>
                                 <state key="normal" image="WhiteArrow"/>
                                 <connections>
@@ -2603,6 +2614,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="JS4-yK-ygp" firstAttribute="leading" secondItem="VVL-U1-ROE" secondAttribute="leading" id="05z-dj-dtp"/>
                             <constraint firstItem="W2h-03-tQg" firstAttribute="top" secondItem="euL-qD-OKE" secondAttribute="bottom" constant="8" id="0Kx-uP-60Y"/>
@@ -2610,14 +2622,14 @@
                             <constraint firstAttribute="trailing" secondItem="s3F-YA-NW2" secondAttribute="trailing" constant="73" id="8q3-3Y-phX"/>
                             <constraint firstAttribute="trailing" secondItem="omY-iC-vla" secondAttribute="trailing" constant="130" id="Lc0-SL-NQO"/>
                             <constraint firstItem="JS4-yK-ygp" firstAttribute="top" secondItem="zg3-OM-mii" secondAttribute="bottom" constant="56" id="Skd-38-fm1"/>
-                            <constraint firstItem="6Cc-J9-cZ8" firstAttribute="leading" secondItem="VVL-U1-ROE" secondAttribute="leading" constant="6" id="Ss8-Ep-lIa"/>
+                            <constraint firstItem="6Cc-J9-cZ8" firstAttribute="leading" secondItem="VVL-U1-ROE" secondAttribute="leading" constant="16" id="Ss8-Ep-lIa"/>
                             <constraint firstAttribute="trailing" secondItem="zg3-OM-mii" secondAttribute="trailing" constant="73" id="VXs-Fa-Fb9"/>
                             <constraint firstItem="3Ox-26-1cG" firstAttribute="top" secondItem="JS4-yK-ygp" secondAttribute="bottom" constant="217" id="YtM-bH-xx1"/>
                             <constraint firstItem="zg3-OM-mii" firstAttribute="leading" secondItem="VVL-U1-ROE" secondAttribute="leading" constant="72" id="bkE-2X-1qK"/>
                             <constraint firstAttribute="trailing" secondItem="euL-qD-OKE" secondAttribute="trailing" constant="73" id="evt-vF-VAM"/>
                             <constraint firstItem="omY-iC-vla" firstAttribute="leading" secondItem="VVL-U1-ROE" secondAttribute="leading" constant="129" id="ex6-iU-PFt"/>
                             <constraint firstAttribute="trailing" secondItem="W2h-03-tQg" secondAttribute="trailing" constant="73" id="flr-kT-oBZ"/>
-                            <constraint firstItem="6Cc-J9-cZ8" firstAttribute="top" secondItem="2Jk-4u-w9t" secondAttribute="bottom" constant="12" id="fxh-eP-GB5"/>
+                            <constraint firstItem="6Cc-J9-cZ8" firstAttribute="top" secondItem="2Jk-4u-w9t" secondAttribute="bottom" constant="8" id="fxh-eP-GB5"/>
                             <constraint firstItem="zg3-OM-mii" firstAttribute="top" secondItem="s3F-YA-NW2" secondAttribute="bottom" constant="8" id="lR4-YO-miM"/>
                             <constraint firstItem="s3F-YA-NW2" firstAttribute="leading" secondItem="VVL-U1-ROE" secondAttribute="leading" constant="72" id="s6w-kK-dyt"/>
                             <constraint firstItem="s3F-YA-NW2" firstAttribute="top" secondItem="W2h-03-tQg" secondAttribute="bottom" constant="57" id="xeO-Nr-z9O"/>
@@ -2625,6 +2637,9 @@
                             <constraint firstItem="W2h-03-tQg" firstAttribute="leading" secondItem="VVL-U1-ROE" secondAttribute="leading" constant="72" id="ye9-NM-Xm7"/>
                             <constraint firstAttribute="trailing" secondItem="JS4-yK-ygp" secondAttribute="trailing" id="zWV-2S-XT7"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="U9G-Vz-YFP" appends="YES" id="mjm-s2-J5d"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="cMZ-8C-YtY">
                         <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="TU1-E6-CGi">
@@ -2637,8 +2652,13 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJr-Ez-0Yi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="U9G-Vz-YFP">
+                    <connections>
+                        <action selector="backGesture:" destination="5nz-Sx-LZu" id="CvI-6i-396"/>
+                    </connections>
+                </screenEdgePanGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2330" y="-2929"/>
+            <point key="canvasLocation" x="-2330.4000000000001" y="-2929.385307346327"/>
         </scene>
         <!--Profile-->
         <scene sceneID="EUM-bq-gAU">
@@ -2778,11 +2798,11 @@
                         <viewControllerLayoutGuide type="bottom" id="fnQ-tH-6yN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9OD-zD-yg6">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="rbC-h3-Wrf">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="I4c-Ma-Fqj"/>
                                 </constraints>
@@ -2790,7 +2810,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="82" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1Kk-un-VbA">
-                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -2929,9 +2949,9 @@
         <segue reference="hWc-jq-9MM"/>
         <segue reference="ouw-aL-F31"/>
         <segue reference="Rxd-mZ-nZM"/>
-        <segue reference="j2M-gV-L9R"/>
+        <segue reference="ScJ-J4-tRu"/>
         <segue reference="akd-UB-fBK"/>
-        <segue reference="lYZ-EY-6R1"/>
+        <segue reference="EsN-Kc-gWc"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

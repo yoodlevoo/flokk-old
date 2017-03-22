@@ -57,6 +57,7 @@
 		7FD4D77B1E6A6BB500922724 /* NewSignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4D77A1E6A6BB500922724 /* NewSignInViewController.swift */; };
 		7FD4D77D1E6A6BC700922724 /* 1stSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4D77C1E6A6BC700922724 /* 1stSignUpViewController.swift */; };
 		7FD4D77F1E6A6BE300922724 /* 2ndSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD4D77E1E6A6BE300922724 /* 2ndSignUpViewController.swift */; };
+		7FDF8B6E1E820D7400BC61C2 /* BounceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF8B6D1E820D7400BC61C2 /* BounceButton.swift */; };
 		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
 		AD22369B1E57983B00112715 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22369A1E57983B00112715 /* Database.swift */; };
 		AD3B25371E3BE5E2006B92AC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3B25361E3BE5E2006B92AC /* Group.swift */; };
@@ -142,6 +143,7 @@
 		7FD4D77A1E6A6BB500922724 /* NewSignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewSignInViewController.swift; sourceTree = "<group>"; };
 		7FD4D77C1E6A6BC700922724 /* 1stSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 1stSignUpViewController.swift; sourceTree = "<group>"; };
 		7FD4D77E1E6A6BE300922724 /* 2ndSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 2ndSignUpViewController.swift; sourceTree = "<group>"; };
+		7FDF8B6D1E820D7400BC61C2 /* BounceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BounceButton.swift; sourceTree = "<group>"; };
 		AD2236981E563E4500112715 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = SOURCE_ROOT; };
 		AD22369A1E57983B00112715 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = SOURCE_ROOT; };
 		AD3B25361E3BE5E2006B92AC /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = SOURCE_ROOT; };
@@ -256,17 +258,16 @@
 				7F8FB8C61E653FF400EDBA02 /* TakePictureViewController.swift */,
 				7F8FB8C21E65353300EDBA02 /* NotificationsViewController.swift */,
 				7F0666441E37BC00003167AC /* PasswordRecoveryViewController.swift */,
-				7FCC126C1E7352E5004F2364 /* ImageTransition.swift */,
 				7F0666451E37BC00003167AC /* ProfileSettingsViewController.swift */,
 				7F06663E1E37BC00003167AC /* GroupProfileViewController.swift */,
 				7F68DE481E6F30E30067C5F4 /* LoadingTableView.swift */,
-				7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */,
 				AD22369A1E57983B00112715 /* Database.swift */,
 				15B672731E671C1200B37CBC /* FileUtils.swift */,
 				AD3B25361E3BE5E2006B92AC /* Group.swift */,
 				ADCF80CE1E451B9900047FE0 /* User.swift */,
 				ADCF80D01E451EFE00047FE0 /* Post.swift */,
 				15E481541E691FF400E9668C /* Notification.swift */,
+				7FDF8B6C1E820C4500BC61C2 /* Animations */,
 				159ACA201E65EB0F004E410B /* JSON files */,
 				159ACA1C1E65E3C5004E410B /* framework */,
 				7F0666461E37BC00003167AC /* Main.storyboard */,
@@ -274,6 +275,7 @@
 				7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */,
 				7F0666161E37BAAD003167AC /* Info.plist */,
 				151430F01E6DC9B60036FA56 /* todo.txt */,
+				7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */,
 			);
 			path = Flokk;
 			sourceTree = "<group>";
@@ -303,6 +305,15 @@
 			);
 			name = Resources;
 			path = Flokk;
+			sourceTree = "<group>";
+		};
+		7FDF8B6C1E820C4500BC61C2 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				7FDF8B6D1E820D7400BC61C2 /* BounceButton.swift */,
+				7FCC126C1E7352E5004F2364 /* ImageTransition.swift */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,7 +384,7 @@
 				TargetAttributes = {
 					7F0666061E37BAAD003167AC = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = L4K4Q74X62;
+						DevelopmentTeam = XT8KNR7TY2;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -461,6 +472,7 @@
 				7FD4D77D1E6A6BC700922724 /* 1stSignUpViewController.swift in Sources */,
 				159ACA1E1E65E3E6004E410B /* SwiftyJSON.swift in Sources */,
 				7F0666501E37BC00003167AC /* GroupSettingsViewController.swift in Sources */,
+				7FDF8B6E1E820D7400BC61C2 /* BounceButton.swift in Sources */,
 				ADCF80CF1E451B9900047FE0 /* User.swift in Sources */,
 				151430EF1E6D321A0036FA56 /* PhotoSelectLayout.swift in Sources */,
 				15B6727A1E6737F000B37CBC /* PhotoSelectViewController.swift in Sources */,
@@ -637,10 +649,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = L4K4Q74X62;
+				DEVELOPMENT_TEAM = XT8KNR7TY2;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
+				PRODUCT_BUNDLE_IDENTIFIER = Flokk123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -654,10 +666,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = L4K4Q74X62;
+				DEVELOPMENT_TEAM = XT8KNR7TY2;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
+				PRODUCT_BUNDLE_IDENTIFIER = Flokk123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

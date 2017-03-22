@@ -12,6 +12,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var scrollView: UIScrollView!
     
+    var refreshControl: UIRefreshControl = UIRefreshControl()
+    
     static var postsCache = NSCache<NSString, Post>()
     
     var group: Group! //the group this feed is reading from
@@ -21,6 +23,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available (iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        }else {
+        tableView.addSubview(refreshControl)
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
