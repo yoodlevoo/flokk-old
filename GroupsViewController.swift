@@ -20,8 +20,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var defaultGroups = [Group]() //an emptyarray of Groups - this is going to be a priorityqueue in a bit
     var groupQueue = PriorityQueue<Group>(sortedBy: <) //hopefully this doesn't get reset each time
     
-    let transitionForward = SlideForwardAnimator()
-    let transitionUp = SlideUpAnimator()
+    let transitionForward = SlideForwardAnimator(right: true)
+    let transitionDown = SlideDownAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -199,7 +199,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         } else if segue.identifier == "segueFromGroupToCreateGroup" {
             if let createGroupView = segue.destination as? CreateGroupViewController {
-                createGroupView.transitioningDelegate = transitionUp
+                createGroupView.transitioningDelegate = transitionDown
             }
         }
     }

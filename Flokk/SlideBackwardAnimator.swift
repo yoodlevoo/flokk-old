@@ -6,12 +6,16 @@
 //  Copyright © 2017 Heyen Enterprises. All rights reserved.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 //literally only 2 lines of code changed
 class SlideBackwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
-    private var presenting = true
+    var right: Bool
+    
+    init(right: Bool) {
+        self.right = right
+    }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.25
@@ -26,9 +30,11 @@ class SlideBackwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UI
         let offScreenRight = CGAffineTransform(translationX: containerView.frame.width, y: 0)
         let offScreenLeft = CGAffineTransform(translationX: -containerView.frame.width, y: 0)
         
-        toView.transform = offScreenLeft
+        //toView.transform = offScreenLeft
         
         containerView.addSubview(toView)
+        containerView.addSubview(fromView)
+        containerView.sendSubview(toBack: toView)
         //toVC!.view.alpha = 0.0
         
         let duration = transitionDuration(using: transitionContext)

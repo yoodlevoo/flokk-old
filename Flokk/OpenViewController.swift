@@ -11,6 +11,8 @@ import UIKit
 class OpenViewController: UIViewController {
     @IBOutlet weak var flokkLogo: UIImageView!
 
+    let transitionForward = SlideForwardAnimator(right: true)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,16 +27,10 @@ class OpenViewController: UIViewController {
     }
     @IBAction func signInPageBttn(_ sender: Any) {
     }
-
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        //it doesnt matter whether we segue to sign up or sign in
+        //we will use the same transition
+        
     }
-    */
 }

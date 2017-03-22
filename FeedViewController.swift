@@ -19,7 +19,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     static let initialPostCount = 10 //the initial amount of posts to load
     var loadedPosts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
     
-    let transitionBackward = SlideBackwardAnimator()
+    let transitionBackward = SlideBackwardAnimator(right: true)
     
     override func viewDidLoad() {
         super.viewDidLoad()
