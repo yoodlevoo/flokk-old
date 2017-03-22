@@ -71,6 +71,8 @@ class Group {
                     //print("loading post image " + imageName!)
                     posts.append(Post(poster: findUserWithHandle(handle: userHandle!), image: image, postedGroup: self, index: index))
                     index += 1
+                    
+                    //print("image name \(imageName)")
                 } else {
                     break
                 }
@@ -182,6 +184,9 @@ class Group {
         postJSON = json
     }
     
+    //for sorting the posts in the GroupView's priority view
+    //so the posts with the most recent/newest posts are at the top
+    //should this be sorted by most recent posts/date instead of numNewPosts?
     static func < (leftGroup: Group, rightGroup: Group) -> Bool {
         return leftGroup.numNewPosts < rightGroup.numNewPosts
     }

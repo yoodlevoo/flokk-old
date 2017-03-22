@@ -443,7 +443,7 @@
                                         <connections>
                                             <outlet property="groupImageView" destination="NYa-aE-H3d" id="HgX-d4-BHg"/>
                                             <outlet property="groupTitleLabel" destination="cuT-P3-VFh" id="bl4-Hz-tgw"/>
-                                            <segue destination="nKl-w0-RhZ" kind="presentation" identifier="toFeed" id="Id1-38-A71"/>
+                                            <segue destination="nKl-w0-RhZ" kind="presentation" identifier="segueFromGroupToFeed" id="wV8-oK-BhX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -465,7 +465,7 @@
                             <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="createGroup:" destination="KFV-bB-sMD" id="8dr-Tk-8mp"/>
-                                <segue destination="mtH-ru-S40" kind="presentation" id="Rxd-mZ-nZM"/>
+                                <segue destination="mtH-ru-S40" kind="presentation" identifier="segueFromGroupToCreateGroup" id="Rxd-mZ-nZM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -494,6 +494,7 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mtj-cC-kYT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="pk4-Bf-Xxu"/>
             </objects>
             <point key="canvasLocation" x="3194" y="-2929"/>
         </scene>
@@ -556,7 +557,7 @@
                         <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="hK7-Jw-Zcq" userLabel="Back Arrow">
                             <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="x15-8V-ONQ" kind="presentation" id="iPI-bi-wYv"/>
+                                <segue destination="x15-8V-ONQ" kind="presentation" identifier="segueFromFeedToGroup" id="iPI-bi-wYv"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -564,7 +565,7 @@
                                 <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="uploadPic:" destination="zMU-GR-fPQ" id="a5z-PJ-Ml5"/>
-                                    <segue destination="1S1-oP-HML" kind="presentation" id="ouw-aL-F31"/>
+                                    <segue destination="1S1-oP-HML" kind="presentation" identifier="segueFromFeedToUploadImage" id="ouw-aL-F31"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem image="Settings Button (Green)" id="r70-je-Mcs" userLabel="Settings">
@@ -2291,7 +2292,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bas-NA-Fzk">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bas-NA-Fzk">
                                                     <rect key="frame" x="0.0" y="0.0" width="127" height="127"/>
                                                     <color key="backgroundColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -2303,6 +2304,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailingMargin" secondItem="Bas-NA-Fzk" secondAttribute="trailing" constant="-85" id="KT0-6e-gGa"/>
                                             <constraint firstItem="Bas-NA-Fzk" firstAttribute="top" secondItem="uPt-Xp-VOa" secondAttribute="top" id="VVA-xM-fZs"/>
+                                            <constraint firstItem="Bas-NA-Fzk" firstAttribute="leading" secondItem="uPt-Xp-VOa" secondAttribute="leading" id="c3B-RN-kb2"/>
                                             <constraint firstItem="Bas-NA-Fzk" firstAttribute="leading" secondItem="uPt-Xp-VOa" secondAttribute="leading" id="faS-Yh-OTp"/>
                                         </constraints>
                                         <connections>
@@ -2786,11 +2788,11 @@
                         <viewControllerLayoutGuide type="bottom" id="fnQ-tH-6yN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9OD-zD-yg6">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="rbC-h3-Wrf">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="I4c-Ma-Fqj"/>
                                 </constraints>
@@ -2798,7 +2800,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="82" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1Kk-un-VbA">
-                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -2933,13 +2935,13 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iPI-bi-wYv"/>
-        <segue reference="hWc-jq-9MM"/>
-        <segue reference="ouw-aL-F31"/>
-        <segue reference="Rxd-mZ-nZM"/>
-        <segue reference="j2M-gV-L9R"/>
         <segue reference="akd-UB-fBK"/>
-        <segue reference="lYZ-EY-6R1"/>
+        <segue reference="ScJ-J4-tRu"/>
+        <segue reference="EsN-Kc-gWc"/>
+        <segue reference="wV8-oK-BhX"/>
+        <segue reference="Rw6-mP-rPb"/>
+        <segue reference="Rxd-mZ-nZM"/>
+        <segue reference="ouw-aL-F31"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

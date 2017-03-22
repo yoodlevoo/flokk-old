@@ -41,6 +41,7 @@ class ConfirmUploadViewController: UIViewController {
                 forGroup.totalPostsCount += 1
                 feedNav.groupToPass = forGroup
                 
+                //print(post.description)
             }
         } else if segue.identifier == "segueBackFromConfirmedImageToPhotoSelect" {
             if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {

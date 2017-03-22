@@ -10,7 +10,6 @@ import UIKit
 
 class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //should probably only use this cache for feed view
-    //static var groupCache: NSCache<NSString, Group> = NSCache() //i want this to be static so it doesnt go away on re-initialization
     
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -21,6 +20,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var defaultGroups = [Group]() //an emptyarray of Groups - this is going to be a priorityqueue in a bit
     var groupQueue = PriorityQueue<Group>(sortedBy: <) //hopefully this doesn't get reset each time
     
+    let transitionForward = SlideForwardAnimator()
+    let transitionUp = SlideUpAnimator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,12 +30,12 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         tableView.delegate = self
         tableView.dataSource = self
-                
+        
         //mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
         
         //FileUtils.deleteUserJSON(user: mainUser)
         //FileUtils.deleteGroupJSON(groupName: "group")
-        //FileUtils.deleteGroupJSON(groupName: "basketball")
+        //FileUtils.deleteGroupJSON(groupName: "Basketball")
         
         
         //FileUtils.findAllFilesInDocuments()
@@ -160,9 +162,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 var groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
                 
                 var group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
-                
-                //defaultGroups.append(group)
-                //mainUser.groups.append(group) //this won't be located here in the future
+
                 return group
             } catch let error as NSError {
                 print(error.localizedDescription)
@@ -184,45 +184,25 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return defaultGroups.count //this number will be loaded in later on
     }
-    
-    //When one of the cells is selected
-    //In the future, the feed should not be loaded each time
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /*
-        let group = defaultGroups[indexPath.row] //get the specific group referred to by the pressed cell
-        
-        
-        //then transition to the feedview controller through the Feed's navigation controller
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let feedNav:FeedNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FeedViewNavController") as! FeedNavigationViewController
-        
-        feedNav.groupToPass = group
-        feedNav.passGroup()
-        
-        self.present(feedNav, animated: true, completion: nil) */
-    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let feedNav = segue.destination as? FeedNavigationViewController {
-            if let tag = (sender as? GroupTableViewCell)?.tag {
-                let group = defaultGroups[tag]
-                
-                feedNav.groupToPass = group
-                //feedNav.passGroup()
+        if segue.identifier == "segueFromGroupToFeed" {
+            if let feedNav = segue.destination as? FeedNavigationViewController {
+                if let tag = (sender as? GroupTableViewCell)?.tag {
+                    let group = defaultGroups[tag]
+                    
+                    feedNav.groupToPass = group
+                    feedNav.transitioningDelegate = transitionForward
+                    
+                    //feedNav.passGroup()
+                }
             }
-        } else if let feedView = segue.destination as? FeedViewController {
-            if let tag = (sender as? GroupTableViewCell)?.tag {
-                let group = defaultGroups[tag]
-                
-                feedView.group = group
+        } else if segue.identifier == "segueFromGroupToCreateGroup" {
+            if let createGroupView = segue.destination as? CreateGroupViewController {
+                createGroupView.transitioningDelegate = transitionUp
             }
         }
     }
-    
-    /*
-    @IBAction func createGroup(_ sender: Any) {
-    }
-     */
 }
 
 class GroupTableViewCell: UITableViewCell {

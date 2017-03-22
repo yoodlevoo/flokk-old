@@ -116,6 +116,12 @@ class Post {
         //write over the file
         FileUtils.saveGroupJSON(json: groupJSON, group: postedGroup)
     }
+    
+    //override the description variable to display information
+    //about this class when this class is printed - like Java's .toString() method
+    public var description: String {
+        return "Posted by: (\(poster.description)) in group: (\(postedGroup.groupName)) at index: (\(index))"
+    }
 }
 
 //A class that holds the values for comments on Posts

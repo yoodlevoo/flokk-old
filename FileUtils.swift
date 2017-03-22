@@ -193,7 +193,7 @@ class FileUtils {
     }
     
     //unused and unimplemented
-    static func saveJSON(json: JSON, name: String) -> Bool {
+    @discardableResult static func saveJSON(json: JSON, name: String) -> Bool {
         //let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         //let groupURL = documentsURL?.appendingPathComponent(APP_DISTINGUISHED_NAME)
         
@@ -202,7 +202,7 @@ class FileUtils {
     
     //delete a specific group's json file
     //mainly used currently for testing purposes
-    static func deleteGroupJSON(groupName: String) -> Bool {
+    @discardableResult static func deleteGroupJSON(groupName: String) -> Bool {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         let groupURL = documentsURL?.appendingPathComponent(groupName) //directory for file storage for this specific group
         let jsonURL = groupURL?.appendingPathComponent(groupName + ".json") //json file for this group stored in the relative directory
@@ -221,16 +221,20 @@ class FileUtils {
     
     //delete the mainUser's json file
     //mainly used currently for testing purposes
-    static func deleteUserJSON(user: User) {
+    @discardableResult static func deleteUserJSON(user: User) -> Bool {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         let jsonURL = documentsURL?.appendingPathComponent(user.handle + ".json") //json file for this group stored in the relative directory
         let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
         
         do {
             var success = try FileManager.default.removeItem(at: jsonFile)
+            return true
         } catch let error as NSError {
             print(error.localizedDescription)
+            return false
         }
+        
+        return false
     }
     
     static func deleteAllFiles() {

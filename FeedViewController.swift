@@ -19,6 +19,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     static let initialPostCount = 10 //the initial amount of posts to load
     var loadedPosts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
     
+    let transitionBackward = SlideBackwardAnimator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -129,6 +131,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 
                 group.setPostJSON(json: postsJSONToPass)
+            }
+        } else if segue.identifier == "segueFromFeedToGroup" {
+            if let tabBar = segue.destination as? UITabBarController {
+                tabBar.transitioningDelegate = transitionBackward
+                
+                if let groupView = tabBar.viewControllers?[0] as? GroupsViewController {
+                    
+                }
             }
         }
     }
