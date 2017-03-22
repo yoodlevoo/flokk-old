@@ -13,6 +13,6 @@ class NavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         print("navigation controller delegate")
-        return SlideForwardAnimator()
+        return SlideForwardAnimator(right: true)
     }
 }

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//present this view
 class SlideUpAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
     private var presenting = true
     
@@ -25,14 +26,18 @@ class SlideUpAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIViewCo
         let offScreenDown = CGAffineTransform(translationX: 0, y: -containerView.frame.height)
         let offScreenUp = CGAffineTransform(translationX: 0, y: containerView.frame.height)
         
-        toView.transform = offScreenDown
+        //toView.transform = offScreenUp
         //toView.transform = CGAffineTransform.identity
         
+        //add both views to the container(so they're both rendered)
         containerView.addSubview(toView)
+        containerView.addSubview(fromView)
+        //then add whatever the "main view" is to the back
+        containerView.sendSubview(toBack: toView)
         
         let duration = transitionDuration(using: transitionContext)
         UIView.animate(withDuration: duration, animations: {
-            fromView.transform = offScreenUp
+            fromView.transform = offScreenDown
             toView.transform = CGAffineTransform.identity
             
         }, completion: { finished in
@@ -42,7 +47,6 @@ class SlideUpAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIViewCo
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
         return self
     }
     

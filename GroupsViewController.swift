@@ -204,7 +204,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         } else if segue.identifier == "segueFromGroupToCreateGroup" {
             if let createGroupView = segue.destination as? CreateGroupViewController {
-                createGroupView.transitioningDelegate = transitionUp
+                createGroupView.transitioningDelegate = transitionDown
             }
         }
     }

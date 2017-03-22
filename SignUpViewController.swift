@@ -9,7 +9,6 @@
 import UIKit
 
 class SignUpViewController: UIViewController {
-
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var email: UITextField!

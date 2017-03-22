@@ -10,7 +10,11 @@ import Foundation
 import UIKit
 
 class SlideForwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
-    private var presenting = true
+    var right: Bool
+    
+    init(right: Bool) {
+        self.right = right
+    }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.25
@@ -28,13 +32,15 @@ class SlideForwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIV
         toView.transform = offScreenRight
         
         containerView.addSubview(toView)
+        containerView.addSubview(fromView)
+        containerView.sendSubview(toBack: fromView)
         //toVC!.view.alpha = 0.0
         
         let duration = transitionDuration(using: transitionContext)
         UIView.animate(withDuration: duration, animations: {
             // slide fromView off either the left or right edge of the screen
             // depending if we're presenting or dismissing this view
-            fromView.transform = offScreenLeft
+            //fromView.transform = offScreenLeft
             toView.transform = CGAffineTransform.identity
             
         }, completion: { finished in

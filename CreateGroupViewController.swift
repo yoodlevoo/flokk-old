@@ -24,7 +24,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     
     var profilePicFromCrop: UIImage!
     
-    let transitionDown = SlideDownAnimator()
+    let transitionUp = SlideUpAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,7 +215,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueCancelCreateGroup" {
             if let tabBar = segue.destination as? UITabBarController {
-                tabBar.transitioningDelegate = transitionDown
+                tabBar.transitioningDelegate = transitionUp
             }
         } else if segue.identifier == "segueCreateGroup" { //then create the group and save it as a JSON file
             var users = selectedUsers //the selected users + main user
