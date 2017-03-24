@@ -11,7 +11,7 @@ import UIKit
 class GroupSettingsViewController: UIViewController {
     @IBOutlet weak var groupImage: UIImageView!
     @IBOutlet weak var groupName: UILabel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

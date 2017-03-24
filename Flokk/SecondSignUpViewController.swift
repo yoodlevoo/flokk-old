@@ -8,14 +8,16 @@
 
 import UIKit
 
-class _ndSignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+class SecondSignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var usernameEntry: UITextField!
     @IBOutlet weak var passwordEntry: UITextField!
     @IBOutlet weak var addProfilePicOutlet: UIButton!
     
     private let imagePicker = UIImagePickerController()
     
-     @IBAction func addProfilePic(_ sender: Any) {
+    let transitionBackward = SlideBackwardAnimator(right: true)
+    
+    @IBAction func addProfilePic(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
         
@@ -38,44 +40,21 @@ class _ndSignUpViewController: UIViewController, UIImagePickerControllerDelegate
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameEntry.becomeFirstResponder()
-
+        
         // Do any additional setup after loading the view.
     }
     
-    
-    
-    
-    
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-
-}
     @IBAction func backGesture(_ sender: Any) {
     }
-
-
-        
-        
-        // Dispose of any resources that can be recreated.
-
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "segueFromSecondToFirstSignUp" {
+            segue.destination.transitioningDelegate = transitionBackward
+        }
     }
-    */
-
-
 }

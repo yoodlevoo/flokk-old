@@ -8,17 +8,20 @@
 
 import UIKit
 
-class _stSignUpViewController: UIViewController {
+class FirstSignUpViewController: UIViewController {
     @IBOutlet weak var nameEntry: UITextField!
     @IBOutlet weak var emailEntry: UITextField!
-
+    
+    let transitionForward = SlideForwardAnimator(right: true)
+    let transitionBackward = SlideBackwardAnimator(right: true)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         nameEntry.becomeFirstResponder()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -28,14 +31,11 @@ class _stSignUpViewController: UIViewController {
     @IBAction func backBttn(_ sender: Any) {
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "segueFromFirstToSecondSignUp" {
+            segue.destination.transitioningDelegate = transitionForward
+        } else if segue.identifier == "segueFromSecondSignUpToInitial" {
+            segue.destination.transitioningDelegate = transitionBackward
+        }
     }
-    */
-
 }

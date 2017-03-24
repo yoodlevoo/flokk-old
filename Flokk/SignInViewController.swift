@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewSignInViewController: UIViewController, UITextFieldDelegate {
+class SignInViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameEntry: UITextField!
     @IBOutlet weak var passwordEntry: UITextField!
     let myPassword = "1"
@@ -63,7 +63,6 @@ class NewSignInViewController: UIViewController, UITextFieldDelegate {
     }
     
  
-
     /*
     // MARK: - Navigation
 
@@ -73,5 +72,4 @@ class NewSignInViewController: UIViewController, UITextFieldDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-
 }
