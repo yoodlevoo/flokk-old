@@ -59,6 +59,7 @@
 		15C826F01E8587EF003EE6E4 /* UploadPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826C01E8587EF003EE6E4 /* UploadPhotoViewController.swift */; };
 		15C826F11E8587EF003EE6E4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826C11E8587EF003EE6E4 /* User.swift */; };
 		15C826F71E85888A003EE6E4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15C826F51E85888A003EE6E4 /* Main.storyboard */; };
+		15F74F1D1E898B3F00A23720 /* FriendsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F74F1C1E898B3F00A23720 /* FriendsNavigationViewController.swift */; };
 		15F998171E65525C003F1773 /* gannonprudhommeBasketball.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */; };
 		15F9981D1E655562003F1773 /* gannonprudhommeLadies_and_G.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */; };
 		7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */; };
@@ -141,6 +142,7 @@
 		15C826C01E8587EF003EE6E4 /* UploadPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadPhotoViewController.swift; sourceTree = "<group>"; };
 		15C826C11E8587EF003EE6E4 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		15C826F61E85888A003EE6E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		15F74F1C1E898B3F00A23720 /* FriendsNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsNavigationViewController.swift; sourceTree = "<group>"; };
 		15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeBasketball.json; sourceTree = "<group>"; };
 		15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeLadies_and_G.json; sourceTree = "<group>"; };
 		7F0666071E37BAAD003167AC /* Flokk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flokk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,6 +225,7 @@
 				15C8268B1E8587DF003EE6E4 /* AddCommentViewController.swift */,
 				15C826B21E8587EF003EE6E4 /* PhotoSelectViewController.swift */,
 				15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */,
+				7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */,
 				15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */,
 				15C826AD1E8587EF003EE6E4 /* NotificationsViewController.swift */,
 				15C826AF1E8587EF003EE6E4 /* PasswordRecoveryViewController.swift */,
@@ -235,7 +238,6 @@
 				15C826971E8587EF003EE6E4 /* CropGroupPhotoViewController.swift */,
 				15C8269E1E8587EF003EE6E4 /* GroupProfileViewController.swift */,
 				15C8269F1E8587EF003EE6E4 /* GroupSettingsViewController.swift */,
-				7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */,
 				15C826A11E8587EF003EE6E4 /* ImageScrollView.swift */,
 				15C826A81E8587EF003EE6E4 /* LoadingTableView.swift */,
 				15C826A91E8587EF003EE6E4 /* OldLoginViewController.swift */,
@@ -250,6 +252,7 @@
 				15C826941E8587EF003EE6E4 /* ConfirmUploadNavigationViewController.swift */,
 				15C826991E8587EF003EE6E4 /* FeedNavigationViewController.swift */,
 				15C826B31E8587EF003EE6E4 /* PhotoUploadPageNavigationViewController.swift */,
+				15F74F1C1E898B3F00A23720 /* FriendsNavigationViewController.swift */,
 			);
 			name = "Navigation Controllers";
 			sourceTree = "<group>";
@@ -315,8 +318,8 @@
 				15C826F41E858844003EE6E4 /* Utils */,
 				159ACA201E65EB0F004E410B /* JSON files */,
 				159ACA1C1E65E3C5004E410B /* Libraries */,
-				15C8268C1E8587DF003EE6E4 /* AppDelegate.swift */,
 				15C826F51E85888A003EE6E4 /* Main.storyboard */,
+				15C8268C1E8587DF003EE6E4 /* AppDelegate.swift */,
 				7F0666471E37BC00003167AC /* Assets.xcassets */,
 				7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */,
 				7F0666161E37BAAD003167AC /* Info.plist */,
@@ -354,12 +357,12 @@
 		7FDF8B6C1E820C4500BC61C2 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				15C826931E8587EF003EE6E4 /* BounceButton.swift */,
-				150789DD1E859EFD003C6FB3 /* SlideBackwardAnimator.swift */,
+				150789E01E859EFD003C6FB3 /* SlideUpAnimator.swift */,
 				150789DE1E859EFD003C6FB3 /* SlideDownAnimator.swift */,
 				150789DF1E859EFD003C6FB3 /* SlideForwardAnimator.swift */,
-				150789E01E859EFD003C6FB3 /* SlideUpAnimator.swift */,
+				150789DD1E859EFD003C6FB3 /* SlideBackwardAnimator.swift */,
 				15C826B11E8587EF003EE6E4 /* PhotoSelectLayout.swift */,
+				15C826931E8587EF003EE6E4 /* BounceButton.swift */,
 				15C826A21E8587EF003EE6E4 /* ImageTransition.swift */,
 			);
 			name = Animations;
@@ -537,6 +540,7 @@
 				15C826DE1E8587EF003EE6E4 /* OpenViewController.swift in Sources */,
 				15C826E21E8587EF003EE6E4 /* PhotoSelectViewController.swift in Sources */,
 				15C826F11E8587EF003EE6E4 /* User.swift in Sources */,
+				15F74F1D1E898B3F00A23720 /* FriendsNavigationViewController.swift in Sources */,
 				15C826C21E8587EF003EE6E4 /* BinaryHeap.swift in Sources */,
 				15C826D91E8587EF003EE6E4 /* OldLoginViewController.swift in Sources */,
 				15C826E01E8587EF003EE6E4 /* PersonalProfileViewController.swift in Sources */,

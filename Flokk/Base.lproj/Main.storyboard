@@ -151,7 +151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7lx-Ua-uxK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1280.8" y="-1416.3418290854574"/>
+            <point key="canvasLocation" x="-92" y="110"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="QRw-xE-Y46">
@@ -162,11 +162,11 @@
                         <viewControllerLayoutGuide type="bottom" id="G7h-TQ-uL7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yd4-0x-GQJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="129" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="S3p-aU-ZCY">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -386,7 +386,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9n2-20-fL0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2286" y="309"/>
+            <point key="canvasLocation" x="2070" y="-1352"/>
         </scene>
         <!--Groups-->
         <scene sceneID="bcU-22-3dx">
@@ -397,11 +397,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Ox1-Lt-1AU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="5fr-Vz-yam">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="109" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g8A-sd-EZu">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -750,7 +750,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Bo-UL-T31" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2285.5999999999999" y="-520.38980509745136"/>
+            <point key="canvasLocation" x="1588" y="111"/>
         </scene>
         <!--Search-->
         <scene sceneID="3Y1-JZ-lh9">
@@ -1577,7 +1577,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uew-OU-QkU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1695.2" y="-1416.3418290854574"/>
+            <point key="canvasLocation" x="-2330" y="-1352"/>
         </scene>
         <!--Open-->
         <scene sceneID="6rr-NR-XZR">
@@ -1633,12 +1633,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ogs-7g-Lff" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2572" y="-2197"/>
+            <point key="canvasLocation" x="-3260" y="-2197"/>
         </scene>
         <!--New Sign In-->
         <scene sceneID="voD-d4-Vv9">
             <objects>
-                <viewController title="New Sign In" id="pO2-rs-4H0" customClass="NewSignInViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="New Sign In" id="pO2-rs-4H0" customClass="SignInViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GRD-w5-Ab9"/>
                         <viewControllerLayoutGuide type="bottom" id="hMw-vt-Eym"/>
@@ -1655,7 +1655,7 @@
                                 <state key="normal" image="Sign In Box"/>
                                 <connections>
                                     <action selector="signInBttn:" destination="pO2-rs-4H0" eventType="touchUpInside" id="c13-r9-q46"/>
-                                    <segue destination="x15-8V-ONQ" kind="show" id="1no-Yl-8Fw"/>
+                                    <segue destination="x15-8V-ONQ" kind="show" identifier="segueFromSignInToGroups" id="1no-Yl-8Fw"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YTY-S7-1gj">
@@ -1717,7 +1717,7 @@
                                 <state key="normal" title="  Sign Up" image="WhiteArrow"/>
                                 <connections>
                                     <action selector="backBttn:" destination="pO2-rs-4H0" eventType="touchUpInside" id="C8v-hL-Rl0"/>
-                                    <segue destination="b5U-De-KjE" kind="presentation" id="akd-UB-fBK"/>
+                                    <segue destination="b5U-De-KjE" kind="presentation" identifier="segueFromSignInToInitial" id="akd-UB-fBK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1752,7 +1752,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lBW-m1-P9f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1695" y="-2197"/>
+            <point key="canvasLocation" x="-2330" y="-2197"/>
         </scene>
         <!--CreateAcct-->
         <scene sceneID="UtU-cw-4Sk">
@@ -2094,7 +2094,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7H4-5Z-jR2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1281" y="-520"/>
+            <point key="canvasLocation" x="719" y="110"/>
         </scene>
         <!--Notifications NavControl-->
         <scene sceneID="2zC-hb-JB9">
@@ -2445,7 +2445,7 @@
         <!--1st Sign Up -->
         <scene sceneID="D6q-y4-F0I">
             <objects>
-                <viewController title="1st Sign Up " id="u4h-64-2I7" customClass="_stSignUpViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="1st Sign Up " id="u4h-64-2I7" customClass="FirstSignUpViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bdS-L4-oOO"/>
                         <viewControllerLayoutGuide type="bottom" id="oDF-VC-o0d"/>
@@ -2547,7 +2547,7 @@
         <!--2nd Sign Up -->
         <scene sceneID="GLm-Bb-G5c">
             <objects>
-                <viewController title="2nd Sign Up " id="5nz-Sx-LZu" customClass="_ndSignUpViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="2nd Sign Up " id="5nz-Sx-LZu" customClass="SecondSignUpViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2Jk-4u-w9t"/>
                         <viewControllerLayoutGuide type="bottom" id="3Ox-26-1cG"/>
@@ -2761,7 +2761,7 @@
                                 <rect key="frame" x="16" y="245" width="32" height="31"/>
                                 <state key="normal" image="Friends Icon"/>
                                 <connections>
-                                    <segue destination="7OG-MU-Nvs" kind="presentation" id="rf2-Jh-3bh"/>
+                                    <segue destination="7OG-MU-Nvs" kind="presentation" identifier="segueFromProfileToFriends" id="rf2-Jh-3bh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -2797,7 +2797,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0CI-g0-z8k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1280.8" y="308.9955022488756"/>
+            <point key="canvasLocation" x="1236" y="-1352"/>
         </scene>
         <!--Friends-->
         <scene sceneID="YqC-6R-qdk">
@@ -2808,11 +2808,11 @@
                         <viewControllerLayoutGuide type="bottom" id="fnQ-tH-6yN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9OD-zD-yg6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="rbC-h3-Wrf">
-                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="I4c-Ma-Fqj"/>
                                 </constraints>
@@ -2820,7 +2820,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="82" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1Kk-un-VbA">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -2886,17 +2886,20 @@
                     <navigationItem key="navigationItem" title="Friends" id="6bk-ct-jwr">
                         <barButtonItem key="rightBarButtonItem" image="Inverse White Arrow" id="qMx-3Q-qZK">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="x15-8V-ONQ" kind="presentation" identifier="segueFromFriendsToTabBar" id="O9C-qX-j2Y"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vDq-qa-Lej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2220" y="1161.7691154422789"/>
+            <point key="canvasLocation" x="351" y="-1352"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Friends Navigation View Controller-->
         <scene sceneID="jME-JG-wAg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7OG-MU-Nvs" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7OG-MU-Nvs" customClass="FriendsNavigationViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" backIndicatorImage="WhiteArrow" id="Ag7-8n-IM2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -2910,7 +2913,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SPi-PF-HzS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1280.8" y="1161.7691154422789"/>
+            <point key="canvasLocation" x="-438" y="-1352"/>
         </scene>
     </scenes>
     <resources>
@@ -2955,13 +2958,13 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iPI-bi-wYv"/>
-        <segue reference="hWc-jq-9MM"/>
-        <segue reference="ouw-aL-F31"/>
+        <segue reference="SDq-LM-LAU"/>
         <segue reference="Rxd-mZ-nZM"/>
-        <segue reference="ScJ-J4-tRu"/>
+        <segue reference="j2M-gV-L9R"/>
         <segue reference="akd-UB-fBK"/>
         <segue reference="EsN-Kc-gWc"/>
+        <segue reference="ouw-aL-F31"/>
+        <segue reference="hWc-jq-9MM"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -9,7 +9,8 @@
 import UIKit
 
 class FriendsViewController: UIViewController {
-
+    let transitionBackwards = SlideBackwardAnimator(right: true)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,14 +23,13 @@ class FriendsViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "segueFromFriendsToTabBar" {
+            if let tabBar = segue.destination as? UITabBarController {
+                tabBar.transitioningDelegate = transitionBackwards
+                
+                tabBar.selectedIndex = 2
+            }
+        }
     }
-    */
-
 }

@@ -29,7 +29,7 @@ class SlideForwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIV
         let offScreenRight = CGAffineTransform(translationX: containerView.frame.width, y: 0)
         let offScreenLeft = CGAffineTransform(translationX: -containerView.frame.width, y: 0)
         
-        toView.transform = offScreenRight
+        toView.transform = self.right ? offScreenRight : offScreenLeft  
         
         containerView.addSubview(toView)
         containerView.addSubview(fromView)

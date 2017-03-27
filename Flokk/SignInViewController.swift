@@ -12,27 +12,30 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var usernameEntry: UITextField!
     @IBOutlet weak var passwordEntry: UITextField!
     let myPassword = "1"
+    
+    let transitionForward = SlideForwardAnimator(right: true)
+    let transitionBackward = SlideBackwardAnimator(right: true)
    
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameEntry.becomeFirstResponder()
 
         passwordEntry.delegate = self
-        
-        
-        
-// Do any additional setup after loading the view.
+    
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     @IBAction func forgotPassword(_ sender: Any) {
     }
+    
     @IBAction func signInBttn(_ sender: Any) {
         
-        if passwordEntry.text == myPassword {print("Welcome")
+        if passwordEntry.text == myPassword {
+            print("Welcome")
         } else {
             
             UIView.animate(withDuration: 0.05, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
@@ -54,22 +57,19 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
             UIView.animate(withDuration: 0.05, delay: 0.4, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
                 
                 UIViewAnimationOptions.curveEaseIn, animations: { self.passwordEntry.center.x += 10}, completion: nil)
-            
         }
-        
     }
     
     @IBAction func backBttn(_ sender: Any) {
     }
     
- 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "segueFromSignInToInitial" {
+            segue.destination.transitioningDelegate = transitionBackward
+            
+        } else if segue.identifier == "segueFromSignInToGroups" {
+            
+            segue.destination.transitioningDelegate = transitionForward
+        }
     }
-    */
 }

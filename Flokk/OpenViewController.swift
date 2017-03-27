@@ -15,16 +15,15 @@ class OpenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
     @IBAction func signUpBttn(_ sender: Any) {
     }
+    
     @IBAction func signInPageBttn(_ sender: Any) {
     }
     
@@ -32,5 +31,6 @@ class OpenViewController: UIViewController {
         //it doesnt matter whether we segue to sign up or sign in
         //we will use the same transition
         
+        segue.destination.transitioningDelegate = transitionForward
     }
 }

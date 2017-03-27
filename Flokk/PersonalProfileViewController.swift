@@ -14,6 +14,9 @@ class PersonalProfileViewController: UIViewController {
     @IBOutlet weak var username: UILabel!
 
     var user: User!
+    
+    let transitionForwardLeft = SlideForwardAnimator(right: false)
+    let transitionForwardRight = SlideForwardAnimator(right: true)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,29 +28,28 @@ class PersonalProfileViewController: UIViewController {
         profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
         profilePic.clipsToBounds = true
         
+        name.text = user.fullName
         username.text = user.handle
-
-        
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
+    
     @IBAction func editProfile(_ sender: Any) {
     }
-    @IBOutlet weak var settings: UIButton!
     
+    @IBOutlet weak var settings: UIButton!
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "segueFromProfileToProfileSettings" {
+            if let profileSettingsView = segue.destination as? ProfileSettingsViewController {
+                profileSettingsView.mainUser = mainUser
+            }
+        } else if segue.identifier == "segueFromProfileToFriends" {
+            if let friendsNav = segue.destination as? FriendsNavigationViewController {
+                friendsNav.transitioningDelegate = transitionForwardLeft
+            }
+        }
     }
-    */
-
 }

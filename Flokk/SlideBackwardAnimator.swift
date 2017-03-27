@@ -41,7 +41,8 @@ class SlideBackwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UI
         UIView.animate(withDuration: duration, animations: {
             // slide fromView off either the left or right edge of the screen
             // depending if we're presenting or dismissing this view
-            fromView.transform = offScreenRight
+            fromView.transform = self.right ? offScreenRight : offScreenLeft
+            
             toView.transform = CGAffineTransform.identity
             
         }, completion: { finished in
