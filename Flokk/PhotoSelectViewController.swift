@@ -21,6 +21,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var forGroup: Group! //just passing this around so we can return it to the feed
     
+    static let initialNumPosts = 10 //load more when scrolling down
     static let numPhotosToLoad = 10
     
     var images = [UIImage]() //should i have this?

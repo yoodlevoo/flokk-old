@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-//literally only 2 lines of code changed
 class SlideBackwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
     var right: Bool
     

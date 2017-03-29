@@ -9,7 +9,7 @@
 import UIKit
 
 class FriendsViewController: UIViewController {
-    let transitionBackwards = SlideBackwardAnimator(right: true)
+    let transitionBackwards = SlideBackwardAnimator(right: false)
     
     override func viewDidLoad() {
         super.viewDidLoad()
