@@ -18,7 +18,7 @@ class UploadPhotoViewController: UIViewController, UIImagePickerControllerDelega
 
         imageView.contentMode = .scaleAspectFit
         imagePicker.delegate = self
-        getLastImage()
+        //getLastImage()
     }
 
     override func didReceiveMemoryWarning() {
