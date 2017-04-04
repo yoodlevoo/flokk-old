@@ -8,6 +8,20 @@
 
 import Foundation
 
+enum NotificationType {
+    case NEW_POST
+    case FRIEND_INVITE
+    case GROUP_INVITE
+}
+
 class Notification {
+    var type: NotificationType
+    var sender: User
+    var receiver: User
     
+    init(type: NotificationType, sender: User, receiver: User) {
+        self.type = type
+        self.sender = sender
+        self.receiver = receiver
+    }
 }
