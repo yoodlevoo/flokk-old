@@ -24,4 +24,13 @@ class Notification {
         self.sender = sender
         self.receiver = receiver
     }
+    
+    //add this to the stack on the notification tab
+    func addToNotificationTab() {
+        
+    }
+    
+    func notifyReceiver() {
+        
+    }
 }

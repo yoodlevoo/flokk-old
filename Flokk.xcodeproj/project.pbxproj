@@ -11,6 +11,7 @@
 		150789E21E859EFD003C6FB3 /* SlideDownAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150789DE1E859EFD003C6FB3 /* SlideDownAnimator.swift */; };
 		150789E31E859EFD003C6FB3 /* SlideForwardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150789DF1E859EFD003C6FB3 /* SlideForwardAnimator.swift */; };
 		150789E41E859EFD003C6FB3 /* SlideUpAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150789E01E859EFD003C6FB3 /* SlideUpAnimator.swift */; };
+		151E60EC1E93CECC00A45227 /* Pods_Flokk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A28DF034D8D231E26FEA16 /* Pods_Flokk.framework */; };
 		15309E7D1E6494F200D1DFA1 /* gannonprudhomme.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */; };
 		15309E7F1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */; };
 		15309E811E65068100D1DFA1 /* jaredheyenSki_Trip.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */; };
@@ -69,7 +70,6 @@
 		7F0666561E37BC00003167AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666471E37BC00003167AC /* Assets.xcassets */; };
 		7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */; };
 		7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */; };
-		95A562C9B19D574142DB5635 /* Pods_Flokk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A28DF034D8D231E26FEA16 /* Pods_Flokk.framework */; };
 		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
 		AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */ = {isa = PBXBuildFile; fileRef = AD5C0FC01E4A62F200272FD0 /* comments.json */; };
 		FF68FB30F333858091D73795 /* Pods_FlokkUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08116963DDC32F6213EF11B5 /* Pods_FlokkUITests.framework */; };
@@ -179,7 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95A562C9B19D574142DB5635 /* Pods_Flokk.framework in Frameworks */,
+				151E60EC1E93CECC00A45227 /* Pods_Flokk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -902,7 +902,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = L4K4Q74X62;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
@@ -921,7 +921,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = L4K4Q74X62;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
