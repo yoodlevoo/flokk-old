@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupSettingsViewController: UIViewController {
+class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var groupImage: UIImageView!
     @IBOutlet weak var groupName: UILabel!
     
@@ -22,18 +22,27 @@ class GroupSettingsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! GroupSettingsTableViewCell
+        
+        return cell
+    }
+    
     @IBAction func backPage(_ sender: AnyObject) {
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
     }
-    */
+}
 
+class GroupSettingsTableViewCell: UITableViewCell {
+    @IBOutlet weak var profilePhotoView: UIImageView!
+    @IBOutlet weak var fullNameLabel: UILabel!
+    
 }
