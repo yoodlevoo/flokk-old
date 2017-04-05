@@ -170,7 +170,7 @@
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="129" id="OQ4-YX-1hl">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="default" rowHeight="129" id="OQ4-YX-1hl" customClass="NotificationTableViewCell" customModule="Flokk" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="129"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OQ4-YX-1hl" id="WEm-ak-gsL">
@@ -210,6 +210,10 @@
                                                 <constraint firstItem="Y6y-w1-Toh" firstAttribute="leading" secondItem="EjS-Df-Vj1" secondAttribute="trailing" constant="44" id="xn8-Ks-A6E"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="Y6y-w1-Toh" id="vq6-wW-v6g"/>
+                                            <outlet property="nameLabel" destination="iCf-o0-tKe" id="EnB-vp-nj6"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -227,6 +231,9 @@
                             <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="S3p-aU-ZCY" id="Rwi-0n-Xn1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BsU-Y1-URd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1635,10 +1642,10 @@
             </objects>
             <point key="canvasLocation" x="-3260" y="-2197"/>
         </scene>
-        <!--New Sign In-->
+        <!--Sign In View Controller-->
         <scene sceneID="voD-d4-Vv9">
             <objects>
-                <viewController title="New Sign In" id="pO2-rs-4H0" customClass="SignInViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pO2-rs-4H0" customClass="SignInViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GRD-w5-Ab9"/>
                         <viewControllerLayoutGuide type="bottom" id="hMw-vt-Eym"/>
@@ -2442,10 +2449,10 @@
             </objects>
             <point key="canvasLocation" x="7927" y="309"/>
         </scene>
-        <!--1st Sign Up -->
+        <!--First Sign Up View Controller-->
         <scene sceneID="D6q-y4-F0I">
             <objects>
-                <viewController title="1st Sign Up " id="u4h-64-2I7" customClass="FirstSignUpViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="u4h-64-2I7" customClass="FirstSignUpViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bdS-L4-oOO"/>
                         <viewControllerLayoutGuide type="bottom" id="oDF-VC-o0d"/>
@@ -2544,10 +2551,10 @@
             </objects>
             <point key="canvasLocation" x="-3260" y="-2929"/>
         </scene>
-        <!--2nd Sign Up -->
+        <!--Second Sign Up View Controller-->
         <scene sceneID="GLm-Bb-G5c">
             <objects>
-                <viewController title="2nd Sign Up " id="5nz-Sx-LZu" customClass="SecondSignUpViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5nz-Sx-LZu" customClass="SecondSignUpViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2Jk-4u-w9t"/>
                         <viewControllerLayoutGuide type="bottom" id="3Ox-26-1cG"/>
@@ -2967,12 +2974,12 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Rxd-mZ-nZM"/>
-        <segue reference="O9C-qX-j2Y"/>
+        <segue reference="1no-Yl-8Fw"/>
+        <segue reference="ScJ-J4-tRu"/>
+        <segue reference="FdN-S2-Bm6"/>
+        <segue reference="lYZ-EY-6R1"/>
         <segue reference="hWc-jq-9MM"/>
         <segue reference="ouw-aL-F31"/>
-        <segue reference="EsN-Kc-gWc"/>
-        <segue reference="akd-UB-fBK"/>
-        <segue reference="j2M-gV-L9R"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
