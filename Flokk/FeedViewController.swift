@@ -12,16 +12,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var scrollView: UIScrollView!
     
-    var refreshControl: UIRefreshControl = UIRefreshControl()
-    
     static var postsCache = NSCache<NSString, Post>()
-    
     var group: Group! //the group this feed is reading from
     
     static let initialPostCount = 10 //the initial amount of posts to load
     var loadedPosts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
     
     let transitionBackward = SlideBackwardAnimator(right: true)
+    var refreshControl: UIRefreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +40,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if loadedPosts.count == 0 {
             loadedPosts = group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
+            
             for post in loadedPosts {
                 if let cachedObject = FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString) { //if this posts exists in the cache
                 } else { //if it doesn't add it to the postsCache
@@ -49,6 +48,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                     //FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString)
                 }
             }
+            
         } else {
             //loadedPosts.removeAll()
             //loadedPosts = group.loadPostsNew(numPostsToLoad: FeedViewController.initialPostCount)
@@ -116,6 +116,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func groupSettings(_ sender: Any) {
+        
+    }
+    
+    @IBAction func unwindFromPhotoSelectToFeed(segue: UIStoryboardSegue) {
+        
+    }
+    
+    @IBAction func unwindFromCommentsToFeed(segue: UIStoryboardSegue) {
         
     }
     

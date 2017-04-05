@@ -564,7 +564,7 @@
                         <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="hK7-Jw-Zcq" userLabel="Back Arrow">
                             <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="x15-8V-ONQ" kind="presentation" identifier="segueFromFeedToGroup" id="iPI-bi-wYv"/>
+                                <segue destination="2VV-zp-xh3" kind="unwind" unwindAction="unwindFromFeedToGroupWithSegue:" id="VX0-sQ-fWD"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -589,6 +589,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cPg-Ji-GDS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="2VV-zp-xh3" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3976.8000000000002" y="-2929.385307346327"/>
         </scene>
@@ -1259,7 +1260,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NxO-ln-eig" id="szF-Ks-JcQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="104.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="105"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Jv-a9-oBF">
@@ -1964,7 +1965,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IWe-nn-AwR" id="MCj-mD-7Yf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="78.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipse-3" translatesAutoresizingMaskIntoConstraints="NO" id="pic-sM-R7D">
@@ -2026,7 +2027,7 @@
                             <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="backPage:" destination="n5W-Aj-Eyg" id="0To-g4-tNw"/>
-                                <segue destination="nKl-w0-RhZ" kind="presentation" id="hWc-jq-9MM"/>
+                                <segue destination="MT4-03-mju" kind="unwind" unwindAction="unwindFromCommentsToFeedWithSegue:" id="uhl-xL-FKD"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="ellipse-3" id="H4C-y0-slr">
@@ -2044,6 +2045,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hLh-xz-M8G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="MT4-03-mju" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5860" y="-2929.385307346327"/>
         </scene>
@@ -2290,12 +2292,13 @@
                         <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="dVa-He-TTT">
                             <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="nKl-w0-RhZ" kind="presentation" identifier="segueFromPhotoSelectPageToFeed" id="pD6-xj-Hkh"/>
+                                <segue destination="YPj-Rj-hrJ" kind="unwind" unwindAction="unwindFromPhotoSelectToFeedWithSegue:" id="ewH-Qj-nJD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CTf-az-DgJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="YPj-Rj-hrJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3977" y="-3752"/>
         </scene>
@@ -2848,7 +2851,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="82"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kol-lS-2YG" id="EJb-Ib-GeD">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="81.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="82"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hke-RD-fcx">
@@ -2859,7 +2862,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdu-Zt-swA">
-                                                    <rect key="frame" x="87" y="25" width="200" height="17"/>
+                                                    <rect key="frame" x="87" y="25" width="200" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="200" id="8qR-Pj-dzU"/>
                                                     </constraints>
@@ -2868,7 +2871,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yy7-0Y-ToN">
-                                                    <rect key="frame" x="87" y="47" width="200" height="17"/>
+                                                    <rect key="frame" x="87" y="50" width="200" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="200" id="CRA-HC-tTx"/>
                                                     </constraints>
@@ -2911,9 +2914,6 @@
                     <navigationItem key="navigationItem" title="Friends" id="6bk-ct-jwr">
                         <barButtonItem key="rightBarButtonItem" image="Inverse White Arrow" id="qMx-3Q-qZK">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <segue destination="x15-8V-ONQ" kind="presentation" identifier="segueFromFriendsToTabBar" id="O9C-qX-j2Y"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -2986,13 +2986,13 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="O9C-qX-j2Y"/>
+        <segue reference="SDq-LM-LAU"/>
         <segue reference="Rxd-mZ-nZM"/>
-        <segue reference="wRb-hd-NRx"/>
+        <segue reference="wV8-oK-BhX"/>
+        <segue reference="ouw-aL-F31"/>
         <segue reference="ScJ-J4-tRu"/>
         <segue reference="FdN-S2-Bm6"/>
         <segue reference="lYZ-EY-6R1"/>
-        <segue reference="6Us-gJ-BYB"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

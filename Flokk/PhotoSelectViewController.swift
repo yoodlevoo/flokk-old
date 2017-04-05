@@ -21,7 +21,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     
     var forGroup: Group! //just passing this around so we can return it to the feed
     
-    static let initialNumPosts = 10 //load more when scrolling down
+    static let initialNumPosts = 100 //load more when scrolling down
     static let morePostsToLoad = 8 //amount of posts to load each time when we need to on scrolling down
     var loadedPostsCount = initialNumPosts //the total amount of posts loaded
     
@@ -144,6 +144,10 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         })
         
         return selected
+    }
+    
+    @IBAction func unwindFromConfirmImageToPhotoSelect(segue: UIStoryboardSegue) {
+    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -41,6 +41,14 @@ class PersonalProfileViewController: UIViewController {
     
     @IBOutlet weak var settings: UIButton!
 
+    @IBAction func unwindFromFriendsToProfile(segue: UIStoryboardSegue) {
+        
+    }
+    
+    @IBAction func unwindFromSettingsToProfile(segue: UIStoryboardSegue) {
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromProfileToProfileSettings" {
             if let profileSettingsView = segue.destination as? ProfileSettingsViewController {

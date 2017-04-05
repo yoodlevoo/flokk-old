@@ -42,7 +42,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
         
         //FileUtils.deleteUserJSON(user: mainUser)
-        //FileUtils.deleteGroupJSON(groupName: "group")
+        //FileUtils.deleteGroupJSON(groupName: "Bball")
         //FileUtils.deleteGroupJSON(groupName: "Basketball")
         
         
@@ -158,7 +158,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 let creator = json["creator"].string
                 let groupName = json["groupName"].string
-                let groupIconName = json["groupIcon"].string
+                //let groupIconName = json["groupIcon"].string
                 
                 var users = [User]()
                 for(_, subJSON) in json["users"] {
@@ -167,9 +167,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 
-                var groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
+                let groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
                 
-                var group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
+                let group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
 
                 return group
             } catch let error as NSError {
@@ -192,12 +192,16 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return defaultGroups.count //this number will be loaded in later on
     }
+    
+    @IBAction func unwindFromFeedToGroup(segue: UIStoryboardSegue) {
+        
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupToFeed" {
             if let feedNav = segue.destination as? FeedNavigationViewController {
                 if let tag = (sender as? GroupTableViewCell)?.tag {
-                    let group = defaultGroups[tag]
+                    weak var group = defaultGroups[tag] // I want this to be weak to prevent memory leakage
                     
                     feedNav.groupToPass = group
                     feedNav.transitioningDelegate = transitionForward

@@ -10,7 +10,7 @@ import UIKit
 
 //basically only used to change the navigation bar's color
 class FeedNavigationViewController: UINavigationController {
-    var groupToPass: Group!
+    weak var groupToPass: Group! //weak b/c I don't want this object to be retained
     
     override func viewDidLoad() {
         super.viewDidLoad()

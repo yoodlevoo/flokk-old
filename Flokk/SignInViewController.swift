@@ -63,6 +63,10 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     @IBAction func backBttn(_ sender: Any) {
     }
     
+    @IBAction func unwindToInitial(segue: UIStoryboardSegue) {
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromSignInToInitial" {
             segue.destination.transitioningDelegate = transitionBackward

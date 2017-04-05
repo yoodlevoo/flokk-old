@@ -31,6 +31,10 @@ class FirstSignUpViewController: UIViewController {
     @IBAction func backBttn(_ sender: Any) {
     }
     
+    @IBAction func segueToFirstSignUp(segue: UIStoryboardSegue) {
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromFirstToSecondSignUp" {
             segue.destination.transitioningDelegate = transitionForward

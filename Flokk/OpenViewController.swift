@@ -27,6 +27,10 @@ class OpenViewController: UIViewController {
     @IBAction func signInPageBttn(_ sender: Any) {
     }
     
+    @IBAction func segueToInitialSignIn(segue: UIStoryboardSegue) {
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //it doesnt matter whether we segue to sign up or sign in
         //we will use the same transition

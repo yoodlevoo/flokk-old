@@ -51,7 +51,7 @@ class SecondSignUpViewController: UIViewController, UIImagePickerControllerDeleg
     
     @IBAction func backGesture(_ sender: Any) {
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromSecondToFirstSignUp" {
             segue.destination.transitioningDelegate = transitionBackward
