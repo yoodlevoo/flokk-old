@@ -579,7 +579,7 @@
                                 <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="groupSettings:" destination="zMU-GR-fPQ" id="ooS-py-VYC"/>
-                                    <segue destination="LNn-a3-Dy2" kind="presentation" id="td5-Og-Zlg"/>
+                                    <segue destination="LNn-a3-Dy2" kind="presentation" identifier="segueFromFeedToGroupSettings" id="td5-Og-Zlg"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -1226,6 +1226,7 @@
                             <color key="tintColor" red="0.23511001470000001" green="0.61087805029999998" blue="0.57534974809999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="backPage:" destination="ZLj-Cl-JuV" id="hWp-hN-ETr"/>
+                                <segue destination="nKl-w0-RhZ" kind="presentation" identifier="segueFromGroupSettingsToFeed" id="wRb-hd-NRx"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1258,7 +1259,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NxO-ln-eig" id="szF-Ks-JcQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="105"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="104.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Jv-a9-oBF">
@@ -1963,7 +1964,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IWe-nn-AwR" id="MCj-mD-7Yf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="78.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipse-3" translatesAutoresizingMaskIntoConstraints="NO" id="pic-sM-R7D">
@@ -2750,7 +2751,7 @@
                                 </state>
                                 <connections>
                                     <action selector="editProfile:" destination="My8-Ss-CJl" eventType="touchUpInside" id="S1Y-Ry-JrT"/>
-                                    <segue destination="Gnc-hd-ZFe" kind="presentation" id="2Pz-Yt-FTy"/>
+                                    <segue destination="Gnc-hd-ZFe" kind="presentation" identifier="segueFromProfileToProfileSettings" id="2Pz-Yt-FTy"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mTt-YQ-p5F">
@@ -2847,7 +2848,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="82"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kol-lS-2YG" id="EJb-Ib-GeD">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="82"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="81.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hke-RD-fcx">
@@ -2858,7 +2859,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdu-Zt-swA">
-                                                    <rect key="frame" x="87" y="25" width="200" height="20"/>
+                                                    <rect key="frame" x="87" y="25" width="200" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="200" id="8qR-Pj-dzU"/>
                                                     </constraints>
@@ -2867,7 +2868,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yy7-0Y-ToN">
-                                                    <rect key="frame" x="87" y="50" width="200" height="20"/>
+                                                    <rect key="frame" x="87" y="47" width="200" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="200" id="CRA-HC-tTx"/>
                                                     </constraints>
@@ -2985,13 +2986,13 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="O9C-qX-j2Y"/>
         <segue reference="Rxd-mZ-nZM"/>
-        <segue reference="iPI-bi-wYv"/>
-        <segue reference="F8l-aN-x6i"/>
-        <segue reference="6Us-gJ-BYB"/>
-        <segue reference="lYZ-EY-6R1"/>
-        <segue reference="FdN-S2-Bm6"/>
+        <segue reference="wRb-hd-NRx"/>
         <segue reference="ScJ-J4-tRu"/>
+        <segue reference="FdN-S2-Bm6"/>
+        <segue reference="lYZ-EY-6R1"/>
+        <segue reference="6Us-gJ-BYB"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
