@@ -67,6 +67,7 @@ class FileUtils {
         let imageURL = groupDirectory?.appendingPathComponent(groupName + "Icon.png")
         let absoluteImageURL = URL(fileURLWithPath: (imageURL?.absoluteString)!)
         
+        //attempt to load the image from data
         do {
             image = try UIImage(data: Data(contentsOf: absoluteImageURL))!
         } catch let error as NSError {
@@ -93,11 +94,12 @@ class FileUtils {
         var newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
+        //convert the image to straight up data
         let imageData = UIImagePNGRepresentation(newImage!)
         let data = NSData(data: imageData!)
         
         do {
-            // print(absoluteImageURL.absoluteString + " save post")
+            print(absoluteImageURL.absoluteString + " save post")
             //try imageData?.write(to: absoluteImageURL)
             return data.write(to: absoluteImageURL, atomically: true)
             
@@ -159,8 +161,7 @@ class FileUtils {
         return data.write(to: absolutePicURL, atomically: true)
     }
     
-    //save the users's new json file
-    //mainly used when creating a new group and adding it to the main user's
+    //save the users's new json file, mainly used when creating a new group and adding it to the main user's
     //participating groups
     @discardableResult static func saveUserJSON(json: JSON, user: User) -> Bool {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
@@ -262,6 +263,7 @@ class FileUtils {
     }
 }
 
+//extension to the JSON class from SwiftyJSON, adds append functions
 extension JSON {
     mutating func appendIfArray(json:JSON){
         if var arr = self.array{

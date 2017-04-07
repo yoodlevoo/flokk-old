@@ -12,9 +12,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    //var defaultGroups: [Group: UIImage] = [:] //makes an empty dictionary
-    var defaultGroups = [Group]() //an emptyarray of Groups - this is going to be a priorityqueue in a bit
-    var groupQueue = PriorityQueue<Group>(sortedBy: <) //hopefully this doesn't get reset each time
+    //var defaultGroups: [Group: UIImage] = [:] // Makes an empty dictionary
+    var defaultGroups = [Group]() // An emptyarray of Groups - this is going to be a priorityqueue in a bit
+    var groupQueue = PriorityQueue<Group>(sortedBy: <) // Hopefully this doesn't get reset each time
     
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
@@ -31,7 +31,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             tableView.addSubview(refreshControl)
         }
         
-        //print(defaultGroups.count) //at this point is this ever not at 0 or is a new array created each time
+        //print(defaultGroups.count) // At this point is this ever not at 0 or is a new array created each time
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -85,13 +85,13 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
-    //called anytime this view appears on screen, while viewDidLoad is only called once
+    // Called anytime this view appears on screen, while viewDidLoad is only called once
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
     }
     
-    //when the view is preparing to appear
+    // When the view is preparing to appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -102,8 +102,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    //Load all about this user and what group(the handles) they're in
-    //use these handles to further load the groups from there separate files
+    // Load all about this user and what group(the handles) they're in
+    // Use these handles to further load the groups from there separate files
     func findGroupHandles() -> [String] { //this will be removed later ons
         var groupHandles = [String]()
         
@@ -168,7 +168,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 let creator = json["creator"].string
                 let groupName = json["groupName"].string
-                //let groupIconName = json["groupIcon"].string
+                let totalPostsCount = json["postsCount"].int
                 
                 var users = [User]()
                 for(_, subJSON) in json["users"] {
@@ -180,6 +180,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
                 
                 let group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
+                group.totalPostsCount = totalPostsCount!
 
                 return group
             } catch let error as NSError {

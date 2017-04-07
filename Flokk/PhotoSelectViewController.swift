@@ -19,11 +19,11 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     let imageManager = PHCachingImageManager()
     var thumbnailSize: CGSize!
     
-    var forGroup: Group! //just passing this around so we can return it to the feed
+    var forGroup: Group! // Just passing this around so we can return it to the feed
     
-    static let initialNumPosts = 100 //load more when scrolling down
-    static let morePostsToLoad = 8 //amount of posts to load each time when we need to on scrolling down
-    var loadedPostsCount = initialNumPosts //the total amount of posts loaded
+    static let initialNumPosts = 100 // Load more when scrolling down
+    static let morePostsToLoad = 8 // Amount of posts to load each time when we need to on scrolling down
+    var loadedPostsCount = initialNumPosts // The total amount of posts loaded
     
     var images = NSMutableArray(capacity: PhotoSelectViewController.initialNumPosts) //should i have this?
     
@@ -92,7 +92,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         
         let boundingRect = CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
         
-        //calculate a height that retains the photo's aspect ratio
+        // Calculate a height that retains the photo's aspect ratio
         let rect = AVMakeRect(aspectRatio: (image.size), insideRect: boundingRect)
         
         height = rect.size.height

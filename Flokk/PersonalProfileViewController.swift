@@ -20,7 +20,7 @@ class PersonalProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //this normally won't be here - only for testing
+        // This normally won't be here - only for testing
         user = mainUser
         
         profilePic.image = user.profilePhoto
