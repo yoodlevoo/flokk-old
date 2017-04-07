@@ -15,8 +15,7 @@ class PersonalProfileViewController: UIViewController {
 
     var user: User!
     
-    let transitionForwardLeft = SlideForwardAnimator(right: false)
-    let transitionForwardRight = SlideForwardAnimator(right: true)
+    let transitionLeft = SlideLeftAnimator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,14 +39,6 @@ class PersonalProfileViewController: UIViewController {
     }
     
     @IBOutlet weak var settings: UIButton!
-
-    @IBAction func unwindFromFriendsToProfile(segue: UIStoryboardSegue) {
-        
-    }
-    
-    @IBAction func unwindFromSettingsToProfile(segue: UIStoryboardSegue) {
-        
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromProfileToProfileSettings" {
@@ -56,7 +47,7 @@ class PersonalProfileViewController: UIViewController {
             }
         } else if segue.identifier == "segueFromProfileToFriends" {
             if let friendsNav = segue.destination as? FriendsNavigationViewController {
-                friendsNav.transitioningDelegate = transitionForwardLeft
+                friendsNav.transitioningDelegate = transitionLeft
             }
         }
     }

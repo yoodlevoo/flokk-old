@@ -78,8 +78,6 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         //set the cells tag so prepare(for: segue) knows which celll was selected
         cell.tag = indexPath.item
         
-        //print("at index \(indexPath.item) cell: \(cell.bounds) imageView: \(cell.imageView.bounds) imageSize: \(cell.imageView.image?.size)")
-        
         return cell
     }
     
@@ -122,8 +120,11 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         let asset = fetchResult.object(at: index)
         imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: PHImageContentMode.aspectFit, options: nil, resultHandler: { image, _ in
             
-            //set the image in the array
-            self.images[index] = image!
+            if image != nil {
+                self.images[index] = image!
+            } else {
+                print("image at index \(index) is nil")
+            }
         })
     }
     

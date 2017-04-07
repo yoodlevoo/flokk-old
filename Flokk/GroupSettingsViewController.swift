@@ -12,6 +12,10 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var groupImage: UIImageView!
     @IBOutlet weak var groupName: UILabel!
     
+    let transitionUp = SlideUpAnimator()
+    
+    weak var group: Group!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,11 +37,10 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-    @IBAction func backPage(_ sender: AnyObject) {
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if let feedView = segue.destination as? FeedViewController {
+            feedView.transitioningDelegate = transitionUp
+        }
     }
 }
 

@@ -11,7 +11,7 @@ import UIKit
 class OpenViewController: UIViewController {
     @IBOutlet weak var flokkLogo: UIImageView!
 
-    let transitionForward = SlideForwardAnimator(right: true)
+    let transitionRight = SlideRightAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +35,6 @@ class OpenViewController: UIViewController {
         //it doesnt matter whether we segue to sign up or sign in
         //we will use the same transition
         
-        segue.destination.transitioningDelegate = transitionForward
+        segue.destination.transitioningDelegate = transitionRight
     }
 }

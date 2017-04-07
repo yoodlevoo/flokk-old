@@ -9,12 +9,8 @@
 import UIKit
 
 class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    //should probably only use this cache for feed view
-    
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    
-    //var mainUser: User! //the user who is currently running the app
     
     //var defaultGroups: [Group: UIImage] = [:] //makes an empty dictionary
     var defaultGroups = [Group]() //an emptyarray of Groups - this is going to be a priorityqueue in a bit
@@ -22,7 +18,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
-    let transitionForward = SlideForwardAnimator(right: true)
+    let transitionRight = SlideRightAnimator()
+    let transitionUp = SlideUpAnimator()
     let transitionDown = SlideDownAnimator()
     
     override func viewDidLoad() {
@@ -90,6 +87,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
     }
     
     //Load all about this user and what group(the handles) they're in
@@ -192,10 +190,6 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return defaultGroups.count //this number will be loaded in later on
     }
-    
-    @IBAction func unwindFromFeedToGroup(segue: UIStoryboardSegue) {
-        
-    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupToFeed" {
@@ -204,7 +198,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     weak var group = defaultGroups[tag] // I want this to be weak to prevent memory leakage
                     
                     feedNav.groupToPass = group
-                    feedNav.transitioningDelegate = transitionForward
+                    feedNav.transitioningDelegate = transitionRight
                     
                     //feedNav.passGroup()
                 }

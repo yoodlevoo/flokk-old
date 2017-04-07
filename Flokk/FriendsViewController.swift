@@ -14,7 +14,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var friends = [User]() //friends of the main user
     var displayedFriends = [User]()
     
-    let transitionBackwards = SlideBackwardAnimator(right: false)
+    let transitionRight = SlideRightAnimator()
     
     
     override func viewDidLoad() {
@@ -52,9 +52,10 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        
         if segue.identifier == "segueFromFriendsToTabBar" {
-            if let tabBar = segue.destination as? UITabBarController {
-                tabBar.transitioningDelegate = transitionBackwards
+            if let tabBar = segue.destination as? MainTabBarController {
                 
                 tabBar.selectedIndex = 2
             }

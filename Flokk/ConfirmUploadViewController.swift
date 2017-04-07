@@ -43,10 +43,8 @@ class ConfirmUploadViewController: UIViewController {
                 
                 //print(post.description)
             }
-        } else if segue.identifier == "segueBackFromConfirmedImageToPhotoSelect" {
-            if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
-                photoUploadPageNav.groupToPass = forGroup
-            }
+        } else if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
+            photoUploadPageNav.groupToPass = forGroup
         }
     }
 }

@@ -13,8 +13,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordEntry: UITextField!
     let myPassword = "1"
     
-    let transitionForward = SlideForwardAnimator(right: true)
-    let transitionBackward = SlideBackwardAnimator(right: true)
+    let transitionRight = SlideRightAnimator()
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,20 +59,16 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func backBttn(_ sender: Any) {
-    }
-    
-    @IBAction func unwindToInitial(segue: UIStoryboardSegue) {
+    @IBAction func unwindToSignIn(segue: UIStoryboardSegue) {
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromSignInToInitial" {
-            segue.destination.transitioningDelegate = transitionBackward
+        if segue.identifier == "segueFromSignInToGroups" {
+            segue.destination.transitioningDelegate = transitionRight
             
-        } else if segue.identifier == "segueFromSignInToGroups" {
-            
-            segue.destination.transitioningDelegate = transitionForward
+        } else if let openView = segue.destination as? OpenViewController {
+            segue.destination.transitioningDelegate = transitionRight
         }
     }
 }

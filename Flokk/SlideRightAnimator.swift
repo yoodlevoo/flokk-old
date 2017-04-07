@@ -1,19 +1,19 @@
 //
-//  SlideForwardAnimator.swift
+//  SlideRightAnimator.swift
 //  Flokk
 //
-//  Created by Gannon Prudhomme on 3/21/17.
+//  Created by Gannon Prudhomme on 4/6/17.
 //  Copyright © 2017 Heyen Enterprises. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class SlideForwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
-    var right: Bool
+class SlideRightAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
+    var presenting: Bool
     
-    init(right: Bool) {
-        self.right = right
+    override init() {
+        presenting = true
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
@@ -29,18 +29,24 @@ class SlideForwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIV
         let offScreenRight = CGAffineTransform(translationX: containerView.frame.width, y: 0)
         let offScreenLeft = CGAffineTransform(translationX: -containerView.frame.width, y: 0)
         
-        toView.transform = self.right ? offScreenRight : offScreenLeft  
+        if self.presenting {
+            toView.transform = offScreenRight
+        }
         
         containerView.addSubview(toView)
         containerView.addSubview(fromView)
-        containerView.sendSubview(toBack: fromView)
+        containerView.sendSubview(toBack: self.presenting ? fromView : toView)
         //toVC!.view.alpha = 0.0
         
         let duration = transitionDuration(using: transitionContext)
         UIView.animate(withDuration: duration, animations: {
             // slide fromView off either the left or right edge of the screen
             // depending if we're presenting or dismissing this view
-            //fromView.transform = offScreenLeft
+            
+            if !self.presenting {
+                fromView.transform = offScreenRight
+            }
+            
             toView.transform = CGAffineTransform.identity
             
         }, completion: { finished in
@@ -50,11 +56,14 @@ class SlideForwardAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIV
     }
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        self.presenting = true
         
         return self
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        self.presenting = false
+        
         return self
     }
 }

@@ -15,7 +15,12 @@ class SecondSignUpViewController: UIViewController, UIImagePickerControllerDeleg
     
     private let imagePicker = UIImagePickerController()
     
-    let transitionBackward = SlideBackwardAnimator(right: true)
+    //let transitionBackward = SlideBackwardAnimator(right: true)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        usernameEntry.becomeFirstResponder()
+    }
     
     @IBAction func addProfilePic(_ sender: Any) {
         imagePicker.allowsEditing = false
@@ -41,20 +46,10 @@ class SecondSignUpViewController: UIViewController, UIImagePickerControllerDeleg
         dismiss(animated: true, completion: nil)
     }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        usernameEntry.becomeFirstResponder()
-        
-        // Do any additional setup after loading the view.
-    }
-    
     @IBAction func backGesture(_ sender: Any) {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromSecondToFirstSignUp" {
-            segue.destination.transitioningDelegate = transitionBackward
-        }
+        
     }
 }

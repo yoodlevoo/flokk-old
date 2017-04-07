@@ -210,18 +210,10 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         
         return true
     }
-    
-    @IBAction func unwindToGroup(segue: UIStoryboardSegue) {
-        
-    }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueCancelCreateGroup" {
-            if let tabBar = segue.destination as? UITabBarController {
-                tabBar.transitioningDelegate = transitionUp
-            }
-        } else if segue.identifier == "segueCreateGroup" { //then create the group and save it as a JSON file
+        if segue.identifier == "segueCreateGroup" { //then create the group and save it as a JSON file
             var users = selectedUsers //the selected users + main user
             users.append(mainUser)
             
