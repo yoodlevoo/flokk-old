@@ -85,9 +85,21 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    //called anytime this view appears on screen, while viewDidLoad is only called once
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+    }
+    
+    //when the view is preparing to appear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //check if there is a group already selected
+        var selectedIndex = self.tableView.indexPathForSelectedRow
+        if selectedIndex != nil { //if there is then deselect it
+            self.tableView.deselectRow(at: selectedIndex!, animated: false)
+        }
     }
     
     //Load all about this user and what group(the handles) they're in
@@ -190,7 +202,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return defaultGroups.count //this number will be loaded in later on
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupToFeed" {
             if let feedNav = segue.destination as? FeedNavigationViewController {
