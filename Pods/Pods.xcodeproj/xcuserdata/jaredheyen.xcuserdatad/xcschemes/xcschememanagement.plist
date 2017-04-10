@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AHKNavigationController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GoogleToolboxForMac.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,12 +37,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2A0830C47432FC97BE774C7B9C6A8B72</key>
+		<key>3834176623EC9B43193B361CD5DA71E5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3834176623EC9B43193B361CD5DA71E5</key>
+		<key>8EFB2B925383A31FB725C611D2F2BACD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>91AFFB49C9895E69CE5F392B17A6CD7D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

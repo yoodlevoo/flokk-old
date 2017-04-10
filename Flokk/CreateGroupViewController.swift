@@ -199,6 +199,16 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: Navigation
     
+    // Called whenever the user cancels the crop
+    @IBAction func unwindToCreateGroupCancelled(segue: UIStoryboardSegue) {
+        
+    }
+    
+    // Called whenever the user chooses the crop
+    @IBAction func unwindToCreateGroupChoosen(segue: UIStoryboardSegue) {
+        
+    }
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "segueCreateGroup" {
             let groupName = groupNameTextField.text
