@@ -67,7 +67,7 @@
 		15FA9B0D1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FA9B0C1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift */; };
 		15FAA0B11E96C19F004820B9 /* SlideLeftAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */; };
 		2969B48B64D7290FBFE6C999 /* Pods_FlokkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A68DF56A284B426BCD7F3944 /* Pods_FlokkTests.framework */; };
-		5ED288086BC7EEE16DD41E8D /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		5ED288086BC7EEE16DD41E8D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */; };
 		7F0666201E37BAAD003167AC /* FlokkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06661F1E37BAAD003167AC /* FlokkTests.swift */; };
 		7F06662B1E37BAAD003167AC /* FlokkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F06662A1E37BAAD003167AC /* FlokkUITests.swift */; };
@@ -196,7 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5ED288086BC7EEE16DD41E8D /* BuildFile in Frameworks */,
+				5ED288086BC7EEE16DD41E8D /* (null) in Frameworks */,
 				2969B48B64D7290FBFE6C999 /* Pods_FlokkTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

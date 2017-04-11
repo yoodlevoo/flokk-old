@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="b5U-De-KjE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="b5U-De-KjE">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -1829,7 +1829,6 @@
                                 </state>
                                 <connections>
                                     <action selector="createAcctBttn:" destination="bJR-56-AxZ" eventType="touchUpInside" id="pNv-0I-Cl5"/>
-                                    <segue destination="ret-2h-0Ts" kind="show" id="cNx-8D-Lae"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdh-iS-2U7">
@@ -3593,6 +3592,7 @@
         <image name="Create Button New" width="152" height="57"/>
         <image name="Crop Icon" width="26" height="26"/>
         <image name="Edit Profile Button" width="111" height="35"/>
+        <image name="Flokk Logo" width="336" height="121"/>
         <image name="Flokk Logo 1 NoBackGrnd" width="2287" height="931"/>
         <image name="Flokk of Birds-1" width="25" height="30"/>
         <image name="Flokk of Geese" width="936" height="1139"/>
@@ -3621,16 +3621,11 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="akd-UB-fBK"/>
-        <segue reference="j2M-gV-L9R"/>
-        <segue reference="ouw-aL-F31"/>
-        <segue reference="F8l-aN-x6i"/>
-        <segue reference="9Mo-2z-VWH"/>
         <segue reference="qAk-YY-8VP"/>
-        <segue reference="PZa-hH-YXx"/>
-        <segue reference="Rw6-mP-rPb"/>
-        <segue reference="Thv-Mk-d9a"/>
-        <segue reference="lYZ-EY-6R1"/>
+        <segue reference="bMJ-L9-aib"/>
+        <segue reference="SDq-LM-LAU"/>
+        <segue reference="wV8-oK-BhX"/>
+        <segue reference="ouw-aL-F31"/>
+        <segue reference="fVO-C2-xmL"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
