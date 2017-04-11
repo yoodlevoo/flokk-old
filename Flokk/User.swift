@@ -9,17 +9,18 @@
 import Foundation
 import UIKit
 
-//A class that represents all user in Flokk.
-//There will be a user clas created for the main user(the one that is logged in and using the local app),
-//as well as each user the main user interacts with.
-class User: Hashable { //hashable so it can be used as a key in a dictionary(for comments)
-    var handle: String //a completely unique identifier(ie. @gannonprudhomme)
+// A class that represents all user in Flokk.
+// There will be a user clas created for the main user(the one that is logged in and using the local app),
+//  as well as each user the main user interacts with.
+class User: Hashable { // Hashable so it can be used as a key in a dictionary(for comments)
+    var handle: String // A completely unique identifier(ie. @gannonprudhomme)
     var fullName: String
     var profilePhoto: UIImage
     
-    var groups = [Group]() //the groups this user is in
+    var groups = [Group]() // The groups this user is in
     
-    var mainUser: Bool! //is it the main/local user - not sure if I want this or not.
+    var mainUser: Bool! // Is it the main/local user - not sure if I want this or not.
+    
     
     init(handle: String, fullName: String) {
         self.handle = handle
@@ -28,7 +29,7 @@ class User: Hashable { //hashable so it can be used as a key in a dictionary(for
         
         loadPicture()
         
-        //load in this user's group from the database
+        // Load in this user's group from the database
         //self.groups = ??
     }
     
@@ -41,8 +42,8 @@ class User: Hashable { //hashable so it can be used as a key in a dictionary(for
         groups.append(group)
     }
     
-    //load in this user's profile photo from the database
-    //for now just set it manually
+    // Load in this user's profile photo from the database
+    // For now just set it manually
     private func loadPicture() {
         //var ret: UIImage
         
@@ -72,22 +73,22 @@ class User: Hashable { //hashable so it can be used as a key in a dictionary(for
     }
     
     
-    //method needed to implement hashable
-    //used to store and match values in a dictionary
+    // Method needed to implement hashable
+    // Used to store and match values in a dictionary
     var hashValue: Int {
         get {
-            //as the handles are unique, this value is also unique
+            // As the handles are unique, this value is also unique
             return handle.hashValue
         }
     }
     
-    //the func Equatable, needed to implement Hashable
+    // The func Equatable, needed to implement Hashable
     static func ==(lh: User, rh: User) -> Bool {
         return lh.handle == rh.handle //all handles are unique
     }
     
-    //override the description variable to display information
-    //about this class when this class is printed - like Java's .toString() method
+    // Override the description variable to display information
+    // About this class when this class is printed - like Java's .toString() method
     public var description: String {
         return "User: handle: \(handle) full name: \(fullName)"
     }

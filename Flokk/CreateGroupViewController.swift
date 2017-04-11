@@ -17,8 +17,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     var searchedUsers = [User]() //ill do this search thing later
     var selectedUsers = [User]()
     
-    //private var groupName: String!
-    //private var groupPhoto: UIImage!
+    let searchController = UISearchController(searchResultsController: nil)
     
     private let imagePicker = UIImagePickerController()
     
@@ -55,6 +54,11 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         selectedUsersCollectionView.collectionViewLayout = layout
         
         self.hideKeyboardWhenTappedAround()
+        
+        // Search bar
+        self.searchController.searchResultsUpdater = self
+        self.searchController.dimsBackgroundDuringPresentation = false
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -191,12 +195,6 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         return cell
     }
     
-    /*
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-    }
-    */
-    
     // MARK: Navigation
     
     // Called whenever the user cancels the crop
@@ -246,6 +244,16 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
                 }
             }
         }
+    }
+}
+
+extension CreateGroupViewController: UISearchBarDelegate {
+    
+}
+
+extension CreateGroupViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
     }
 }
 
