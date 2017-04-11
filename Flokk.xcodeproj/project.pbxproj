@@ -73,6 +73,7 @@
 		7F0666561E37BC00003167AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666471E37BC00003167AC /* Assets.xcassets */; };
 		7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */; };
 		7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */; };
+		7FE0D33D1E91874F000E097D /* ConnectContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */; };
 		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
 		AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */ = {isa = PBXBuildFile; fileRef = AD5C0FC01E4A62F200272FD0 /* comments.json */; };
 		FF68FB30F333858091D73795 /* Pods_FlokkUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08116963DDC32F6213EF11B5 /* Pods_FlokkUITests.framework */; };
@@ -171,9 +172,7 @@
 		7F0666471E37BC00003167AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
-		9BA6EF2CE28E34FC0613B349 /* Pods-FlokkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlokkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlokkTests/Pods-FlokkTests.debug.xcconfig"; sourceTree = "<group>"; };
-		A043CDA11E6DD291C2C35674 /* Pods_FlokkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlokkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A4C1C58C0065DC83FD6AC175 /* Pods-Flokk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flokk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flokk/Pods-Flokk.debug.xcconfig"; sourceTree = "<group>"; };
+		7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectContactsViewController.swift; sourceTree = "<group>"; };
 		AD2236981E563E4500112715 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = SOURCE_ROOT; };
 		AD5C0FC01E4A62F200272FD0 /* comments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = comments.json; sourceTree = SOURCE_ROOT; };
 		CF1B7B1941DF3885473F40CA /* Pods-FlokkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlokkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlokkTests/Pods-FlokkTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -247,6 +246,7 @@
 				15C826B21E8587EF003EE6E4 /* PhotoSelectViewController.swift */,
 				15C826951E8587EF003EE6E4 /* ConfirmUploadViewController.swift */,
 				15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */,
+				7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */,
 				7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */,
 				15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */,
 				15C826AD1E8587EF003EE6E4 /* NotificationsViewController.swift */,
@@ -746,6 +746,7 @@
 				15C826E01E8587EF003EE6E4 /* PersonalProfileViewController.swift in Sources */,
 				15C826C61E8587EF003EE6E4 /* CreateGroupViewController.swift in Sources */,
 				15C826D01E8587EF003EE6E4 /* GroupsViewController.swift in Sources */,
+				7FE0D33D1E91874F000E097D /* ConnectContactsViewController.swift in Sources */,
 				15C826C91E8587EF003EE6E4 /* FeedNavigationViewController.swift in Sources */,
 				15C826D11E8587EF003EE6E4 /* ImageScrollView.swift in Sources */,
 				15C826E51E8587EF003EE6E4 /* Post.swift in Sources */,
