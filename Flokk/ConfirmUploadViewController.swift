@@ -30,7 +30,7 @@ class ConfirmUploadViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromConfirmedImageToFeed" {
             if let feedNav = segue.destination as? FeedNavigationViewController {
-                //use the imageView because it might be changed asynchronously
+                // Use the imageView because it might be changed asynchronously
                 let post = Post(poster: mainUser, image: imageView.image!, postedGroup: forGroup, index: forGroup.totalPostsCount)
                 //forGroup.posts.append(post)
                 
@@ -38,15 +38,14 @@ class ConfirmUploadViewController: UIViewController {
                 
                 FileUtils.savePostImage(post: post)
                 
-                forGroup.totalPostsCount += 1
+                // We increse the totalPostsCount inside of Group.convertToJSONWithNewPost()
+                //forGroup.totalPostsCount += 1
                 feedNav.groupToPass = forGroup
                 
                 //print(post.description)
             }
-        } else if segue.identifier == "segueBackFromConfirmedImageToPhotoSelect" {
-            if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
-                photoUploadPageNav.groupToPass = forGroup
-            }
+        } else if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
+            photoUploadPageNav.groupToPass = forGroup
         }
     }
 }

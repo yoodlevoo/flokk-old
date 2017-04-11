@@ -8,9 +8,13 @@
 
 import UIKit
 
-class GroupSettingsViewController: UIViewController {
+class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var groupImage: UIImageView!
     @IBOutlet weak var groupName: UILabel!
+    
+    let transitionUp = SlideUpAnimator()
+    
+    weak var group: Group!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,18 +26,26 @@ class GroupSettingsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func backPage(_ sender: AnyObject) {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! GroupSettingsTableViewCell
+        
+        return cell
     }
-    */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let feedView = segue.destination as? FeedViewController {
+            feedView.transitioningDelegate = transitionUp
+        }
+    }
+}
 
+class GroupSettingsTableViewCell: UITableViewCell {
+    @IBOutlet weak var profilePhotoView: UIImageView!
+    @IBOutlet weak var fullNameLabel: UILabel!
+    
 }

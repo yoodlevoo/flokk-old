@@ -199,6 +199,16 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: Navigation
     
+    // Called whenever the user cancels the crop
+    @IBAction func unwindToCreateGroupCancelled(segue: UIStoryboardSegue) {
+        
+    }
+    
+    // Called whenever the user chooses the crop
+    @IBAction func unwindToCreateGroupChoosen(segue: UIStoryboardSegue) {
+        
+    }
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "segueCreateGroup" {
             let groupName = groupNameTextField.text
@@ -213,11 +223,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueCancelCreateGroup" {
-            if let tabBar = segue.destination as? UITabBarController {
-                tabBar.transitioningDelegate = transitionUp
-            }
-        } else if segue.identifier == "segueCreateGroup" { //then create the group and save it as a JSON file
+        if segue.identifier == "segueCreateGroup" { //then create the group and save it as a JSON file
             var users = selectedUsers //the selected users + main user
             users.append(mainUser)
             

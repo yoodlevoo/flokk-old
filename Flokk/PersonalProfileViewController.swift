@@ -15,13 +15,12 @@ class PersonalProfileViewController: UIViewController {
 
     var user: User!
     
-    let transitionForwardLeft = SlideForwardAnimator(right: false)
-    let transitionForwardRight = SlideForwardAnimator(right: true)
+    let transitionLeft = SlideLeftAnimator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //this normally won't be here - only for testing
+        // This normally won't be here - only for testing
         user = mainUser
         
         profilePic.image = user.profilePhoto
@@ -40,7 +39,7 @@ class PersonalProfileViewController: UIViewController {
     }
     
     @IBOutlet weak var settings: UIButton!
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromProfileToProfileSettings" {
             if let profileSettingsView = segue.destination as? ProfileSettingsViewController {
@@ -48,7 +47,7 @@ class PersonalProfileViewController: UIViewController {
             }
         } else if segue.identifier == "segueFromProfileToFriends" {
             if let friendsNav = segue.destination as? FriendsNavigationViewController {
-                friendsNav.transitioningDelegate = transitionForwardLeft
+                friendsNav.transitioningDelegate = transitionLeft
             }
         }
     }

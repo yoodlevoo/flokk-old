@@ -52,7 +52,7 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
-    //the number of rows depends on how many comments there are
+    // The number of rows depends on how many comments there are
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return post.comments.count
     }

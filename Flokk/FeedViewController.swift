@@ -12,16 +12,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var scrollView: UIScrollView!
     
-    var refreshControl: UIRefreshControl = UIRefreshControl()
-    
     static var postsCache = NSCache<NSString, Post>()
+    var group: Group! // The group this feed is reading from
     
-    var group: Group! //the group this feed is reading from
+    static let initialPostCount = 10 // The initial amount of posts to load
+    var loadedPosts = [Post]() // When there are a lot of posts, this will contain only the most 'x' recent posts
     
-    static let initialPostCount = 10 //the initial amount of posts to load
-    var loadedPosts = [Post]() //when there are a lot of posts, this will contain only the most 'x' recent posts
-    
-    let transitionBackward = SlideBackwardAnimator(right: true)
+    let transitionDown = SlideDownAnimator()
+    var refreshControl: UIRefreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +33,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         
-        //dont load the posts if there are already posts stored
+        // Don't load the posts if there are already posts stored
         if loadedPosts.count == 0 {
             // group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
         }
         
         if loadedPosts.count == 0 {
             loadedPosts = group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
+            
             for post in loadedPosts {
                 if let cachedObject = FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString) { //if this posts exists in the cache
                 } else { //if it doesn't add it to the postsCache
@@ -49,6 +48,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                     //FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString)
                 }
             }
+            
         } else {
             //loadedPosts.removeAll()
             //loadedPosts = group.loadPostsNew(numPostsToLoad: FeedViewController.initialPostCount)
@@ -62,12 +62,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.didReceiveMemoryWarning()
     }
     
-    //try to adjust the size of each cell according to the size of the picture
+    // Try to adjust the size of each cell according to the size of the picture
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
         
         let index = loadedPosts.count - 1 - indexPath.row
-        cell.tag = index //set the tag so prepare for segue can recognize which post was selected
+        cell.tag = index // Set the tag so prepare for segue can recognize which post was selected
         
         let user: User = loadedPosts[index].poster
         cell.userImage.image = user.profilePhoto
@@ -78,7 +78,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //print("\(cell.userImage.image?.size.width) \(cell.userImage.image?.size.height)")
         
-        //then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
+        // Then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
         
         return cell
     }
@@ -87,14 +87,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         return loadedPosts.count
     }
     
-    //Once the post is pressed, go to the comments
-    //in the future this may change to a swipe on the post instead of a tap
+    // Once the post is pressed, go to the comments
+    // In the future this may change to a swipe on the post instead of a tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = loadedPosts.count - 1 - indexPath.row
         
-        let post = loadedPosts[index] //get the specific post referred to by the pressed cell
+        let post = loadedPosts[index] // Get the specific post referred to by the pressed cell
         
-        //then transition to the comment view through the comment's navigation controller
+        // Then transition to the comment view through the comment's navigation controller
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let commentNav:AddCommentNavigationViewController = storyboard.instantiateViewController(withIdentifier: "AddCommentNavigationController") as! AddCommentNavigationViewController
         
@@ -104,8 +104,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.present(commentNav, animated: true, completion: nil)
     }
     
-    //search through all of the saved posts
-    //and load the ones with the key that start with this group's unique name
+    // Search through all of the saved posts
+    // And load the ones with the key that start with this group's unique name
     private func searchedCachedPosts() -> [Post] {
         var groupName = group.groupName
         
@@ -115,7 +115,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func uploadPic(_ sender: AnyObject) {
     }
     
-    @IBAction func groupSettings(_ sender: Any) {
+    @IBAction func unwindToFeed(segue: UIStoryboardSegue) {
         
     }
     
@@ -140,13 +140,9 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 group.setPostJSON(json: postsJSONToPass)
             }
-        } else if segue.identifier == "segueFromFeedToGroup" {
-            if let tabBar = segue.destination as? UITabBarController {
-                tabBar.transitioningDelegate = transitionBackward
-                
-                if let groupView = tabBar.viewControllers?[0] as? GroupsViewController {
-                    
-                }
+        } else if segue.identifier == "segueFromFeedToGroupSettings" {
+            if let groupSettingsNav = segue.destination as? GroupSettingsNavigationViewController {
+                groupSettingsNav.transitioningDelegate = transitionDown
             }
         }
     }
@@ -156,7 +152,7 @@ class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var postedImage: UIImageView!
     
-    //internally calculate the constraint for this aspect fit
+    // Internally calculate the constraint for this aspect fit
     internal var aspectConstraint : NSLayoutConstraint? {
         didSet {
             if oldValue != nil {
@@ -174,7 +170,7 @@ class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
         aspectConstraint = nil
     }
     
-    //sets the custom constraints for this
+    // Sets the custom constraints for this
     func setCustomImage(image: UIImage) {
         let aspect = image.size.width / image.size.height
         let constraint = NSLayoutConstraint(item: postedImage, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: postedImage, attribute: NSLayoutAttribute.height, multiplier: aspect, constant: 0.0)

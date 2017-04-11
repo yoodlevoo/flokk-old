@@ -68,11 +68,10 @@ class Group {
                 
                     let image = FileUtils.loadPostImage(group: self, fileName: imageName!)
                 
-                    //print("loading post image " + imageName!)
                     posts.append(Post(poster: findUserWithHandle(handle: userHandle!), image: image, postedGroup: self, index: index))
                     index += 1
                     
-                    //print("image name \(imageName)")
+                    print("image name \(imageName)")
                 } else {
                     break
                 }
@@ -164,14 +163,14 @@ class Group {
         var postToArray: JSON = [post.convertToJSON().object]
         
         var postsData = JSON(postJSON.arrayObject! + postToArray.arrayObject!)
-        //totalPostsCount += 1
+        totalPostsCount += 1
         
         var json: JSON = [
             "groupName": groupName,
             "groupIcon": groupName + "Photo",
             "creator": mainUser.handle,
             "users": users,
-            "postsCount": totalPostsCount,
+            "postsCount": totalPostsCount, //this is increased in the 
             "posts": postsData.arrayObject! //fill this in later
         ]
         

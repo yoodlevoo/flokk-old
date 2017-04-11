@@ -9,20 +9,17 @@
 import UIKit
 
 class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    //should probably only use this cache for feed view
-    
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    //var mainUser: User! //the user who is currently running the app
-    
-    //var defaultGroups: [Group: UIImage] = [:] //makes an empty dictionary
-    var defaultGroups = [Group]() //an emptyarray of Groups - this is going to be a priorityqueue in a bit
-    var groupQueue = PriorityQueue<Group>(sortedBy: <) //hopefully this doesn't get reset each time
+    //var defaultGroups: [Group: UIImage] = [:] // Makes an empty dictionary
+    var defaultGroups = [Group]() // An emptyarray of Groups - this is going to be a priorityqueue in a bit
+    var groupQueue = PriorityQueue<Group>(sortedBy: <) // Hopefully this doesn't get reset each time
     
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
-    let transitionForward = SlideForwardAnimator(right: true)
+    let transitionRight = SlideRightAnimator()
+    let transitionUp = SlideUpAnimator()
     let transitionDown = SlideDownAnimator()
     
     override func viewDidLoad() {
@@ -34,7 +31,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             tableView.addSubview(refreshControl)
         }
         
-        //print(defaultGroups.count) //at this point is this ever not at 0 or is a new array created each time
+        //print(defaultGroups.count) // At this point is this ever not at 0 or is a new array created each time
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -42,7 +39,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
         
         //FileUtils.deleteUserJSON(user: mainUser)
-        //FileUtils.deleteGroupJSON(groupName: "group")
+        //FileUtils.deleteGroupJSON(groupName: "Bball")
         //FileUtils.deleteGroupJSON(groupName: "Basketball")
         
         
@@ -88,12 +85,25 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     
+    // Called anytime this view appears on screen, while viewDidLoad is only called once
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
     }
     
-    //Load all about this user and what group(the handles) they're in
-    //use these handles to further load the groups from there separate files
+    // When the view is preparing to appear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //check if there is a group already selected
+        var selectedIndex = self.tableView.indexPathForSelectedRow
+        if selectedIndex != nil { //if there is then deselect it
+            self.tableView.deselectRow(at: selectedIndex!, animated: false)
+        }
+    }
+    
+    // Load all about this user and what group(the handles) they're in
+    // Use these handles to further load the groups from there separate files
     func findGroupHandles() -> [String] { //this will be removed later ons
         var groupHandles = [String]()
         
@@ -158,7 +168,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 let creator = json["creator"].string
                 let groupName = json["groupName"].string
-                let groupIconName = json["groupIcon"].string
+                let totalPostsCount = json["postsCount"].int
                 
                 var users = [User]()
                 for(_, subJSON) in json["users"] {
@@ -167,9 +177,10 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                 }
                 
-                var groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
+                let groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
                 
-                var group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
+                let group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
+                group.totalPostsCount = totalPostsCount!
 
                 return group
             } catch let error as NSError {
@@ -192,15 +203,15 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return defaultGroups.count //this number will be loaded in later on
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupToFeed" {
             if let feedNav = segue.destination as? FeedNavigationViewController {
                 if let tag = (sender as? GroupTableViewCell)?.tag {
-                    let group = defaultGroups[tag]
+                    weak var group = defaultGroups[tag] // I want this to be weak to prevent memory leakage
                     
                     feedNav.groupToPass = group
-                    feedNav.transitioningDelegate = transitionForward
+                    feedNav.transitioningDelegate = transitionRight
                     
                     //feedNav.passGroup()
                 }

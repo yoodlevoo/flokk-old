@@ -19,15 +19,17 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     let imageManager = PHCachingImageManager()
     var thumbnailSize: CGSize!
     
-    var forGroup: Group! //just passing this around so we can return it to the feed
+    var forGroup: Group! // Just passing this around so we can return it to the feed
     
-    static let numPhotosToLoad = 10
+    static let initialNumPosts = 100 // Load more when scrolling down
+    static let morePostsToLoad = 8 // Amount of posts to load each time when we need to on scrolling down
+    var loadedPostsCount = initialNumPosts // The total amount of posts loaded
     
-    var images = [UIImage]() //should i have this?
+    var images = NSMutableArray(capacity: PhotoSelectViewController.initialNumPosts) //should i have this?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView!.contentInset = UIEdgeInsets(top: 23, left: 5, bottom: 10, right: 5)
@@ -40,7 +42,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         allPhotoOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         fetchResult = PHAsset.fetchAssets(with: allPhotoOptions)
         
-        thumbnailSize = CGSize(width: 335, height: 667)
+        thumbnailSize = CGSize(width: 335, height: 667) //default size of the iPhone screen - this should probably be dynamic
     }
     
     override func viewDidLayoutSubviews() {
@@ -52,53 +54,78 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         // Dispose of any resources that can be recreated.
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PhotoSelectViewController.numPhotosToLoad
+        //print("collectionview numberOfItemsInSection \(self.loadedPostsCount)")
+        return self.loadedPostsCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        //print("collectionview cellForItemAt \(indexPath.item)")
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! PhotoSelectCell
         
-        //cell.repres
-        let asset = fetchResult.object(at: indexPath.item)
-        imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: PHImageContentMode.aspectFit, options: nil, resultHandler: { image, _ in
-            cell.imageView.image = image
-        })
-        
-        //let screenWidth = UIScreen.main.bounds.width
+        cell.imageView.image = images[indexPath.item] as! UIImage
         
         //Attempt to change this imageView's bounds so the cell shows the full image
-        // cell.imageView.bounds.size = cell.bounds.size
         cell.imageView.contentMode = .scaleAspectFit
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 1
+        
         //set the cells tag so prepare(for: segue) knows which celll was selected
         cell.tag = indexPath.item
         
-        print("at index \(indexPath.item) cell: \(cell.bounds) imageView: \(cell.imageView.bounds) imageSize: \(cell.imageView.image?.size)")
-        
         return cell
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
     }
     
     func collectionView(_ collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath , withWidth width:CGFloat) -> CGFloat {
         var height: CGFloat = 5.0
         
-        let asset = fetchResult.object(at: indexPath.item)
-        imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: PHImageContentMode.aspectFill, options: nil, resultHandler: { image, _ in
-            
-            let boundingRect = CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
-            //calculate a height that retains the photo's aspect ratio
-            let rect = AVMakeRect(aspectRatio: (image?.size)!, insideRect: boundingRect)
-            
-            height = rect.size.height
-        })
+        if images.count - 1 < indexPath.item || images[indexPath.item] == nil {
+            self.setImageInArray(index: indexPath.item)
+        }
         
-        //print("heightForPhotoAtIndexPath: \(height) at index \(indexPath.item)")
+        let image = images[indexPath.item] as! UIImage
+        
+        let boundingRect = CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
+        
+        // Calculate a height that retains the photo's aspect ratio
+        let rect = AVMakeRect(aspectRatio: (image.size), insideRect: boundingRect)
+        
+        height = rect.size.height
+        
         return height
+    }
+    
+    //check for if we need to have more cells
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        //check if we're close to the bottom of the page and need to load more posts
+        if indexPath.item == loadedPostsCount - 4 {
+            //increase the amount of posts loaded
+            loadedPostsCount += PhotoSelectViewController.morePostsToLoad
+            
+            //attempt to reload the data
+            //self.collectionView.reloadData()
+            
+            //print("reloading data")
+        }
+    }
+    
+    private func setImageInArray(index: Int) {
+        //at this point, the array should already be of sufficient size
+        //so we don't have to check if the index is out of bounds
+        let asset = fetchResult.object(at: index)
+        imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: PHImageContentMode.aspectFit, options: nil, resultHandler: { image, _ in
+            
+            if image != nil {
+                self.images[index] = image!
+            } else {
+                print("image at index \(index) is nil")
+            }
+        })
     }
     
     private func getSelectedImage(index: Int) -> UIImage {
@@ -120,10 +147,16 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         return selected
     }
     
+    @IBAction func unwindFromConfirmImageToPhotoSelect(segue: UIStoryboardSegue) {
+    
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromPhotoSelectToConfirmImage" {
             if let confirmUploadNav = segue.destination as? ConfirmUploadNavigationViewController {
                 if let tag = (sender as? PhotoSelectCell)?.tag {
+                    print("selected photo at index \(tag)")
+                    
                     let screenWidth = UIScreen.main.bounds.width
                     let screenHeight = UIScreen.main.bounds.height
                     
