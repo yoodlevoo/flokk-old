@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var scrollView: UIScrollView!
     
@@ -56,52 +56,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    // Try to adjust the size of each cell according to the size of the picture
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
-        
-        let index = loadedPosts.count - 1 - indexPath.row
-        cell.tag = index // Set the tag so prepare for segue can recognize which post was selected
-        
-        let user: User = loadedPosts[index].poster
-        cell.userImage.image = user.profilePhoto
-        cell.setCustomImage(image: loadedPosts[index].image)
-        
-        cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
-        cell.userImage.clipsToBounds = true
-        
-        //print("\(cell.userImage.image?.size.width) \(cell.userImage.image?.size.height)")
-        
-        // Then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return loadedPosts.count
-    }
-    
-    // Once the post is pressed, go to the comments
-    // In the future this may change to a swipe on the post instead of a tap
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let index = loadedPosts.count - 1 - indexPath.row
-        
-        let post = loadedPosts[index] // Get the specific post referred to by the pressed cell
-        
-        // Then transition to the comment view through the comment's navigation controller
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let commentNav:AddCommentNavigationViewController = storyboard.instantiateViewController(withIdentifier: "AddCommentNavigationController") as! AddCommentNavigationViewController
-        
-        commentNav.postToPass = post
-        commentNav.passPost()
-        
-        self.present(commentNav, animated: true, completion: nil)
     }
     
     // Search through all of the saved posts
@@ -145,6 +105,52 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                 groupSettingsNav.transitioningDelegate = transitionDown
             }
         }
+    }
+}
+
+
+// Table View functions
+extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
+    // Try to adjust the size of each cell according to the size of the picture
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
+        
+        let index = loadedPosts.count - 1 - indexPath.row
+        cell.tag = index // Set the tag so prepare for segue can recognize which post was selected
+        
+        let user: User = loadedPosts[index].poster
+        cell.userImage.image = user.profilePhoto
+        cell.setCustomImage(image: loadedPosts[index].image)
+        
+        cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
+        cell.userImage.clipsToBounds = true
+        
+        //print("\(cell.userImage.image?.size.width) \(cell.userImage.image?.size.height)")
+        
+        // Then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return loadedPosts.count
+    }
+    
+    // Once the post is pressed, go to the comments
+    // In the future this may change to a swipe on the post instead of a tap
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let index = loadedPosts.count - 1 - indexPath.row
+        
+        let post = loadedPosts[index] // Get the specific post referred to by the pressed cell
+        
+        // Then transition to the comment view through the comment's navigation controller
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let commentNav:AddCommentNavigationViewController = storyboard.instantiateViewController(withIdentifier: "AddCommentNavigationController") as! AddCommentNavigationViewController
+        
+        commentNav.postToPass = post
+        commentNav.passPost()
+        
+        self.present(commentNav, animated: true, completion: nil)
     }
 }
 
