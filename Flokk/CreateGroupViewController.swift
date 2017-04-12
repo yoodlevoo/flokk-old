@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CreateGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource/*, UICollectionViewDelegateFlowLayout*/ {
+class CreateGroupViewController: UIViewController,  UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var groupNameTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addGroupPictureButton: UIButton!
@@ -47,7 +47,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
             addGroupPictureButton.setImage(profilePicFromCrop, for: .normal)
         }
         
-        //set the collection view so it scrolls sideways
+        // Set the collection view so it scrolls sideways
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 3
@@ -64,49 +64,6 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-    }
-
-    // MARK: Searched Users table view functions
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CreateGroupUserCell
-        
-        let user = searchedUsers[indexPath.row]
-        
-        cell.profilePicture.image = user.profilePhoto
-        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
-        cell.profilePicture.clipsToBounds = true
-        
-        cell.fullNameLabel.text = user.fullName
-        cell.usernameLabel.text = user.handle
-        
-        if selectedUsers.contains(user) {
-            cell.accessoryType = UITableViewCellAccessoryType.checkmark
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryType.none
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //toggle it
-        let user = searchedUsers[indexPath.row]
-        
-        if selectedUsers.contains(user) {
-            selectedUsers.remove(at: selectedUsers.index(of: user)!)
-            
-        } else {
-            selectedUsers.append(user)
-        }
-        
-        DispatchQueue.main.async{
-            tableView.reloadData()
-            self.selectedUsersCollectionView.reloadData()
-        }
     }
     
     // MARK: Group Name text field functions
@@ -172,29 +129,6 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: Selected Users collection view functions
-    
-    //When the selected user's icon is pressed show options to remove the user
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedUsers.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! SelectedUsersCell
-        
-        cell.tag = indexPath.item
-        
-        cell.profilePicture.image = selectedUsers[indexPath.item].profilePhoto
-        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
-        cell.profilePicture.clipsToBounds = true
-        
-        return cell
-    }
-    
     // MARK: Navigation
     
     // Called whenever the user cancels the crop
@@ -247,11 +181,76 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     }
 }
 
-extension CreateGroupViewController: UISearchBarDelegate {
+// Table View Functions
+extension CreateGroupViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CreateGroupUserCell
+        
+        let user = searchedUsers[indexPath.row]
+        
+        cell.profilePicture.image = user.profilePhoto
+        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
+        cell.profilePicture.clipsToBounds = true
+        
+        cell.fullNameLabel.text = user.fullName
+        cell.usernameLabel.text = user.handle
+        
+        if selectedUsers.contains(user) {
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryType.none
+        }
+        
+        return cell
+    }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //toggle it
+        let user = searchedUsers[indexPath.row]
+        
+        if selectedUsers.contains(user) {
+            selectedUsers.remove(at: selectedUsers.index(of: user)!)
+            
+        } else {
+            selectedUsers.append(user)
+        }
+        
+        DispatchQueue.main.async{
+            tableView.reloadData()
+            self.selectedUsersCollectionView.reloadData()
+        }
+    }
 }
 
-extension CreateGroupViewController: UISearchResultsUpdating {
+// Collection View Functions
+extension CreateGroupViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    //When the selected user's icon is pressed show options to remove the user
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return selectedUsers.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! SelectedUsersCell
+        
+        cell.tag = indexPath.item
+        
+        cell.profilePicture.image = selectedUsers[indexPath.item].profilePhoto
+        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
+        cell.profilePicture.clipsToBounds = true
+        
+        return cell
+    }
+}
+
+// Search Bar Functions
+extension CreateGroupViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         
     }
