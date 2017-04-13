@@ -9,7 +9,6 @@
 import UIKit
 
 class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
     @IBOutlet weak var editName: UITextField!
     @IBOutlet weak var profilePictureOutlet: UIButton!
     
@@ -17,10 +16,25 @@ class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDe
     @IBOutlet weak var editPassword: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
     
-    var mainUser: User!
+    //var mainUser: User!
     
     private let imagePicker = UIImagePickerController()
+    
+    let transitionRight = SlideRightAnimator()
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.hideKeyboardWhenTappedAround()
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     @IBAction func profilePicture(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
@@ -45,18 +59,6 @@ class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDe
         dismiss(animated: true, completion: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.hideKeyboardWhenTappedAround()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     @IBAction func backPage(_ sender: AnyObject) {
     }
     /*
@@ -67,15 +69,14 @@ class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDe
     }
     
     // MARK: - Navigation
+    
+    @IBAction func unwindToProfileSettings(segue: UIStoryboardSegue) {
+        
+    }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { //USE SEGUE IDENTIFIERS
-        if let tabBar = segue.destination as? UITabBarController {
-            if let profileView = tabBar.viewControllers?[2] as? ProfileViewController {
-                //profileView.mainUser = mainUser
-            }
-            
-            tabBar.selectedIndex = 2
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueFromSettingsToPushNotificationSettings" {
+           segue.destination.transitioningDelegate = transitionRight
         }
     }
 }

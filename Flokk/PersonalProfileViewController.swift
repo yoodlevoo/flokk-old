@@ -16,6 +16,7 @@ class PersonalProfileViewController: UIViewController {
     var user: User!
     
     let transitionLeft = SlideLeftAnimator()
+    let transitionRight = SlideRightAnimator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +42,8 @@ class PersonalProfileViewController: UIViewController {
     @IBOutlet weak var settings: UIButton!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromProfileToProfileSettings" {
-            if let profileSettingsView = segue.destination as? ProfileSettingsViewController {
-                profileSettingsView.mainUser = mainUser
-            }
+        if segue.identifier == "segueFromProfileToAppSettings" {
+            segue.destination.transitioningDelegate = transitionRight
         } else if segue.identifier == "segueFromProfileToFriends" {
             if let friendsNav = segue.destination as? FriendsNavigationViewController {
                 friendsNav.transitioningDelegate = transitionLeft

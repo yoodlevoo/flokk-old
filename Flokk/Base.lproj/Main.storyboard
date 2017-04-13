@@ -303,7 +303,7 @@
                                 <state key="normal" image="TurquoiseSaveBttn"/>
                                 <connections>
                                     <action selector="saveBttn:" destination="Gnc-hd-ZFe" eventType="touchUpInside" id="GVO-bv-xyU"/>
-                                    <segue destination="x15-8V-ONQ" kind="presentation" id="SDq-LM-LAU"/>
+                                    <segue destination="hol-x6-rFt" kind="unwind" unwindAction="unwindToProfileWithSegue:" id="coY-es-huT"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2EI-B4-TZP">
@@ -392,6 +392,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9n2-20-fL0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="hol-x6-rFt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2070" y="-1352"/>
         </scene>
@@ -978,11 +979,6 @@
                                 <rect key="frame" x="173" y="103" width="174" height="4"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Ang-yg-UCJ">
-                                <rect key="frame" x="0.0" y="214" width="375" height="44"/>
-                                <color key="barTintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
-                            </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJv-g0-f9U">
                                 <rect key="frame" x="14" y="590" width="148" height="57"/>
                                 <constraints>
@@ -1033,6 +1029,9 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xcn-Ch-ccS">
                                 <rect key="frame" x="14" y="149" width="361" height="50"/>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="o1E-d4-97m"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="18V-ql-VcA">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -1071,29 +1070,25 @@
                         </subviews>
                         <color key="backgroundColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Ang-yg-UCJ" firstAttribute="top" secondItem="EcG-B4-Tfg" secondAttribute="bottom" constant="107" id="0Va-V9-LTG"/>
                             <constraint firstItem="lOE-Xo-obp" firstAttribute="top" secondItem="JGX-KM-sQ1" secondAttribute="bottom" constant="20" id="2du-vO-jnw"/>
                             <constraint firstItem="eq6-9f-UES" firstAttribute="leading" secondItem="kFw-dW-rvi" secondAttribute="leadingMargin" constant="9" id="4wp-wj-Vnt"/>
-                            <constraint firstItem="Ang-yg-UCJ" firstAttribute="top" secondItem="eq6-9f-UES" secondAttribute="bottom" constant="81" id="5Cj-Od-OTB"/>
-                            <constraint firstItem="Ang-yg-UCJ" firstAttribute="trailing" secondItem="T7o-JI-AI3" secondAttribute="trailing" id="5q3-xe-Z6z"/>
+                            <constraint firstAttribute="trailing" secondItem="xcn-Ch-ccS" secondAttribute="trailing" id="8bJ-YQ-Siy"/>
+                            <constraint firstItem="T7o-JI-AI3" firstAttribute="leading" secondItem="kFw-dW-rvi" secondAttribute="leading" id="8n9-30-4DN"/>
                             <constraint firstItem="GDP-98-MUH" firstAttribute="leading" secondItem="eq6-9f-UES" secondAttribute="trailing" constant="43" id="Bag-4f-oCc"/>
                             <constraint firstItem="GDP-98-MUH" firstAttribute="trailing" secondItem="EcG-B4-Tfg" secondAttribute="trailing" id="DZc-mg-ZAm"/>
                             <constraint firstAttribute="trailing" secondItem="JGX-KM-sQ1" secondAttribute="trailing" constant="14" id="E7H-XU-pTp"/>
                             <constraint firstItem="lOE-Xo-obp" firstAttribute="top" secondItem="FJv-g0-f9U" secondAttribute="bottom" constant="20" id="F2l-xO-zR7"/>
                             <constraint firstItem="xcn-Ch-ccS" firstAttribute="top" secondItem="eq6-9f-UES" secondAttribute="bottom" constant="16" id="HZK-xX-YhI"/>
-                            <constraint firstItem="Ang-yg-UCJ" firstAttribute="leading" secondItem="T7o-JI-AI3" secondAttribute="leading" id="IFp-Lh-bgb"/>
                             <constraint firstItem="EcG-B4-Tfg" firstAttribute="top" secondItem="GDP-98-MUH" secondAttribute="bottom" id="JD7-sN-G89"/>
-                            <constraint firstAttribute="trailing" secondItem="Ang-yg-UCJ" secondAttribute="trailing" id="Ka8-Oy-Hup"/>
+                            <constraint firstItem="xcn-Ch-ccS" firstAttribute="leading" secondItem="FJv-g0-f9U" secondAttribute="leading" id="JRb-p7-xhm"/>
+                            <constraint firstItem="xcn-Ch-ccS" firstAttribute="trailing" secondItem="T7o-JI-AI3" secondAttribute="trailing" id="Lhc-5b-Qwx"/>
                             <constraint firstItem="FJv-g0-f9U" firstAttribute="leading" secondItem="kFw-dW-rvi" secondAttribute="leading" constant="14" id="Qc2-fQ-gK6"/>
                             <constraint firstItem="T7o-JI-AI3" firstAttribute="bottom" secondItem="lOE-Xo-obp" secondAttribute="top" id="VTT-iJ-fCT"/>
-                            <constraint firstItem="T7o-JI-AI3" firstAttribute="top" secondItem="Ang-yg-UCJ" secondAttribute="bottom" id="X7U-8f-p0e"/>
                             <constraint firstItem="GDP-98-MUH" firstAttribute="top" secondItem="xuv-yT-wBv" secondAttribute="bottom" constant="53" id="dkP-uA-xOI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="EcG-B4-Tfg" secondAttribute="trailing" constant="12" id="hAI-OO-J7h"/>
                             <constraint firstItem="GDP-98-MUH" firstAttribute="leading" secondItem="EcG-B4-Tfg" secondAttribute="leading" id="knV-Vf-DwT"/>
-                            <constraint firstItem="xcn-Ch-ccS" firstAttribute="leading" secondItem="Ang-yg-UCJ" secondAttribute="leading" constant="14" id="sem-ix-iU6"/>
-                            <constraint firstItem="Ang-yg-UCJ" firstAttribute="leading" secondItem="kFw-dW-rvi" secondAttribute="leading" id="u13-7l-yu8"/>
-                            <constraint firstItem="xcn-Ch-ccS" firstAttribute="bottom" secondItem="Ang-yg-UCJ" secondAttribute="top" constant="-15" id="xgF-M9-hwB"/>
-                            <constraint firstItem="xcn-Ch-ccS" firstAttribute="trailing" secondItem="Ang-yg-UCJ" secondAttribute="trailing" id="yug-Id-IiY"/>
+                            <constraint firstItem="T7o-JI-AI3" firstAttribute="top" secondItem="xcn-Ch-ccS" secondAttribute="bottom" constant="59" id="lFL-iy-dFW"/>
+                            <constraint firstItem="xcn-Ch-ccS" firstAttribute="top" secondItem="EcG-B4-Tfg" secondAttribute="bottom" constant="42" id="smP-kM-2R8"/>
                             <constraint firstItem="eq6-9f-UES" firstAttribute="top" secondItem="xuv-yT-wBv" secondAttribute="bottom" constant="8" symbolic="YES" id="zd8-NW-fFs"/>
                         </constraints>
                     </view>
@@ -1366,7 +1361,7 @@
         <!--Settings-->
         <scene sceneID="8Ed-yX-udN">
             <objects>
-                <tableViewController id="tKt-ko-pPf" sceneMemberID="viewController">
+                <tableViewController id="tKt-ko-pPf" customClass="AppSettingsTableViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="xdL-jC-msW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1392,7 +1387,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="5CD-zu-ea3" kind="presentation" id="Iug-0L-SEy"/>
+                                            <segue destination="5CD-zu-ea3" kind="presentation" identifier="segueFromAppSettingsToPushNotificationSettings" id="Iug-0L-SEy"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1524,12 +1519,13 @@
                         <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="6Vp-kn-gDR">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="My8-Ss-CJl" kind="presentation" id="9Mo-2z-VWH"/>
+                                <segue destination="a8N-Ki-LvK" kind="unwind" unwindAction="unwindToProfileWithSegue:" id="Ug0-2G-FvG"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U4h-lr-tvS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="a8N-Ki-LvK" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="9144.7999999999993" y="-564.46776611694156"/>
         </scene>
@@ -1770,12 +1766,13 @@
                         <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="GsZ-nx-rvB">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="tKt-ko-pPf" kind="presentation" id="idq-NU-jgG"/>
+                                <segue destination="lq8-Sp-12y" kind="unwind" unwindAction="unwindToAppSettingsWithSegue:" id="LPI-U4-nNf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ExA-jP-is9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="lq8-Sp-12y" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="11020" y="-564.46776611694156"/>
         </scene>
@@ -3021,7 +3018,7 @@
                                     <color key="titleColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="jFd-5J-qXa" kind="presentation" id="cIx-8Z-63v"/>
+                                    <segue destination="jFd-5J-qXa" kind="presentation" identifier="segueFromProfileToAppSettings" id="cIx-8Z-63v"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejG-Hf-25J">
@@ -3510,9 +3507,6 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="17"/>
                                 <state key="normal" image="WhiteArrow"/>
-                                <connections>
-                                    <segue destination="5nz-Sx-LZu" kind="presentation" id="Thv-Mk-d9a"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3561,7 +3555,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zDT-Wx-raH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8205.6000000000004" y="-564.46776611694156"/>
+            <point key="canvasLocation" x="8399" y="-564"/>
         </scene>
         <!--Push Notifications-->
         <scene sceneID="Uim-zi-Pcb">
@@ -3580,7 +3574,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HEQ-GV-cqR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10080.799999999999" y="-564.46776611694156"/>
+            <point key="canvasLocation" x="10220" y="-564"/>
         </scene>
     </scenes>
     <resources>
@@ -3621,11 +3615,8 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qAk-YY-8VP"/>
-        <segue reference="bMJ-L9-aib"/>
-        <segue reference="SDq-LM-LAU"/>
         <segue reference="wV8-oK-BhX"/>
+        <segue reference="ME7-O5-4bK"/>
         <segue reference="ouw-aL-F31"/>
-        <segue reference="fVO-C2-xmL"/>
     </inferredMetricsTieBreakers>
 </document>
