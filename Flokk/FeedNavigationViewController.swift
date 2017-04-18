@@ -10,7 +10,7 @@ import UIKit
 import AHKNavigationController
 
 //basically only used to change the navigation bar's color
-class FeedNavigationViewController: UINavigationController {
+class FeedNavigationViewController: AHKNavigationController {
     weak var groupToPass: Group! //weak b/c I don't want this object to be retained
     
     var isPushingViewController = false
@@ -23,7 +23,7 @@ class FeedNavigationViewController: UINavigationController {
         let feedVC = self.viewControllers[0] as! FeedViewController
         feedVC.group = groupToPass
         //print("view did load feed nav")
-        
+    
         //self.navigationBar.barTintColor = UIColor.darkGray
         
     }

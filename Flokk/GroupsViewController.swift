@@ -57,24 +57,6 @@ class GroupsViewController: UIViewController {
                 mainUser.groups.append(groupToLoad)
             }
         }
-        
-        /*
-        if defaultGroups.count == 0 {
-            print(findGroupHandlesNew())
-            for groupHandle in findGroupHandlesNew() {
-                if let group = GroupsViewController.groupCache.object(forKey: groupHandle as NSString) {
-                    defaultGroups.append(group)
-                } else {
-                    let groupToLoad = loadGroup(groupHandle: groupHandle)
-                    GroupsViewController.groupCache.setObject(groupToLoad, forKey: groupHandle as NSString)
-                    defaultGroups.append(groupToLoad)
-                }
-            }
-        } else {
-            //commented this out cause i dont want to reload each time
-            //defaultGroups.removeAll()
-            //loadGroupsNew(handles: findGroupHandles())
-        } */
     }
 
     override func didReceiveMemoryWarning() {
@@ -85,16 +67,16 @@ class GroupsViewController: UIViewController {
     // Called anytime this view appears on screen, while viewDidLoad is only called once
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
     }
     
     // When the view is preparing to appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //check if there is a group already selected
-        var selectedIndex = self.tableView.indexPathForSelectedRow
-        if selectedIndex != nil { //if there is then deselect it
+        // Check if there is a group already selected
+        let selectedIndex = self.tableView.indexPathForSelectedRow
+        if selectedIndex != nil { // If there is then deselect it
             self.tableView.deselectRow(at: selectedIndex!, animated: false)
         }
     }
@@ -132,8 +114,8 @@ extension GroupsViewController {
             
             let json = JSON(data: data)
             
-            //iterate through all of the groups and to find the internal handles of the groups
-            //so we know which ones to load
+            // Iterate through all of the groups and find the internal handles of the groups
+            // So we know which ones to load
             for (_, group) in json["groups"] {
                 groupHandles.append(group.string!)
             }
@@ -157,8 +139,8 @@ extension GroupsViewController {
             
             let json = JSON(data: data)
             
-            //iterate through all of the groups and to find the internal handles of the groups
-            //so we know which ones to load
+            // Iterate through all of the groups and to find the internal handles of the groups
+            // So we know which ones to load
             for (_, group) in json["groups"] {
                 groupHandles.append(group.string!)
             }
@@ -169,7 +151,7 @@ extension GroupsViewController {
         return groupHandles
     }
     
-    //put this in FileUtils later
+    // Put this in FileUtils later
     func loadGroup(groupHandle: String) -> Group {
         // for groupHandle in handles {
         let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
@@ -227,6 +209,7 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// Custom Table View Cell Class
 class GroupTableViewCell: UITableViewCell {
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupTitleLabel: UILabel!

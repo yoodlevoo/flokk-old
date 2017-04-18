@@ -8,10 +8,12 @@
 
 import UIKit
 
+// I might pass the Create Group data so that all selected users, group name, etc won't be deleted when selecting a Group Photo
 class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     
+    // Constraints for the image
     @IBOutlet weak var imageViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint!
@@ -24,6 +26,7 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
     
     var image: UIImage!
     
+    // The Bounds of the image to be cropped - should fit the crop circle
     var cropSize: CGSize = CGSize(width: 100, height: 100)
     
     override func viewDidLoad() {
@@ -49,7 +52,7 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    //only called once when opened
+    // Only called once when opened
     private func updateMinZoomScaleForSize(size: CGSize) {
         let widthScale = size.width / imageView.bounds.width
         let heightScale = size.height / imageView.bounds.height
@@ -98,6 +101,7 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
+    
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         updateConstraintsForSize(size: view.bounds.size)
@@ -169,6 +173,7 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
         return cgImage!;
     }
     
+    // Get the final cropped image when seguing
     func getCroppedImage(image: UIImage) -> UIImage {
         let cgImage = getCGImageWithCorrectOrientation(image)
         let zoom = scrollView.zoomScale
