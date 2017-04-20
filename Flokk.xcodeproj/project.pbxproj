@@ -68,6 +68,7 @@
 		15F9981D1E655562003F1773 /* gannonprudhommeLadies_and_G.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */; };
 		15FA9B0D1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FA9B0C1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift */; };
 		15FAA0B11E96C19F004820B9 /* SlideLeftAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */; };
+		15FC22A01EA7BB5D00DC9FA6 /* TextUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */; };
 		2969B48B64D7290FBFE6C999 /* Pods_FlokkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A68DF56A284B426BCD7F3944 /* Pods_FlokkTests.framework */; };
 		5ED288086BC7EEE16DD41E8D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */; };
@@ -109,6 +110,7 @@
 		15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyenSki_Trip.json; sourceTree = "<group>"; };
 		15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyenCouples.json; sourceTree = "<group>"; };
 		15309E881E65430E00D1DFA1 /* jaredheyen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyen.json; sourceTree = "<group>"; };
+		153A30D91EA7E7E0001540A3 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
 		158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		15C275901E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationsSettingsTableViewController.swift; sourceTree = "<group>"; };
 		15C275941E9FCC7100C62F0D /* AppSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeLadies_and_G.json; sourceTree = "<group>"; };
 		15FA9B0C1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSettingsNavigationViewController.swift; sourceTree = "<group>"; };
 		15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideLeftAnimator.swift; sourceTree = "<group>"; };
+		15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextUtils.swift; sourceTree = "<group>"; };
 		3485561FD16ECCB0AA98F00C /* Pods-Flokk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flokk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flokk/Pods-Flokk.debug.xcconfig"; sourceTree = "<group>"; };
 		6F319E36F1B8391236766DB7 /* Pods-FlokkUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlokkUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlokkUITests/Pods-FlokkUITests.release.xcconfig"; sourceTree = "<group>"; };
 		70E8D19BD29D05BB944412A5 /* Pods-FlokkUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlokkUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlokkUITests/Pods-FlokkUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -306,6 +309,7 @@
 		15C826F31E858820003EE6E4 /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
+				15C826B11E8587EF003EE6E4 /* PhotoSelectLayout.swift */,
 			);
 			name = Layouts;
 			sourceTree = "<group>";
@@ -316,6 +320,7 @@
 				15C826921E8587EF003EE6E4 /* BinaryHeap.swift */,
 				15C826981E8587EF003EE6E4 /* Database.swift */,
 				15C8269B1E8587EF003EE6E4 /* FileUtils.swift */,
+				15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -385,6 +390,7 @@
 		7F88AC801E4F8B2500623143 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				153A30D91EA7E7E0001540A3 /* JosefinSans-Bold.ttf */,
 				7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */,
 			);
 			name = Resources;
@@ -398,7 +404,6 @@
 				150789DE1E859EFD003C6FB3 /* SlideDownAnimator.swift */,
 				15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */,
 				15E743B21E968041002D1220 /* SlideRightAnimator.swift */,
-				15C826B11E8587EF003EE6E4 /* PhotoSelectLayout.swift */,
 				15C826931E8587EF003EE6E4 /* BounceButton.swift */,
 				15C826A21E8587EF003EE6E4 /* ImageTransition.swift */,
 			);
@@ -501,7 +506,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
-				ORGANIZATIONNAME = "Heyen Enterprises";
+				ORGANIZATIONNAME = "Akaro LLC";
 				TargetAttributes = {
 					7F0666061E37BAAD003167AC = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -749,6 +754,7 @@
 				15C826C51E8587EF003EE6E4 /* ConfirmUploadViewController.swift in Sources */,
 				15C826CB1E8587EF003EE6E4 /* FileUtils.swift in Sources */,
 				15E743B31E968041002D1220 /* SlideRightAnimator.swift in Sources */,
+				15FC22A01EA7BB5D00DC9FA6 /* TextUtils.swift in Sources */,
 				15C826DF1E8587EF003EE6E4 /* PasswordRecoveryViewController.swift in Sources */,
 				15C826DE1E8587EF003EE6E4 /* OpenViewController.swift in Sources */,
 				15C826E21E8587EF003EE6E4 /* PhotoSelectViewController.swift in Sources */,
@@ -931,7 +937,7 @@
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
+				PRODUCT_BUNDLE_IDENTIFIER = info.flokk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -950,7 +956,7 @@
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = Flokk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Gannon1234;
+				PRODUCT_BUNDLE_IDENTIFIER = info.flokk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flokk-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

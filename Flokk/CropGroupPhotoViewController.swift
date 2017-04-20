@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 3/6/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Akaro. All rights reserved.
 //
 
 import UIKit
@@ -192,13 +192,12 @@ class CropGroupPhotoViewController: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    @IBAction func cancelButtonPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueCancelCrop" {
-            if let createGroupView = segue.destination as? CreateGroupViewController {
-                
-            }
-        } else if segue.identifier == "segueChoseCropToCreateGroup" {
+        if segue.identifier == "segueChoseCropToCreateGroup" {
             if let createGroupView = segue.destination as? CreateGroupViewController {
                 createGroupView.profilePicFromCrop = getCroppedImage(image: (imageView?.image)!)
                 

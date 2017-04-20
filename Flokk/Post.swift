@@ -124,8 +124,8 @@ class Post {
     }
 }
 
-//A class that holds the values for comments on Posts
-//I'm not happy this has to be a separate class lol
+// A class that holds the values for comments on Posts
+// I'm not happy this has to be a separate class lol
 class Comment {
     var user: User //the user who posted the comment
     var content: String //the text of the comment

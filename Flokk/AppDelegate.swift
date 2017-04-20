@@ -9,6 +9,8 @@
 import UIKit
 
 var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
+var jaredUser = User(handle: "jaredheyen", fullName: "Jared Heyen")
+var tavianUser = User(handle: "taviansims", fullName: "Tavian Sims")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

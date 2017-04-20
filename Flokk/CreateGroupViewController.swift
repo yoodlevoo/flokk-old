@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 11/4/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Akaro LLC. All rights reserved.
 //
 
 import UIKit
@@ -26,12 +26,14 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
 
     let transitionUp = SlideUpAnimator()
     
+    var createGroupViewReference: CreateGroupViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //hard code in the users just for testing
-        totalUsers.append(User(handle: "taviansims", fullName: "Tavian Sims"))
-        totalUsers.append(User(handle: "jaredheyen", fullName:"Jared Heyen"))
+        totalUsers.append(tavianUser)
+        totalUsers.append(jaredUser)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -69,14 +71,17 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
     
     // MARK: Navigation
     
-    // Called whenever the user cancels the crop
+    // Called whenever the user cancels the crop - not used currently
     @IBAction func unwindToCreateGroupCancelled(segue: UIStoryboardSegue) {
         
     }
     
     // Called whenever the user chooses the crop
     @IBAction func unwindToCreateGroupChoosen(segue: UIStoryboardSegue) {
-        
+        if let cropGroupPhotoView = segue.source as? CropGroupPhotoViewController {
+            
+            self.profilePicFromCrop = cropGroupPhotoView.getCroppedImage(image: (cropGroupPhotoView.imageView?.image)!)
+        }
     }
     
     // Check to see if its okay to try to create this group - like if all of the fields are not filled out
@@ -249,6 +254,8 @@ extension CreateGroupViewController: UIImagePickerControllerDelegate {
             
             cropView.image = selectedImage
             
+            // Pass the image picker to the cropView so we can unwind back to it
+            
             self.present(cropView, animated: true, completion: nil)
             
             //imageView.contentMode = .scaleAspectFit
@@ -261,14 +268,17 @@ extension CreateGroupViewController: UIImagePickerControllerDelegate {
         }
     }
     
+    // If the image picker was cancelled
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
     
-    
+    // When the upload photo button is pressed
     @IBAction func addGroupPicture(_ sender: Any) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
+        
+        //createGroupViewReference = self // Create a reference of this
         
         present(imagePicker, animated: true, completion: nil)
     }

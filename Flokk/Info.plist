@@ -28,6 +28,7 @@
 	<string>Used to select photos to upload</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>JosefinSans-Bold.ttf</string>
 		<string>JosefinSans-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
