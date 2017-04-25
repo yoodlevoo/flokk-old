@@ -77,8 +77,19 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let notification = notifications[indexPath.row]
         
+        // We will do different things depending on which type of Notification we selected
         switch notification.type {
         case NotificationType.FRIEND_REQUESTED:
+            // Attempt to instantiate a Profile Navigation Object
+            guard let profileNavView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileNavigationViewController") as? ProfileNavigationViewController else {
+                print("Could not instantiate view controller of type Profile View Controller from Notifications Tab")
+                return
+            }
+            
+            profileNavView.userToPass = notification.sender
+            
+            // Then segue to it
+            self.present(profileNavView, animated: true, completion: nil)
             
             break
         case NotificationType.FRIEND_REQUEST_ACCEPTED:

@@ -60,12 +60,11 @@ class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDe
     }
     
     @IBAction func backPage(_ sender: AnyObject) {
+        
     }
-    /*
-    @IBAction func logoutBttn(_ sender: AnyObject) {
-    } */
     
     @IBAction func saveBttn(_ sender: AnyObject) {
+        
     }
     
     // MARK: - Navigation

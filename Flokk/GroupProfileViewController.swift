@@ -3,43 +3,68 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 11/3/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Akaro. All rights reserved.
 //
 
 import UIKit
 
 class GroupProfileViewController: UIViewController {
-    @IBOutlet weak var groupImage: UIImageView!
-    @IBOutlet weak var groupName: UIButton!
-    @IBOutlet weak var createdDate: UILabel!
-    @IBOutlet weak var creatorName: UILabel!
-    @IBOutlet weak var groupSize: UILabel!
-    @IBOutlet weak var requestBttn: UIButton!
-
+    @IBOutlet weak var tableView: UITableView!
+    
+    var group: Group!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    @IBAction func backPage(_ sender: AnyObject) {
-    }
-    @IBAction func requestToJoin(_ sender: AnyObject) {
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func backPage(_ sender: AnyObject) {
+        
     }
-    */
+    
+    @IBAction func requestToJoin(_ sender: AnyObject) {
+        
+    }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "embedSegueGroupProfileContainer" { //
+            if let groupProfilePageView = segue.destination as? GroupProfilePageViewController {
+                groupProfilePageView.group = self.group
+            }
+        }
+    }
+}
+
+extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return group.participants.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default") as! GroupParticipantsTableViewCell
+        
+        let user = group.participants[indexPath.row]
+        
+        cell.profilePictureView.image = user.profilePhoto
+        cell.profilePictureView.layer.cornerRadius = cell.profilePictureView.frame.size.width / 2
+        cell.profilePictureView.clipsToBounds = true
+        
+        cell.nameLabel.text = user.fullName
+        cell.usernameLabel.text = user.handle
+        
+        return cell
+    }
+}
+
+class GroupParticipantsTableViewCell: UITableViewCell {
+    @IBOutlet weak var profilePictureView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
+    
 }

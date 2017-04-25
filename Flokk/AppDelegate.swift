@@ -3,14 +3,18 @@
 //  Tutorial
 //
 //  Created by Jared Heyen on 10/7/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Akaro. All rights reserved.
 //
 
 import UIKit
 
-var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
+// Universal Variables for testing
+var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhomme")
 var jaredUser = User(handle: "jaredheyen", fullName: "Jared Heyen")
 var tavianUser = User(handle: "taviansims", fullName: "Tavian Sims")
+
+var friendGroup = Group(groupName: "Friends", image: UIImage(named: "groupPhoto")!, users: [mainUser, jaredUser, tavianUser], creator: mainUser)
+var otherGroup = Group(groupName: "Other", image: UIImage(named: "group2Photo")!, users: [mainUser, jaredUser, tavianUser], creator: mainUser)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

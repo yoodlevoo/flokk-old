@@ -20,7 +20,8 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var groups = [Group]() // The groups this user is in
     
     var mainUser: Bool! // Is it the main/local user - not sure if I want this or not.
-    
+    var friends = [User]() // Array of all friends this user has
+    var openFriendRequests = [User]() // Array of users that requested to be this user's friend
     
     init(handle: String, fullName: String) {
         self.handle = handle
@@ -31,6 +32,14 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         
         // Load in this user's group from the database
         //self.groups = ??
+    }
+    
+    func loadFriends() {
+        
+    }
+    
+    func isFriendsWith(user: User) -> Bool {
+        return false
     }
     
     func addNewGroup(group: Group) {
