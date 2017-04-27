@@ -29,7 +29,7 @@ class PersonalProfileViewController: UIViewController {
         profilePic.clipsToBounds = true
         
         name.text = user.fullName
-        username.text = user.handle
+        username.text = "@\(user.handle)"
     }
 
     override func didReceiveMemoryWarning() {

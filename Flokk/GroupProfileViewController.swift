@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 11/3/16.
-//  Copyright © 2016 Akaro. All rights reserved.
+//  Copyright © 2016 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -19,13 +19,19 @@ class GroupProfileViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     @IBAction func backPage(_ sender: AnyObject) {
-        
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func requestToJoin(_ sender: AnyObject) {
@@ -56,10 +62,15 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
         cell.profilePictureView.clipsToBounds = true
         
         cell.nameLabel.text = user.fullName
-        cell.usernameLabel.text = user.handle
+        cell.usernameLabel.text = "@\(user.handle)"
         
         return cell
     }
+    
+    /*
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Participants"
+    } */
 }
 
 class GroupParticipantsTableViewCell: UITableViewCell {

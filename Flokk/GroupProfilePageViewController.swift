@@ -71,6 +71,10 @@ extension GroupProfilePageViewController: UIPageViewControllerDataSource {
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return 2 // No need to do viewControllerPages.count, this will always be 2
     }
+    
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+        return 0
+    }
 }
 
 // View Controller at the top of the group profile

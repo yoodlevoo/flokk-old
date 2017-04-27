@@ -58,7 +58,7 @@ class Notification {
         
         // Bold the sender's name and the group name
         let formattedString = NSMutableAttributedString()
-        formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("invited you to").bold(" \(group.groupName).", Notification.textSize)
+        formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("invited you to join").bold(" \(group.groupName).", Notification.textSize)
         
         self.description = formattedString
     }

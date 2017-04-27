@@ -70,6 +70,7 @@
 		15FAA0B11E96C19F004820B9 /* SlideLeftAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */; };
 		15FB666A1EA9396C004D23AF /* ProfileNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */; };
 		15FB666C1EAA8493004D23AF /* GroupProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB666B1EAA8493004D23AF /* GroupProfilePageViewController.swift */; };
+		15FB666F1EB1225E004D23AF /* GroupProfileNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB666E1EB1225E004D23AF /* GroupProfileNavigationViewController.swift */; };
 		15FC22A01EA7BB5D00DC9FA6 /* TextUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */; };
 		2969B48B64D7290FBFE6C999 /* Pods_FlokkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A68DF56A284B426BCD7F3944 /* Pods_FlokkTests.framework */; };
 		5ED288086BC7EEE16DD41E8D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
@@ -168,6 +169,7 @@
 		15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideLeftAnimator.swift; sourceTree = "<group>"; };
 		15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileNavigationViewController.swift; sourceTree = "<group>"; };
 		15FB666B1EAA8493004D23AF /* GroupProfilePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupProfilePageViewController.swift; sourceTree = "<group>"; };
+		15FB666E1EB1225E004D23AF /* GroupProfileNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupProfileNavigationViewController.swift; sourceTree = "<group>"; };
 		15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextUtils.swift; sourceTree = "<group>"; };
 		3485561FD16ECCB0AA98F00C /* Pods-Flokk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flokk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flokk/Pods-Flokk.debug.xcconfig"; sourceTree = "<group>"; };
 		6F319E36F1B8391236766DB7 /* Pods-FlokkUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlokkUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlokkUITests/Pods-FlokkUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 				15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */,
 				15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */,
 				15FB666B1EAA8493004D23AF /* GroupProfilePageViewController.swift */,
+				15FB666E1EB1225E004D23AF /* GroupProfileNavigationViewController.swift */,
 			);
 			name = "Navigation Controllers";
 			sourceTree = "<group>";
@@ -512,7 +515,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
-				ORGANIZATIONNAME = Akaro;
+				ORGANIZATIONNAME = Flokk;
 				TargetAttributes = {
 					7F0666061E37BAAD003167AC = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -744,6 +747,7 @@
 				15C826E71E8587EF003EE6E4 /* ProfileSettingsViewController.swift in Sources */,
 				15C8268E1E8587DF003EE6E4 /* SecondSignUpViewController.swift in Sources */,
 				15C275951E9FCC7100C62F0D /* AppSettingsTableViewController.swift in Sources */,
+				15FB666F1EB1225E004D23AF /* GroupProfileNavigationViewController.swift in Sources */,
 				15C826DC1E8587EF003EE6E4 /* Notification.swift in Sources */,
 				158FE22E1E954A81009EFBA6 /* MainTabBarController.swift in Sources */,
 				15C826E41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift in Sources */,

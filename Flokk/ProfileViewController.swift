@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         name.text = user.fullName
-        username.text = user.handle
+        username.text = "@\(user.handle)"
         
         // Set the profile pic and make it crop to an image
         profilePic.image = user.profilePhoto
@@ -46,7 +46,11 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
+        // Check if there is a group this user is participating in already selected
+        let selectedIndex = self.tableView.indexPathForSelectedRow
+        if selectedIndex != nil { // If there is then deselect it
+            self.tableView.deselectRow(at: selectedIndex!, animated: false)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,10 +76,10 @@ class ProfileViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromProfileToGroupProfile" {
-            if let groupProfileView = segue.destination.childViewControllers[0] as? GroupProfileViewController {
+            if let groupProfileNav = segue.destination as? GroupProfileNavigationViewController {
                 let indexPath = self.tableView.indexPathForSelectedRow
                 
-                groupProfileView.group = user.groups[(indexPath?.row)!]
+                groupProfileNav.groupToPass = user.groups[(indexPath?.row)!]
             }
         }
     }
