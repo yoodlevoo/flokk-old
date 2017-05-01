@@ -10,6 +10,7 @@
 		150789E21E859EFD003C6FB3 /* SlideDownAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150789DE1E859EFD003C6FB3 /* SlideDownAnimator.swift */; };
 		150789E41E859EFD003C6FB3 /* SlideUpAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150789E01E859EFD003C6FB3 /* SlideUpAnimator.swift */; };
 		151E60EC1E93CECC00A45227 /* Pods_Flokk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A28DF034D8D231E26FEA16 /* Pods_Flokk.framework */; };
+		152F02281EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152F02271EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift */; };
 		15309E7D1E6494F200D1DFA1 /* gannonprudhomme.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */; };
 		15309E7F1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */; };
 		15309E811E65068100D1DFA1 /* jaredheyenSki_Trip.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */; };
@@ -108,6 +109,7 @@
 		0F6413F9D4AD8FFE064610FB /* Pods-Flokk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flokk.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flokk/Pods-Flokk.release.xcconfig"; sourceTree = "<group>"; };
 		150789DE1E859EFD003C6FB3 /* SlideDownAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideDownAnimator.swift; sourceTree = "<group>"; };
 		150789E01E859EFD003C6FB3 /* SlideUpAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideUpAnimator.swift; sourceTree = "<group>"; };
+		152F02271EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideRightNavigationAnimator.swift; sourceTree = "<group>"; };
 		15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhomme.json; sourceTree = SOURCE_ROOT; };
 		15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeFPSF2016.json; sourceTree = "<group>"; };
 		15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyenSki_Trip.json; sourceTree = "<group>"; };
@@ -289,13 +291,13 @@
 		15C826871E8587B7003EE6E4 /* Navigation Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				15E743B01E967DA8002D1220 /* GroupsNavigationViewController.swift */,
 				15C8268A1E8587DF003EE6E4 /* AddCommentNavigationViewController.swift */,
 				15C826941E8587EF003EE6E4 /* ConfirmUploadNavigationViewController.swift */,
 				15C826991E8587EF003EE6E4 /* FeedNavigationViewController.swift */,
 				15C826B31E8587EF003EE6E4 /* PhotoUploadPageNavigationViewController.swift */,
 				15F74F1C1E898B3F00A23720 /* FriendsNavigationViewController.swift */,
 				15FA9B0C1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift */,
-				15E743B01E967DA8002D1220 /* GroupsNavigationViewController.swift */,
 				15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */,
 				15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */,
 				15FB666B1EAA8493004D23AF /* GroupProfilePageViewController.swift */,
@@ -415,6 +417,7 @@
 				15E743B21E968041002D1220 /* SlideRightAnimator.swift */,
 				15C826931E8587EF003EE6E4 /* BounceButton.swift */,
 				15C826A21E8587EF003EE6E4 /* ImageTransition.swift */,
+				152F02271EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -782,6 +785,7 @@
 				15C826D11E8587EF003EE6E4 /* ImageScrollView.swift in Sources */,
 				15C826E51E8587EF003EE6E4 /* Post.swift in Sources */,
 				150789E21E859EFD003C6FB3 /* SlideDownAnimator.swift in Sources */,
+				152F02281EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift in Sources */,
 				15C826D21E8587EF003EE6E4 /* ImageTransition.swift in Sources */,
 				15C826EF1E8587EF003EE6E4 /* TakePictureViewController.swift in Sources */,
 				15C826F01E8587EF003EE6E4 /* UploadPhotoViewController.swift in Sources */,

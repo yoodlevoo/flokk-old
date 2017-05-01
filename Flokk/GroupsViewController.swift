@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 12/21/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -21,6 +21,7 @@ class GroupsViewController: UIViewController {
     let transitionRight = SlideRightAnimator()
     let transitionUp = SlideUpAnimator()
     let transitionDown = SlideDownAnimator()
+    let transitionRightNavigation = SlideRightNavigationAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +75,9 @@ class GroupsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // If the tab bar was previously hidden(like from the feed view), unhide it
+        //self.tabBarController?.tabBar.isHidden = false
+        
         // Check if there is a group already selected
         let selectedIndex = self.tableView.indexPathForSelectedRow
         if selectedIndex != nil { // If there is then deselect it
@@ -83,11 +87,11 @@ class GroupsViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupToFeed" {
-            if let feedNav = segue.destination as? FeedNavigationViewController {
+            if let feedNav = segue.destination as? FeedViewController {
                 if let tag = (sender as? GroupTableViewCell)?.tag {
                     weak var group = defaultGroups[tag] // I want this to be weak to prevent memory leakage
                     
-                    feedNav.groupToPass = group
+                    feedNav.group = group
                     feedNav.transitioningDelegate = transitionRight
                     
                     //feedNav.passGroup()

@@ -1,15 +1,15 @@
 //
-//  SlideRightAnimator.swift
+//  SlideRightNavigationAnimator.swift
 //  Flokk
 //
-//  Created by Gannon Prudhomme on 4/6/17.
+//  Created by Gannon Prudhomme on 4/28/17.
 //  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class SlideRightAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
+class SlideRightNavigationAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     var presenting: Bool
     
     override init() {

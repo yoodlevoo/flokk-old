@@ -13,8 +13,6 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
 
     var notifications = [Notification]()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,7 +63,8 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
             cell.groupIconView.image = notification.group.groupIcon
             cell.groupIconView.layer.cornerRadius = cell.groupIconView.frame.size.width / 2
             cell.groupIconView.clipsToBounds = true
-            cell.descriptionLabel.numberOfLines = 2
+            cell.descriptionLabel.numberOfLines = 0
+            cell.descriptionLabel.lineBreakMode = .byWordWrapping
             cell.descriptionLabel.sizeToFit()
             
             break

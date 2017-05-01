@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 11/3/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -16,7 +16,7 @@ class FeedViewController: UIViewController {
     var group: Group! // The group this feed is reading from
     
     static let initialPostCount = 10 // The initial amount of posts to load
-    var loadedPosts = [Post]() // When there are a lot of posts, this will contain only the most 'x' recent posts
+    var loadedPosts = [Post]() // Whe8n there are a lot of posts, this will contain only the most 'x' recent posts
     
     let transitionDown = SlideDownAnimator()
     var refreshControl: UIRefreshControl = UIRefreshControl()
@@ -27,7 +27,7 @@ class FeedViewController: UIViewController {
         if #available (iOS 10.0, *) {
             tableView.refreshControl = refreshControl
         }else {
-        tableView.addSubview(refreshControl)
+            tableView.addSubview(refreshControl)
         }
         
         tableView.delegate = self
@@ -35,29 +35,18 @@ class FeedViewController: UIViewController {
         
         // Don't load the posts if there are already posts stored
         if loadedPosts.count == 0 {
-            // group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
-        }
-        
-        if loadedPosts.count == 0 {
             loadedPosts = group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
-            
-            for post in loadedPosts {
-                if let cachedObject = FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString) { //if this posts exists in the cache
-                } else { //if it doesn't add it to the postsCache
-                    //priint(post.getUniqueName())
-                    //FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString)
-                }
-            }
-            
-        } else {
-            //loadedPosts.removeAll()
-            //loadedPosts = group.loadPostsNew(numPostsToLoad: FeedViewController.initialPostCount)
         }
         
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        
+        // Hide the tab bar
+        self.tabBarController?.tabBar.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
