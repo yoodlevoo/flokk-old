@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 3/5/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -30,6 +30,14 @@ class PersonalProfileViewController: UIViewController {
         
         name.text = user.fullName
         username.text = "@\(user.handle)"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //(self.navigationController as! PersonalProfileNavigationViewController).hideNavigationBar()
+        self.navigationController?.navigationBar.isHidden = true
+        (self.tabBarController as! MainTabBarController).showTabBar()
     }
 
     override func didReceiveMemoryWarning() {

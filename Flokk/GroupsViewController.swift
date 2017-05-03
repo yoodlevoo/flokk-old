@@ -32,20 +32,8 @@ class GroupsViewController: UIViewController {
             tableView.addSubview(refreshControl)
         }
         
-        //print(defaultGroups.count) // At this point is this ever not at 0 or is a new array created each time
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
-        
-        //mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
-        
-        //FileUtils.deleteUserJSON(user: mainUser)
-        //FileUtils.deleteGroupJSON(groupName: "Bball")
-        //FileUtils.deleteGroupJSON(groupName: "Basketball")
-        
-        
-        //FileUtils.findAllFilesInDocuments()
         
         if defaultGroups.count == 0 {
 
@@ -59,30 +47,24 @@ class GroupsViewController: UIViewController {
             }
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
-    
-    // Called anytime this view appears on screen, while viewDidLoad is only called once
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-    }
     
     // When the view is preparing to appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // If the tab bar was previously hidden(like from the feed view), unhide it
-        //self.tabBarController?.tabBar.isHidden = false
+        (self.tabBarController as! MainTabBarController).showTabBar()
         
         // Check if there is a group already selected
         let selectedIndex = self.tableView.indexPathForSelectedRow
         if selectedIndex != nil { // If there is then deselect it
             self.tableView.deselectRow(at: selectedIndex!, animated: false)
         }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

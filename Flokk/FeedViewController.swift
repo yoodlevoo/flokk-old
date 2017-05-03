@@ -46,7 +46,7 @@ class FeedViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // Hide the tab bar
-        self.tabBarController?.tabBar.isHidden = true
+        (self.tabBarController as! MainTabBarController).hideTabBar()
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,11 +70,11 @@ class FeedViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromFeedToComment" {
-            if let commentNav = segue.destination as? AddCommentNavigationViewController {
+            if let commentView = segue.destination as? AddCommentViewController {
                 if let tag = (sender as? FeedTableViewCell)?.tag {
                     let post = loadedPosts[tag]
                     
-                    commentNav.postToPass = post
+                    commentView.post = post
                 }
             }
         } else if segue.identifier == "segueFromFeedToUploadImage" {
@@ -128,6 +128,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     // Once the post is pressed, go to the comments
     // In the future this may change to a swipe on the post instead of a tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*
         let index = loadedPosts.count - 1 - indexPath.row
         
         let post = loadedPosts[index] // Get the specific post referred to by the pressed cell
@@ -140,6 +141,8 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         commentNav.passPost()
         
         self.present(commentNav, animated: true, completion: nil)
+ 
+        */
     }
 }
 

@@ -25,6 +25,13 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         loadFriends()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        (self.tabBarController as! MainTabBarController).hideTabBar()
+        self.navigationController?.navigationBar.isHidden = false
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
