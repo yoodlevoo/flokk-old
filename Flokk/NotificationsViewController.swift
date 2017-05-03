@@ -20,7 +20,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.dataSource = self
         
         notifications.append(Notification(type: NotificationType.FRIEND_REQUESTED, sender: jaredUser))
-        notifications.append(Notification(type: NotificationType.GROUP_INVITE, sender: jaredUser, group: otherGroup))
+        notifications.append(Notification(type: NotificationType.GROUP_INVITE, sender: jaredUser, group: friendGroup))
         
     }
     
@@ -110,15 +110,15 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
             
             break
         case NotificationType.GROUP_INVITE:
-            guard let groupProfileNavView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GroupProfileNavigationViewController") as? GroupProfileNavigationViewController else {
-                print("Could not instantiate view controller of type Group Profile View Controller from Notifications Tab")
+            guard let groupProfileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GroupProfileViewController") as? GroupProfileViewController else {
+                print("Could not instantiate view controller of type Group View Controller from Notifications Tab")
                 return
             }
             
-            groupProfileNavView.groupToPass = notification.group
-            groupProfileNavView.userToPass = notification.sender
+            groupProfileView.group = notification.group
+            //groupProfileView.user = notification.sender
             
-            self.present(groupProfileNavView, animated: true, completion: nil)
+            self.present(groupProfileView, animated: true, completion: nil)
             
             break
         case NotificationType.NEW_COMMENT:

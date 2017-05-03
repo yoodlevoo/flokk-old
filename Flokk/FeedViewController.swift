@@ -40,6 +40,9 @@ class FeedViewController: UIViewController {
         
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+        self.edgesForExtendedLayout = .bottom
     }
     
     override func viewWillAppear(_ animated: Bool) {

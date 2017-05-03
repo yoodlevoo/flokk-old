@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 4/19/17.
-//  Copyright © 2017 Akaro. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import Foundation
@@ -13,13 +13,13 @@ import UIKit
 extension NSMutableAttributedString {
     @discardableResult func bold(_ text: String, _ size: Float) -> NSMutableAttributedString {
         let familyNames = UIFont.familyNames
-        print(familyNames)
+        //print(familyNames)
         
         var fontnames = UIFont.fontNames(forFamilyName: "Georgia")
-        print(fontnames)
+        //print(fontnames)
         
         fontnames = UIFont.fontNames(forFamilyName: "Josefin Sans")
-        print(fontnames)
+        //print(fontnames)
         
         let josefinSans = UIFont(name: "Josefin Sans", size: CGFloat(size))
         

@@ -11,8 +11,8 @@ import UIKit
 class FriendsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
-    var friends = [User]() //friends of the main user
-    var displayedFriends = [User]()
+    var totalFriends = [User]() // The total friends of the main users
+    var displayedFriends = [User]() // Just the friends that are being displayed
     
     let transitionRight = SlideRightAnimator()
     
@@ -31,6 +31,8 @@ class FriendsViewController: UIViewController {
         (self.tabBarController as! MainTabBarController).hideTabBar()
         (self.navigationController as! PersonalProfileNavigationViewController).showNavigationBar()
         //self.navigationController?.navigationBar.isHidden = false
+        
+        loadFriends()
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,7 +40,9 @@ class FriendsViewController: UIViewController {
     }
     
     func loadFriends() {
+        totalFriends = mainUser.friends // Fetch all of the main user's friends
         
+        displayedFriends = totalFriends // Set the displayed friends to just show all of the friends for testing
     }
     
     // Simply dismiss this view manually when the back button is pressed, 
@@ -56,6 +60,8 @@ extension FriendsViewController: UITableViewDelegate, UITableViewDataSource {
         //get which friend should be referenced
         let friend = displayedFriends[indexPath.row]
         
+        cell.profilePhotoView.layer.cornerRadius = cell.profilePhotoView.frame.size.width / 2
+        cell.profilePhotoView.clipsToBounds = true
         cell.profilePhotoView.image = friend.profilePhoto
         cell.fullNameLabel.text = friend.fullName
         cell.handleLabel.text = friend.handle

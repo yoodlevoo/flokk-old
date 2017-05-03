@@ -29,13 +29,16 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.profilePhoto = UIImage(named: "AddProfilePic")! //temporary
         
         loadPicture()
+        loadFriends()
         
         // Load in this user's group from the database
         //self.groups = ??
     }
     
     func loadFriends() {
-        
+        if self.handle == "gannonprudhomme" {
+            self.friends = [jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser]
+        }
     }
     
     func isFriendsWith(user: User) -> Bool {

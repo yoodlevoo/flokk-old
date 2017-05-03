@@ -12,8 +12,15 @@ import UIKit
 var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhomme")
 var jaredUser = User(handle: "jaredheyen", fullName: "Jared Heyen")
 var tavianUser = User(handle: "taviansims", fullName: "Tavian Sims")
+var crosbyUser = User(handle: "crosbus", fullName: "Crosby Busfield")
+var grantUser = User(handle: "granthuser", fullName: "Grant Huser")
+var ryanUser = User(handle: "ryanmac", fullName: "Ryan McClemore")
+var berginUser = User(handle: "berginelias", fullName: "Bergin Elias")
+var alexUser = User(handle: "alexshilnikov", fullName: "Alex Shilnikov")
+var chandlerUser = User(handle: "chanfranks", fullName: "Chandler Franks")
+var madiUser = User(handle: "madileal", fullName: "Madi Leal")
 
-var friendGroup = Group(groupName: "Friends", image: UIImage(named: "groupPhoto")!, users: [mainUser, jaredUser, tavianUser], creator: mainUser)
+var friendGroup = Group(groupName: "Friends", image: UIImage(named: "groupPhoto")!, users: [mainUser, jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser], creator: mainUser)
 var otherGroup = Group(groupName: "Other", image: UIImage(named: "group2Photo")!, users: [jaredUser, tavianUser], creator: mainUser)
 
 @UIApplicationMain
