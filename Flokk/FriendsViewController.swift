@@ -3,19 +3,18 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 3/6/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
 
-class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FriendsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var friends = [User]() //friends of the main user
     var displayedFriends = [User]()
     
     let transitionRight = SlideRightAnimator()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +29,27 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewWillAppear(animated)
         
         (self.tabBarController as! MainTabBarController).hideTabBar()
-        self.navigationController?.navigationBar.isHidden = false
+        (self.navigationController as! PersonalProfileNavigationViewController).showNavigationBar()
+        //self.navigationController?.navigationBar.isHidden = false
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    func loadFriends() {
+        
+    }
+    
+    // Simply dismiss this view manually when the back button is pressed, 
+    //  as this view is segued to the left not the default right
+    @IBAction func backButtonPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+// Table View Functions
+extension FriendsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! FriendsTableViewCell
         
@@ -53,27 +66,10 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.displayedFriends.count //ranges from [0,
     }
-    
-    func loadFriends() {
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        
-        if segue.identifier == "segueFromFriendsToTabBar" {
-            if let tabBar = segue.destination as? MainTabBarController {
-                
-                tabBar.selectedIndex = 2
-            }
-        }
-    }
 }
 
 class FriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var profilePhotoView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var handleLabel: UILabel!
-
-    
 }

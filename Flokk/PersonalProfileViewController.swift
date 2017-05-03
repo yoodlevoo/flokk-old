@@ -16,7 +16,6 @@ class PersonalProfileViewController: UIViewController {
     var user: User!
     
     let transitionLeft = SlideLeftAnimator()
-    let transitionRight = SlideRightAnimator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +34,8 @@ class PersonalProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //(self.navigationController as! PersonalProfileNavigationViewController).hideNavigationBar()
-        self.navigationController?.navigationBar.isHidden = true
+        (self.navigationController as! PersonalProfileNavigationViewController).hideNavigationBar()
+        //self.navigationController?.navigationBar.isHidden = true
         (self.tabBarController as! MainTabBarController).showTabBar()
     }
 
@@ -50,10 +49,8 @@ class PersonalProfileViewController: UIViewController {
     @IBOutlet weak var settings: UIButton!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromProfileToAppSettings" {
-            segue.destination.transitioningDelegate = transitionRight
-        } else if segue.identifier == "segueFromProfileToFriends" {
-            if let friendsNav = segue.destination as? FriendsNavigationViewController {
+        if segue.identifier == "segueFromProfileToFriends" {
+            if let friendsNav = segue.destination as? FriendsViewController {
                 friendsNav.transitioningDelegate = transitionLeft
             }
         }

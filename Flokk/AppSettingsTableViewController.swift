@@ -13,17 +13,17 @@ class AppSettingsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationController?.navigationBar.isHidden = true
         // self.clearsSelectionOnViewWillAppear = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //(self.navigationController as! PersonalProfileNavigationViewController).showNavigationBar()
+        (self.navigationController as! PersonalProfileNavigationViewController).showNavigationBar()
         (self.tabBarController as! MainTabBarController).hideTabBar()
-        self.navigationController?.navigationBar.isHidden = false
-        
+        //self.navigationController?.navigationBar.isHidden = false
     }
 
     override func didReceiveMemoryWarning() {

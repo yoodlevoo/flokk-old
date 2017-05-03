@@ -8,6 +8,9 @@
 
 import UIKit
 
+// Global duration constant for the tab bar show and hide animation
+let TAB_BAR_ANIMATION_DURATION: Double = 0.25
+
 class MainTabBarController: UITabBarController {
     let transitionRight = SlideRightAnimator()
     let transitionUp = SlideUpAnimator()
@@ -24,9 +27,10 @@ class MainTabBarController: UITabBarController {
     func showTabBar() {
         var frame = self.tabBar.frame
         frame.origin.y = self.view.frame.size.height - (frame.size.height)
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: TAB_BAR_ANIMATION_DURATION, animations: {
             self.tabBar.frame = frame
             print("y: \(frame.origin.y)")
+            //self.tabBar.alpha = 1
         })
         
         self.tabBar.isHidden = false
@@ -35,8 +39,9 @@ class MainTabBarController: UITabBarController {
     func hideTabBar() {
         var frame = self.tabBar.frame
         frame.origin.y = self.view.frame.size.height + (frame.size.height)
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: TAB_BAR_ANIMATION_DURATION, animations: {
             self.tabBar.frame = frame
+            //self.tabBar.alpha = 0
             
         }, completion: { (value: Bool) in
             //hide the tab bar once this animation is completed so the tableview is formatted correctly
