@@ -21,8 +21,8 @@ class AppSettingsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        (self.navigationController as! PersonalProfileNavigationViewController).showNavigationBar()
-        (self.tabBarController as! MainTabBarController).hideTabBar()
+        self.navigationController?.showNavigationBar()
+        //self.tabBarController?.hideTabBar()
         //self.navigationController?.navigationBar.isHidden = false
     }
 

@@ -19,9 +19,10 @@ var berginUser = User(handle: "berginelias", fullName: "Bergin Elias")
 var alexUser = User(handle: "alexshilnikov", fullName: "Alex Shilnikov")
 var chandlerUser = User(handle: "chanfranks", fullName: "Chandler Franks")
 var madiUser = User(handle: "madileal", fullName: "Madi Leal")
+var lucasUser = User(handle: "lucasarnold", fullName: "Lucas Arnold")
 
-var friendGroup = Group(groupName: "Friends", image: UIImage(named: "groupPhoto")!, users: [mainUser, jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser], creator: mainUser)
-var otherGroup = Group(groupName: "Other", image: UIImage(named: "group2Photo")!, users: [jaredUser, tavianUser], creator: mainUser)
+var friendGroup = Group(groupName: "Friends", image: UIImage(named: "groupPhoto")!, users: [mainUser, jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser, lucasUser], creator: mainUser)
+var otherGroup = Group(groupName: "Other", image: UIImage(named: "group2Photo")!, users: [jaredUser, tavianUser, lucasUser, madiUser, berginUser], creator: mainUser)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.classForCoder() as! UIAppearanceContainer.Type]).setTitleTextAttributes(["attribute" : "value"], for: .normal)
         
         //passing which group is pressed from the GroupsViewController to the FeedViewController
         //the GroupsViewController(in didSelectRow) sets the group in FeedNavigationViewController

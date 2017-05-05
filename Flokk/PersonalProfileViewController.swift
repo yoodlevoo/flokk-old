@@ -12,6 +12,7 @@ class PersonalProfileViewController: UIViewController {
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var settings: UIButton!
 
     var user: User!
     
@@ -34,9 +35,9 @@ class PersonalProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        (self.navigationController as! PersonalProfileNavigationViewController).hideNavigationBar()
+        self.navigationController?.hideNavigationBar()
         //self.navigationController?.navigationBar.isHidden = true
-        (self.tabBarController as! MainTabBarController).showTabBar()
+        self.tabBarController?.showTabBar()
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,12 +47,31 @@ class PersonalProfileViewController: UIViewController {
     @IBAction func editProfile(_ sender: Any) {
     }
     
-    @IBOutlet weak var settings: UIButton!
+    /*
+    @IBAction func friendsButtonPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let friendsView: FriendsNavigationViewController = storyboard.instantiateViewController(withIdentifier: "FriendsNavigationViewController") as! FriendsNavigationViewController
+        
+        let transition = CATransition()
+        transition.duration = 0.35
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromLeft
+        
+        view.window!.layer.add(transition, forKey: kCATransition)
+        present(friendsView, animated: false, completion: nil)
+        
+    } */
+    
+    @IBAction func unwindToPersonalProfile(segue: UIStoryboardSegue) {
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromProfileToFriends" {
-            if let friendsNav = segue.destination as? FriendsViewController {
+        self.tabBarController?.hideTabBar()
+        
+        if segue.identifier == "segueFromPersonalProfileToFriends" {
+            if let friendsNav = segue.destination as? FriendsNavigationViewController {
                 friendsNav.transitioningDelegate = transitionLeft
+                
             }
         }
     }

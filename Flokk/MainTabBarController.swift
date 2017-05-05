@@ -23,19 +23,22 @@ class MainTabBarController: UITabBarController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+}
+
+extension UITabBarController {
+    // Animate the tab bar by sliding it from the bottom
     func showTabBar() {
         var frame = self.tabBar.frame
         frame.origin.y = self.view.frame.size.height - (frame.size.height)
         UIView.animate(withDuration: TAB_BAR_ANIMATION_DURATION, animations: {
             self.tabBar.frame = frame
-            print("y: \(frame.origin.y)")
             //self.tabBar.alpha = 1
         })
         
         self.tabBar.isHidden = false
     }
     
+    // Animate the tab bar by sliding it down
     func hideTabBar() {
         var frame = self.tabBar.frame
         frame.origin.y = self.view.frame.size.height + (frame.size.height)
@@ -47,21 +50,5 @@ class MainTabBarController: UITabBarController {
             //hide the tab bar once this animation is completed so the tableview is formatted correctly
             self.tabBar.isHidden = true
         })
-    }
-
-    @IBAction func unwindToGroup(segue: UIStoryboardSegue) {
-        
-    }
-    
-    @IBAction func unwindToProfile(segue: UIStoryboardSegue) {
-        if let friendsView = segue.source as? FriendsViewController {
-            self.selectedIndex = 2
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromPersonalProfileToAppSettings" {
-            
-        }
     }
 }

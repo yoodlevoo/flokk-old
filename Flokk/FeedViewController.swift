@@ -30,8 +30,10 @@ class FeedViewController: UIViewController {
             tableView.addSubview(refreshControl)
         }
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        //self.tabBarController?.tabBar.isHidden = true
         
         // Don't load the posts if there are already posts stored
         if loadedPosts.count == 0 {
@@ -49,7 +51,7 @@ class FeedViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // Hide the tab bar
-        (self.tabBarController as! MainTabBarController).hideTabBar()
+        //(self.tabBarController as! MainTabBarController).hideTabBar()
     }
 
     override func didReceiveMemoryWarning() {

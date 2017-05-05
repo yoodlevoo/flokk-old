@@ -53,7 +53,7 @@ class GroupsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // If the tab bar was previously hidden(like from the feed view), unhide it
-        (self.tabBarController as! MainTabBarController).showTabBar()
+        self.tabBarController?.showTabBar()
         
         // Check if there is a group already selected
         let selectedIndex = self.tableView.indexPathForSelectedRow
@@ -67,6 +67,10 @@ class GroupsViewController: UIViewController {
         
     }
     
+    @IBAction func unwindToGroup(segue: UIStoryboardSegue) {
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupToFeed" {
             if let feedNav = segue.destination as? FeedViewController {
@@ -75,6 +79,7 @@ class GroupsViewController: UIViewController {
                     
                     feedNav.group = group
                     feedNav.transitioningDelegate = transitionRight
+                    self.tabBarController?.hideTabBar()
                     
                     //feedNav.passGroup()
                 }

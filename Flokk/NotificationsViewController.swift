@@ -33,6 +33,11 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         if selectedIndex != nil { // If there is then deselect it
             self.tableView.deselectRow(at: selectedIndex!, animated: false)
         }
+        
+        // Check if the tab bar is hidden
+        if self.tabBarController?.tabBar.isHidden == true {
+            self.tabBarController?.showTabBar() // if it is, animate the unhiding of it
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -95,15 +100,15 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         switch notification.type {
         case NotificationType.FRIEND_REQUESTED:
             // Attempt to instantiate a Profile Navigation Object
-            guard let profileNavView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileNavigationViewController") as? ProfileNavigationViewController else {
+            guard let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController else {
                 print("Could not instantiate view controller of type Profile Navigation View Controller from Notifications Tab")
                 return
             }
             
-            profileNavView.userToPass = notification.sender
+            profileView.user = notification.sender
             
             // Then segue to it
-            self.present(profileNavView, animated: true, completion: nil)
+            //self.present(profileView, animated: true, completion: nil)
             
             break
         case NotificationType.FRIEND_REQUEST_ACCEPTED:
@@ -115,10 +120,11 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
                 return
             }
             
-            groupProfileView.group = notification.group
+            //groupProfileView.group = notification.group
             //groupProfileView.user = notification.sender
             
-            self.present(groupProfileView, animated: true, completion: nil)
+            //
+            self.performSegue(withIdentifier: "segueFromNotificationsToGroupProfile", sender: self)
             
             break
         case NotificationType.NEW_COMMENT:
@@ -131,7 +137,23 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        (self.tabBarController as! MainTabBarController).hideTabBar()
         
+        let indexPath = self.tableView.indexPathForSelectedRow!
+        
+        if segue.identifier == "segueFromNotificationsToProfile" {
+            if let profileView = segue.destination as? ProfileViewController {
+                let notification = notifications[indexPath.row]
+                
+                profileView.user = notification.sender
+            }
+        } else if segue.identifier == "segueFromNotificationsToGroupProfile" {
+            if let groupProfileView = segue.destination as? GroupProfileViewController {
+                let notification = notifications[indexPath.row]
+                
+                groupProfileView.group = notification.group
+            }
+        }
     }
 }
 

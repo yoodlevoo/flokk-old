@@ -37,7 +37,7 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     
     func loadFriends() {
         if self.handle == "gannonprudhomme" {
-            self.friends = [jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser]
+            self.friends = [jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser, lucasUser]
         }
     }
     

@@ -23,7 +23,6 @@ class GroupProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,7 +30,7 @@ class GroupProfileViewController: UIViewController {
     }
     
     @IBAction func backPage(_ sender: AnyObject) {
-        self.dismiss(animated: true, completion: nil)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func requestToJoin(_ sender: AnyObject) {

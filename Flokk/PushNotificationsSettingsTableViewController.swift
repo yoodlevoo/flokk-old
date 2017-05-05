@@ -25,7 +25,7 @@ class PushNotificationsSettingsTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.isHidden = false
-        (self.tabBarController as! MainTabBarController).hideTabBar()
+        self.tabBarController?.hideTabBar()
     }
 
     /*

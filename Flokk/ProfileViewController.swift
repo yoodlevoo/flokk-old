@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 11/4/16.
-//  Copyright © 2016 Akaro. All rights reserved.
+//  Copyright © 2016 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -67,7 +67,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func backButton(_ sender: Any) {
         // There are various different ways we segue to this view, so we can't really specify a single unwind segue to use
-        self.dismiss(animated: true, completion: nil)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func unwindToProfile(segue: UIStoryboardSegue) {
@@ -76,10 +76,10 @@ class ProfileViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromProfileToGroupProfile" {
-            if let groupProfileNav = segue.destination as? GroupProfileNavigationViewController {
+            if let groupProfileView = segue.destination as? GroupProfileViewController {
                 let indexPath = self.tableView.indexPathForSelectedRow
                 
-                groupProfileNav.groupToPass = user.groups[(indexPath?.row)!]
+                groupProfileView.group = user.groups[(indexPath?.row)!]
             }
         }
     }

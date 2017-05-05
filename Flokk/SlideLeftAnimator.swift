@@ -45,6 +45,7 @@ class SlideLeftAnimator: NSObject, UIViewControllerAnimatedTransitioning, UIView
             
             if !self.presenting {
                 fromView.transform = offScreenLeft
+                toView.transform = offScreenRight
             }
             
             toView.transform = CGAffineTransform.identity

@@ -19,13 +19,17 @@ class PersonalProfileNavigationViewController: UINavigationController {
         self.navigationBar.tintColor = UIColor(colorLiteralRed: 22, green: 23, blue: 43, alpha: 1)
         
         self.navigationBar.isHidden = true // Hidden by default
+        
+        self.navigationItem.backBarButtonItem?.image = UIImage(named: "WhtieArrow")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
-    
+}
+
+// Global extension to the UINavigationController class to hide and show the navigation bar
+extension UINavigationController {
     func showNavigationBar() {
         self.navigationBar.isHidden = false
         

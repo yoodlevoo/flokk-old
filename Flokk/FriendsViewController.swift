@@ -28,8 +28,8 @@ class FriendsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        (self.tabBarController as! MainTabBarController).hideTabBar()
-        (self.navigationController as! PersonalProfileNavigationViewController).showNavigationBar()
+        //self.tabBarController?.hideTabBar()
+        self.navigationController?.showNavigationBar()
         //self.navigationController?.navigationBar.isHidden = false
         
         loadFriends()
@@ -47,8 +47,29 @@ class FriendsViewController: UIViewController {
     
     // Simply dismiss this view manually when the back button is pressed, 
     //  as this view is segued to the left not the default right
+    /*
     @IBAction func backButtonPressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        
+        let transition = CATransition()
+        transition.duration = 0.35
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromRight
+        
+        view.window!.layer.add(transition, forKey: kCATransition)
+        
+        self.navigationController?.hideNavigationBar()
+        self.dismiss(animated: false, completion: nil)
+    } */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueFromFriendsToProfile" {
+            if let profileView = segue.destination as? ProfileViewController {
+                // Get which friend was selected
+                let friend = displayedFriends[self.tableView.indexPathForSelectedRow!.row]
+                
+                profileView.user = friend
+            }
+        }
     }
 }
 
@@ -64,7 +85,7 @@ extension FriendsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.profilePhotoView.clipsToBounds = true
         cell.profilePhotoView.image = friend.profilePhoto
         cell.fullNameLabel.text = friend.fullName
-        cell.handleLabel.text = friend.handle
+        cell.handleLabel.text = "@\(friend.handle)"
         
         return cell
     }
