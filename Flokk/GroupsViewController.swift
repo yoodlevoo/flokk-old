@@ -3,12 +3,12 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 12/21/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Flokk. All rights reserved.
 //
 
 import UIKit
 
-class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class GroupsViewController: UIViewController {
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
@@ -21,6 +21,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let transitionRight = SlideRightAnimator()
     let transitionUp = SlideUpAnimator()
     let transitionDown = SlideDownAnimator()
+    let transitionRightNavigation = SlideRightNavigationAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,77 +32,68 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             tableView.addSubview(refreshControl)
         }
         
-        //print(defaultGroups.count) // At this point is this ever not at 0 or is a new array created each time
-        
         tableView.delegate = self
         tableView.dataSource = self
         
-        //mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
-        
-        //FileUtils.deleteUserJSON(user: mainUser)
-        //FileUtils.deleteGroupJSON(groupName: "Bball")
-        //FileUtils.deleteGroupJSON(groupName: "Basketball")
-        
-        
-        //FileUtils.findAllFilesInDocuments()
-        
         if defaultGroups.count == 0 {
-            //print("Loading groups")
-            
+
             mainUser.groups.removeAll()
             
             for groupHandle in findGroupHandlesNew() {
                 let groupToLoad = loadGroup(groupHandle: groupHandle)
                 
-                //print(groupHandle)
                 defaultGroups.append(groupToLoad)
                 mainUser.groups.append(groupToLoad)
             }
-            
-           // print("\n")
         }
-        
-        /*
-        if defaultGroups.count == 0 {
-            print(findGroupHandlesNew())
-            for groupHandle in findGroupHandlesNew() {
-                if let group = GroupsViewController.groupCache.object(forKey: groupHandle as NSString) {
-                    defaultGroups.append(group)
-                } else {
-                    let groupToLoad = loadGroup(groupHandle: groupHandle)
-                    GroupsViewController.groupCache.setObject(groupToLoad, forKey: groupHandle as NSString)
-                    defaultGroups.append(groupToLoad)
-                }
-            }
-        } else {
-            //commented this out cause i dont want to reload each time
-            //defaultGroups.removeAll()
-            //loadGroupsNew(handles: findGroupHandles())
-        } */
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
-    
-    // Called anytime this view appears on screen, while viewDidLoad is only called once
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
     }
     
     // When the view is preparing to appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //check if there is a group already selected
-        var selectedIndex = self.tableView.indexPathForSelectedRow
-        if selectedIndex != nil { //if there is then deselect it
+        // If the tab bar was previously hidden(like from the feed view), unhide it
+        self.tabBarController?.showTabBar()
+        
+        // Check if there is a group already selected
+        let selectedIndex = self.tableView.indexPathForSelectedRow
+        if selectedIndex != nil { // If there is then deselect it
             self.tableView.deselectRow(at: selectedIndex!, animated: false)
         }
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
+    
+    @IBAction func unwindToGroup(segue: UIStoryboardSegue) {
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueFromGroupToFeed" {
+            if let feedNav = segue.destination as? FeedViewController {
+                if let tag = (sender as? GroupTableViewCell)?.tag {
+                    weak var group = defaultGroups[tag] // I want this to be weak to prevent memory leakage
+                    
+                    feedNav.group = group
+                    feedNav.transitioningDelegate = transitionRight
+                    self.tabBarController?.hideTabBar()
+                    
+                    //feedNav.passGroup()
+                }
+            }
+        } else if segue.identifier == "segueFromGroupToCreateGroup" {
+            if let createGroupView = segue.destination as? CreateGroupViewController {
+                createGroupView.transitioningDelegate = transitionDown
+            }
+        }
+    }
+}
+
+// Framework functions
+extension GroupsViewController {
     // Load all about this user and what group(the handles) they're in
     // Use these handles to further load the groups from there separate files
     func findGroupHandles() -> [String] { //this will be removed later ons
@@ -113,8 +105,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             let json = JSON(data: data)
             
-            //iterate through all of the groups and to find the internal handles of the groups
-            //so we know which ones to load
+            // Iterate through all of the groups and find the internal handles of the groups
+            // So we know which ones to load
             for (_, group) in json["groups"] {
                 groupHandles.append(group.string!)
             }
@@ -138,8 +130,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             let json = JSON(data: data)
             
-            //iterate through all of the groups and to find the internal handles of the groups
-            //so we know which ones to load
+            // Iterate through all of the groups and to find the internal handles of the groups
+            // So we know which ones to load
             for (_, group) in json["groups"] {
                 groupHandles.append(group.string!)
             }
@@ -149,47 +141,50 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         return groupHandles
     }
-
-    //put this in FileUtils later
+    
+    // Put this in FileUtils later
     func loadGroup(groupHandle: String) -> Group {
-       // for groupHandle in handles {
-            let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        // for groupHandle in handles {
+        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        
+        // 'groupHandle' should already be a "friendly" group handle
+        // b/c it is coming from the user's .json file
+        let groupURL = documentsURL?.appendingPathComponent(groupHandle)
+        let jsonURL = groupURL?.appendingPathComponent(groupHandle + ".json")
+        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
+        
+        do {
+            let data = try Data(contentsOf: jsonFile, options: .mappedIfSafe)
             
-            // 'groupHandle' should already be a "friendly" group handle
-            // b/c it is coming from the user's .json file
-            let groupURL = documentsURL?.appendingPathComponent(groupHandle)
-            let jsonURL = groupURL?.appendingPathComponent(groupHandle + ".json")
-            let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
+            let json = JSON(data: data)
             
-            do {
-                let data = try Data(contentsOf: jsonFile, options: .mappedIfSafe)
-                
-                let json = JSON(data: data)
-                
-                let creator = json["creator"].string
-                let groupName = json["groupName"].string
-                let totalPostsCount = json["postsCount"].int
-                
-                var users = [User]()
-                for(_, subJSON) in json["users"] {
-                    if let userHandle = subJSON.string {
-                        users.append(User(handle: userHandle, fullName:"filler"))
-                    }
+            let creator = json["creator"].string
+            let groupName = json["groupName"].string
+            let totalPostsCount = json["postsCount"].int
+            
+            var users = [User]()
+            for(_, subJSON) in json["users"] {
+                if let userHandle = subJSON.string {
+                    users.append(User(handle: userHandle, fullName:"filler"))
                 }
-                
-                let groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
-                
-                let group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
-                group.totalPostsCount = totalPostsCount!
-
-                return group
-            } catch let error as NSError {
-                print(error.localizedDescription)
-                return Group()
             }
+            
+            let groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
+            
+            let group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
+            group.totalPostsCount = totalPostsCount!
+            
+            return group
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return Group()
+        }
         //}
     }
-    
+}
+
+// Table View Functions
+extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! GroupTableViewCell
         
@@ -203,27 +198,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return defaultGroups.count //this number will be loaded in later on
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromGroupToFeed" {
-            if let feedNav = segue.destination as? FeedNavigationViewController {
-                if let tag = (sender as? GroupTableViewCell)?.tag {
-                    weak var group = defaultGroups[tag] // I want this to be weak to prevent memory leakage
-                    
-                    feedNav.groupToPass = group
-                    feedNav.transitioningDelegate = transitionRight
-                    
-                    //feedNav.passGroup()
-                }
-            }
-        } else if segue.identifier == "segueFromGroupToCreateGroup" {
-            if let createGroupView = segue.destination as? CreateGroupViewController {
-                createGroupView.transitioningDelegate = transitionDown
-            }
-        }
-    }
 }
 
+// Custom Table View Cell Class
 class GroupTableViewCell: UITableViewCell {
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupTitleLabel: UILabel!

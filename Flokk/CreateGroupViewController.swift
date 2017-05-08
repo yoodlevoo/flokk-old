@@ -3,34 +3,37 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 11/4/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Akaro LLC. All rights reserved.
 //
 
 import UIKit
 
-class CreateGroupViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource/*, UICollectionViewDelegateFlowLayout*/ {
+class CreateGroupViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var groupNameTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addGroupPictureButton: UIButton!
     @IBOutlet weak var selectedUsersCollectionView: UICollectionView!
     
-    var searchedUsers = [User]() //ill do this search thing later
+    var totalUsers = [User]()
+    var filteredUsers = [User]()
     var selectedUsers = [User]()
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    private let imagePicker = UIImagePickerController()
+    fileprivate let imagePicker = UIImagePickerController()
     
     var profilePicFromCrop: UIImage!
-    
+
     let transitionUp = SlideUpAnimator()
+    
+    var createGroupViewReference: CreateGroupViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //hard code in the users just for testing
-        searchedUsers.append(User(handle: "taviansims", fullName: "Tavian Sims"))
-        searchedUsers.append(User(handle: "jaredheyen", fullName:"Jared Heyen"))
+        totalUsers.append(tavianUser)
+        totalUsers.append(jaredUser)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -47,7 +50,7 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
             addGroupPictureButton.setImage(profilePicFromCrop, for: .normal)
         }
         
-        //set the collection view so it scrolls sideways
+        // Set the collection view so it scrolls sideways
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 3
@@ -58,155 +61,30 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
         // Search bar
         self.searchController.searchResultsUpdater = self
         self.searchController.dimsBackgroundDuringPresentation = false
-        
+        self.definesPresentationContext = true
+        self.tableView.tableHeaderView = self.searchController.searchBar
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
-    }
-
-    // MARK: Searched Users table view functions
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CreateGroupUserCell
-        
-        let user = searchedUsers[indexPath.row]
-        
-        cell.profilePicture.image = user.profilePhoto
-        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
-        cell.profilePicture.clipsToBounds = true
-        
-        cell.fullNameLabel.text = user.fullName
-        cell.usernameLabel.text = user.handle
-        
-        if selectedUsers.contains(user) {
-            cell.accessoryType = UITableViewCellAccessoryType.checkmark
-        } else {
-            cell.accessoryType = UITableViewCellAccessoryType.none
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //toggle it
-        let user = searchedUsers[indexPath.row]
-        
-        if selectedUsers.contains(user) {
-            selectedUsers.remove(at: selectedUsers.index(of: user)!)
-            
-        } else {
-            selectedUsers.append(user)
-        }
-        
-        DispatchQueue.main.async{
-            tableView.reloadData()
-            self.selectedUsersCollectionView.reloadData()
-        }
-    }
-    
-    // MARK: Group Name text field functions
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if(textField == groupNameTextField) {
-            let characterCountLimit = 15
-            
-            //?? is used so if we cant get the length of the text field it is set to 0 instead
-            let startingLength = groupNameTextField.text?.characters.count ?? 0
-            let lengthToAdd = string.characters.count
-            let lengthToReplace = range.length
-            
-            let newLength = startingLength + lengthToAdd - lengthToReplace
-            
-            return newLength <= characterCountLimit
-        }
-        
-        return true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //groupName = textField.text
-        
-        textField.endEditing(true)
-        
-        return false
-    }
-    
-    // MARK: Add Group Picture image picker functions
-    
-    @IBAction func addGroupPicture(_ sender: Any) {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        //let selectedImage: UIImage!
-        
-        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            dismiss(animated: false, completion: nil)
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let cropView: CropGroupPhotoViewController = storyboard.instantiateViewController(withIdentifier: "CropGroupPhotoViewController") as! CropGroupPhotoViewController
-            
-            cropView.image = selectedImage
-            
-            self.present(cropView, animated: true, completion: nil)
-            
-            //imageView.contentMode = .scaleAspectFit
-            //print("picked image size \(pickedImage.size)")
-            //addGroupPictureButton.setImage(pickedImage, for: UIControlState.normal)
-        } else {
-            print("Something went wrong")
-            
-            dismiss(animated: false, completion: nil)
-        }
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    // MARK: Selected Users collection view functions
-    
-    //When the selected user's icon is pressed show options to remove the user
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedUsers.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! SelectedUsersCell
-        
-        cell.tag = indexPath.item
-        
-        cell.profilePicture.image = selectedUsers[indexPath.item].profilePhoto
-        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
-        cell.profilePicture.clipsToBounds = true
-        
-        return cell
     }
     
     // MARK: Navigation
     
-    // Called whenever the user cancels the crop
+    // Called whenever the user cancels the crop - not used currently
     @IBAction func unwindToCreateGroupCancelled(segue: UIStoryboardSegue) {
         
     }
     
     // Called whenever the user chooses the crop
     @IBAction func unwindToCreateGroupChoosen(segue: UIStoryboardSegue) {
-        
+        if let cropGroupPhotoView = segue.source as? CropGroupPhotoViewController {
+            
+            self.profilePicFromCrop = cropGroupPhotoView.getCroppedImage(image: (cropGroupPhotoView.imageView?.image)!)
+        }
     }
     
+    // Check to see if its okay to try to create this group - like if all of the fields are not filled out
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "segueCreateGroup" {
             let groupName = groupNameTextField.text
@@ -247,13 +125,162 @@ class CreateGroupViewController: UIViewController, UITableViewDataSource, UITabl
     }
 }
 
-extension CreateGroupViewController: UISearchBarDelegate {
+// Table View Functions
+extension CreateGroupViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CreateGroupUserCell
+        
+        let user = selectedUsers[indexPath.row]
+        
+        cell.profilePicture.image = user.profilePhoto
+        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
+        cell.profilePicture.clipsToBounds = true
+        
+        cell.fullNameLabel.text = user.fullName
+        cell.usernameLabel.text = user.handle
+        
+        if selectedUsers.contains(user) {
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryType.none
+        }
+        
+        return cell
+    }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredUsers.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //toggle it
+        let user = selectedUsers[indexPath.row]
+        
+        if selectedUsers.contains(user) {
+            selectedUsers.remove(at: selectedUsers.index(of: user)!)
+            
+        } else {
+            selectedUsers.append(user)
+        }
+        
+        DispatchQueue.main.async{
+            tableView.reloadData()
+            self.selectedUsersCollectionView.reloadData()
+        }
+    }
 }
 
-extension CreateGroupViewController: UISearchResultsUpdating {
+// Collection View Functions
+extension CreateGroupViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    //When the selected user's icon is pressed show options to remove the user
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return selectedUsers.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! SelectedUsersCell
+        
+        cell.tag = indexPath.item
+        
+        cell.profilePicture.image = selectedUsers[indexPath.item].profilePhoto
+        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
+        cell.profilePicture.clipsToBounds = true
+        
+        return cell
+    }
+}
+
+// Search Bar Functions
+extension CreateGroupViewController: UISearchBarDelegate, UISearchResultsUpdating {
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         
+    }
+    
+    // Filter the users by the searchText
+    func filterContentForSearchText(searchText: String, scope: String = " All") {
+        filteredUsers = totalUsers.filter({(user : User) -> Bool in
+            return user.fullName.contains(searchText.lowercased())
+        })
+        
+        self.tableView.reloadData()
+    }
+}
+
+// Text Field Functions
+extension CreateGroupViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(textField == groupNameTextField) {
+            let characterCountLimit = 15
+            
+            //?? is used so if we cant get the length of the text field it is set to 0 instead
+            let startingLength = groupNameTextField.text?.characters.count ?? 0
+            let lengthToAdd = string.characters.count
+            let lengthToReplace = range.length
+            
+            let newLength = startingLength + lengthToAdd - lengthToReplace
+            
+            return newLength <= characterCountLimit
+        }
+        
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //groupName = textField.text
+        
+        textField.endEditing(true)
+        
+        return false
+    }
+}
+
+// Image Picker Controller Functions
+extension CreateGroupViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        //let selectedImage: UIImage!
+        
+        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            dismiss(animated: false, completion: nil)
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let cropView: CropGroupPhotoViewController = storyboard.instantiateViewController(withIdentifier: "CropGroupPhotoViewController") as! CropGroupPhotoViewController
+            
+            cropView.image = selectedImage
+            
+            // Pass the image picker to the cropView so we can unwind back to it
+            
+            self.present(cropView, animated: true, completion: nil)
+            
+            //imageView.contentMode = .scaleAspectFit
+            //print("picked image size \(pickedImage.size)")
+            //addGroupPictureButton.setImage(pickedImage, for: UIControlState.normal)
+        } else {
+            print("Something went wrong")
+            
+            dismiss(animated: false, completion: nil)
+        }
+    }
+    
+    // If the image picker was cancelled
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // When the upload photo button is pressed
+    @IBAction func addGroupPicture(_ sender: Any) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        
+        //createGroupViewReference = self // Create a reference of this
+        
+        present(imagePicker, animated: true, completion: nil)
     }
 }
 

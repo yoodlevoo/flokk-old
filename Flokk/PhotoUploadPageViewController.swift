@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 3/1/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Akaro. All rights reserved.
 //
 
 import UIKit
@@ -30,6 +30,7 @@ class PhotoUploadPageViewController: UIPageViewController, UIPageViewControllerD
         // Dispose of any resources that can be recreated.
     }
     
+    // Returns the view controller to be shown next
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
         guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
@@ -43,6 +44,7 @@ class PhotoUploadPageViewController: UIPageViewController, UIPageViewControllerD
         return nil
     }
     
+    // Returns the view controller to be shown before this one
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
         guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
@@ -55,14 +57,15 @@ class PhotoUploadPageViewController: UIPageViewController, UIPageViewControllerD
         
         return nil
     }
-
-    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+    
+    // Returns the number of items to be shown on the page indicator
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return orderedViewControllers.count
     }
     
-    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         guard let firstViewController = viewControllers?.first, let firstViewControllerIndex = orderedViewControllers.index(of: firstViewController) else {
-                return 0
+            return 0
         }
         
         return firstViewControllerIndex

@@ -3,10 +3,13 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 4/5/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
+
+// Global duration constant for the tab bar show and hide animation
+let TAB_BAR_ANIMATION_DURATION: Double = 0.25
 
 class MainTabBarController: UITabBarController {
     let transitionRight = SlideRightAnimator()
@@ -14,33 +17,38 @@ class MainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
 
-    @IBAction func unwindToGroup(segue: UIStoryboardSegue) {
+extension UITabBarController {
+    // Animate the tab bar by sliding it from the bottom
+    func showTabBar() {
+        var frame = self.tabBar.frame
+        frame.origin.y = self.view.frame.size.height - (frame.size.height)
+        UIView.animate(withDuration: TAB_BAR_ANIMATION_DURATION, animations: {
+            self.tabBar.frame = frame
+            //self.tabBar.alpha = 1
+        })
         
+        self.tabBar.isHidden = false
     }
     
-    @IBAction func unwindToProfile(segue: UIStoryboardSegue) {
-        if let friendsView = segue.source as? FriendsViewController {
-            self.selectedIndex = 2
-        }
+    // Animate the tab bar by sliding it down
+    func hideTabBar() {
+        var frame = self.tabBar.frame
+        frame.origin.y = self.view.frame.size.height + (frame.size.height)
+        UIView.animate(withDuration: TAB_BAR_ANIMATION_DURATION, animations: {
+            self.tabBar.frame = frame
+            //self.tabBar.alpha = 0
+            
+        }, completion: { (value: Bool) in
+            //hide the tab bar once this animation is completed so the tableview is formatted correctly
+            self.tabBar.isHidden = true
+        })
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

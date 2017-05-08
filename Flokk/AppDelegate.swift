@@ -3,12 +3,26 @@
 //  Tutorial
 //
 //  Created by Jared Heyen on 10/7/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Flokk. All rights reserved.
 //
 
 import UIKit
 
-var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhome")
+// Universal Variables for testing
+var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhomme")
+var jaredUser = User(handle: "jaredheyen", fullName: "Jared Heyen")
+var tavianUser = User(handle: "taviansims", fullName: "Tavian Sims")
+var crosbyUser = User(handle: "crosbus", fullName: "Crosby Busfield")
+var grantUser = User(handle: "granthuser", fullName: "Grant Huser")
+var ryanUser = User(handle: "ryanmac", fullName: "Ryan McClemore")
+var berginUser = User(handle: "berginelias", fullName: "Bergin Elias")
+var alexUser = User(handle: "alexshilnikov", fullName: "Alex Shilnikov")
+var chandlerUser = User(handle: "chanfranks", fullName: "Chandler Franks")
+var madiUser = User(handle: "madileal", fullName: "Madi Leal")
+var lucasUser = User(handle: "lucasarnold", fullName: "Lucas Arnold")
+
+var friendGroup = Group(groupName: "Friends", image: UIImage(named: "groupPhoto")!, users: [mainUser, jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser, lucasUser], creator: mainUser)
+var otherGroup = Group(groupName: "Other", image: UIImage(named: "group2Photo")!, users: [jaredUser, tavianUser, lucasUser, madiUser, berginUser], creator: mainUser)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +30,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        // Make all the users be apart of the groups
+        crosbyUser.groups.append(friendGroup)
+        tavianUser.groups.append(friendGroup)
+        grantUser.groups.append(friendGroup)
+        ryanUser.groups.append(friendGroup)
+        berginUser.groups.append(friendGroup)
+        alexUser.groups.append(friendGroup)
+        chandlerUser.groups.append(friendGroup)
+        madiUser.groups.append(friendGroup)
+        lucasUser.groups.append(friendGroup)
+        
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.classForCoder() as! UIAppearanceContainer.Type]).setTitleTextAttributes(["attribute" : "value"], for: .normal)
         
         //passing which group is pressed from the GroupsViewController to the FeedViewController
         //the GroupsViewController(in didSelectRow) sets the group in FeedNavigationViewController

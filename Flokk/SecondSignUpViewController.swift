@@ -48,6 +48,10 @@ class SecondSignUpViewController: UIViewController, UIImagePickerControllerDeleg
     
     @IBAction func backGesture(_ sender: Any) {
     }
+    
+    @IBAction func unwindToSecondSignUp(segue: UIStoryboardSegue) {
+        
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         

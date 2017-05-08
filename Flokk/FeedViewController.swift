@@ -3,12 +3,12 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 11/3/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Flokk. All rights reserved.
 //
 
 import UIKit
 
-class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var scrollView: UIScrollView!
     
@@ -16,7 +16,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     var group: Group! // The group this feed is reading from
     
     static let initialPostCount = 10 // The initial amount of posts to load
-    var loadedPosts = [Post]() // When there are a lot of posts, this will contain only the most 'x' recent posts
+    var loadedPosts = [Post]() // Whe8n there are a lot of posts, this will contain only the most 'x' recent posts
     
     let transitionDown = SlideDownAnimator()
     var refreshControl: UIRefreshControl = UIRefreshControl()
@@ -27,41 +27,84 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         if #available (iOS 10.0, *) {
             tableView.refreshControl = refreshControl
         }else {
-        tableView.addSubview(refreshControl)
+            tableView.addSubview(refreshControl)
         }
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        //self.tabBarController?.tabBar.isHidden = true
         
         // Don't load the posts if there are already posts stored
         if loadedPosts.count == 0 {
-            // group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
-        }
-        
-        if loadedPosts.count == 0 {
             loadedPosts = group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
-            
-            for post in loadedPosts {
-                if let cachedObject = FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString) { //if this posts exists in the cache
-                } else { //if it doesn't add it to the postsCache
-                    //priint(post.getUniqueName())
-                    //FeedViewController.postsCache.object(forKey: post.getUniqueName() as NSString)
-                }
-            }
-            
-        } else {
-            //loadedPosts.removeAll()
-            //loadedPosts = group.loadPostsNew(numPostsToLoad: FeedViewController.initialPostCount)
         }
         
         tableView.estimatedRowHeight = 200
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+        self.edgesForExtendedLayout = .bottom
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Hide the tab bar
+        //(self.tabBarController as! MainTabBarController).hideTabBar()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    // Search through all of the saved posts
+    // And load the ones with the key that start with this group's unique name
+    private func searchedCachedPosts() -> [Post] {
+        var groupName = group.groupName
+        
+        return [Post]()
+    }
+    
+    @IBAction func uploadPic(_ sender: AnyObject) {
+    }
+    
+    @IBAction func unwindToFeed(segue: UIStoryboardSegue) {
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueFromFeedToComment" {
+            if let commentView = segue.destination as? AddCommentViewController {
+                if let tag = (sender as? FeedTableViewCell)?.tag {
+                    let post = loadedPosts[tag]
+                    
+                    commentView.post = post
+                }
+            }
+        } else if segue.identifier == "segueFromFeedToUploadImage" {
+            if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
+                photoUploadPageNav.groupToPass = group
+                
+                var postsJSONToPass: JSON = []
+                
+                for post in loadedPosts {
+                    postsJSONToPass.appendIfArray(json: post.convertToJSON())
+                }
+                
+                group.setPostJSON(json: postsJSONToPass)
+            }
+        } else if segue.identifier == "segueFromFeedToGroupSettings" {
+            if let groupSettingsNav = segue.destination as? GroupSettingsNavigationViewController {
+                groupSettingsNav.transitioningDelegate = transitionDown
+            }
+        }
+    }
+}
+
+
+// Table View functions
+extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     // Try to adjust the size of each cell according to the size of the picture
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
@@ -90,6 +133,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     // Once the post is pressed, go to the comments
     // In the future this may change to a swipe on the post instead of a tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*
         let index = loadedPosts.count - 1 - indexPath.row
         
         let post = loadedPosts[index] // Get the specific post referred to by the pressed cell
@@ -102,49 +146,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         commentNav.passPost()
         
         self.present(commentNav, animated: true, completion: nil)
-    }
-    
-    // Search through all of the saved posts
-    // And load the ones with the key that start with this group's unique name
-    private func searchedCachedPosts() -> [Post] {
-        var groupName = group.groupName
-        
-        return [Post]()
-    }
-    
-    @IBAction func uploadPic(_ sender: AnyObject) {
-    }
-    
-    @IBAction func unwindToFeed(segue: UIStoryboardSegue) {
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromFeedToComment" {
-            if let commentNav = segue.destination as? AddCommentNavigationViewController {
-                if let tag = (sender as? FeedTableViewCell)?.tag {
-                    let post = loadedPosts[tag]
-                    
-                    commentNav.postToPass = post
-                }
-            }
-        } else if segue.identifier == "segueFromFeedToUploadImage" {
-            if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
-                photoUploadPageNav.groupToPass = group
-                
-                var postsJSONToPass: JSON = []
-                
-                for post in loadedPosts {
-                    postsJSONToPass.appendIfArray(json: post.convertToJSON())
-                }
-                
-                group.setPostJSON(json: postsJSONToPass)
-            }
-        } else if segue.identifier == "segueFromFeedToGroupSettings" {
-            if let groupSettingsNav = segue.destination as? GroupSettingsNavigationViewController {
-                groupSettingsNav.transitioningDelegate = transitionDown
-            }
-        }
+ 
+        */
     }
 }
 
