@@ -31,6 +31,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // Make all the users be apart of the groups
+        crosbyUser.groups.append(friendGroup)
+        tavianUser.groups.append(friendGroup)
+        grantUser.groups.append(friendGroup)
+        ryanUser.groups.append(friendGroup)
+        berginUser.groups.append(friendGroup)
+        alexUser.groups.append(friendGroup)
+        chandlerUser.groups.append(friendGroup)
+        madiUser.groups.append(friendGroup)
+        lucasUser.groups.append(friendGroup)
+        
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.classForCoder() as! UIAppearanceContainer.Type]).setTitleTextAttributes(["attribute" : "value"], for: .normal)
         
         //passing which group is pressed from the GroupsViewController to the FeedViewController
