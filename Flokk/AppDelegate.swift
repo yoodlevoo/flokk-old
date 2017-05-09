@@ -23,6 +23,9 @@ var lucasUser = User(handle: "lucasarnold", fullName: "Lucas Arnold")
 
 var friendGroup = Group(groupName: "Friends", image: UIImage(named: "groupPhoto")!, users: [mainUser, jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser, lucasUser], creator: mainUser)
 var otherGroup = Group(groupName: "Other", image: UIImage(named: "group2Photo")!, users: [jaredUser, tavianUser, lucasUser, madiUser, berginUser], creator: mainUser)
+var group1 = Group(groupName: "Group1", image: UIImage(named: "groupPhoto")!, users: [jaredUser, mainUser], creator: mainUser)
+var group2 = Group(groupName: "Group2", image: UIImage(named: "groupPhoto")!, users: [jaredUser, mainUser], creator: mainUser)
+var group3 = Group(groupName: "Group3", image: UIImage(named: "groupPhoto")!, users: [jaredUser, mainUser], creator: mainUser)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,6 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         chandlerUser.groups.append(friendGroup)
         madiUser.groups.append(friendGroup)
         lucasUser.groups.append(friendGroup)
+        jaredUser.groups.append(group1)
+        jaredUser.groups.append(group2)
+        jaredUser.groups.append(group3)
+        jaredUser.groups.append(group1)
+        jaredUser.groups.append(group2)
+        jaredUser.groups.append(group3)
         
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.classForCoder() as! UIAppearanceContainer.Type]).setTitleTextAttributes(["attribute" : "value"], for: .normal)
         

@@ -16,7 +16,14 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var addFriendButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var headerView: UIView!
+    
     var user: User! // The user this profile is showing
+    
+    var oldContentOffset = CGPoint.zero
+    var headerConstraintRange: Range<CGFloat>!
+    
+    var headerViewCriteria = CGFloat(0) // Doesn't actually affect the header view, but used for the scroll view calculations
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +44,12 @@ class ProfileViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        // Create the range for when the tableView should start & stop moving
+        self.headerConstraintRange = (CGFloat(self.headerView.frame.origin.y - self.headerView.frame.size.height)..<CGFloat(self.headerView.frame.origin.y))
+        self.view.bringSubview(toFront: tableView) // Make sure the table view is always shown on top of the header view
+        self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -105,6 +118,30 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         cell.groupNameLabel.text = group.groupName
         
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let delta =  scrollView.contentOffset.y - oldContentOffset.y
+        
+        // We compress the header view
+        if delta > 0 && headerViewCriteria > headerConstraintRange.lowerBound && scrollView.contentOffset.y > 0 {
+            scrollView.contentOffset.y -= delta
+            self.headerViewCriteria -= delta
+            
+            self.tableView.frame.origin.y -= delta
+            self.tableView.frame.size.height += delta
+        }
+        
+        // We expand the header view
+        if delta < 0 && headerViewCriteria < headerConstraintRange.upperBound && scrollView.contentOffset.y < 0{
+            scrollView.contentOffset.y -= delta
+            self.headerViewCriteria -= delta
+            
+            self.tableView.frame.origin.y -= delta
+            self.tableView.frame.size.height += delta
+        }
+        
+        oldContentOffset = scrollView.contentOffset
     }
 }
 

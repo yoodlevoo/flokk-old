@@ -27,6 +27,7 @@ class GroupProfilePageViewController: UIPageViewController {
         
         // Attempt to initialize the second child view controller
         if let viewController2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GroupProfileViewControllerPage2") as? GroupProfileViewControllerPage2 {
+            
             viewController2.group = self.group
             viewControllerPages.append(viewController2)
         }
