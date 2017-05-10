@@ -28,7 +28,7 @@ class GroupProfileViewController: UIViewController {
         // Create the range for when the tableView should start/stop moving
         self.headerConstraintRange = (CGFloat(self.headerView.frame.origin.y - self.headerView.frame.size.height)..<CGFloat(self.headerView.frame.origin.y))
         self.view.bringSubview(toFront: tableView) // Make sure the table view is always shown on top of the header view
-        self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it to achieve the desired effect
+        self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it to achieve the desired effect\
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,13 +81,12 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
         let delta = scrollView.contentOffset.y - oldContentOffset.y
         
         // Compress the header view
-        if delta > 0 && headerViewCriteria < headerConstraintRange.upperBound && scrollView.contentOffset.y < 0 {
+        if delta > 0 && headerViewCriteria > headerConstraintRange.lowerBound && scrollView.contentOffset.y > 0 {
             scrollView.contentOffset.y -= delta
             self.headerViewCriteria -= delta
             
             self.tableView.frame.origin.y -= delta
             self.tableView.frame.size.height += delta
-            
         }
         
         // Expand the header view

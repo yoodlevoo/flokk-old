@@ -18,10 +18,7 @@ class GroupsViewController: UIViewController {
     
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
-    let transitionRight = SlideRightAnimator()
     let transitionUp = SlideUpAnimator()
-    let transitionDown = SlideDownAnimator()
-    let transitionRightNavigation = SlideRightNavigationAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()

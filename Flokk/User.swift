@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 2/3/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import Foundation
@@ -22,6 +22,7 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var mainUser: Bool! // Is it the main/local user - not sure if I want this or not.
     var friends = [User]() // Array of all friends this user has
     var openFriendRequests = [User]() // Array of users that requested to be this user's friend
+    var outgoingFriendRequests = [User]() // Array of users this user requested to be friends with
     
     init(handle: String, fullName: String) {
         self.handle = handle
@@ -52,6 +53,11 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         FileUtils.saveUserJSON(json: json, user: self)
         
         groups.append(group)
+    }
+    
+    // Call this function if this user(the main user) requests to be friends with another user
+    func sendFriendRequestTo(_ user: User) {
+        
     }
     
     // Load in this user's profile photo from the database

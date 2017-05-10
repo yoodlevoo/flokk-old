@@ -25,8 +25,13 @@ class ProfileViewController: UIViewController {
     
     var headerViewCriteria = CGFloat(0) // Doesn't actually affect the header view, but used for the scroll view calculations
     
+    var requestedFriend: Bool = false // Has the main user requested to be this user's friend
+    var alreadyFriends: Bool = false // Is the main user already friends with this user
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set this profile's data from the according User
         
         name.text = user.fullName
         username.text = "@\(user.handle)"
@@ -49,7 +54,6 @@ class ProfileViewController: UIViewController {
         self.headerConstraintRange = (CGFloat(self.headerView.frame.origin.y - self.headerView.frame.size.height)..<CGFloat(self.headerView.frame.origin.y))
         self.view.bringSubview(toFront: tableView) // Make sure the table view is always shown on top of the header view
         self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,7 +75,12 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func addFriendButtonPressed(_ sender: Any) {
-        
+        if !requestedFriend { // If the main user hasn't already added this friend
+            self.addFriendButton.imageView?.image = UIImage(named: "Add Friend Button New") // Change the buttons image to show that its already been pressed
+            
+            // Send a friend request to this user
+            mainUser.sendFriendRequestTo(self.user)
+        }
     }
     
     @IBAction func profileSettings(_ sender: AnyObject) {
@@ -79,6 +88,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func backButton(_ sender: Any) {
+        // Unwind to the previous view controller within this navigation controller
         // There are various different ways we segue to this view, so we can't really specify a single unwind segue to use
         _ = self.navigationController?.popViewController(animated: true)
     }

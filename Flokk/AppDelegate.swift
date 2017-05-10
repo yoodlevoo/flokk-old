@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 // Universal Variables for testing
 var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhomme")
@@ -33,36 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        // Make all the users be apart of the groups
-        crosbyUser.groups.append(friendGroup)
-        tavianUser.groups.append(friendGroup)
-        grantUser.groups.append(friendGroup)
-        ryanUser.groups.append(friendGroup)
-        berginUser.groups.append(friendGroup)
-        alexUser.groups.append(friendGroup)
-        chandlerUser.groups.append(friendGroup)
-        madiUser.groups.append(friendGroup)
-        lucasUser.groups.append(friendGroup)
-        jaredUser.groups.append(group1)
-        jaredUser.groups.append(group2)
-        jaredUser.groups.append(group3)
-        jaredUser.groups.append(group1)
-        jaredUser.groups.append(group2)
-        jaredUser.groups.append(group3)
-        
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.classForCoder() as! UIAppearanceContainer.Type]).setTitleTextAttributes(["attribute" : "value"], for: .normal)
-        
-        //passing which group is pressed from the GroupsViewController to the FeedViewController
-        //the GroupsViewController(in didSelectRow) sets the group in FeedNavigationViewController
-        //and this passes it from the nav controller to the feed controller
-        if let navigationController = window?.rootViewController as? FeedNavigationViewController {
-            if let firstVC = navigationController.viewControllers[0] as? FeedViewController {
-                firstVC.group = navigationController.groupToPass
-                
-                print("app delegate setting thing")
-            }
-        }
+        // Use Firebase library to configure APIs
+        //FIRApp.configure()
         
         return true
     }
@@ -89,5 +62,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         
     }
+    
+    func loadUserTestData() {
+        // Make all the users be apart of the groups
+        crosbyUser.groups.append(friendGroup)
+        tavianUser.groups.append(friendGroup)
+        grantUser.groups.append(friendGroup)
+        ryanUser.groups.append(friendGroup)
+        berginUser.groups.append(friendGroup)
+        alexUser.groups.append(friendGroup)
+        chandlerUser.groups.append(friendGroup)
+        madiUser.groups.append(friendGroup)
+        lucasUser.groups.append(friendGroup)
+        jaredUser.groups.append(group1)
+        jaredUser.groups.append(group2)
+        jaredUser.groups.append(group3)
+        jaredUser.groups.append(group1)
+        jaredUser.groups.append(group2)
+        jaredUser.groups.append(group3)
+    }
 }
-
