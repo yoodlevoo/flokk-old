@@ -18,6 +18,7 @@ class GroupsViewController: UIViewController {
     
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
+    let transitionDown = SlideDownAnimator()
     let transitionUp = SlideUpAnimator()
     
     override func viewDidLoad() {
@@ -75,7 +76,6 @@ class GroupsViewController: UIViewController {
                     weak var group = defaultGroups[tag] // I want this to be weak to prevent memory leakage
                     
                     feedNav.group = group
-                    feedNav.transitioningDelegate = transitionRight
                     self.tabBarController?.hideTabBar()
                     
                     //feedNav.passGroup()

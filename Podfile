@@ -7,7 +7,7 @@ target 'Flokk' do
 
   # Pods for Flokk
   pod ‘Firebase/Core’
-  pod ‘AHKNavigationController’
+  pod 'Firebase/Auth'
 
   target 'FlokkTests' do
     inherit! :search_paths

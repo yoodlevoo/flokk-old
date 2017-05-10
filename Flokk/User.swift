@@ -111,3 +111,11 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         return "User: handle: \(handle) full name: \(fullName)"
     }
 }
+
+// Determine the various statuses of a friend request
+// To determine how to display the add friend button
+enum FriendRequestStatus {
+    case THIS_USER_SENT
+    case THIS_USER_RECEIVED
+    case THIS_USER_DENIED
+}

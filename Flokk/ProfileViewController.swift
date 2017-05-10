@@ -47,6 +47,11 @@ class ProfileViewController: UIViewController {
             addFriendButton.isHidden = true
         }
         
+        // Check if the main user has requested to be friends with this user
+        if mainUser.outgoingFriendRequests.contains(self.user) {
+            
+        }
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
