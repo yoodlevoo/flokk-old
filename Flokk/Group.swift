@@ -49,50 +49,7 @@ class Group {
     func loadPosts(numPostsToLoad: Int) -> [Post] {
         var posts = [Post]()
         
-        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
-        
-        let groupURL = documentsURL?.appendingPathComponent(groupName)
-        let jsonURL = groupURL?.appendingPathComponent(groupName + ".json")
-        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
-        
-        do {
-            let data = try Data(contentsOf: jsonFile, options: .mappedIfSafe)
-            
-            let json = JSON(data: data)
-            
-            var index: Int = 0
-            for (_, post) in json["posts"] {
-                if index < FeedViewController.initialPostCount - 1 {
-                    let userHandle = post["handle"].string
-                    let imageName = post["imageName"].string
-                
-                    let image = FileUtils.loadPostImage(group: self, fileName: imageName!)
-                
-                    posts.append(Post(poster: findUserWithHandle(handle: userHandle!), image: image, postedGroup: self, index: index))
-                    index += 1
-                    
-                    print("image name \(imageName)")
-                } else {
-                    break
-                }
-            }
-        } catch let error as NSError {
-            print("Error: \(error)")
-        }
-        
         return posts
-    }
-    
-    //find the user with the specified handle
-    //in the future use a more efficient search
-    func findUserWithHandle(handle: String) -> User {
-        for user in participants {
-            if user.handle == handle {
-                return user
-            }
-        }
-        
-        return User(handle: "nil", fullName: "nil")
     }
     
     //create an internal group name from the original group name

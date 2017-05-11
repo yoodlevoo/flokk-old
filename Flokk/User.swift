@@ -13,16 +13,20 @@ import UIKit
 // There will be a user clas created for the main user(the one that is logged in and using the local app),
 //  as well as each user the main user interacts with.
 class User: Hashable { // Hashable so it can be used as a key in a dictionary(for comments)
+    //var userFIR // The user variable retrieved from Firebase
     var handle: String // A completely unique identifier(ie. @gannonprudhomme)
+    //var email: String
     var fullName: String
     var profilePhoto: UIImage
     
     var groups = [Group]() // The groups this user is in
     
     var mainUser: Bool! // Is it the main/local user - not sure if I want this or not.
+    
+    // Might not need to be loaded immediately
     var friends = [User]() // Array of all friends this user has
     var openFriendRequests = [User]() // Array of users that requested to be this user's friend
-    var outgoingFriendRequests = [User]() // Array of users this user requested to be friends with
+    var outgoingFriendRequests = [User]() // Array of users this user requested to be friends wit
     
     init(handle: String, fullName: String) {
         self.handle = handle
@@ -30,16 +34,19 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.profilePhoto = UIImage(named: "AddProfilePic")! //temporary
         
         loadPicture()
-        loadFriends()
+        // loadFriends() // dont need to load this immediately
+    }
+    
+    init(handle: String, fullName: String, profilePhoto: UIImage) {
+        self.handle = handle
+        self.fullName = fullName
+        self.profilePhoto = profilePhoto
         
-        // Load in this user's group from the database
-        //self.groups = ??
+        
     }
     
     func loadFriends() {
-        if self.handle == "gannonprudhomme" {
-            self.friends = [jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser, lucasUser]
-        }
+        
     }
     
     func isFriendsWith(user: User) -> Bool {
@@ -63,15 +70,7 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     // Load in this user's profile photo from the database
     // For now just set it manually
     private func loadPicture() {
-        //var ret: UIImage
         
-        if let image = UIImage(named: handle + "ProfilePhoto") {
-            self.profilePhoto = image
-        } else {
-            self.profilePhoto = UIImage(named: "AddProfilePic")!
-        }
-        
-        //return ret
     }
     
     func convertToJSON() -> JSON {

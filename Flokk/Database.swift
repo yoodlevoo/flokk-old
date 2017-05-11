@@ -9,16 +9,69 @@
 import Foundation
 import UIKit
 import Firebase
+import FirebaseDatabase
+import FirebaseStorage
 
-//A class that the framework of flokk can use to load data from the database.
-//Most of the functions in this class will be static, so a Database object doesn't need to be passed around.
+// A class that the framework of flokk can use to load data from the database.
+// Most of the functions in this class will be static, so a Database object doesn't need to be passed around.
 class Database {
-    static func loadUserWith(handle: String) -> User {
-        //implement later
-        return User(handle: "filler", fullName: "Filler Name")
+    private var databaseRef: FIRDatabaseReference!
+    private var storageRef: FIRStorageReference!
+    
+    init() {
+        FIRApp.configure()
+        
+        databaseRef = FIRDatabase.database().reference() // Create a reference from our database service
+        storageRef = FIRStorage.storage().reference() // Create a reference from our storage service
     }
     
-    static func getImage() -> UIImage {
-        return UIImage()
+    func loadMainUserGroups() -> [Group] {
+        return [Group]()
+    }
+    
+    func createGroup(groupHandle: String, creator: User, profileIcon: UIImage) {
+        let groupData = databaseRef.child(groupHandle)
+        
+        groupData.child("creator").setValue(creator.handle)
+        groupData.child("members").set
+    }
+}
+
+// User functions
+extension Database {
+    // Authenticate the user and add them to the database
+    func createNewUser(email: String, password: String, handle: String, fullName: String, profilePhoto: UIImage) {
+        let userData = databaseRef.child(handle)
+        
+        userData.child("fullName").setValue(fullName)
+        userData.child("email").setValue(email)
+        userData.child("profilePhoto").setValue("\(handle)ProfilePhoto.jpg") // How should this be handled
+    }
+    
+    // Load in data about this user
+    func getUserWithHandle(_ handle: String) -> User {
+        var userData = databaseRef.child(handle)
+        
+        var fullName = userData.child("fullName")
+        var profilePhoto = UIImage()
+        
+        return User(handle: handle, fullName: fullName)
+    }
+    
+    func getUserGroups(user: User) -> [Group] {
+        return [Group]()
+    }
+    
+    func uploadUserProfilePhoto(user: User, profilePhoto: UIImage)
+}
+
+// Group functions
+extension Database {
+    func inviteUsersToGroup(group: Group) {
+        
+    }
+    
+    func addPostToGroup(_ group: Group, image: UIImage) {
+        
     }
 }

@@ -1,0 +1,33 @@
+{
+    "creator": "gannonprudhomme"
+    "members": {
+        "gannonprudhomme": true,
+        "jaredheyen": true
+    },
+
+    "posts": {
+        "one": {
+            "poster": "jaredheyen",
+            "timestamp": 12341234
+        }
+    }
+
+    "comments": {
+        "one": {
+            "comment1": {
+                "user":"jaredheyen"
+                "content": "nice one dude!
+                "timestamp": 12341234
+            }
+        }
+    },
+
+    "invitedusers": { // users who have been invited
+        "taviansims": true,
+        "lucasarnold": true
+    },
+
+    "requestedusers": { // users who requested to join
+
+    }
+}

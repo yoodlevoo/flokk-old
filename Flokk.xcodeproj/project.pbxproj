@@ -74,6 +74,8 @@
 		15FB666C1EAA8493004D23AF /* GroupProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB666B1EAA8493004D23AF /* GroupProfilePageViewController.swift */; };
 		15FB666F1EB1225E004D23AF /* GroupProfileNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB666E1EB1225E004D23AF /* GroupProfileNavigationViewController.swift */; };
 		15FB870C1EC388560048ADA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15FB870B1EC388560048ADA4 /* GoogleService-Info.plist */; };
+		15FB870E1EC41D000048ADA4 /* groupfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = 15FB870D1EC41D000048ADA4 /* groupfile.txt */; };
+		15FB87101EC421260048ADA4 /* userfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = 15FB870F1EC421260048ADA4 /* userfile.txt */; };
 		15FC22A01EA7BB5D00DC9FA6 /* TextUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */; };
 		2969B48B64D7290FBFE6C999 /* Pods_FlokkTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A68DF56A284B426BCD7F3944 /* Pods_FlokkTests.framework */; };
 		5ED288086BC7EEE16DD41E8D /* (null) in Frameworks */ = {isa = PBXBuildFile; };
@@ -176,6 +178,8 @@
 		15FB666B1EAA8493004D23AF /* GroupProfilePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupProfilePageViewController.swift; sourceTree = "<group>"; };
 		15FB666E1EB1225E004D23AF /* GroupProfileNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupProfileNavigationViewController.swift; sourceTree = "<group>"; };
 		15FB870B1EC388560048ADA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		15FB870D1EC41D000048ADA4 /* groupfile.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = groupfile.txt; sourceTree = "<group>"; };
+		15FB870F1EC421260048ADA4 /* userfile.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = userfile.txt; sourceTree = "<group>"; };
 		15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextUtils.swift; sourceTree = "<group>"; };
 		3485561FD16ECCB0AA98F00C /* Pods-Flokk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flokk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flokk/Pods-Flokk.debug.xcconfig"; sourceTree = "<group>"; };
 		6F319E36F1B8391236766DB7 /* Pods-FlokkUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlokkUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlokkUITests/Pods-FlokkUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -382,6 +386,8 @@
 				7F0666131E37BAAD003167AC /* LaunchScreen.storyboard */,
 				7F0666161E37BAAD003167AC /* Info.plist */,
 				15FB870B1EC388560048ADA4 /* GoogleService-Info.plist */,
+				15FB870D1EC41D000048ADA4 /* groupfile.txt */,
+				15FB870F1EC421260048ADA4 /* userfile.txt */,
 			);
 			path = Flokk;
 			sourceTree = "<group>";
@@ -578,8 +584,10 @@
 				15C826F71E85888A003EE6E4 /* Main.storyboard in Resources */,
 				AD2236991E563E4500112715 /* posts.json in Resources */,
 				15F9981D1E655562003F1773 /* gannonprudhommeLadies_and_G.json in Resources */,
+				15FB87101EC421260048ADA4 /* userfile.txt in Resources */,
 				15F998171E65525C003F1773 /* gannonprudhommeBasketball.json in Resources */,
 				15309E7D1E6494F200D1DFA1 /* gannonprudhomme.json in Resources */,
+				15FB870E1EC41D000048ADA4 /* groupfile.txt in Resources */,
 				AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */,
 				15309E7F1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json in Resources */,
 				15FB870C1EC388560048ADA4 /* GoogleService-Info.plist in Resources */,

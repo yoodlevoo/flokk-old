@@ -1,0 +1,26 @@
+{
+    "email": "gannonprudhomme@gmail.com"
+    "profilephoto": "image.jpg"
+
+    "groups": {
+        "basketball": true
+        "friends": true
+    },
+
+    "friends": {
+        "jaredheyen": true
+    },
+
+    "outgoingrequests": { // Outgoing friend requests
+
+    },
+
+    "incomingrequests" {
+        
+    },
+
+    // Private data b/c you have to authenticate to get the UID
+    "qcoWiuBxurT1e4M8WtLDgnEolSB2": {
+        
+    }
+}

@@ -8,26 +8,7 @@
 
 import UIKit
 import Firebase
-import UserNotifications
-
-// Universal Variables for testing
-var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhomme")
-var jaredUser = User(handle: "jaredheyen", fullName: "Jared Heyen")
-var tavianUser = User(handle: "taviansims", fullName: "Tavian Sims")
-var crosbyUser = User(handle: "crosbus", fullName: "Crosby Busfield")
-var grantUser = User(handle: "granthuser", fullName: "Grant Huser")
-var ryanUser = User(handle: "ryanmac", fullName: "Ryan McClemore")
-var berginUser = User(handle: "berginelias", fullName: "Bergin Elias")
-var alexUser = User(handle: "alexshilnikov", fullName: "Alex Shilnikov")
-var chandlerUser = User(handle: "chanfranks", fullName: "Chandler Franks")
-var madiUser = User(handle: "madileal", fullName: "Madi Leal")
-var lucasUser = User(handle: "lucasarnold", fullName: "Lucas Arnold")
-
-var friendGroup = Group(groupName: "Friends", image: UIImage(named: "groupPhoto")!, users: [mainUser, jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser, lucasUser], creator: mainUser)
-var otherGroup = Group(groupName: "Other", image: UIImage(named: "group2Photo")!, users: [jaredUser, tavianUser, lucasUser, madiUser, berginUser], creator: mainUser)
-var group1 = Group(groupName: "Group1", image: UIImage(named: "groupPhoto")!, users: [jaredUser, mainUser], creator: mainUser)
-var group2 = Group(groupName: "Group2", image: UIImage(named: "groupPhoto")!, users: [jaredUser, mainUser], creator: mainUser)
-var group3 = Group(groupName: "Group3", image: UIImage(named: "groupPhoto")!, users: [jaredUser, mainUser], creator: mainUser)
+import FirebaseDatabase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,23 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use Firebase library to configure APIs
         FIRApp.configure()
         
-        // Register for remote app notifications
-        if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
+        /*
+        FIRAuth.auth()?.createUser(withEmail: "gannonprudhomme@gmail.com", password: "gannon123", completion: { (user, error) in
+            if let error = error {
+                print(error)
+            }
             
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {_, _ in })
-            
-            // For iOS 10 data message (sent via FCM)
-            FIRMessaging.messaging().remoteMessageDelegate = self
-            
-        } else {
-            let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
-        
-        application.registerForRemoteNotifications()
+            print("email created")
+        }) */
         
         // Retrieve a registration token for this client
         let token = FIRInstanceID.instanceID().token()
@@ -83,24 +55,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //remove all the stored files
     func applicationWillTerminate(_ application: UIApplication) {
         
-    }
-    
-    func loadUserTestData() {
-        // Make all the users be apart of the groups
-        crosbyUser.groups.append(friendGroup)
-        tavianUser.groups.append(friendGroup)
-        grantUser.groups.append(friendGroup)
-        ryanUser.groups.append(friendGroup)
-        berginUser.groups.append(friendGroup)
-        alexUser.groups.append(friendGroup)
-        chandlerUser.groups.append(friendGroup)
-        madiUser.groups.append(friendGroup)
-        lucasUser.groups.append(friendGroup)
-        jaredUser.groups.append(group1)
-        jaredUser.groups.append(group2)
-        jaredUser.groups.append(group3)
-        jaredUser.groups.append(group1)
-        jaredUser.groups.append(group2)
-        jaredUser.groups.append(group3)
     }
 }

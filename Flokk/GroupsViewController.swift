@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class GroupsViewController: UIViewController {
     @IBOutlet weak var groupName: UILabel!
@@ -21,6 +22,9 @@ class GroupsViewController: UIViewController {
     let transitionDown = SlideDownAnimator()
     let transitionUp = SlideUpAnimator()
     
+    // The handler for the auth state listener, to allow cancelling later.
+    var handle: FIRAuthStateDidChangeListenerHandle?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,7 +38,6 @@ class GroupsViewController: UIViewController {
         tableView.dataSource = self
         
         if defaultGroups.count == 0 {
-
             mainUser.groups.removeAll()
             
             for groupHandle in findGroupHandlesNew() {
@@ -50,6 +53,11 @@ class GroupsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Attach this to any view that requires information about this user
+        handle = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            
+        })
+        
         // If the tab bar was previously hidden(like from the feed view), unhide it
         self.tabBarController?.showTabBar()
         
@@ -58,6 +66,12 @@ class GroupsViewController: UIViewController {
         if selectedIndex != nil { // If there is then deselect it
             self.tableView.deselectRow(at: selectedIndex!, animated: false)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        FIRAuth.auth()?.removeStateDidChangeListener(handle!)
     }
     
     override func didReceiveMemoryWarning() {
