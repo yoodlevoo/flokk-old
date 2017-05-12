@@ -58,11 +58,17 @@ extension Database {
         return User(handle: handle, fullName: fullName)
     }
     
+    // Get the groups this user is participating in (and all of the basic data)
     func getUserGroups(user: User) -> [Group] {
-        return [Group]()
+        var groups = [Group]() // The groups to return
+        
+        
+        return groups
     }
     
-    func uploadUserProfilePhoto(user: User, profilePhoto: UIImage)
+    func uploadUserProfilePhoto(user: User, profilePhoto: UIImage) {
+        
+    }
 }
 
 // Group functions
