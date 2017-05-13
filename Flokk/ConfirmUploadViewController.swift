@@ -29,8 +29,10 @@ class ConfirmUploadViewController: UIViewController {
     
     @IBAction func uploadPressed(_ sender: Any) {
         let postsRef = database.ref.child("groups").child(forGroup.groupName).child("posts")
-        let imageRef = 
+        let imageRef = storage.ref.child("groups").child(forGroup.groupName).child("posts")
         var autoID = postsRef.childByAutoId() // Generate random ID for this post
+        
+        
         
         // Start storage here
         
