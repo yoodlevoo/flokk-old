@@ -3,13 +3,13 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 11/4/16.
-//  Copyright © 2016 Akaro LLC. All rights reserved.
+//  Copyright © 2016 Flokk. All rights reserved.
 //
 
 import UIKit
 
 class CreateGroupViewController: UIViewController, UINavigationControllerDelegate {
-    @IBOutlet weak var groupNameTextField: UITextField!
+    @IBOutlet weak var groupNameField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addGroupPictureButton: UIButton!
     @IBOutlet weak var selectedUsersCollectionView: UICollectionView!
@@ -22,32 +22,32 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
     
     fileprivate let imagePicker = UIImagePickerController()
     
-    var profilePicFromCrop: UIImage!
+    var profilePicFromCrop: UIImage! // The profile photo retrieved from the crop
 
     let transitionUp = SlideUpAnimator()
     
-    var createGroupViewReference: CreateGroupViewController!
+    var createGroupViewReference: CreateGroupViewController! // What's this for
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //hard code in the users just for testing
-        totalUsers.append(tavianUser)
-        totalUsers.append(jaredUser)
+        //totalUsers.append(tavianUser)
+        //totalUsers.append(jaredUser)
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
-        groupNameTextField.delegate = self
+        self.groupNameField.delegate = self
         
-        imagePicker.delegate = self
+        self.imagePicker.delegate = self
         
-        selectedUsersCollectionView.delegate = self
-        selectedUsersCollectionView.dataSource = self
+        self.selectedUsersCollectionView.delegate = self
+        self.selectedUsersCollectionView.dataSource = self
         
         if profilePicFromCrop != nil {
-            addGroupPictureButton.imageView?.image = profilePicFromCrop
-            addGroupPictureButton.setImage(profilePicFromCrop, for: .normal)
+            self.addGroupPictureButton.imageView?.image = profilePicFromCrop
+            self.addGroupPictureButton.setImage(profilePicFromCrop, for: .normal)
         }
         
         // Set the collection view so it scrolls sideways
@@ -64,9 +64,40 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         self.definesPresentationContext = true
         self.tableView.tableHeaderView = self.searchController.searchBar
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.hideNavigationBar() // Hide the nav bar when this appears
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // When the user tries to create the group
+    @IBAction func createButtonPressed(_ sender: Any) {
+        let groupName = groupNameField.text!
+        
+        // Check if all of the fields are filled out correctly
+        
+        let groupRef = database.ref.child("groups").child(groupName)
+        groupRef.child("creator").setValue(mainUser.handle)
+        
+        // Just the user will be a member for now
+        let members: [String: Bool] = [mainUser.handle: true]
+        groupRef.child("members").setValue(members)
+        
+        // Invite the selected users here
+        
+        // Add the group to the mainUser/creators list of groups
+        database.ref.child("users").child(mainUser.handle).child("groups").child(groupName).setValue(true)
+        
+        // Actually create the group
+        let group = Group(groupName: groupName, image: UIImage(named: "BasketballMob")!, users: [mainUser], creator: mainUser)
+        groups.append(group) // Add this group to the global groups
+        
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: Navigation
@@ -87,7 +118,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
     // Check to see if its okay to try to create this group - like if all of the fields are not filled out
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "segueCreateGroup" {
-            let groupName = groupNameTextField.text
+            let groupName = groupNameField.text
             
             if groupName == nil || groupName == "" { //add more exceptions here, like just spaces and stuff
                 return false
@@ -101,23 +132,23 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueCreateGroup" { //then create the group and save it as a JSON file
             var users = selectedUsers //the selected users + main user
-            users.append(mainUser)
+            //users.append(mainUser)
             
             let buttonImage = addGroupPictureButton.imageView?.image
-            let groupName = groupNameTextField.text
+            let groupName = groupNameField.text
             
-            let group = Group(groupName: groupName!, image: buttonImage!, users: users, creator: mainUser)
-            let json: JSON = group.convertToJSON()
+            //let group = Group(groupName: groupName!, image: buttonImage!, users: users, creator: mainUser)
+            //let json: JSON = group.convertToJSON()
             
             if let tabBar = segue.destination as? UITabBarController {
                 if let groupsNav = tabBar.viewControllers![0] as? UINavigationController {
                     if let groupsView = groupsNav.viewControllers[0] as? GroupsViewController {
-                        groupsView.defaultGroups.append(group)
+                        //groupsView.defaultGroups.append(group)
                         
-                        FileUtils.saveGroupJSON(json: json, group: group)
-                        FileUtils.saveGroupIcon(group: group)
+                        //FileUtils.saveGroupJSON(json: json, group: group)
+                        //FileUtils.saveGroupIcon(group: group)
                         
-                        mainUser.addNewGroup(group: group)
+                        //mainUser.addNewGroup(group: group)
                     }
                 }
             }
@@ -215,12 +246,13 @@ extension CreateGroupViewController: UISearchBarDelegate, UISearchResultsUpdatin
 
 // Text Field Functions
 extension CreateGroupViewController: UITextFieldDelegate {
+    // Check if we should allow the user to change the characters, to prevent unwanted characters or to restrict length
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if(textField == groupNameTextField) {
+        if(textField == groupNameField) {
             let characterCountLimit = 15
             
             //?? is used so if we cant get the length of the text field it is set to 0 instead
-            let startingLength = groupNameTextField.text?.characters.count ?? 0
+            let startingLength = groupNameField.text?.characters.count ?? 0
             let lengthToAdd = string.characters.count
             let lengthToReplace = range.length
             
@@ -248,7 +280,7 @@ extension CreateGroupViewController: UIImagePickerControllerDelegate {
         
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             dismiss(animated: false, completion: nil)
-            
+            /*
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let cropView: CropGroupPhotoViewController = storyboard.instantiateViewController(withIdentifier: "CropGroupPhotoViewController") as! CropGroupPhotoViewController
             
@@ -257,6 +289,7 @@ extension CreateGroupViewController: UIImagePickerControllerDelegate {
             // Pass the image picker to the cropView so we can unwind back to it
             
             self.present(cropView, animated: true, completion: nil)
+            */
             
             //imageView.contentMode = .scaleAspectFit
             //print("picked image size \(pickedImage.size)")

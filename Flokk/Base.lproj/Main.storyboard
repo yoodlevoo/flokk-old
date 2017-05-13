@@ -1086,6 +1086,7 @@
                                 </constraints>
                                 <state key="normal" image="Create Button New"/>
                                 <connections>
+                                    <action selector="createButtonPressed:" destination="mtH-ru-S40" eventType="touchUpInside" id="Ljy-OP-rcT"/>
                                     <segue destination="x15-8V-ONQ" kind="presentation" identifier="segueCreateGroup" id="ME7-O5-4bK"/>
                                 </connections>
                             </button>
@@ -1182,7 +1183,7 @@
                     </view>
                     <connections>
                         <outlet property="addGroupPictureButton" destination="eq6-9f-UES" id="plT-0h-OUm"/>
-                        <outlet property="groupNameTextField" destination="GDP-98-MUH" id="OgT-4r-Lko"/>
+                        <outlet property="groupNameField" destination="GDP-98-MUH" id="Pzb-Jg-Wcq"/>
                         <outlet property="selectedUsersCollectionView" destination="xcn-Ch-ccS" id="VKu-mI-bYy"/>
                         <outlet property="tableView" destination="T7o-JI-AI3" id="Jw6-kW-FKZ"/>
                     </connections>
@@ -1613,7 +1614,7 @@
             <objects>
                 <tableViewController id="7Za-W0-7Vw" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="IeB-Sk-C73">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -2175,7 +2176,6 @@
                                 <state key="normal" image="Sign In - 2"/>
                                 <connections>
                                     <action selector="signInBttn:" destination="pO2-rs-4H0" eventType="touchUpInside" id="c13-r9-q46"/>
-                                    <segue destination="x15-8V-ONQ" kind="show" identifier="segueFromSignInToGroups" id="1no-Yl-8Fw"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YTY-S7-1gj">
@@ -2267,6 +2267,7 @@
                     <connections>
                         <outlet property="passwordEntry" destination="6Jo-Si-iQy" id="2kw-rT-3e4"/>
                         <outlet property="usernameEntry" destination="YTY-S7-1gj" id="mV7-fj-roo"/>
+                        <segue destination="x15-8V-ONQ" kind="presentation" identifier="segueFromSignInToGroups" id="70L-xp-JEW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lBW-m1-P9f" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2516,6 +2517,17 @@
                                 </items>
                                 <color key="barTintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrB-NL-n4T">
+                                <rect key="frame" x="246" y="545" width="103" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="UPLOAD">
+                                    <color key="titleColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="uploadPressed:" destination="UNJ-Pi-iNs" eventType="touchUpInside" id="QzN-4k-EW3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -2540,7 +2552,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bo6-qd-hHA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3777" y="-4506"/>
+            <point key="canvasLocation" x="3776.8000000000002" y="-4506.2968515742132"/>
         </scene>
         <!--Upload Photo View Controller-->
         <scene sceneID="dyQ-nG-fYu">
@@ -2845,8 +2857,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="emailEntry" destination="CU3-eH-XIH" id="wIL-2c-04S"/>
-                        <outlet property="nameEntry" destination="4LZ-xO-unm" id="lv1-4W-pyG"/>
+                        <outlet property="emailField" destination="CU3-eH-XIH" id="v1h-Yt-mCJ"/>
+                        <outlet property="nameField" destination="4LZ-xO-unm" id="SLP-V2-2lg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z4G-8i-aeH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2873,7 +2885,7 @@
                                 </constraints>
                                 <state key="normal" image="Sign Up - 2"/>
                                 <connections>
-                                    <segue destination="S3h-JQ-9pu" kind="presentation" id="y4a-Wz-2j6"/>
+                                    <action selector="signUpPressed:" destination="5nz-Sx-LZu" eventType="touchUpInside" id="QpS-UL-5VJ"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="euL-qD-OKE">
@@ -2970,8 +2982,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="passwordEntry" destination="s3F-YA-NW2" id="dbD-aJ-1bS"/>
-                        <outlet property="usernameEntry" destination="euL-qD-OKE" id="zvQ-l6-v5O"/>
+                        <outlet property="passwordField" destination="s3F-YA-NW2" id="tnp-c5-ajt"/>
+                        <outlet property="usernameField" destination="euL-qD-OKE" id="IPJ-hP-Mwg"/>
+                        <segue destination="S3h-JQ-9pu" kind="show" identifier="segueFromSecondSignUpToConnectContacts" id="XBq-CG-Ahq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJr-Ez-0Yi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3335,6 +3348,9 @@
                                     <constraint firstAttribute="width" secondItem="cON-os-CXH" secondAttribute="height" multiplier="125:22" id="dlw-fK-rdW"/>
                                 </constraints>
                                 <state key="normal" image="Send - 2"/>
+                                <connections>
+                                    <action selector="sendButtonPressed:" destination="S3h-JQ-9pu" eventType="touchUpInside" id="RC7-xR-wYc"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IwW-Lq-0nN">
                                 <rect key="frame" x="71" y="305" width="233" height="3"/>
@@ -3411,6 +3427,7 @@
                     </view>
                     <connections>
                         <outlet property="phoneNumber" destination="FFL-HJ-hAW" id="3oD-RT-R9k"/>
+                        <segue destination="x15-8V-ONQ" kind="presentation" identifier="segueFromConnectContactsToGroups" id="t1Q-ad-xZI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9aI-GA-pnq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3738,7 +3755,7 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ME7-O5-4bK"/>
+        <segue reference="t1Q-ad-xZI"/>
         <segue reference="VLB-2b-YeH"/>
         <segue reference="sMK-Mq-ip7"/>
     </inferredMetricsTieBreakers>

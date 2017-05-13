@@ -17,6 +17,7 @@
 		15309E811E65068100D1DFA1 /* jaredheyenSki_Trip.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */; };
 		15309E871E6541EE00D1DFA1 /* jaredheyenCouples.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */; };
 		15309E891E65430E00D1DFA1 /* jaredheyen.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E881E65430E00D1DFA1 /* jaredheyen.json */; };
+		158F02621EC6A49F00D7552A /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158F02611EC6A49F00D7552A /* Storage.swift */; };
 		158FE22E1E954A81009EFBA6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */; };
 		15C275911E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C275901E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift */; };
 		15C275951E9FCC7100C62F0D /* AppSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C275941E9FCC7100C62F0D /* AppSettingsTableViewController.swift */; };
@@ -121,6 +122,7 @@
 		15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyenCouples.json; sourceTree = "<group>"; };
 		15309E881E65430E00D1DFA1 /* jaredheyen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyen.json; sourceTree = "<group>"; };
 		153A30D91EA7E7E0001540A3 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
+		158F02611EC6A49F00D7552A /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		15C275901E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationsSettingsTableViewController.swift; sourceTree = "<group>"; };
 		15C275941E9FCC7100C62F0D /* AppSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -267,13 +269,13 @@
 				15C826AB1E8587EF003EE6E4 /* SignInViewController.swift */,
 				15C826881E8587DF003EE6E4 /* FirstSignUpViewController.swift */,
 				15C826891E8587DF003EE6E4 /* SecondSignUpViewController.swift */,
+				7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */,
 				15C826961E8587EF003EE6E4 /* CreateGroupViewController.swift */,
 				15C826A01E8587EF003EE6E4 /* GroupsViewController.swift */,
 				15C8269A1E8587EF003EE6E4 /* FeedViewController.swift */,
 				15C8268B1E8587DF003EE6E4 /* AddCommentViewController.swift */,
 				15C826B21E8587EF003EE6E4 /* PhotoSelectViewController.swift */,
 				15C826951E8587EF003EE6E4 /* ConfirmUploadViewController.swift */,
-				7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */,
 				15C826AD1E8587EF003EE6E4 /* NotificationsViewController.swift */,
 				15C826AF1E8587EF003EE6E4 /* PasswordRecoveryViewController.swift */,
 				15C826B01E8587EF003EE6E4 /* PersonalProfileViewController.swift */,
@@ -341,6 +343,7 @@
 				15C826981E8587EF003EE6E4 /* Database.swift */,
 				15C8269B1E8587EF003EE6E4 /* FileUtils.swift */,
 				15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */,
+				158F02611EC6A49F00D7552A /* Storage.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				15C826C61E8587EF003EE6E4 /* CreateGroupViewController.swift in Sources */,
 				15C826D01E8587EF003EE6E4 /* GroupsViewController.swift in Sources */,
 				7FE0D33D1E91874F000E097D /* ConnectContactsViewController.swift in Sources */,
+				158F02621EC6A49F00D7552A /* Storage.swift in Sources */,
 				15C826C91E8587EF003EE6E4 /* FeedNavigationViewController.swift in Sources */,
 				15C826D11E8587EF003EE6E4 /* ImageScrollView.swift in Sources */,
 				15C826E51E8587EF003EE6E4 /* Post.swift in Sources */,

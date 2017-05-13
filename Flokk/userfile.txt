@@ -1,10 +1,10 @@
-{
+"users": {
     "email": "gannonprudhomme@gmail.com"
     "profilephoto": "image.jpg"
 
     "groups": {
-        "basketball": true
-        "friends": true
+        "basketball": true,
+        "prom": true
     },
 
     "friends": {

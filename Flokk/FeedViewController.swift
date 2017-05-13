@@ -67,6 +67,7 @@ class FeedViewController: UIViewController {
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
+        
     }
     
     @IBAction func unwindToFeed(segue: UIStoryboardSegue) {

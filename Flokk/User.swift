@@ -20,6 +20,7 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var profilePhoto: UIImage
     
     var groups = [Group]() // The groups this user is in
+    var groupHandles = [String]() // Passed in from SignIn - for the mainUser
     
     var mainUser: Bool! // Is it the main/local user - not sure if I want this or not.
     
@@ -35,6 +36,14 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         
         loadPicture()
         // loadFriends() // dont need to load this immediately
+    }
+    
+    init(handle: String, fullName: String, groupHandles: [String]) {
+        self.handle = handle
+        self.fullName = fullName
+        self.profilePhoto = UIImage(named: "AddProfilePic")!
+        
+        self.groupHandles = groupHandles
     }
     
     init(handle: String, fullName: String, profilePhoto: UIImage) {

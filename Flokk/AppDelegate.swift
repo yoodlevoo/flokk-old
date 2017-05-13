@@ -10,6 +10,10 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
+var mainUser: User!
+var database: Database!
+var groups = [Group]() // Should i do groups like this so they only need to be loaded once?
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -17,16 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Use Firebase library to configure APIs
-        FIRApp.configure()
+        database = Database()
         
-        /*
-        FIRAuth.auth()?.createUser(withEmail: "gannonprudhomme@gmail.com", password: "gannon123", completion: { (user, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            print("email created")
-        }) */
+        //FIRApp.configure()
+        
+        //database.createNewUser(email: "gannonprudhomme@gmail.com", password: "gannon123", handle: "gannonprudhomme", fullName: "Gannon Prudhomme", profilePhoto: UIImage())
         
         // Retrieve a registration token for this client
         let token = FIRInstanceID.instanceID().token()

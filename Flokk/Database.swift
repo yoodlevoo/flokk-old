@@ -12,28 +12,28 @@ import Firebase
 import FirebaseDatabase
 import FirebaseStorage
 
-// A class that the framework of flokk can use to load data from the database.
-// Most of the functions in this class will be static, so a Database object doesn't need to be passed around.
+// A class that the framework of flokk can use to load data from Firebase.
+// Most of the functions in this class will be static???, so a Database object doesn't need to be passed around.
+// Basically all of these functions are write-only / no getter functions, as loading from the database is asynchronous
 class Database {
-    private var databaseRef: FIRDatabaseReference!
-    private var storageRef: FIRStorageReference!
+    var ref: FIRDatabaseReference!
     
     init() {
-        FIRApp.configure()
+        FIRApp.configure() // Initialize Firebase
         
-        databaseRef = FIRDatabase.database().reference() // Create a reference from our database service
-        storageRef = FIRStorage.storage().reference() // Create a reference from our storage service
+        ref = FIRDatabase.database().reference() // Create a reference from our database service
     }
     
     func loadMainUserGroups() -> [Group] {
         return [Group]()
     }
     
-    func createGroup(groupHandle: String, creator: User, profileIcon: UIImage) {
-        let groupData = databaseRef.child(groupHandle)
+    func createGroup(groupHandle: String, profileIcon: UIImage) {
+        let groupData = ref.child("groups").child(groupHandle)
         
-        groupData.child("creator").setValue(creator.handle)
-        groupData.child("members").set
+        groupData.child("creator").setValue(mainUser.handle) // the creator will always be the main user
+        
+        
     }
 }
 
@@ -41,30 +41,32 @@ class Database {
 extension Database {
     // Authenticate the user and add them to the database
     func createNewUser(email: String, password: String, handle: String, fullName: String, profilePhoto: UIImage) {
-        let userData = databaseRef.child(handle)
-        
-        userData.child("fullName").setValue(fullName)
-        userData.child("email").setValue(email)
-        userData.child("profilePhoto").setValue("\(handle)ProfilePhoto.jpg") // How should this be handled
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+            if error == nil {
+                if let user = user { // Make sure we got this user OK - might be redundant
+                    self.ref.child("uids").child(user.uid).setValue(handle) // Connect this user's UID with their handle, for logging in
+                    
+                    // While this(below) doesnt need to be synchronous necessarily, if there is an error in the creation,
+                    // I dont want the rest of the user to be added to the database
+                    
+                    // Write this new user's data to the database
+                    let userDataRef = self.ref.child("users").child(handle)
+                    
+                    userDataRef.child("fullName").setValue(fullName)
+                    userDataRef.child("email").setValue(email)
+                    
+                    //let groupHandles: [String: Bool] = ["basketball": true]
+                    
+                    //userDataRef.child("groups").setValue(groupHandles)
+                    
+                    //userDataRef.child("profilePhoto").setValue("\(handle)ProfilePhoto.jpg") // How should this be handled
+                }
+            } else {
+                print(error!)
+            }
+        })
     }
-    
-    // Load in data about this user
-    func getUserWithHandle(_ handle: String) -> User {
-        var userData = databaseRef.child(handle)
-        
-        var fullName = userData.child("fullName")
-        var profilePhoto = UIImage()
-        
-        return User(handle: handle, fullName: fullName)
-    }
-    
-    // Get the groups this user is participating in (and all of the basic data)
-    func getUserGroups(user: User) -> [Group] {
-        var groups = [Group]() // The groups to return
-        
-        
-        return groups
-    }
+
     
     func uploadUserProfilePhoto(user: User, profilePhoto: UIImage) {
         

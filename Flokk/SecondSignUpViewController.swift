@@ -7,30 +7,74 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
-class SecondSignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    @IBOutlet weak var usernameEntry: UITextField!
-    @IBOutlet weak var passwordEntry: UITextField!
+class SecondSignUpViewController: UIViewController, UINavigationControllerDelegate {
+    @IBOutlet weak var usernameField: UITextField! // The handle
+    @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var addProfilePicOutlet: UIButton!
     
     private let imagePicker = UIImagePickerController()
     
-    //let transitionBackward = SlideBackwardAnimator(right: true)
+    // Data passed in from the previous view
+    var fullName: String!
+    var email: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        usernameEntry.becomeFirstResponder()
+        self.usernameField.becomeFirstResponder() // Set the usernameEntry to be selected by default
+        
+        self.imagePicker.delegate = self
     }
     
     @IBAction func addProfilePic(_ sender: Any) {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        
-        imagePicker.delegate = self
-        
-        present(imagePicker, animated: true, completion: nil)
+        self.imagePicker.allowsEditing = false
+        self.imagePicker.sourceType = .photoLibrary
+
+        // Present the imagePicker
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
+    @IBAction func backGesture(_ sender: Any) {
+    }
+    
+    @IBAction func unwindToSecondSignUp(segue: UIStoryboardSegue) {
+        
+    }
+
+    @IBAction func signUpPressed(_ sender: Any) {
+        // Make sure all of the fields are filled in correctly
+        
+        // Create this user, these calls aren't asynchronous so no worries using it as a function - I think
+        database.createNewUser(email: email, password: passwordField.text!, handle: usernameField.text!, fullName: fullName, profilePhoto: UIImage())
+        
+        // After creating the user, load it into the mainUser directly,
+        // instead of uploading it then downloading it again(b/c thats just stupid)
+        mainUser = User(handle: usernameField.text!, fullName: fullName, profilePhoto: UIImage())
+        
+        // Segue to the next view - doesn't really need to be segued programmaticaly though
+        self.performSegue(withIdentifier: "segueFromSecondSignUpToConnectContacts", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueFromSecondSignUpToConnectContacts" {
+            if let connectContactsView = segue.destination as? ConnectContactsViewController {
+                // What do i need to pass to this?
+            }
+        }
+    }
+}
+
+// Text Field Functions
+extension SecondSignUpViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return true
+    }
+}
+
+// Image Picker Functions
+extension SecondSignUpViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             //imageView.contentMode = .scaleAspectFit
@@ -44,16 +88,5 @@ class SecondSignUpViewController: UIViewController, UIImagePickerControllerDeleg
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func backGesture(_ sender: Any) {
-    }
-    
-    @IBAction func unwindToSecondSignUp(segue: UIStoryboardSegue) {
-        
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
     }
 }

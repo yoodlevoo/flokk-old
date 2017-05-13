@@ -3,21 +3,23 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 3/3/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
 
 class FirstSignUpViewController: UIViewController {
-    @IBOutlet weak var nameEntry: UITextField!
-    @IBOutlet weak var emailEntry: UITextField!
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var emailField: UITextField!
     
     let transitionRight = SlideRightAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameEntry.becomeFirstResponder()
+        nameField.becomeFirstResponder()
         
+        self.nameField.delegate = self
+        self.emailField.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -32,9 +34,25 @@ class FirstSignUpViewController: UIViewController {
         
     }
     
+    // Check if all the fields are filled out correctly
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        
+        return true
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromFirstToSecondSignUp" {
-            segue.destination.transitioningDelegate = transitionRight
+            if let secondSignUpView = segue.destination as? SecondSignUpViewController {
+                // Pass this sign up's data to the next
+                secondSignUpView.email = emailField.text!
+                secondSignUpView.fullName = nameField.text!
+            }
         }
+    }
+}
+
+extension FirstSignUpViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return true
     }
 }

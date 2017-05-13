@@ -15,10 +15,6 @@ class OpenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Just for testing
-        jaredUser.groups.append(friendGroup)
-        jaredUser.groups.append(otherGroup)
     }
 
     override func didReceiveMemoryWarning() {

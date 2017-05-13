@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 4/2/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -14,7 +14,7 @@ class ConnectContactsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-    phoneNumber.becomeFirstResponder()
+        self.phoneNumber.becomeFirstResponder()
         
         // Do any additional setup after loading the view.
     }
@@ -24,15 +24,13 @@ class ConnectContactsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func sendButtonPressed(_ sender: Any) {
+        self.performSegue(withIdentifier: "segueFromConnectContactsToGroups", sender: self)
     }
-    */
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueFromConnectContactsToGroups" {
+            // Would i even pass anything here
+        }
+    }
 }

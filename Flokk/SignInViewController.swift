@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SignInViewController: UIViewController, UITextFieldDelegate {
+class SignInViewController: UIViewController {
     @IBOutlet weak var usernameEntry: UITextField!
     @IBOutlet weak var passwordEntry: UITextField!
     
@@ -31,6 +31,8 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signInBttn(_ sender: Any) {
+        // Make sure the fields are filled in correctly before trying to sign in
+        
         signIn()
     }
     
@@ -40,17 +42,37 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     func signIn() {
         let email = usernameEntry.text // Get the entered email
-        let password = passwordEntry.text //
+        let password = passwordEntry.text // Get the entered password
         
         FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
-            if let error = error {
-                print("Sign in error: \(error)")
-                print("with username: \(email!) and password \(password!)")
-                
-                return
+            if error == nil { // If there wasn't an error
+                if let user = user { // Basically just removes the "optional" from user (so there's no need for doing "(user?.uid)!")
+                    database.ref.child("uids").child(user.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                        let handle = snapshot.value as! String // Get this user's handle from their UID
+                        
+                        database.ref.child("users").child(handle).observeSingleEvent(of: .value, with: { (snapshot) in
+                            let userValues = snapshot.value as! NSDictionary
+                            let fullName = userValues["fullName"] as! String
+                            
+                            if let groupsDict = userValues["groups"] as? [String: Bool] {// Bool is basically just a placeholder
+                                let groupHandles = Array(groupsDict.keys)
+                                
+                                print(fullName)
+                                
+                                mainUser = User(handle: handle, fullName: fullName, groupHandles: groupHandles) // Set the main user
+                                
+                            } else { // Then the user is not in any groups
+                                mainUser = User(handle: handle, fullName: fullName)
+                            }
+                            
+                            
+                            self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
+                        })
+                    })
+                }
+            } else { // If there was an error
+                print(error!)
             }
-            
-            print("signed in successfully")
         })
     }
     
@@ -78,10 +100,24 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromSignInToGroups" {
-            segue.destination.transitioningDelegate = transitionRight
+            //segue.destination.transitioningDelegate = transitionRight
             
         } else if let openView = segue.destination as? OpenViewController {
-            segue.destination.transitioningDelegate = transitionRight
+            //segue.destination.transitioningDelegate = transitionRight
         }
+    }
+}
+
+// Text Field functions
+extension SignInViewController: UITextFieldDelegate {
+    // Check if we should allow the user to continue editing
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == usernameEntry {
+            
+        } else if textField == passwordEntry {
+            
+        }
+        
+        return true
     }
 }
