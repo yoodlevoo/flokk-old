@@ -59,13 +59,13 @@ class GroupProfileViewController: UIViewController {
 
 extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return group.participants.count
+        return group.members.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default") as! GroupParticipantsTableViewCell
         
-        let user = group.participants[indexPath.row]
+        let user = group.members[indexPath.row]
         
         cell.profilePictureView.image = user.profilePhoto
         cell.profilePictureView.layer.cornerRadius = cell.profilePictureView.frame.size.width / 2

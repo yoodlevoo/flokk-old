@@ -78,7 +78,7 @@ class Post {
     //when we have the database we can reduce storage by getting this frk
     //this should be in the Group class anyways
     func findUserInGroupWith(handle: String) -> User {
-        for user in postedGroup.participants {
+        for user in postedGroup.members {
             if user.handle == handle {
                 return user
             }
@@ -109,12 +109,12 @@ class Post {
         let imageName = getUniqueName()
         let postData = convertToJSON()
         
-        var groupJSON = postedGroup.convertToJSONWithNewPost(post: self)
+        //var groupJSON = postedGroup.convertToJSONWithNewPost(post: self)
         
         //groupJSON["posts"].appendIfArray(json: convertToJSON())
         
         //write over the file
-        FileUtils.saveGroupJSON(json: groupJSON, group: postedGroup)
+        //FileUtils.saveGroupJSON(json: groupJSON, group: postedGroup)
     }
     
     //override the description variable to display information

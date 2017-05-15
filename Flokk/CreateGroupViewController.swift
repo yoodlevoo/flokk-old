@@ -78,8 +78,9 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
     // When the user tries to create the group
     @IBAction func createButtonPressed(_ sender: Any) {
         let groupName = groupNameField.text!
+        profilePicFromCrop = UIImage(named: "BasketballMob")
         
-        // Check if all of the fields are filled out correctly
+        // Check if all of the fields are filled out correctly first
         
         let groupRef = database.ref.child("groups").child(groupName)
         groupRef.child("creator").setValue(mainUser.handle)
@@ -87,6 +88,17 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         // Just the user will be a member for now
         let members: [String: Bool] = [mainUser.handle: true]
         groupRef.child("members").setValue(members)
+        
+        // Upload the groups profile icon to storage
+        storage.ref.child("groups").child(groupName).child("icon/\(groupName).jpg").put(profilePicFromCrop.convertJpegToData(), metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                // an error occured
+                
+                return
+            }
+            
+            //let downloadURl = metadata.
+        }
         
         // Invite the selected users here
         

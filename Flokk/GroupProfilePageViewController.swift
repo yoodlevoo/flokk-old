@@ -115,7 +115,7 @@ class GroupProfileViewControllerPage2: UIViewController {
         super.viewDidLoad()
         
         self.creatorNameLabel.text = group.groupCreator.fullName
-        self.groupSizeLabel.text = "\(group.participants.count)"
+        self.groupSizeLabel.text = "\(group.members.count)"
     }
     
     override func didReceiveMemoryWarning() {

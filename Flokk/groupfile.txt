@@ -6,7 +6,7 @@
     },
 
     "posts": {
-        "one": {
+        "-hKasbqwtBrQcZ-5mV92cXzNop": {
             "poster": "jaredheyen",
             "timestamp": 12341234
         }

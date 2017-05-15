@@ -263,6 +263,16 @@ class FileUtils {
     }
 }
 
+extension UIImage {
+    func convertJpegToData() -> Data {
+        return UIImageJPEGRepresentation(self, 1)!
+    }
+    
+    func convertPNGToData() -> Data {
+        return UIImagePNGRepresentation(self)!
+    }
+}
+
 //extension to the JSON class from SwiftyJSON, adds append functions
 extension JSON {
     mutating func appendIfArray(json:JSON){

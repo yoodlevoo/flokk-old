@@ -28,11 +28,20 @@ class ConfirmUploadViewController: UIViewController {
     }
     
     @IBAction func uploadPressed(_ sender: Any) {
-        let postsRef = database.ref.child("groups").child(forGroup.groupName).child("posts")
-        let imageRef = storage.ref.child("groups").child(forGroup.groupName).child("posts")
+        let postsRef = database.ref.child("groups").child(forGroup.groupName).child("posts") // Database
+        let imageRef = storage.ref.child("groups").child(forGroup.groupName).child("posts") // Storage
         var autoID = postsRef.childByAutoId() // Generate random ID for this post
         
+        let uploadTask = imageRef.child("\(autoID)").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                return
+            }
+            
+            let downloadURL = metadata.downloadURL()
+        }
         
+        postsRef.child("\(autoID)").child("poster").setValue(mainUser.handle)
+        postsRef.child("\(autoID)").child("timestamp").setValue(12341234)
         
         // Start storage here
         

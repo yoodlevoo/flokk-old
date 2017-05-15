@@ -37,7 +37,44 @@ class GroupsViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        
+        if groups.count < mainUser.groupHandles.count { // If we dont have all of the groups loaded in
+            for groupHandle in mainUser.groupHandles {
+                let matches = groups.filter{ $0.groupName == groupHandle } // Check if we already have a group with this handle, probably very inefficient
+                if matches.count != 0 { // If we already contain a group with this handle, skip it
+                    continue
+                } else { // Otherwise, load it from the Database
+                    let groupRef = database.ref.child("groups").child(groupHandle)
+                    
+                    groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                        let values = snapshot.value as! NSDictionary
+                        
+                        // Load in all of the data for this group
+                        let creatorHandle = values["creator"] as! String // No need to add a default, will never be empty
+                        let memberHandles = values["members"] as! [String: Bool] // No need to add a default, will never be empty
+                        let postHandles = values["posts"] as? [String: [String: String]] ?? [String: [String: String]]() // In case there are no posts in this group
+                        
+                        // Download the icon for this group
+                        let iconRef = storage.ref.child("groups").child(groupHandle).child("icon/\(groupHandle).jpg")
+                        iconRef.data(withMaxSize: 1 * 1024 * 1024, completion: { data, error in
+                            if error == nil { // If there wasn't an error
+                                // Then the data is returned
+                                let groupIcon = UIImage(data: data!)
+                                
+                                // And we can finish loading the group
+                                let group = Group(groupName: groupHandle, groupIcon: groupIcon!, memberHandles: Array(memberHandles.keys), postIDs: Array(postHandles.keys), creatorHandle: creatorHandle)
+                                
+                                groups.append(group) // Add this newly loaded group into the global groups variable
+                                
+                                self.tableView.reloadData() // Reload data every time a group is loaded
+                            } else { // If there was an error
+                                print(error!)
+                                //continue // Skip this
+                            }
+                        })
+                    })
+                }
+            }
+        }
     }
     
     // When the view is preparing to appear
@@ -99,7 +136,6 @@ class GroupsViewController: UIViewController {
 
 // Framework functions
 extension GroupsViewController {
-    // Put this in FileUtils later
     func loadGroup(groupHandle: String) -> Group {
         let groupRef = database.ref.child("groups").child(groupHandle)
         
