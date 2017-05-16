@@ -51,7 +51,7 @@ class GroupsViewController: UIViewController {
                         // Load in all of the data for this group
                         let creatorHandle = values["creator"] as! String // No need to add a default, will never be empty
                         let memberHandles = values["members"] as! [String: Bool] // No need to add a default, will never be empty
-                        let postHandles = values["posts"] as? [String: [String: String]] ?? [String: [String: String]]() // In case there are no posts in this group
+                        let postsData = values["posts"] as? [String: [String: Any?]] ?? [String: [String: String]]() // In case there are no posts in this group
                         
                         // Download the icon for this group
                         let iconRef = storage.ref.child("groups").child(groupHandle).child("icon/\(groupHandle).jpg")
@@ -61,7 +61,7 @@ class GroupsViewController: UIViewController {
                                 let groupIcon = UIImage(data: data!)
                                 
                                 // And we can finish loading the group
-                                let group = Group(groupName: groupHandle, groupIcon: groupIcon!, memberHandles: Array(memberHandles.keys), postIDs: Array(postHandles.keys), creatorHandle: creatorHandle)
+                                let group = Group(groupName: groupHandle, groupIcon: groupIcon!, memberHandles: Array(memberHandles.keys), postsData: postsData, creatorHandle: creatorHandle)
                                 
                                 groups.append(group) // Add this newly loaded group into the global groups variable
                                 

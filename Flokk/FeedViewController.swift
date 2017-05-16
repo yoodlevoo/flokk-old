@@ -10,38 +10,37 @@ import UIKit
 
 class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet weak var scrollView: UIScrollView!
     
-    static var postsCache = NSCache<NSString, Post>()
     var group: Group! // The group this feed is reading from
     
     static let initialPostCount = 10 // The initial amount of posts to load
-    var loadedPosts = [Post]() // Whe8n there are a lot of posts, this will contain only the most 'x' recent posts
+    var loadedPosts = [Post]() // When there are a lot of posts, this will contain only the most 'x' recent posts
+    //let postIDs = [String] () // IDs of the posts in FIR Storage
     
     let transitionDown = SlideDownAnimator()
     var refreshControl: UIRefreshControl = UIRefreshControl()
+    
+    var postCount = initialPostCount
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if #available (iOS 10.0, *) {
             tableView.refreshControl = refreshControl
-        }else {
+        } else {
             tableView.addSubview(refreshControl)
         }
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        //self.tabBarController?.tabBar.isHidden = true
-        
         // Don't load the posts if there are already posts stored
         if loadedPosts.count == 0 {
-            loadedPosts = group.loadPosts(numPostsToLoad: FeedViewController.initialPostCount)
+            loadedPosts = self.group.posts
         }
         
-        tableView.estimatedRowHeight = 200
-        tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 200
+        self.tableView.rowHeight = UITableViewAutomaticDimension
         
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
         self.edgesForExtendedLayout = .bottom
@@ -50,20 +49,38 @@ class FeedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Hide the tab bar
-        //(self.tabBarController as! MainTabBarController).hideTabBar()
+        if self.group.posts.count < self.postCount { // If we need to load more posts
+            for (id, data) in self.group.postsData {
+                let matches = self.group.posts.filter{$0.id == id}
+                if matches.count != 0 { // If this post has already been loaded
+                    continue // Then skip loading this post
+                } else { // This post hasn't been loaded yet, begin to load it
+                    let dataDict = data
+                    
+                    let postRef = storage.ref.child("groups").child(self.group.groupName).child("posts")
+                    
+                    postRef.child("\(id)/post.jpg").data(withMaxSize: 1 * 3072 * 3072, completion: { (data, error) in
+                        if error == nil { // If there wasn't an error
+                            let postImage = UIImage(data: data!)
+                            
+                            // Generate the post
+                            let post = Post(posterHandle: dataDict["poster"] as! String, image: postImage!, postID: id)
+                            
+                            // Store it in the various arrays
+                            self.group.posts.append(post)
+                            self.loadedPosts = self.group.posts
+                            self.tableView.reloadData()
+                        } else { // If there was an error
+                            print(error!)
+                        }
+                    })
+                }
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    // Search through all of the saved posts
-    // And load the ones with the key that start with this group's unique name
-    private func searchedCachedPosts() -> [Post] {
-        var groupName = group.groupName
-        
-        return [Post]()
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
@@ -83,17 +100,10 @@ class FeedViewController: UIViewController {
                     commentView.post = post
                 }
             }
-        } else if segue.identifier == "segueFromFeedToUploadImage" {
-            if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
-                photoUploadPageNav.groupToPass = group
-                
-                var postsJSONToPass: JSON = []
-                
-                for post in loadedPosts {
-                    postsJSONToPass.appendIfArray(json: post.convertToJSON())
-                }
-                
-                group.setPostJSON(json: postsJSONToPass)
+        } else if segue.identifier == "segueFromFeedToPhotoUploadPage" {
+            if let photoUploadPageView = segue.destination as? PhotoUploadPageViewController {
+                photoUploadPageView.groupToPass = group
+
             }
         } else if segue.identifier == "segueFromFeedToGroupSettings" {
             if let groupSettingsNav = segue.destination as? GroupSettingsNavigationViewController {
@@ -113,12 +123,12 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         let index = loadedPosts.count - 1 - indexPath.row
         cell.tag = index // Set the tag so prepare for segue can recognize which post was selected
         
-        let user: User = loadedPosts[index].poster
-        cell.userImage.image = user.profilePhoto
+        //let user: User = loadedPosts[index].poster
+        //cell.userImage.image = user.profilePhoto
         cell.setCustomImage(image: loadedPosts[index].image)
         
-        cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
-        cell.userImage.clipsToBounds = true
+        //cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
+        //cell.userImage.clipsToBounds = true
         
         //print("\(cell.userImage.image?.size.width) \(cell.userImage.image?.size.height)")
         

@@ -62,15 +62,6 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         return false
     }
     
-    func addNewGroup(group: Group) {
-        var json = convertToJSON()
-        json["groups"].appendIfArray(json: JSON(group.getFriendlyGroupName()))
-        
-        FileUtils.saveUserJSON(json: json, user: self)
-        
-        groups.append(group)
-    }
-    
     // Call this function if this user(the main user) requests to be friends with another user
     func sendFriendRequestTo(_ user: User) {
         
@@ -79,25 +70,7 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     // Load in this user's profile photo from the database
     // For now just set it manually
     private func loadPicture() {
-        
     }
-    
-    func convertToJSON() -> JSON {
-        var json: JSON = [
-            "handle": handle,
-            "fullName": fullName,
-            "profilePhoto": handle + "ProfilePhoto",
-            
-            "groups": [ ]
-        ]
-        
-        for group in groups {
-            json["groups"].appendIfArray(json: JSON(group.getFriendlyGroupName()))
-        }
-        
-        return json
-    }
-    
     
     // Method needed to implement hashable
     // Used to store and match values in a dictionary

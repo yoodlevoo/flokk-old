@@ -12,61 +12,52 @@ class ConfirmUploadViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     var image: UIImage!
     
-    var forGroup: Group!
+    var forGroup: Group! // This is just a copy of the actual group
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        imageView.image = image
-        
-        // Do any additional setup after loading the view.
+        //imageView.image = image
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func uploadPressed(_ sender: Any) {
         let postsRef = database.ref.child("groups").child(forGroup.groupName).child("posts") // Database
         let imageRef = storage.ref.child("groups").child(forGroup.groupName).child("posts") // Storage
-        var autoID = postsRef.childByAutoId() // Generate random ID for this post
+        let key = postsRef.childByAutoId().key // Generate random ID for this post
         
-        let uploadTask = imageRef.child("\(autoID)").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
+        self.image = imageView.image
+        
+        imageRef.child("\(key)/post.jpg").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 return
             }
             
-            let downloadURL = metadata.downloadURL()
+            //let downloadURL = metadata.downloadURL()
         }
         
-        postsRef.child("\(autoID)").child("poster").setValue(mainUser.handle)
-        postsRef.child("\(autoID)").child("timestamp").setValue(12341234)
+        postsRef.child("\(key)").child("poster").setValue(mainUser.handle)
+        postsRef.child("\(key)").child("timestamp").setValue(12341234)
+        
+        let post = Post(poster: mainUser, image: self.imageView.image!)
+            
+        //self.forGroup.posts.append(post) // Appending to a copy will do nothing
+        
+        let index = groups.index(where: { (item) -> Bool in
+            item.groupName = forGroup.groupName
+        })
         
         // Start storage here
         
-        self.performSegue(withIdentifier: "segueFromConfirmedImageToFeed", sender: self)
+        self.performSegue(withIdentifier: "unwindToFeedFromConfirmUpload", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromConfirmedImageToFeed" {
-            if let feedNav = segue.destination as? FeedNavigationViewController {
-                // Use the imageView because it might be changed asynchronously
-                //let post = Post(poster: mainUser, image: imageView.image!, postedGroup: forGroup, index: forGroup.totalPostsCount)
-                //forGroup.posts.append(post)
-                
-               // post.uploadPostToFile()
-                
-                //FileUtils.savePostImage(post: post)
-                
-                // We increse the totalPostsCount inside of Group.convertToJSONWithNewPost()
-                //forGroup.totalPostsCount += 1
-                //feedNav.groupToPass = forGroup
-                
-                //print(post.description)
-            }
-        } else if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
-            photoUploadPageNav.groupToPass = forGroup
+        if let feedView = segue.destination as? FeedViewController {
+            
         }
     }
 }

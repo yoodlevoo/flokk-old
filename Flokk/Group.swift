@@ -22,8 +22,9 @@ class Group {
     var members = [User]() //the users that are in this group
     var memberHandles = [String]() // The user handles that are in this group, not fully loaded until Group Settings b/c useless otherwise?
     
-    var posts = [Post]()
-    var postIDs = [String]() // loaded in in the Groups view, then used by the feedView to quickly download the post images
+    var posts = [Post]() // The posts that have been loaded in, from newest to oldest
+    //var loadedPosts = [Post]() // The posts that have been loaded so far
+    var postsData = [String : [String: Any?]]() // loaded in in the Groups view, then used by the feedView to quickly download the post images
     
     var numNewPosts: Int! //the amount of new posts the mainUser has missed from this group
     
@@ -49,11 +50,11 @@ class Group {
         //self.internalGroupName = Group.createFriendlyGroupName(name: groupName)
     }
     
-    init(groupName: String, groupIcon: UIImage, memberHandles: [String], postIDs: [String], creatorHandle: String) {
+    init(groupName: String, groupIcon: UIImage, memberHandles: [String], postsData: [String : [String: Any?]], creatorHandle: String) {
         self.groupName = groupName
         self.groupIcon = groupIcon
         self.memberHandles = memberHandles
-        self.postIDs = postIDs
+        self.postsData = postsData
         self.groupCreatorHandle = creatorHandle
         
     }
@@ -64,6 +65,8 @@ class Group {
         
         return posts
     }
+    
+    /*
     
     //create an internal group name from the original group name
     //which is fixed so there are no characters that will cause errors(eg. spaces)
@@ -105,6 +108,8 @@ class Group {
     func setPostJSON(json: JSON) {
         postJSON = json
     }
+ 
+    */
     
     //for sorting the posts in the GroupView's priority view
     //so the posts with the most recent/newest posts are at the top

@@ -302,16 +302,16 @@
 			children = (
 				158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */,
 				15E743B01E967DA8002D1220 /* GroupsNavigationViewController.swift */,
+				15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */,
 				152F02631EB7B42500F0C7BD /* PersonalProfileNavigationViewController.swift */,
 				15F74F1C1E898B3F00A23720 /* FriendsNavigationViewController.swift */,
 				15C8268A1E8587DF003EE6E4 /* AddCommentNavigationViewController.swift */,
 				15C826941E8587EF003EE6E4 /* ConfirmUploadNavigationViewController.swift */,
 				15C826991E8587EF003EE6E4 /* FeedNavigationViewController.swift */,
-				15C826B31E8587EF003EE6E4 /* PhotoUploadPageNavigationViewController.swift */,
 				15FA9B0C1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift */,
 				15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */,
-				15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */,
 				15FB666B1EAA8493004D23AF /* GroupProfilePageViewController.swift */,
+				15C826B31E8587EF003EE6E4 /* PhotoUploadPageNavigationViewController.swift */,
 				15FB666E1EB1225E004D23AF /* GroupProfileNavigationViewController.swift */,
 			);
 			name = "Navigation Controllers";

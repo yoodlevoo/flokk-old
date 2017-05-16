@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 2/11/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -72,7 +72,7 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     //whenever the keyboard is activated, this notifies the textField to shift upward with the keyboard
-    //i got this entire code somewhere from satack overflow
+    //i got this entire code somewhere from stack overflow
     func keyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
@@ -99,7 +99,7 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let feedNav = segue.destination as? FeedNavigationViewController {
-            feedNav.groupToPass = post.postedGroup
+            //feedNav.groupToPass = post.postedGroup
         }
     }
 }

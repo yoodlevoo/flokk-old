@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 11/3/16.
-//  Copyright © 2016 Heyen Enterprises. All rights reserved.
+//  Copyright © 2016 Flokk. All rights reserved.
 //
 
 import UIKit
