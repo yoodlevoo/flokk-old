@@ -22,15 +22,14 @@ class GroupsViewController: UIViewController {
     let transitionDown = SlideDownAnimator()
     let transitionUp = SlideUpAnimator()
     
-    // The handler for the auth state listener, to allow cancelling later.
     var handle: FIRAuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available (iOS 10.0, *) {
+        if #available(iOS 10.0, *) {
             self.tableView.refreshControl = refreshControl
-        }else {
+        } else {
             self.tableView.addSubview(refreshControl)
         }
         
@@ -50,7 +49,7 @@ class GroupsViewController: UIViewController {
                         
                         // Load in all of the data for this group
                         let creatorHandle = values["creator"] as! String // No need to add a default, will never be empty
-                        let memberHandles = values["members"] as! [String: Bool] // No need to add a default, will never be empty
+                        let memberHandles = values["members"] as! [String: Bool] // Again, no need to add a default, will never be empty
                         let postsData = values["posts"] as? [String: [String: Any?]] ?? [String: [String: String]]() // In case there are no posts in this group
                         
                         // Download the icon for this group
@@ -77,11 +76,10 @@ class GroupsViewController: UIViewController {
         }
     }
     
-    // When the view is preparing to appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Attach this to any view that requires information about this user
+        // Attach this to any view that requires information about this user??
         handle = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             
         })

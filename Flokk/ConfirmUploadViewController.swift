@@ -13,9 +13,10 @@ class ConfirmUploadViewController: UIViewController {
     var image: UIImage!
     
     var forGroup: Group! // This is just a copy of the actual group
+    var groupIndex: Int! // The index of this group in the global groups array
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad() 
 
         //imageView.image = image
     }
@@ -31,6 +32,7 @@ class ConfirmUploadViewController: UIViewController {
         
         self.image = imageView.image
         
+        // Upload the post image to Storage
         imageRef.child("\(key)/post.jpg").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 return
@@ -39,25 +41,30 @@ class ConfirmUploadViewController: UIViewController {
             //let downloadURL = metadata.downloadURL()
         }
         
+        // Upload the data about this post to the Database
         postsRef.child("\(key)").child("poster").setValue(mainUser.handle)
-        postsRef.child("\(key)").child("timestamp").setValue(12341234)
+        postsRef.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         
-        let post = Post(poster: mainUser, image: self.imageView.image!)
+        let post = Post(poster: mainUser, image: self.imageView.image!, postID: key)
             
         //self.forGroup.posts.append(post) // Appending to a copy will do nothing
         
+        // Search for this group's index
         let index = groups.index(where: { (item) -> Bool in
-            item.groupName = forGroup.groupName
+            item.groupName == forGroup.groupName
         })
+        
+        groups[index!].posts.append(post) // Add this post to the group
         
         // Start storage here
         
         self.performSegue(withIdentifier: "unwindToFeedFromConfirmUpload", sender: self)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let feedView = segue.destination as? FeedViewController {
-            
+            // Do we need to pass anything
         }
     }
 }

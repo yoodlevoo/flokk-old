@@ -12,6 +12,7 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var group: Group! // The group this feed is reading from
+    var groupIndex: Int! // The index of this group in the global group variable
     
     static let initialPostCount = 10 // The initial amount of posts to load
     var loadedPosts = [Post]() // When there are a lot of posts, this will contain only the most 'x' recent posts
@@ -51,7 +52,7 @@ class FeedViewController: UIViewController {
         
         if self.group.posts.count < self.postCount { // If we need to load more posts
             for (id, data) in self.group.postsData {
-                let matches = self.group.posts.filter{$0.id == id}
+                let matches = self.group.posts.filter{$0.id == id} // Check if there is a loaded post that matches this ID
                 if matches.count != 0 { // If this post has already been loaded
                     continue // Then skip loading this post
                 } else { // This post hasn't been loaded yet, begin to load it
@@ -84,11 +85,9 @@ class FeedViewController: UIViewController {
     }
     
     @IBAction func uploadPic(_ sender: AnyObject) {
-        
     }
     
     @IBAction func unwindToFeed(segue: UIStoryboardSegue) {
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

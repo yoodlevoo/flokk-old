@@ -15,8 +15,13 @@
 
     },
 
-    "incomingrequests" {
+    "incomingrequests" { // Incomign friend requests
         
+    },
+
+    "groupinvites": {
+        "friends": true,
+        "football": true
     },
 
     // Private data b/c you have to authenticate to get the UID

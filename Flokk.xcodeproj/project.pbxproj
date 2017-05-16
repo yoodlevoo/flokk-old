@@ -19,6 +19,7 @@
 		15309E891E65430E00D1DFA1 /* jaredheyen.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E881E65430E00D1DFA1 /* jaredheyen.json */; };
 		158F02621EC6A49F00D7552A /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158F02611EC6A49F00D7552A /* Storage.swift */; };
 		158FE22E1E954A81009EFBA6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */; };
+		15B51D3B1ECB82A3009BCB6D /* UserSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B51D3A1ECB82A3009BCB6D /* UserSearchTableViewController.swift */; };
 		15C275911E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C275901E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift */; };
 		15C275951E9FCC7100C62F0D /* AppSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C275941E9FCC7100C62F0D /* AppSettingsTableViewController.swift */; };
 		15C8268D1E8587DF003EE6E4 /* FirstSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826881E8587DF003EE6E4 /* FirstSignUpViewController.swift */; };
@@ -124,6 +125,7 @@
 		153A30D91EA7E7E0001540A3 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
 		158F02611EC6A49F00D7552A /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		15B51D3A1ECB82A3009BCB6D /* UserSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchTableViewController.swift; sourceTree = "<group>"; };
 		15C275901E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationsSettingsTableViewController.swift; sourceTree = "<group>"; };
 		15C275941E9FCC7100C62F0D /* AppSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewController.swift; sourceTree = "<group>"; };
 		15C826881E8587DF003EE6E4 /* FirstSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstSignUpViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				15C826891E8587DF003EE6E4 /* SecondSignUpViewController.swift */,
 				7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */,
 				15C826961E8587EF003EE6E4 /* CreateGroupViewController.swift */,
+				15B51D3A1ECB82A3009BCB6D /* UserSearchTableViewController.swift */,
 				15C826A01E8587EF003EE6E4 /* GroupsViewController.swift */,
 				15C8269A1E8587EF003EE6E4 /* FeedViewController.swift */,
 				15C8268B1E8587DF003EE6E4 /* AddCommentViewController.swift */,
@@ -780,6 +783,7 @@
 				15C826E11E8587EF003EE6E4 /* PhotoSelectLayout.swift in Sources */,
 				15C826C81E8587EF003EE6E4 /* Database.swift in Sources */,
 				15C826C71E8587EF003EE6E4 /* CropGroupPhotoViewController.swift in Sources */,
+				15B51D3B1ECB82A3009BCB6D /* UserSearchTableViewController.swift in Sources */,
 				7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */,
 				15C826C31E8587EF003EE6E4 /* BounceButton.swift in Sources */,
 				15FA9B0D1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift in Sources */,

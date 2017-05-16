@@ -68,7 +68,8 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.hideNavigationBar() // Hide the nav bar when this appears
+        self.navigationController?.hideNavigationBar() // Hide the nav bar when this view appears
+        self.tabBarController?.hideTabBar() // Hide the tab bar when this view appears
     }
 
     override func didReceiveMemoryWarning() {
@@ -292,6 +293,8 @@ extension CreateGroupViewController: UIImagePickerControllerDelegate {
         
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             dismiss(animated: false, completion: nil)
+            
+            self.profilePicFromCrop = selectedImage
             /*
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let cropView: CropGroupPhotoViewController = storyboard.instantiateViewController(withIdentifier: "CropGroupPhotoViewController") as! CropGroupPhotoViewController
