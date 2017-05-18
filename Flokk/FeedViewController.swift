@@ -10,6 +10,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
     var group: Group! // The group this feed is reading from
     var groupIndex: Int! // The index of this group in the global group variable
@@ -32,6 +33,7 @@ class FeedViewController: UIViewController {
             tableView.addSubview(refreshControl)
         }
         
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
@@ -45,13 +47,15 @@ class FeedViewController: UIViewController {
         
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
         self.edgesForExtendedLayout = .bottom
+        
+        self.navigationBar.title = "Custom Name"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if self.group.posts.count < self.postCount { // If we need to load more posts
-            for (id, data) in self.group.postsData {
+            for (id, data) in self.group.postsData { //print("postsData count \(self.group.postsData.count)")
                 let matches = self.group.posts.filter{$0.id == id} // Check if there is a loaded post that matches this ID
                 if matches.count != 0 { // If this post has already been loaded
                     continue // Then skip loading this post

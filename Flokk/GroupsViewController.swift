@@ -114,12 +114,13 @@ class GroupsViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupToFeed" {
-            if let feedNav = segue.destination as? FeedViewController {
+            if let feedView = segue.destination as? FeedViewController {
                 if let tag = (sender as? GroupTableViewCell)?.tag {
                     weak var group = groups[tag] // I want this to be weak to prevent memory leakage
                     
-                    feedNav.group = group
+                    feedView.group = group
                     self.tabBarController?.hideTabBar()
+                    self.navigationController?.title = group?.groupName
                     
                     //feedNav.passGroup()
                 }
