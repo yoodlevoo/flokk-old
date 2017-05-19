@@ -3019,6 +3019,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="cMZ-8C-YtY"/>
                     <connections>
+                        <outlet property="addProfilePhotoButton" destination="omY-iC-vla" id="VLe-VF-4cF"/>
                         <outlet property="passwordField" destination="s3F-YA-NW2" id="tnp-c5-ajt"/>
                         <outlet property="usernameField" destination="euL-qD-OKE" id="IPJ-hP-Mwg"/>
                         <segue destination="S3h-JQ-9pu" kind="show" identifier="segueFromSecondSignUpToConnectContacts" id="XBq-CG-Ahq"/>

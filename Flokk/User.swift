@@ -26,6 +26,8 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     
     // Might not need to be loaded immediately
     var friends = [User]() // Array of all friends this user has
+    var friendHandles = [String]() // Array of the handles of friends this user has, don't need all of the user's data the entire time
+    
     var openFriendRequests = [User]() // Array of users that requested to be this user's friend
     var outgoingFriendRequests = [User]() // Array of users this user requested to be friends wit
     
@@ -50,8 +52,14 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = profilePhoto
+    }
+    
+    init(handle: String, fullName: String, profilePhoto: UIImage, groupHandles: [String]) {
+        self.handle = handle
+        self.fullName = fullName
+        self.profilePhoto = profilePhoto
         
-        
+        self.groupHandles = groupHandles
     }
     
     func loadFriends() {

@@ -173,9 +173,9 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
 extension CreateGroupViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CreateGroupUserCell
-        
         let user = selectedUsers[indexPath.row]
         
+        // Set the profile picure and crop it to a circle
         cell.profilePicture.image = user.profilePhoto
         cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
         cell.profilePicture.clipsToBounds = true

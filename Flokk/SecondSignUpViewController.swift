@@ -13,7 +13,7 @@ import FirebaseAuth
 class SecondSignUpViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var usernameField: UITextField! // The handle
     @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var addProfilePicOutlet: UIButton!
+    @IBOutlet weak var addProfilePhotoButton: UIButton! // Rename this
     
     private let imagePicker = UIImagePickerController()
     
@@ -47,11 +47,16 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
         // Make sure all of the fields are filled in correctly
         
         // Create this user, these calls aren't asynchronous so no worries using it as a function - I think
-        database.createNewUser(email: email, password: passwordField.text!, handle: usernameField.text!, fullName: fullName, profilePhoto: UIImage())
+        database.createNewUser(email: email, password: passwordField.text!, handle: usernameField.text!, fullName: fullName, profilePhoto: (addProfilePhotoButton.imageView?.image)!)
+        
+        // Upload this user to the database
+        let userRef = database.ref.child("users").child(usernameField.text!)
+        userRef.child("fullName").setValue(fullName)
+        userRef.child("email").setValue(email)
         
         // After creating the user, load it into the mainUser directly,
         // instead of uploading it then downloading it again(b/c thats just stupid)
-        mainUser = User(handle: usernameField.text!, fullName: fullName, profilePhoto: UIImage())
+        mainUser = User(handle: usernameField.text!, fullName: fullName, profilePhoto: addProfilePhotoButton.imageView?.image)
         
         // Segue to the next view - doesn't really need to be segued programmaticaly though
         self.performSegue(withIdentifier: "segueFromSecondSignUpToConnectContacts", sender: self)
@@ -78,7 +83,7 @@ extension SecondSignUpViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             //imageView.contentMode = .scaleAspectFit
-            addProfilePicOutlet.setImage(pickedImage, for: UIControlState.normal)
+            addProfilePhotoButton.setImage(pickedImage, for: UIControlState.normal)
         } else {
             print("Something went wrong")
         }

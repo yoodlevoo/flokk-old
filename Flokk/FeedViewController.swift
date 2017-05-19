@@ -48,7 +48,7 @@ class FeedViewController: UIViewController {
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
         self.edgesForExtendedLayout = .bottom
         
-        self.navigationBar.title = "Custom Name"
+        self.navigationBar.title = group.groupName
     }
     
     override func viewWillAppear(_ animated: Bool) {

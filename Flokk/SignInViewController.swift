@@ -44,12 +44,14 @@ class SignInViewController: UIViewController {
         let email = usernameEntry.text // Get the entered email
         let password = passwordEntry.text // Get the entered password
         
+        // Authenticate and sign the user in
         FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil { // If there wasn't an error
                 if let user = user { // Basically just removes the "optional" from user (so there's no need for doing "(user?.uid)!")
-                    database.ref.child("uids").child(user.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                    database.ref.child("uids").child(user.uid).observeSingleEvent(of: .value, with: { (snapshot) in // Check the UID tree and get the user's handle
                         let handle = snapshot.value as! String // Get this user's handle from their UID
                         
+                        // Get the user data from their handle
                         database.ref.child("users").child(handle).observeSingleEvent(of: .value, with: { (snapshot) in
                             let userValues = snapshot.value as! NSDictionary
                             let fullName = userValues["fullName"] as! String
@@ -59,14 +61,39 @@ class SignInViewController: UIViewController {
                                 
                                 print(fullName)
                                 
-                                mainUser = User(handle: handle, fullName: fullName, groupHandles: groupHandles) // Set the main user
+                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                                profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                                    if error == nil { // If there wasn't an error
+                                        let profilePhoto = UIImage(data: data!) // Load the image
+                                        
+                                        // Load in the user
+                                        mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupHandles: groupHandles)
+                                    } else { // If there was an error
+                                        // Load in the user
+                                        mainUser = User(handle: handle, fullName: fullName, groupHandles: groupHandles)
+                                    }
+                                    
+                                    self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
+                                })
                                 
                             } else { // Then the user is not in any groups
                                 mainUser = User(handle: handle, fullName: fullName)
+                                
+                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                                profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                                    if error == nil { // If there wasn't an error
+                                        let profilePhoto = UIImage(data: data!)
+                                        
+                                        // Load in the user
+                                        mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                    } else { // If there was an error
+                                        // Load in the user with the baseline criteria
+                                        mainUser = User(handle: handle, fullName: fullName)
+                                    }
+                                    
+                                    self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
+                                })
                             }
-                            
-                            
-                            self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
                         })
                     })
                 }

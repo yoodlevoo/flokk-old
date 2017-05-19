@@ -36,6 +36,7 @@ class GroupsViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        // Attempt to load in all of the groups
         if groups.count < mainUser.groupHandles.count { // If we dont have all of the groups loaded in
             for groupHandle in mainUser.groupHandles {
                 let matches = groups.filter{ $0.groupName == groupHandle } // Check if we already have a group with this handle, probably very inefficient
@@ -74,6 +75,18 @@ class GroupsViewController: UIViewController {
                 }
             }
         }
+        
+        // Load the user's friends whenever we can
+        database.ref.child("users").child(mainUser.handle).child("friends").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let friendHandles = values.allKeys as! [String] // The tree is ordered as "userHandle": true, the value of this doesnt matter
+                
+                // Set the friend handles for the main user
+                mainUser.friendHandles = friendHandles
+            } else { // This user has no friends
+                mainUser.friends = [User]()
+            }
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,7 +165,12 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! GroupTableViewCell
         
         cell.groupTitleLabel?.text = groups[indexPath.row].groupName
+        
+        // Set the group icon 
         cell.groupImageView?.image = groups[indexPath.row].groupIcon
+        cell.groupImageView?.layer.cornerRadius = cell.groupImageView.frame.size.width / 2
+        cell.groupImageView.clipsToBounds = true
+        
         cell.tag = indexPath.row //or do i do indexPath.item
         
         return cell
