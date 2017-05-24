@@ -75,18 +75,8 @@ class GroupsViewController: UIViewController {
                 }
             }
         }
-        
-        // Load the user's friends whenever we can
-        database.ref.child("users").child(mainUser.handle).child("friends").observeSingleEvent(of: .value, with: { (snapshot) in
-            if let values = snapshot.value as? NSDictionary {
-                let friendHandles = values.allKeys as! [String] // The tree is ordered as "userHandle": true, the value of this doesnt matter
-                
-                // Set the friend handles for the main user
-                mainUser.friendHandles = friendHandles
-            } else { // This user has no friends
-                mainUser.friends = [User]()
-            }
-        })
+    
+        self.loadUserData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -157,6 +147,65 @@ extension GroupsViewController {
         
         return Group()
     }
+    
+    func loadUserData() {
+        // Load the user's friends whenever we can
+        database.ref.child("users").child(mainUser.handle).child("friends").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let friendHandles = values.allKeys as! [String] // The tree is ordered as "userHandle": true, the value of this doesnt matter
+                
+                // Set the friend handles for the main user
+                mainUser.friendHandles = friendHandles
+            } else { // This user has no friends
+                //mainUser.friends = [User]()
+            }
+        })
+        
+        // Load notifications too probably, just the first 10
+        database.ref.child("notifications").child(mainUser.handle).queryOrdered(byChild: "timestamp").queryLimited(toFirst: 10).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                for (_, value) in values {
+                    if let data = value as? [String : Any] {
+                        let type = NotificationType(rawValue: data["type"] as! Int)!
+                        
+                        let notification: Notification
+                        
+                        switch(type) {
+                        case NotificationType.FRIEND_REQUESTED:
+                            let senderHandle = data["sender"] as! String
+                            let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
+                            
+                            notification = Notification(type: type, senderHandle: senderHandle)
+                            
+                            // Add the notification
+                            mainUser.notifications.append(notification)
+                            break
+                        default: break
+                        }
+                    }
+                }
+            }
+        })
+        
+        // Load all of the outgoing friend requests
+        database.ref.child("users").child(mainUser.handle).child("outgoingrequests").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let requestHandles = values.allKeys as! [String]
+                
+                mainUser.outgoingFriendRequests = requestHandles
+            }
+        })
+        
+        // Load all of the incoming friend requests
+        database.ref.child("users").child(mainUser.handle).child("incomingrequests").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let requestHandles = values.allKeys as! [String]
+                
+                mainUser.incomingFriendRequests = requestHandles
+            }
+        })
+    }
+
 }
 
 // Table View Functions

@@ -128,7 +128,23 @@
                                             <color key="titleColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="addFriendButtonPressed:" destination="urq-WG-epc" eventType="touchUpInside" id="XO9-sW-1oV"/>
+                                            <action selector="addFriendButtonPressed:" destination="urq-WG-epc" eventType="touchUpInside" id="H1T-AX-c4K"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5m-TP-MMI">
+                                        <rect key="frame" x="107" y="175" width="81" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="Cancel Button"/>
+                                        <connections>
+                                            <action selector="denyFriendRequestPressed:" destination="urq-WG-epc" eventType="touchUpInside" id="FHo-KJ-P91"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZn-fr-D3E">
+                                        <rect key="frame" x="193" y="169" width="81" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="Add Friend New"/>
+                                        <connections>
+                                            <action selector="acceptFriendRequestPressed:" destination="urq-WG-epc" eventType="touchUpInside" id="qAi-2f-wLE"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -172,13 +188,14 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
-                        <outlet property="addFriendButton" destination="C4k-DV-l4U" id="rYt-8T-EL5"/>
-                        <outlet property="groupNumber" destination="V4m-0e-fOH" id="a4V-mP-Xrp"/>
+                        <outlet property="acceptFriendRequestButton" destination="wZn-fr-D3E" id="lfK-es-AnE"/>
+                        <outlet property="addFriendButton" destination="C4k-DV-l4U" id="7IW-i0-wNY"/>
+                        <outlet property="denyFriendRequestButton" destination="I5m-TP-MMI" id="13M-Cl-IZx"/>
                         <outlet property="headerView" destination="fP7-jE-JTb" id="45t-kU-gsa"/>
-                        <outlet property="name" destination="20c-fx-LN6" id="Sff-QU-AgT"/>
-                        <outlet property="profilePic" destination="fwG-a1-qOv" id="I7I-4P-CGe"/>
+                        <outlet property="nameLabel" destination="20c-fx-LN6" id="kNG-On-YVJ"/>
+                        <outlet property="profilePhotoView" destination="fwG-a1-qOv" id="xlQ-4x-fpD"/>
                         <outlet property="tableView" destination="QT0-Ff-i1W" id="deB-h3-ukj"/>
-                        <outlet property="username" destination="eec-0E-mJj" id="fwq-Om-R8r"/>
+                        <outlet property="usernameLabel" destination="eec-0E-mJj" id="W3K-hr-b6W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7lx-Ua-uxK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2854,7 +2871,7 @@
                                     <segue destination="5nz-Sx-LZu" kind="show" identifier="segueFromFirstToSecondSignUp" id="fVO-C2-xmL"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4LZ-xO-unm">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4LZ-xO-unm">
                                 <rect key="frame" x="72" y="192" width="230" height="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="20"/>
@@ -2872,7 +2889,7 @@
                                     <constraint firstAttribute="height" constant="3" id="Mmf-BK-g3r"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CU3-eH-XIH">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CU3-eH-XIH">
                                 <rect key="frame" x="72" y="283" width="230" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="iZr-wI-Zr1"/>
@@ -2914,8 +2931,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="emailField" destination="CU3-eH-XIH" id="v1h-Yt-mCJ"/>
-                        <outlet property="nameField" destination="4LZ-xO-unm" id="SLP-V2-2lg"/>
+                        <outlet property="emailField" destination="4LZ-xO-unm" id="Wk8-mq-YFl"/>
+                        <outlet property="passwordField" destination="CU3-eH-XIH" id="cfR-to-k6z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z4G-8i-aeH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2962,14 +2979,14 @@
                                     <constraint firstAttribute="height" constant="3" id="J5a-Hj-tju"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s3F-YA-NW2">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Full Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s3F-YA-NW2">
                                 <rect key="frame" x="72" y="297" width="230" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="HWu-JG-zgu"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
                                         <color key="value" red="0.66121901849999998" green="0.6677657414" blue="0.6677657414" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3020,7 +3037,7 @@
                     <navigationItem key="navigationItem" id="cMZ-8C-YtY"/>
                     <connections>
                         <outlet property="addProfilePhotoButton" destination="omY-iC-vla" id="VLe-VF-4cF"/>
-                        <outlet property="passwordField" destination="s3F-YA-NW2" id="tnp-c5-ajt"/>
+                        <outlet property="fullNameField" destination="s3F-YA-NW2" id="T5p-BC-wjc"/>
                         <outlet property="usernameField" destination="euL-qD-OKE" id="IPJ-hP-Mwg"/>
                         <segue destination="S3h-JQ-9pu" kind="show" identifier="segueFromSecondSignUpToConnectContacts" id="XBq-CG-Ahq"/>
                     </connections>
@@ -3744,6 +3761,7 @@
         <image name="Add Friend New" width="111" height="56"/>
         <image name="Add Profile Picture New" width="106" height="106"/>
         <image name="AddBttn" width="21" height="21"/>
+        <image name="Cancel Button" width="140" height="51"/>
         <image name="Cancel Button New" width="152" height="57"/>
         <image name="Create Button New" width="152" height="57"/>
         <image name="Crop Icon" width="26" height="26"/>

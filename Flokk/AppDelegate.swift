@@ -14,6 +14,7 @@ var mainUser: User!
 var database: Database!
 var storage: Storage!
 var groups = [Group]() // Should i do groups like this so they only need to be loaded once?
+var storedUsers = [String : User]() // Dict of all of the loaded users, should probably clean up from time to time, has to have profile photo & handle at the least
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -57,4 +58,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         
     }
+    
 }

@@ -73,6 +73,12 @@ class SignInViewController: UIViewController {
                                         mainUser = User(handle: handle, fullName: fullName, groupHandles: groupHandles)
                                     }
                                     
+                                    // Attemp to load in the friends
+                                    if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
+                                        mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
+                                    }
+                                    
+                                    // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
                                     self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
                                 })
                                 
@@ -87,10 +93,16 @@ class SignInViewController: UIViewController {
                                         // Load in the user
                                         mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                                     } else { // If there was an error
-                                        // Load in the user with the baseline criteria
+                                        // Load in the user with the minimum criteria
                                         mainUser = User(handle: handle, fullName: fullName)
                                     }
                                     
+                                    // Attemp to load in the friends
+                                    if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
+                                        mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
+                                    }
+                                    
+                                    // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
                                     self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
                                 })
                             }

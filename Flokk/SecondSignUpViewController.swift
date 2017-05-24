@@ -12,14 +12,14 @@ import FirebaseAuth
 
 class SecondSignUpViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var usernameField: UITextField! // The handle
-    @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var fullNameField: UITextField!
     @IBOutlet weak var addProfilePhotoButton: UIButton! // Rename this
     
     private let imagePicker = UIImagePickerController()
     
     // Data passed in from the previous view
-    var fullName: String!
     var email: String!
+    var password: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,20 +46,45 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
     @IBAction func signUpPressed(_ sender: Any) {
         // Make sure all of the fields are filled in correctly
         
+        let handle = usernameField.text!
+        let fullName = fullNameField.text!
+        let profilePhoto = addProfilePhotoButton.imageView?.image!
+        
         // Create this user, these calls aren't asynchronous so no worries using it as a function - I think
-        database.createNewUser(email: email, password: passwordField.text!, handle: usernameField.text!, fullName: fullName, profilePhoto: (addProfilePhotoButton.imageView?.image)!)
+        //database.createNewUser(email: email, password: passwordField.text!, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
         
-        // Upload this user to the database
-        let userRef = database.ref.child("users").child(usernameField.text!)
-        userRef.child("fullName").setValue(fullName)
-        userRef.child("email").setValue(email)
-        
-        // After creating the user, load it into the mainUser directly,
-        // instead of uploading it then downloading it again(b/c thats just stupid)
-        mainUser = User(handle: usernameField.text!, fullName: fullName, profilePhoto: addProfilePhotoButton.imageView?.image)
-        
-        // Segue to the next view - doesn't really need to be segued programmaticaly though
-        self.performSegue(withIdentifier: "segueFromSecondSignUpToConnectContacts", sender: self)
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+            if error == nil { // If there wasn't an error
+                if let user = user { // Make sure we authenticate this new user without error - might be redundant
+                    database.ref.child("uids").child(user.uid).setValue(handle) // Connect this user's UID with their handle, for logging in
+                    
+                    // While this(below) doesnt need to be synchronous necessarily, if there is an error in the creation,
+                    // I dont want the rest of the user to be added to the database
+                    
+                    // Write this new user's data to the database
+                    let userDataRef = database.ref.child("users").child(handle)
+                    
+                    userDataRef.child("fullName").setValue(fullName)
+                    userDataRef.child("email").setValue(self.email)
+                    
+                    // Attempt to upload this user's profilePhoto to the database
+                    storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg").put(profilePhoto!.convertJpegToData(), metadata: nil) { (metadata, error) in
+                        if error != nil { // If there was an error
+                            print(error!)
+                        }
+                    }
+                    
+                    // After creating the user, load it into the mainUser directly,
+                    // instead of uploading it then downloading it again(b/c thats just stupid)
+                    mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                    
+                    // Segue to the next view, placed in the completion block so we don't segue when there was an error
+                    self.performSegue(withIdentifier: "segueFromSecondSignUpToConnectContacts", sender: self)
+                }
+            } else {
+                print(error!)
+            }
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

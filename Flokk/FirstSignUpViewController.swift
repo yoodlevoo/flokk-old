@@ -9,16 +9,16 @@
 import UIKit
 
 class FirstSignUpViewController: UIViewController {
-    @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
     
     let transitionRight = SlideRightAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameField.becomeFirstResponder()
+        self.emailField.becomeFirstResponder()
         
-        self.nameField.delegate = self
+        self.passwordField.delegate = self
         self.emailField.delegate = self
     }
     
@@ -45,7 +45,7 @@ class FirstSignUpViewController: UIViewController {
             if let secondSignUpView = segue.destination as? SecondSignUpViewController {
                 // Pass this sign up's data to the next
                 secondSignUpView.email = emailField.text!
-                secondSignUpView.fullName = nameField.text!
+                secondSignUpView.password = passwordField.text!
             }
         }
     }

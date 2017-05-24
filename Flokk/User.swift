@@ -13,23 +13,20 @@ import UIKit
 // There will be a user clas created for the main user(the one that is logged in and using the local app),
 //  as well as each user the main user interacts with.
 class User: Hashable { // Hashable so it can be used as a key in a dictionary(for comments)
-    //var userFIR // The user variable retrieved from Firebase
     var handle: String // A completely unique identifier(ie. @gannonprudhomme)
-    //var email: String
     var fullName: String
     var profilePhoto: UIImage
     
     var groups = [Group]() // The groups this user is in
     var groupHandles = [String]() // Passed in from SignIn - for the mainUser
     
-    var mainUser: Bool! // Is it the main/local user - not sure if I want this or not.
-    
-    // Might not need to be loaded immediately
-    var friends = [User]() // Array of all friends this user has
+    var friends = [User]() // Array of all friends this user has that have already been loaded
     var friendHandles = [String]() // Array of the handles of friends this user has, don't need all of the user's data the entire time
     
-    var openFriendRequests = [User]() // Array of users that requested to be this user's friend
-    var outgoingFriendRequests = [User]() // Array of users this user requested to be friends wit
+    var incomingFriendRequests = [String]() // Array of user handles that requested to be this user's friend
+    var outgoingFriendRequests = [String]() // Array of user handles this user requested to be friends with
+    
+    var notifications = [Notification]() // The user's notifications
     
     init(handle: String, fullName: String) {
         self.handle = handle
@@ -37,7 +34,6 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.profilePhoto = UIImage(named: "AddProfilePic")! //temporary
         
         loadPicture()
-        // loadFriends() // dont need to load this immediately
     }
     
     init(handle: String, fullName: String, groupHandles: [String]) {

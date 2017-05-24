@@ -18,11 +18,16 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        // Listen for any changes in the user's notification tree
+        
     }
     
     // When this view is being transitioned to - check for Notifications?
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.notifications = mainUser.notifications
         
         // Check if there is a group already selected
         let selectedIndex = self.tableView.indexPathForSelectedRow

@@ -79,7 +79,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
     // When the user tries to create the group
     @IBAction func createButtonPressed(_ sender: Any) {
         let groupName = groupNameField.text!
-        profilePicFromCrop = UIImage(named: "BasketballMob")
+        //profilePicFromCrop = UIImage(named: "BasketballMob")
         
         // Check if all of the fields are filled out correctly first
         

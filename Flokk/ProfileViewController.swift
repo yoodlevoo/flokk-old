@@ -9,47 +9,54 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    @IBOutlet weak var profilePic: UIImageView!
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var username: UILabel!
-    @IBOutlet weak var groupNumber: UILabel!
+    @IBOutlet weak var profilePhotoView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
+    //@IBOutlet weak var groupNumberLabel: UILabel!
     @IBOutlet weak var addFriendButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var denyFriendRequestButton: UIButton!
+    @IBOutlet weak var acceptFriendRequestButton: UIButton!
     
     @IBOutlet weak var headerView: UIView!
     
     var user: User! // The user this profile is showing
     
-    var oldContentOffset = CGPoint.zero
-    var headerConstraintRange: Range<CGFloat>!
-    
-    var headerViewCriteria = CGFloat(0) // Doesn't actually affect the header view, but used for the scroll view calculations
-    
-    var requestedFriend: Bool = false // Has the main user requested to be this user's friend
+    var requestSent: Bool = false // Has the main user requested to be this user's friend
+    var requestReceived: Bool = false // Has this user requested to be friends with the main user
     var alreadyFriends: Bool = false // Is the main user already friends with this user
+    
+    fileprivate var oldContentOffset = CGPoint.zero
+    fileprivate var headerConstraintRange: Range<CGFloat>!
+    fileprivate var headerViewCriteria = CGFloat(0) // Doesn't actually affect the header view, but used for the scroll view calculations
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set this profile's data from the according User
-        
-        name.text = user.fullName
-        username.text = "@\(user.handle)"
+        self.nameLabel.text = user.fullName
+        self.usernameLabel.text = "@\(user.handle)"
         
         // Set the profile pic and make it crop to an image
-        profilePic.image = user.profilePhoto
-        profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
-        profilePic.clipsToBounds = true
+        self.profilePhotoView.image = user.profilePhoto
+        self.profilePhotoView.layer.cornerRadius = self.profilePhotoView.frame.size.width / 2
+        self.profilePhotoView.clipsToBounds = true
         
         // If this user is already friends with the main user
-        if mainUser.isFriendsWith(user: user) {
+        if mainUser.friendHandles.contains(self.user.handle) {
             // Then don't display the add friend button
-            addFriendButton.isHidden = true
-        }
-        
-        // Check if the main user has requested to be friends with this user
-        if mainUser.outgoingFriendRequests.contains(self.user) {
+            self.addFriendButton.isHidden = true
+            self.alreadyFriends = true
             
+        } else if mainUser.outgoingFriendRequests.contains(self.user.handle) { // Check if the main user has requested to be friends with this user
+            self.addFriendButton.setImage(UIImage(named: "Added Friend New"), for: .normal)
+            self.requestSent = true
+            
+        } else if mainUser.incomingFriendRequests.contains(self.user.handle) { // Check if this user has requested to be friends with the main user
+            self.requestReceived = true
+            self.addFriendButton.isHidden = true
+            self.acceptFriendRequestButton.isHidden = false
+            self.denyFriendRequestButton.isHidden = false
         }
         
         self.tableView.delegate = self
@@ -57,7 +64,7 @@ class ProfileViewController: UIViewController {
         
         // Create the range for when the tableView should start & stop moving
         self.headerConstraintRange = (CGFloat(self.headerView.frame.origin.y - self.headerView.frame.size.height)..<CGFloat(self.headerView.frame.origin.y))
-        self.view.bringSubview(toFront: tableView) // Make sure the table view is always shown on top of the header view
+        self.view.bringSubview(toFront: self.tableView) // Make sure the table view is always shown on top of the header view
         self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it
     }
     
@@ -79,13 +86,131 @@ class ProfileViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
+    // No need to check for the other states, this button won't appear if this user sent a request to the main User
+    // this is for sending requests to the local user
     @IBAction func addFriendButtonPressed(_ sender: Any) {
-        if !requestedFriend { // If the main user hasn't already added this friend
-            self.addFriendButton.imageView?.image = UIImage(named: "Add Friend Button New") // Change the buttons image to show that its already been pressed
+        if !self.requestSent { // If the main user hasn't already added this friend
+            //self.addFriendButton.imageView?.image = UIImage(named: "Add Friend Button New") // Change the buttons image to show that its already been pressed
             
-            // Send a friend request to this user
-            mainUser.sendFriendRequestTo(self.user)
+            // Notify the other user the mainUser requested to be their friend
+            database.ref.child("users").child(self.user.handle).child("incomingrequests").child(mainUser.handle).setValue(true)
+            
+            // Tell the database that the main user has an outgoing friend request to this (self.)user
+            database.ref.child("users").child(mainUser.handle).child("outgoingrequests").child(self.user.handle).setValue(true)
+            
+            // This should probably be a server-side function, but we'll do it here
+            let key = database.ref.child("notifications").child(self.user.handle).childByAutoId().key
+            let notificationRef = database.ref.child("notifications").child(self.user.handle).child("\(key)")
+            
+            notificationRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
+            notificationRef.child("type").setValue(NotificationType.FRIEND_REQUESTED.rawValue)
+            notificationRef.child("sender").setValue(mainUser.handle)
+            
+            // Update the button
+            self.addFriendButton.setImage(UIImage(named: "Added Friend New"), for: .normal)
+            self.requestSent = true
+            
+        } else { // If the main user requested to be this user's friend, "undo" the request
+            // Remove the incoming request for this user
+            database.ref.child("users").child(self.user.handle).child("incomingrequests").child(mainUser.handle).removeValue() { error in
+            }
+            
+            // Remove the outgoing request for the main user
+            database.ref.child("users").child(mainUser.handle).child("outgoingrequests").child(self.user.handle).removeValue() { error in
+            }
+            
+            // Delete the notification for the user
+            let notificationRef = database.ref.child("notifications").child(self.user.handle)
+            notificationRef.queryOrdered(byChild: "sender").queryEqual(toValue: mainUser.handle).observeSingleEvent(of: .value, with: { (snapshot) in
+                if let values = snapshot.value as? NSDictionary {
+                    for (key, value) in values {
+                        if let dict = value as? [String: Any] {
+                            if dict["type"] as! Int == NotificationType.FRIEND_REQUESTED.rawValue {
+                                notificationRef.child(key as! String).removeValue() // Delete this notification
+                            }
+                        }
+                    }
+                }
+            })
+            
+            self.addFriendButton.setImage(UIImage(named: "Add Friend New"), for: .normal)
+            self.requestSent = false
         }
+    }
+    
+    // This button will only be shown if the local(self.) user has requested to be friends with the main User
+    @IBAction func acceptFriendRequestPressed(_ sender: Any) {
+        // Remove the outgoing request for this user
+        database.ref.child("users").child(self.user.handle).child("outgoingrequests").child(mainUser.handle).removeValue() { error in
+        }
+        
+        // Remove the incoming request for the main user
+        database.ref.child("users").child(mainUser.handle).child("incomingrequests").child(self.user.handle).removeValue() { error in
+        }
+        
+        // Remove the notification from local memory - mainUser.notifications
+        
+        // Remove the corresponding notification from the database
+        let notificationRefMainUser = database.ref.child("notifications").child(mainUser.handle)
+        notificationRefMainUser.queryOrdered(byChild: "sender").queryEqual(toValue: mainUser.handle).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                for (key, value) in values {
+                    if let dict = value as? [String: Any] {
+                        if dict["type"] as! Int == NotificationType.FRIEND_REQUESTED.rawValue {
+                            notificationRef.child(key as! String).removeValue() // Delete this notification
+                        }
+                    }
+                }
+            }
+        })
+
+        // Tell the database these users are friends
+        database.ref.child("users").child(self.user.handle).child("friends").child(mainUser.handle).setValue(true)
+        database.ref.child("users").child(mainUser.handle).child("friends").child(self.user.handle).setValue(true)
+        
+        // Send a notification to this user that the mainUser accepted their friend request
+        let notificationRefLocalUser = database.ref.child("notifcations").child(self.user.handle)
+        let key = notificationRef.childByAutoID() // Unique ID for this notification
+        notificationRefLocalUser.child(key).child("type").setValue(NotificationType.FRIEND_REQUEST_ACCEPTED.rawValue)
+        notificationRefLocalUser.child(key).child("sender").setValue(mainUser.handle)
+        notificationRefLocalUser.child(key).child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
+        
+        // Set these users as friends locally
+        //mainUser.friends.append(self.user)
+        mainUser.friendHandles.append(self.user.handle)
+        
+        // Update the local booleans
+        self.requestReceived = false
+        self.alreadyFriends = true
+        self.acceptFriendRequestButton.isHidden = true
+        self.denyFriendRequestButton.isHidden = true
+    }
+    
+    // This button will only be shown if the local(self.) user has requested to be friends with the main User
+    @IBAction func denyFriendRequestPressed(_ sender: Any) {
+        // Remove the outgoing request for this user
+        database.ref.child("users").child(self.user.handle).child("outgoingrequests").child(mainUser.handle).removeValue() { error in
+        }
+        
+        // Remove the outgoing request for the main user
+        database.ref.child("users").child(mainUser.handle).child("incomingrequests").child(self.user.handle).removeValue() { error in
+        }
+        
+        // Remove the notification from local memory - mainUser.notifications
+        
+        // Remove the corresponding notification from the database
+        let notificationRef = database.ref.child("notifications").child(self.user.handle)
+        notificationRef.queryOrdered(byChild: "sender").queryEqual(toValue: mainUser.handle).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                for (key, value) in values {
+                    if let dict = value as? [String: Any] {
+                        if dict["type"] as! Int == NotificationType.FRIEND_REQUESTED.rawValue {
+                            notificationRef.child(key as! String).removeValue() // Delete this notification
+                        }
+                    }
+                }
+            }
+        })
     }
     
     @IBAction func profileSettings(_ sender: AnyObject) {
