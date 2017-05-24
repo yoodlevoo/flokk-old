@@ -152,7 +152,7 @@ class ProfileViewController: UIViewController {
         
         // Remove the corresponding notification from the database
         let notificationRefMainUser = database.ref.child("notifications").child(mainUser.handle)
-        notificationRefMainUser.queryOrdered(byChild: "sender").queryEqual(toValue: mainUser.handle).observeSingleEvent(of: .value, with: { (snapshot) in
+        notificationRefMainUser.queryOrdered(byChild: "sender").queryEqual(toValue: self.user.handle).observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
                 for (key, value) in values {
                     if let dict = value as? [String: Any] {
