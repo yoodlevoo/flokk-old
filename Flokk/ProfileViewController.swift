@@ -157,7 +157,7 @@ class ProfileViewController: UIViewController {
                 for (key, value) in values {
                     if let dict = value as? [String: Any] {
                         if dict["type"] as! Int == NotificationType.FRIEND_REQUESTED.rawValue {
-                            notificationRef.child(key as! String).removeValue() // Delete this notification
+                            notificationRefMainUser.child(key as! String).removeValue() // Delete this notification
                         }
                     }
                 }
@@ -170,10 +170,10 @@ class ProfileViewController: UIViewController {
         
         // Send a notification to this user that the mainUser accepted their friend request
         let notificationRefLocalUser = database.ref.child("notifcations").child(self.user.handle)
-        let key = notificationRef.childByAutoID() // Unique ID for this notification
-        notificationRefLocalUser.child(key).child("type").setValue(NotificationType.FRIEND_REQUEST_ACCEPTED.rawValue)
-        notificationRefLocalUser.child(key).child("sender").setValue(mainUser.handle)
-        notificationRefLocalUser.child(key).child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
+        let key = notificationRefLocalUser.childByAutoId().key // Unique ID for this notification
+        notificationRefLocalUser.child("\(key)").child("type").setValue(NotificationType.FRIEND_REQUEST_ACCEPTED.rawValue)
+        notificationRefLocalUser.child("\(key)").child("sender").setValue(mainUser.handle)
+        notificationRefLocalUser.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         
         // Set these users as friends locally
         //mainUser.friends.append(self.user)
