@@ -10,6 +10,7 @@ import UIKit
 
 class PhotoUploadPageViewController: UIPageViewController, UIPageViewControllerDataSource {
     var groupToPass: Group!
+    var groupIndexToPass: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class PhotoUploadPageViewController: UIPageViewController, UIPageViewControllerD
             
             if let photoSelect = firstViewController as? PhotoSelectViewController {
                 photoSelect.forGroup = groupToPass
+                photoSelect.groupIndex = groupIndexToPass
             }
         }
     }

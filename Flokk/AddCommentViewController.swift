@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Jared Heyen on 2/11/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -14,8 +14,11 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var textField: UITextField!
     @IBOutlet var keyboardHeightLayoutConstraint : NSLayoutConstraint?
     
-    var post: Post!
-
+    var post: Post! // A copy of the post
+    var postIndex: Int! // The index of the post in the post array
+    var groupIndex: Int! // The index of the group in the global groups array
+    //var forGroup: Group
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,13 +30,12 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
         
         postView.image = post.image
         
-        //tells the notification to
+        // Tells the notification to
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,23 +58,23 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return post.comments.count
     }
-    
-    /*
-    //what should we do when a comment is selected?
-    //have a way to reply to it or a way to go to the user's profile?
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-     */
 
-    //so the text field doesnt try to line break when we press enter
+    // So the text field doesnt try to line break when we press enter
+    // Upload this comment
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        
+        // Upload the comment
+        let commentRef = database.ref.child("groups").child(groups[groupIndex].groupName).child("comments") // Database reference
+        commentRef.child("poster").setValue(mainUser.handle) // The handle of the commenter, always going to be the mainUser
+        commentRef.child("content").setValue(textField.text!) // The actual content of the comment
+        commentRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
+        
         return true
     }
     
-    //whenever the keyboard is activated, this notifies the textField to shift upward with the keyboard
-    //i got this entire code somewhere from satack overflow
+    // Whenever the keyboard is activated, this notifies the textField to shift upward with the keyboard
+    // I got this entire code somewhere from stack overflow
     func keyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
@@ -80,26 +82,24 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
             let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
             let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
             let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+            
             if (endFrame?.origin.y)! >= UIScreen.main.bounds.size.height {
                 self.keyboardHeightLayoutConstraint?.constant = 0.0
             } else {
                 self.keyboardHeightLayoutConstraint?.constant = endFrame?.size.height ?? 0.0
             }
-            UIView.animate(withDuration: duration,
-                           delay: TimeInterval(0),
-                           options: animationCurve,
-                           animations: { self.view.layoutIfNeeded() },
-                           completion: nil)
+            
+            UIView.animate(withDuration: duration, delay: TimeInterval(0), options: animationCurve, animations: { self.view.layoutIfNeeded() }, completion: nil)
         }
     }
     
     @IBAction func posterProfile(_ sender: Any) {
-    
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let feedNav = segue.destination as? FeedNavigationViewController {
-            feedNav.groupToPass = post.postedGroup
+            //feedNav.groupToPass = post.postedGroup
         }
     }
 }

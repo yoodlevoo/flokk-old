@@ -3,13 +3,15 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 3/1/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
 class FileUtils {
+    
+    /*
     //general load image
     //currently unused
     static func loadImage(fileName: String) -> UIImage {
@@ -237,6 +239,8 @@ class FileUtils {
         
         return false
     }
+ 
+     */
     
     static func deleteAllFiles() {
         
@@ -260,6 +264,16 @@ class FileUtils {
         } catch let error as NSError {
             print(error.localizedDescription)
         }
+    }
+}
+
+extension UIImage {
+    func convertJpegToData() -> Data {
+        return UIImageJPEGRepresentation(self, 1)!
+    }
+    
+    func convertPNGToData() -> Data {
+        return UIImagePNGRepresentation(self)!
     }
 }
 

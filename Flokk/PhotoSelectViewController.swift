@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 3/1/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -20,8 +20,9 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     var thumbnailSize: CGSize!
     
     var forGroup: Group! // Just passing this around so we can return it to the feed
+    var groupIndex: Int! // The index of this group in the global groups array
     
-    static let initialNumPosts = 100 // Load more when scrolling down
+    static let initialNumPosts = 5 // Load more when scrolling down
     static let morePostsToLoad = 8 // Amount of posts to load each time when we need to on scrolling down
     var loadedPostsCount = initialNumPosts // The total amount of posts loaded
     
@@ -30,9 +31,9 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.delegate = self
-        collectionView?.dataSource = self
-        collectionView!.contentInset = UIEdgeInsets(top: 23, left: 5, bottom: 10, right: 5)
+        self.collectionView?.delegate = self
+        self.collectionView?.dataSource = self
+        self.collectionView!.contentInset = UIEdgeInsets(top: 23, left: 5, bottom: 10, right: 5)
         
         if let layout = collectionView?.collectionViewLayout as? PhotoSelectLayout {
             layout.delegate = self
@@ -51,7 +52,6 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -68,7 +68,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! PhotoSelectCell
         
-        cell.imageView.image = images[indexPath.item] as! UIImage
+        cell.imageView.image = images[indexPath.item] as? UIImage
         
         //Attempt to change this imageView's bounds so the cell shows the full image
         cell.imageView.contentMode = .scaleAspectFit
@@ -153,31 +153,24 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromPhotoSelectToConfirmImage" {
-            if let confirmUploadNav = segue.destination as? ConfirmUploadNavigationViewController {
+            if let confirmUploadView = segue.destination as? ConfirmUploadViewController {
                 if let tag = (sender as? PhotoSelectCell)?.tag {
-                    print("selected photo at index \(tag)")
+                    confirmUploadView.groupIndex = self.groupIndex
                     
                     let screenWidth = UIScreen.main.bounds.width
                     let screenHeight = UIScreen.main.bounds.height
                     
+                    confirmUploadView.forGroup = self.forGroup
+                    
                     let asset = fetchResult.object(at: tag)
                     imageManager.requestImage(for: asset, targetSize: CGSize(width: screenWidth * 2, height: screenHeight * 2), contentMode: .default, options: nil, resultHandler: { image, _ in
                         
-                        if confirmUploadNav.imageToPass != nil {
-                            if let confirmUpload = confirmUploadNav.viewControllers[0] as? ConfirmUploadViewController {
-                                if confirmUpload.imageView != nil {
-                                    confirmUpload.imageView.image = image
-                                }
-                                
-                                confirmUpload.image = image
-                            }
-                            
+                        if confirmUploadView.imageView != nil {
+                            confirmUploadView.imageView.image = image
                         }
                         
-                        confirmUploadNav.imageToPass = image
+                        confirmUploadView.image = image
                     })
-                    
-                    confirmUploadNav.groupToPass = forGroup
                 }
             }
         }

@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import AHKNavigationController
 
 //basically only used to change the navigation bar's color
-class FeedNavigationViewController: AHKNavigationController {
+class FeedNavigationViewController: UINavigationController {
     weak var groupToPass: Group! //weak b/c I don't want this object to be retained
     
     var isPushingViewController = false

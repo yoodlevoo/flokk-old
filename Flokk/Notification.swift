@@ -3,25 +3,27 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 3/2/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import Foundation
+import UIKit
 
 // Enum for the different kinds of Notifications
-enum NotificationType {
-    case NEW_POST
-    case FRIEND_REQUESTED // Someone requested to be your friend
-    case FRIEND_REQUEST_ACCEPTED // Somone accepted your friend request
-    case GROUP_INVITE
-    case NEW_COMMENT // Should the user be notified for a new comment if its not on their post?
+enum NotificationType: Int {
+    case NEW_POST = 0,
+    FRIEND_REQUESTED, // Someone requested to be your friend
+    FRIEND_REQUEST_ACCEPTED, // Somone accepted your friend request
+    GROUP_INVITE, //
+    NEW_COMMENT // Should the user be notified for a new comment if its not on their post?
 }
 
 let GROUP_INVITE_DESCRIPTION = ""
 
 class Notification {
     var type: NotificationType
-    var sender: User // Whoever caused this notification
+    var sender: User! // Whoever caused this notification
+    var senderHandle: String!
     var receiver: User! // Receiver is always going to be this(main) user
     var group: Group! // Optional, not all notifications are going to involve a group
     var post: Post! // Optional, not all notifications are going to involve a post
@@ -33,21 +35,45 @@ class Notification {
     // MARK: Different initializers for the different kinds of Notifications
     
     // Friend Request or Friend Accepted Your Friend Request
-    init(type: NotificationType, sender: User) {
+    init(type: NotificationType, senderHandle: String) {
         self.type = type
-        self.sender = sender
+        self.senderHandle = senderHandle
         Notification.textSize = 20
         
-        // Bold the sender's name
-        let formattedString = NSMutableAttributedString()
-        
-        if type == NotificationType.FRIEND_REQUESTED { // If someone requested to be your friend
-            formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("added you as a friend.")
-        } else if type == NotificationType.FRIEND_REQUEST_ACCEPTED { // If someone accepted your friend requests
-            formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("accepted your friend request.")
+        // Load the user
+        if !storedUsers.keys.contains(senderHandle) { // If the user hasn't been loaded yet
+            // Careful doing this, it's going to load all of the child data, not just the fullName
+            database.ref.child("users").child(senderHandle).observeSingleEvent(of: .value, with: { (snapshot) in
+                if let values = snapshot.value as? [String : Any] {
+                    let fullName = values["fullName"] as! String
+                    
+                    // Bold the sender's name
+                    let formattedString = NSMutableAttributedString()
+                    if type == NotificationType.FRIEND_REQUESTED { // If someone requested to be your friend
+                        formattedString.bold("\(fullName) ", Notification.textSize).normal("added you as a friend.")
+                    } else if type == NotificationType.FRIEND_REQUEST_ACCEPTED { // If someone accepted your friend requests
+                        formattedString.bold("\(fullName) ", Notification.textSize).normal("accepted your friend request.")
+                    }
+                    
+                    self.description = formattedString
+                    
+                    // Download the profile Photo
+                    let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
+                    profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                        if error == nil { // If there wasn't an error
+                            let profilePhoto = UIImage(data: data!)
+                            
+                            self.sender = User(handle: senderHandle, fullName: fullName, profilePhoto: profilePhoto!)
+                            storedUsers[senderHandle] = self.sender // Add this value to the stored user dict
+                        } else { // If there was an error
+                            print(error!)
+                        }
+                    })
+                }
+            })
+        } else { // If the user has been loaded
+            self.sender = storedUsers[senderHandle] // Get it from all of the stored users
         }
-        
-        self.description = formattedString
     }
     
     // Group Invite Notification

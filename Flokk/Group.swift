@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 1/27/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import Foundation
@@ -11,17 +11,23 @@ import UIKit
 
 //how should i determine what this groups unique handle is?
 class Group {
-    var groupCreator: User //whoever created the group, has all the "admin" rights on it - this should never be nil
+    var groupCreator: User! //whoever created the group, has all the "admin" rights on it - this should never be nil
+    private var groupCreatorHandle: String! // Loaded in in the groups view, not needed immediately so no need to download extra data
     
+    var groupIndex: Int! // The index of this group in the global groups array
     var groupName: String
     //var internalGroupName: String! //this could still be the same as the groupName sometimes
     var groupIcon: UIImage
-    var totalPostsCount: Int
+    var totalPostsCount: Int!
     
-    var participants = [User]() //the users that are in this group
-    //var posts = [Post]()
+    var members = [User]() //the users that are in this group
+    var memberHandles = [String]() // The user handles that are in this group, not fully loaded until Group Settings b/c useless otherwise?
     
-    var numNewPosts: Int //the amount of new posts the mainUser has missed from this group
+    var posts = [Post]() // The posts that have been loaded in, from newest to oldest
+    //var loadedPosts = [Post]() // The posts that have been loaded so far
+    var postsData = [String : [String: Any?]]() // loaded in in the Groups view, then used by the feedView to quickly download the post images
+    
+    var numNewPosts: Int! //the amount of new posts the mainUser has missed from this group
     
     private var postJSON: JSON! //json used in convertToJSON, set by FeedViewController in prepareForSegue
     
@@ -37,7 +43,7 @@ class Group {
     init(groupName: String, image: UIImage, users: [User], creator: User) {
         self.groupName = groupName
         self.groupIcon = image
-        self.participants = users
+        self.members = users
         self.groupCreator = creator
         self.numNewPosts = 0
         self.totalPostsCount = 0
@@ -45,55 +51,23 @@ class Group {
         //self.internalGroupName = Group.createFriendlyGroupName(name: groupName)
     }
     
+    init(groupName: String, groupIcon: UIImage, memberHandles: [String], postsData: [String : [String: Any?]], creatorHandle: String) {
+        self.groupName = groupName
+        self.groupIcon = groupIcon
+        self.memberHandles = memberHandles
+        self.postsData = postsData
+        self.groupCreatorHandle = creatorHandle
+        
+    }
+    
     //Load all of the most recent Posts from this group - uses SwiftyJSONb
     func loadPosts(numPostsToLoad: Int) -> [Post] {
         var posts = [Post]()
         
-        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
-        
-        let groupURL = documentsURL?.appendingPathComponent(groupName)
-        let jsonURL = groupURL?.appendingPathComponent(groupName + ".json")
-        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
-        
-        do {
-            let data = try Data(contentsOf: jsonFile, options: .mappedIfSafe)
-            
-            let json = JSON(data: data)
-            
-            var index: Int = 0
-            for (_, post) in json["posts"] {
-                if index < FeedViewController.initialPostCount - 1 {
-                    let userHandle = post["handle"].string
-                    let imageName = post["imageName"].string
-                
-                    let image = FileUtils.loadPostImage(group: self, fileName: imageName!)
-                
-                    posts.append(Post(poster: findUserWithHandle(handle: userHandle!), image: image, postedGroup: self, index: index))
-                    index += 1
-                    
-                    print("image name \(imageName)")
-                } else {
-                    break
-                }
-            }
-        } catch let error as NSError {
-            print("Error: \(error)")
-        }
-        
         return posts
     }
     
-    //find the user with the specified handle
-    //in the future use a more efficient search
-    func findUserWithHandle(handle: String) -> User {
-        for user in participants {
-            if user.handle == handle {
-                return user
-            }
-        }
-        
-        return User(handle: "nil", fullName: "nil")
-    }
+    /*
     
     //create an internal group name from the original group name
     //which is fixed so there are no characters that will cause errors(eg. spaces)
@@ -130,58 +104,13 @@ class Group {
          return creatorsHandle + groupName
     }
     
-    func convertToJSON() -> JSON {
-        var users = [String]()
-        
-        for user in participants {
-            users.append(user.handle)
-        }
-        
-        var json: JSON = [
-            "groupName": groupName,
-            "groupIcon": groupName + "Photo",
-            "creator": mainUser.handle,
-            "users": users,
-            "postsCount": totalPostsCount,
-            "posts": [] //fill this in later
-        ]
-        
-        //for post in posts {
-            //json["posts"].appendIfArray(json: post.convertToJSON())
-        //}
-        
-        return json
-    }
-    
-    func convertToJSONWithNewPost(post: Post) -> JSON{
-        var users = [String]()
-        
-        for user in participants {
-            users.append(user.handle)
-        }
-        
-        var postToArray: JSON = [post.convertToJSON().object]
-        
-        var postsData = JSON(postJSON.arrayObject! + postToArray.arrayObject!)
-        totalPostsCount += 1
-        
-        var json: JSON = [
-            "groupName": groupName,
-            "groupIcon": groupName + "Photo",
-            "creator": mainUser.handle,
-            "users": users,
-            "postsCount": totalPostsCount, //this is increased in the 
-            "posts": postsData.arrayObject! //fill this in later
-        ]
-        
-        return json
-    }
-    
     //ONLY USE THIS IN FEED VIEW prepareForSegue to PhotoSelectView
     //this is the only work around i can se
     func setPostJSON(json: JSON) {
         postJSON = json
     }
+ 
+    */
     
     //for sorting the posts in the GroupView's priority view
     //so the posts with the most recent/newest posts are at the top

@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 2/3/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import Foundation
@@ -18,10 +18,15 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var profilePhoto: UIImage
     
     var groups = [Group]() // The groups this user is in
+    var groupHandles = [String]() // Passed in from SignIn - for the mainUser
     
-    var mainUser: Bool! // Is it the main/local user - not sure if I want this or not.
-    var friends = [User]() // Array of all friends this user has
-    var openFriendRequests = [User]() // Array of users that requested to be this user's friend
+    var friends = [User]() // Array of all friends this user has that have already been loaded
+    var friendHandles = [String]() // Array of the handles of friends this user has, don't need all of the user's data the entire time
+    
+    var incomingFriendRequests = [String]() // Array of user handles that requested to be this user's friend
+    var outgoingFriendRequests = [String]() // Array of user handles this user requested to be friends with
+    
+    var notifications = [Notification]() // The user's notifications
     
     init(handle: String, fullName: String) {
         self.handle = handle
@@ -29,61 +34,47 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.profilePhoto = UIImage(named: "AddProfilePic")! //temporary
         
         loadPicture()
-        loadFriends()
+    }
+    
+    init(handle: String, fullName: String, groupHandles: [String]) {
+        self.handle = handle
+        self.fullName = fullName
+        self.profilePhoto = UIImage(named: "AddProfilePic")!
         
-        // Load in this user's group from the database
-        //self.groups = ??
+        self.groupHandles = groupHandles
+    }
+    
+    init(handle: String, fullName: String, profilePhoto: UIImage) {
+        self.handle = handle
+        self.fullName = fullName
+        self.profilePhoto = profilePhoto
+    }
+    
+    init(handle: String, fullName: String, profilePhoto: UIImage, groupHandles: [String]) {
+        self.handle = handle
+        self.fullName = fullName
+        self.profilePhoto = profilePhoto
+        
+        self.groupHandles = groupHandles
     }
     
     func loadFriends() {
-        if self.handle == "gannonprudhomme" {
-            self.friends = [jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser, lucasUser]
-        }
+        
     }
     
     func isFriendsWith(user: User) -> Bool {
         return false
     }
     
-    func addNewGroup(group: Group) {
-        var json = convertToJSON()
-        json["groups"].appendIfArray(json: JSON(group.getFriendlyGroupName()))
+    // Call this function if this user(the main user) requests to be friends with another user
+    func sendFriendRequestTo(_ user: User) {
         
-        FileUtils.saveUserJSON(json: json, user: self)
-        
-        groups.append(group)
     }
     
     // Load in this user's profile photo from the database
     // For now just set it manually
     private func loadPicture() {
-        //var ret: UIImage
-        
-        if let image = UIImage(named: handle + "ProfilePhoto") {
-            self.profilePhoto = image
-        } else {
-            self.profilePhoto = UIImage(named: "AddProfilePic")!
-        }
-        
-        //return ret
     }
-    
-    func convertToJSON() -> JSON {
-        var json: JSON = [
-            "handle": handle,
-            "fullName": fullName,
-            "profilePhoto": handle + "ProfilePhoto",
-            
-            "groups": [ ]
-        ]
-        
-        for group in groups {
-            json["groups"].appendIfArray(json: JSON(group.getFriendlyGroupName()))
-        }
-        
-        return json
-    }
-    
     
     // Method needed to implement hashable
     // Used to store and match values in a dictionary
@@ -104,4 +95,12 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     public var description: String {
         return "User: handle: \(handle) full name: \(fullName)"
     }
+}
+
+// Determine the various statuses of a friend request
+// To determine how to display the add friend button
+enum FriendRequestStatus {
+    case THIS_USER_SENT
+    case THIS_USER_RECEIVED
+    case THIS_USER_DENIED
 }

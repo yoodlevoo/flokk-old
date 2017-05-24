@@ -7,22 +7,14 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
-// Universal Variables for testing
-var mainUser = User(handle: "gannonprudhomme", fullName: "Gannon Prudhomme")
-var jaredUser = User(handle: "jaredheyen", fullName: "Jared Heyen")
-var tavianUser = User(handle: "taviansims", fullName: "Tavian Sims")
-var crosbyUser = User(handle: "crosbus", fullName: "Crosby Busfield")
-var grantUser = User(handle: "granthuser", fullName: "Grant Huser")
-var ryanUser = User(handle: "ryanmac", fullName: "Ryan McClemore")
-var berginUser = User(handle: "berginelias", fullName: "Bergin Elias")
-var alexUser = User(handle: "alexshilnikov", fullName: "Alex Shilnikov")
-var chandlerUser = User(handle: "chanfranks", fullName: "Chandler Franks")
-var madiUser = User(handle: "madileal", fullName: "Madi Leal")
-var lucasUser = User(handle: "lucasarnold", fullName: "Lucas Arnold")
-
-var friendGroup = Group(groupName: "Friends", image: UIImage(named: "groupPhoto")!, users: [mainUser, jaredUser, tavianUser, crosbyUser, grantUser, ryanUser, berginUser, alexUser, chandlerUser, madiUser, lucasUser], creator: mainUser)
-var otherGroup = Group(groupName: "Other", image: UIImage(named: "group2Photo")!, users: [jaredUser, tavianUser, lucasUser, madiUser, berginUser], creator: mainUser)
+var mainUser: User!
+var database: Database!
+var storage: Storage!
+var groups = [Group]() // Should i do groups like this so they only need to be loaded once?
+var storedUsers = [String : User]() // Dict of all of the loaded users, should probably clean up from time to time, has to have profile photo & handle at the least
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,30 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Use Firebase library to configure APIs
+        database = Database()
+        storage = Storage()
         
-        // Make all the users be apart of the groups
-        crosbyUser.groups.append(friendGroup)
-        tavianUser.groups.append(friendGroup)
-        grantUser.groups.append(friendGroup)
-        ryanUser.groups.append(friendGroup)
-        berginUser.groups.append(friendGroup)
-        alexUser.groups.append(friendGroup)
-        chandlerUser.groups.append(friendGroup)
-        madiUser.groups.append(friendGroup)
-        lucasUser.groups.append(friendGroup)
+        //FIRApp.configure()
         
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.classForCoder() as! UIAppearanceContainer.Type]).setTitleTextAttributes(["attribute" : "value"], for: .normal)
+        //database.createNewUser(email: "gannonprudhomme@gmail.com", password: "gannon123", handle: "gannonprudhomme", fullName: "Gannon Prudhomme", profilePhoto: UIImage())
         
-        //passing which group is pressed from the GroupsViewController to the FeedViewController
-        //the GroupsViewController(in didSelectRow) sets the group in FeedNavigationViewController
-        //and this passes it from the nav controller to the feed controller
-        if let navigationController = window?.rootViewController as? FeedNavigationViewController {
-            if let firstVC = navigationController.viewControllers[0] as? FeedViewController {
-                firstVC.group = navigationController.groupToPass
-                
-                print("app delegate setting thing")
-            }
-        }
+        // Retrieve a registration token for this client
+        let token = FIRInstanceID.instanceID().token()
         
         return true
     }
@@ -80,5 +58,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         
     }
+    
 }
-

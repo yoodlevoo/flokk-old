@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class GroupsViewController: UIViewController {
     @IBOutlet weak var groupName: UILabel!
@@ -18,48 +19,91 @@ class GroupsViewController: UIViewController {
     
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
-    let transitionRight = SlideRightAnimator()
-    let transitionUp = SlideUpAnimator()
     let transitionDown = SlideDownAnimator()
-    let transitionRightNavigation = SlideRightNavigationAnimator()
+    let transitionUp = SlideUpAnimator()
+    
+    var handle: FIRAuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available (iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        }else {
-            tableView.addSubview(refreshControl)
+        if #available(iOS 10.0, *) {
+            self.tableView.refreshControl = refreshControl
+        } else {
+            self.tableView.addSubview(refreshControl)
         }
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
-        if defaultGroups.count == 0 {
-
-            mainUser.groups.removeAll()
-            
-            for groupHandle in findGroupHandlesNew() {
-                let groupToLoad = loadGroup(groupHandle: groupHandle)
-                
-                defaultGroups.append(groupToLoad)
-                mainUser.groups.append(groupToLoad)
+        // Attempt to load in all of the groups
+        if groups.count < mainUser.groupHandles.count { // If we dont have all of the groups loaded in
+            for groupHandle in mainUser.groupHandles {
+                let matches = groups.filter{ $0.groupName == groupHandle } // Check if we already have a group with this handle, probably very inefficient
+                if matches.count != 0 { // If we already contain a group with this handle, skip it
+                    continue
+                } else { // Otherwise, load it from the Database
+                    let groupRef = database.ref.child("groups").child(groupHandle)
+                    
+                    groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                        let values = snapshot.value as! NSDictionary
+                        
+                        // Load in all of the data for this group
+                        let creatorHandle = values["creator"] as! String // No need to add a default, will never be empty
+                        let memberHandles = values["members"] as! [String: Bool] // Again, no need to add a default, will never be empty
+                        let postsData = values["posts"] as? [String: [String: Any?]] ?? [String: [String: String]]() // In case there are no posts in this group
+                        
+                        // Download the icon for this group
+                        let iconRef = storage.ref.child("groups").child(groupHandle).child("icon/\(groupHandle).jpg")
+                        iconRef.data(withMaxSize: 1 * 1024 * 1024, completion: { data, error in
+                            if error == nil { // If there wasn't an error
+                                // Then the data is returned
+                                let groupIcon = UIImage(data: data!)
+                                
+                                // And we can finish loading the group
+                                let group = Group(groupName: groupHandle, groupIcon: groupIcon!, memberHandles: Array(memberHandles.keys), postsData: postsData, creatorHandle: creatorHandle)
+                                
+                                groups.append(group) // Add this newly loaded group into the global groups variable
+                                
+                                self.tableView.reloadData() // Reload data every time a group is loaded
+                            } else { // If there was an error
+                                print(error!)
+                                //continue // Skip this
+                            }
+                        })
+                    })
+                }
             }
         }
+    
+        self.loadUserData()
     }
     
-    // When the view is preparing to appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Attach this to any view that requires information about this user??
+        handle = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            
+        })
+        
         // If the tab bar was previously hidden(like from the feed view), unhide it
         self.tabBarController?.showTabBar()
+        self.navigationController?.showNavigationBar() // Unhide the nav bar
         
         // Check if there is a group already selected
         let selectedIndex = self.tableView.indexPathForSelectedRow
         if selectedIndex != nil { // If there is then deselect it
             self.tableView.deselectRow(at: selectedIndex!, animated: false)
         }
+        
+        self.tableView.reloadData() // Reload the data incase we added a new group??? should i do this in create group segue
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        FIRAuth.auth()?.removeStateDidChangeListener(handle!)
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,13 +117,13 @@ class GroupsViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupToFeed" {
-            if let feedNav = segue.destination as? FeedViewController {
+            if let feedView = segue.destination as? FeedViewController {
                 if let tag = (sender as? GroupTableViewCell)?.tag {
-                    weak var group = defaultGroups[tag] // I want this to be weak to prevent memory leakage
+                    weak var group = groups[tag] // I want this to be weak to prevent memory leakage
                     
-                    feedNav.group = group
-                    feedNav.transitioningDelegate = transitionRight
+                    feedView.group = group
                     self.tabBarController?.hideTabBar()
+                    self.navigationController?.title = group?.groupName
                     
                     //feedNav.passGroup()
                 }
@@ -94,93 +138,74 @@ class GroupsViewController: UIViewController {
 
 // Framework functions
 extension GroupsViewController {
-    // Load all about this user and what group(the handles) they're in
-    // Use these handles to further load the groups from there separate files
-    func findGroupHandles() -> [String] { //this will be removed later ons
-        var groupHandles = [String]()
-        
-        let path = Bundle.main.url(forResource: mainUser.handle, withExtension: "json")
-        do {
-            let data = try Data(contentsOf: path!, options: .mappedIfSafe)
-            
-            let json = JSON(data: data)
-            
-            // Iterate through all of the groups and find the internal handles of the groups
-            // So we know which ones to load
-            for (_, group) in json["groups"] {
-                groupHandles.append(group.string!)
-            }
-        }  catch let error as NSError {
-            print("Error: \(error)")
-        }
-        
-        return groupHandles
-    }
-    
-    func findGroupHandlesNew() -> [String] {
-        var groupHandles = [String]()
-        
-        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
-        
-        let jsonURL = documentsURL?.appendingPathComponent(mainUser.handle + ".json")
-        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
-        
-        do {
-            let data = try Data(contentsOf: jsonFile, options: .mappedIfSafe)
-            
-            let json = JSON(data: data)
-            
-            // Iterate through all of the groups and to find the internal handles of the groups
-            // So we know which ones to load
-            for (_, group) in json["groups"] {
-                groupHandles.append(group.string!)
-            }
-        }  catch let error as NSError {
-            print("Error: \(error)")
-        }
-        
-        return groupHandles
-    }
-    
-    // Put this in FileUtils later
     func loadGroup(groupHandle: String) -> Group {
-        // for groupHandle in handles {
-        let documentsURL = URL(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        let groupRef = database.ref.child("groups").child(groupHandle)
         
-        // 'groupHandle' should already be a "friendly" group handle
-        // b/c it is coming from the user's .json file
-        let groupURL = documentsURL?.appendingPathComponent(groupHandle)
-        let jsonURL = groupURL?.appendingPathComponent(groupHandle + ".json")
-        let jsonFile = URL(fileURLWithPath: (jsonURL?.absoluteString)!)
+        groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            
+        })
         
-        do {
-            let data = try Data(contentsOf: jsonFile, options: .mappedIfSafe)
-            
-            let json = JSON(data: data)
-            
-            let creator = json["creator"].string
-            let groupName = json["groupName"].string
-            let totalPostsCount = json["postsCount"].int
-            
-            var users = [User]()
-            for(_, subJSON) in json["users"] {
-                if let userHandle = subJSON.string {
-                    users.append(User(handle: userHandle, fullName:"filler"))
+        return Group()
+    }
+    
+    func loadUserData() {
+        // Load the user's friends whenever we can
+        database.ref.child("users").child(mainUser.handle).child("friends").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let friendHandles = values.allKeys as! [String] // The tree is ordered as "userHandle": true, the value of this doesnt matter
+                
+                // Set the friend handles for the main user
+                mainUser.friendHandles = friendHandles
+            } else { // This user has no friends
+                //mainUser.friends = [User]()
+            }
+        })
+        
+        // Load notifications too probably, just the first 10
+        database.ref.child("notifications").child(mainUser.handle).queryOrdered(byChild: "timestamp").queryLimited(toFirst: 10).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                for (_, value) in values {
+                    if let data = value as? [String : Any] {
+                        let type = NotificationType(rawValue: data["type"] as! Int)!
+                        
+                        let notification: Notification
+                        
+                        switch(type) {
+                        case NotificationType.FRIEND_REQUESTED:
+                            let senderHandle = data["sender"] as! String
+                            let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
+                            
+                            notification = Notification(type: type, senderHandle: senderHandle)
+                            
+                            // Add the notification
+                            mainUser.notifications.append(notification)
+                            break
+                        default: break
+                        }
+                    }
                 }
             }
-            
-            let groupIconPhoto = FileUtils.loadGroupIcon(groupName: groupName!)
-            
-            let group = Group(groupName: groupName!, image: groupIconPhoto, users: users, creator: User(handle: creator!, fullName: "filler"))
-            group.totalPostsCount = totalPostsCount!
-            
-            return group
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            return Group()
-        }
-        //}
+        })
+        
+        // Load all of the outgoing friend requests
+        database.ref.child("users").child(mainUser.handle).child("outgoingrequests").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let requestHandles = values.allKeys as! [String]
+                
+                mainUser.outgoingFriendRequests = requestHandles
+            }
+        })
+        
+        // Load all of the incoming friend requests
+        database.ref.child("users").child(mainUser.handle).child("incomingrequests").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let requestHandles = values.allKeys as! [String]
+                
+                mainUser.incomingFriendRequests = requestHandles
+            }
+        })
     }
+
 }
 
 // Table View Functions
@@ -188,15 +213,20 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! GroupTableViewCell
         
-        cell.groupTitleLabel?.text = defaultGroups[indexPath.row].groupName
-        cell.groupImageView?.image = defaultGroups[indexPath.row].groupIcon
+        cell.groupTitleLabel?.text = groups[indexPath.row].groupName
+        
+        // Set the group icon 
+        cell.groupImageView?.image = groups[indexPath.row].groupIcon
+        cell.groupImageView?.layer.cornerRadius = cell.groupImageView.frame.size.width / 2
+        cell.groupImageView.clipsToBounds = true
+        
         cell.tag = indexPath.row //or do i do indexPath.item
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return defaultGroups.count //this number will be loaded in later on
+        return groups.count //this number will be loaded in later on
     }
 }
 

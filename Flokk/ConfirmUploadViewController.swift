@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 3/1/17.
-//  Copyright © 2017 Heyen Enterprises. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -12,40 +12,59 @@ class ConfirmUploadViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     var image: UIImage!
     
-    var forGroup: Group!
+    var forGroup: Group! // This is just a copy of the actual group
+    var groupIndex: Int! // The index of this group in the global groups array
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad() 
 
-        imageView.image = image
-        
-        // Do any additional setup after loading the view.
+        //imageView.image = image
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func uploadPressed(_ sender: Any) {
+        let postsRef = database.ref.child("groups").child(forGroup.groupName).child("posts") // Database
+        let imageRef = storage.ref.child("groups").child(forGroup.groupName).child("posts") // Storage
+        let key = postsRef.childByAutoId().key // Generate random ID for this post
+        
+        self.image = imageView.image
+        
+        // Upload the post image to Storage
+        imageRef.child("\(key)/post.jpg").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                return
+            }
+            
+            //let downloadURL = metadata.downloadURL()
+        }
+        
+        // Upload the data about this post to the Database
+        postsRef.child("\(key)").child("poster").setValue(mainUser.handle)
+        postsRef.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
+        
+        let post = Post(poster: mainUser, image: self.imageView.image!, postID: key)
+            
+        //self.forGroup.posts.append(post) // Appending to a copy will do nothing
+        
+        // Search for this group's index
+        let index = groups.index(where: { (item) -> Bool in
+            item.groupName == forGroup.groupName
+        })
+        
+        groups[index!].posts.append(post) // Add this post to the group
+        
+        // Start storage here
+        
+        self.performSegue(withIdentifier: "unwindToFeedFromConfirmUpload", sender: self)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromConfirmedImageToFeed" {
-            if let feedNav = segue.destination as? FeedNavigationViewController {
-                // Use the imageView because it might be changed asynchronously
-                let post = Post(poster: mainUser, image: imageView.image!, postedGroup: forGroup, index: forGroup.totalPostsCount)
-                //forGroup.posts.append(post)
-                
-                post.uploadPostToFile()
-                
-                FileUtils.savePostImage(post: post)
-                
-                // We increse the totalPostsCount inside of Group.convertToJSONWithNewPost()
-                //forGroup.totalPostsCount += 1
-                feedNav.groupToPass = forGroup
-                
-                //print(post.description)
-            }
-        } else if let photoUploadPageNav = segue.destination as? PhotoUploadPageNavigationViewController {
-            photoUploadPageNav.groupToPass = forGroup
+        if let feedView = segue.destination as? FeedViewController {
+            // Do we need to pass anything
         }
     }
 }

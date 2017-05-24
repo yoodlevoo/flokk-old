@@ -22,7 +22,7 @@ class FriendsViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        loadFriends()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
