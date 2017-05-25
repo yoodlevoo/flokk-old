@@ -141,7 +141,6 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         return true
     }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueCreateGroup" { //then create the group and save it as a JSON file
             var users = selectedUsers //the selected users + main user
@@ -172,16 +171,16 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
 // Table View Functions
 extension CreateGroupViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CreateGroupUserCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! UserTableViewCell
         let user = selectedUsers[indexPath.row]
         
-        // Set the profile picure and crop it to a circle
-        cell.profilePicture.image = user.profilePhoto
-        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
-        cell.profilePicture.clipsToBounds = true
+        // Set the profilePhotoView picure and crop it to a circle
+        cell.profilePhotoView.image = user.profilePhoto
+        cell.profilePhotoView.layer.cornerRadius = cell.profilePhotoView.frame.size.width / 2
+        cell.profilePhotoView.clipsToBounds = true
         
         cell.fullNameLabel.text = user.fullName
-        cell.usernameLabel.text = user.handle
+        cell.handleLabel.text = user.handle
         
         if selectedUsers.contains(user) {
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
@@ -330,14 +329,6 @@ extension CreateGroupViewController: UIImagePickerControllerDelegate {
         
         present(imagePicker, animated: true, completion: nil)
     }
-}
-
-class CreateGroupUserCell: UITableViewCell {
-    @IBOutlet weak var profilePicture: UIImageView!
-    @IBOutlet weak var fullNameLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
-
-    var selectedToAdd: Bool!
 }
 
 class SelectedUsersCell: UICollectionViewCell {

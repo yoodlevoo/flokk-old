@@ -63,16 +63,16 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default") as! GroupParticipantsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default") as! UserTableViewCell
         
         let user = group.members[indexPath.row]
         
-        cell.profilePictureView.image = user.profilePhoto
-        cell.profilePictureView.layer.cornerRadius = cell.profilePictureView.frame.size.width / 2
-        cell.profilePictureView.clipsToBounds = true
+        cell.profilePhotoView.image = user.profilePhoto
+        cell.profilePhotoView.layer.cornerRadius = cell.profilePhotoView.frame.size.width / 2
+        cell.profilePhotoView.clipsToBounds = true
         
-        cell.nameLabel.text = user.fullName
-        cell.usernameLabel.text = "@\(user.handle)"
+        cell.fullNameLabel.text = user.fullName
+        cell.handleLabel.text = "@\(user.handle)"
         
         return cell
     }
@@ -100,11 +100,4 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
         
         oldContentOffset = scrollView.contentOffset
     }
-}
-
-class GroupParticipantsTableViewCell: UITableViewCell {
-    @IBOutlet weak var profilePictureView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
-    
 }
