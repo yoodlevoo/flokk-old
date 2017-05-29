@@ -11,11 +11,13 @@ import UIKit
 // If there is no search, then just show some of the user's friends not in this group
 class InviteFriendsTableViewController: UITableViewController, UISearchResultsUpdating {
     var users = [User]()
-    var mainUserFriends = [User]()
+    var mainUserFriends = [User]() // The main user's friends that have been loaded in for this view
     var selectedUsers = [User]()
     let searchController = UISearchController(searchResultsController: nil)
     
     var searchContent: String!
+    
+    weak var group: Group! // The according group
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +31,7 @@ class InviteFriendsTableViewController: UITableViewController, UISearchResultsUp
         
         self.searchContent = ""
         
-        self.users = self.mainUserFriends // If there isn't a search, set it to the user's friends
+        self.users = self.mainUserFriends // If there isn't a search, set it to the main user's friends
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,7 +47,7 @@ class InviteFriendsTableViewController: UITableViewController, UISearchResultsUp
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! UserTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! InviteFriendsTableViewCell
         let user = users[indexPath.row]
         
         // Add the profile photo and make it crop to a circle
@@ -55,21 +57,69 @@ class InviteFriendsTableViewController: UITableViewController, UISearchResultsUp
         
         cell.fullNameLabel.text = user.fullName
         cell.handleLabel.text = user.handle
+        
+        if self.selectedUsers.contains(user) { // If the user has been selected to be invited
+            cell.invitedView.image = UIImage(named: "Full Check") // Set the invited icon to be filled
+            cell.invited = true
+        } else {
+            cell.invitedView.image = UIImage(named: "Empty Check") // Set the invited icon to be empty
+            cell.invited = false
+        }
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = users[indexPath.row]
-        let cell = tableView.cellForRow(at: indexPath)
+        let cell = tableView.cellForRow(at: indexPath) as! InviteFriendsTableViewCell
         
-        if selectedUsers.contains(user) {
-            cell?.accessoryType = UITableViewCellAccessoryType.checkmark
+        if selectedUsers.contains(user) { // If this user has already been selected
+            // Deselect it
+            cell.invitedView.image = UIImage(named: "Empty Check")
+            cell.invited = false
             selectedUsers.remove(at: selectedUsers.index(of: user)!)
-        } else {
-            cell?.accessoryType =  UITableViewCellAccessoryType.none
+        } else { // If the user has not already been selected
+            // Select it
+            cell.invitedView.image = UIImage(named: "Full Check")
             selectedUsers.append(user)
         }
+    }
+    
+    // Called when the user is done selecting all of the users and wants to invite them all
+    // Should there be a max amount of users that can be selected at a time?
+    @IBAction func inviteAllUsersPressed(_ sender: Any) {
+        // Check if no users have been invited and pop up something
+        if self.selectedUsers.count == 0 {
+            // Pop up something telling the user no users have been selected
+            
+            return // Will this prevent the rest of the function being called?
+        }
+        
+        let groupRef = database.ref.child("groups").child(self.group.groupID)
+        
+        // Notify each user that they have been invited
+        for user in self.selectedUsers {
+            let handle = user.handle
+            
+            // Tell the groups database that this user has been invited
+            groupRef.child("invitedUsers").child(handle).setValue(true)
+            
+            let userRef = database.ref.child("users").child(handle)
+            userRef.child("groupInvites").child(self.group.groupID).setValue(true) // Set this group as an incoming invite in the user's database
+            
+            // Create a group invite notification for this user
+            let notificationKey = database.ref.child("notifications").child(handle).childByAutoId().key // Generate a UID for this notification
+            let notificationRef = database.ref.child("notifications").child(handle).child(notificationKey)
+            
+            // Set the data for this notification
+            notificationRef.child("type").setValue(NotificationType.GROUP_INVITE.rawValue) // Set the notification type
+            notificationRef.child("sender").setValue(mainUser.handle) // Set who has invited this user
+            notificationRef.child("groupID").setValue(self.group.groupID) // Set the group's ID this user has been invited to
+            notificationRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate) // Set the time this invite has been sent
+        }
+        
+        // Go back to group settings
+        self.navigationController?.popViewController(animated: true)
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -81,16 +131,18 @@ class InviteFriendsTableViewController: UITableViewController, UISearchResultsUp
     }
 }
 
+// Search bar functions
 extension InviteFriendsTableViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let testRef = database.ref.child("users").queryOrdered(byChild: "fullName").queryStarting(atValue: searchBar.text) //insert queryLimited
+        let searchRef = database.ref.child("users").queryOrdered(byChild: "fullName").queryStarting(atValue: searchBar.text) //insert queryLimited
         
         // Clear the users on every new search
-        users.removeAll()
-        users = selectedUsers // Always show the selected Users
+        self.users.removeAll()
+        self.users = self.selectedUsers // Always show the selected Users
         self.tableView.reloadData()
         
-        testRef.observeSingleEvent(of: .value, with: { (snapshot) in
+        // Load in the data about the users returned by the search query
+        searchRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
                 for each in values {
                     let searchCount = searchBar.text?.characters.count // The number of characters in this search to compare
@@ -141,26 +193,23 @@ extension InviteFriendsTableViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        users = selectedUsers
+        self.users = self.selectedUsers
         self.tableView.reloadData()
     }
     
-    // Chcek if there
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         if searchBar.text == "" { // If the user isn't searching anything, fill it with the user's friends
-            users = mainUserFriends
+            self.users = mainUserFriends
             self.tableView.reloadData()
         }
     }
 }
 
-/*
 class InviteFriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var profilePhotoView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var handleLabel: UILabel!
+    @IBOutlet weak var invitedView: UIImageView!
     
-    var buttonPressedObj: (() -> Void)? = nil
-    
-    
-} */
+    var invited = false // If this user has been selected to be invited
+}

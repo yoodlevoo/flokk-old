@@ -125,7 +125,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         groupRef.child("creator").setValue(mainUser.handle)
         groupRef.child("name").setValue(groupName) // Set the groups name
         
-        // Just the user will be a member for now
+        // Only the user will be a member for now
         let members: [String: Bool] = [mainUser.handle: true]
         groupRef.child("members").setValue(members)
         
@@ -133,30 +133,30 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         storage.ref.child("groups").child(groupKey).child("icon/\(groupKey).jpg").put((self.addGroupPictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 // an error occured
-                
                 return
             }
-            
-            //let downloadURl = metadata.
         }
         
         var invitedMembers = [String : Bool]()
         
         // Invite the selected users here
         for user in self.selectedUsers {
-            invitedMembers[user.handle] = true
-            
             let handle = user.handle
+            invitedMembers[handle] = true
+            
+            // Tell the groups database that this user has been invited
+            groupRef.child("invitedUsers").child(handle).setValue(true)
             
             let userRef = database.ref.child("users").child(handle)
             userRef.child("groupInvites").child(groupKey).setValue(true) // Tell the database this user has been invited to the group, for verification purposes
             
+            // Create a group invite notification for this user
             let notificationKey = database.ref.child("notifications").child(groupKey).childByAutoId().key
             let notificationRef = database.ref.child("notifications").child(groupKey).child(notificationKey) // Generate a new notification
             
             notificationRef.child("type").setValue(NotificationType.GROUP_INVITE.rawValue) // Set the notification's type
             notificationRef.child("sender").setValue(mainUser.handle) // Set who sent this invite
-            notificationRef.child("group").setValue(groupKey) // Set which group this user has been invited to
+            notificationRef.child("groupID").setValue(groupKey) // Set which group this user has been invited to
             notificationRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate) // Set when this notification was sent
         }
         
@@ -252,17 +252,18 @@ extension CreateGroupViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //toggle it
         let user = totalUsers[indexPath.row]
         
-        if selectedUsers.contains(user) {
-            selectedUsers.remove(at: selectedUsers.index(of: user)!)
+        if self.selectedUsers.contains(user) { // If this user is already selected
+            self.selectedUsers.remove(at: selectedUsers.index(of: user)!) // Remove it
             
-        } else {
-            selectedUsers.append(user)
+        } else { // If this user hasn't been selected
+            self.selectedUsers.append(user) // Select it
         }
         
-        DispatchQueue.main.async{
+        // This is already on the main thread, no need to call it to the main thread explicitly
+        //DispatchQueue.main.async{
             tableView.reloadData()
             self.selectedUsersCollectionView.reloadData()
-        }
+        //}
     }
 }
 

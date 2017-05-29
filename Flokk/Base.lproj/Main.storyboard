@@ -637,12 +637,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="207"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bH6-b0-oAS">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="207"/>
+                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aiq-rO-ziJ">
                                                     <rect key="frame" x="8" y="8" width="55" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bH6-b0-oAS">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="207"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -1220,7 +1220,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="default" rowHeight="95" id="NCv-Ca-KZD" customClass="UserTableViewCell" customModule="Flokk" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="default" rowHeight="95" id="NCv-Ca-KZD" customClass="InviteFriendsTableViewCell" customModule="Flokk" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="95"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NCv-Ca-KZD" id="Bzy-6f-err">
@@ -1252,11 +1252,10 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0w-d5-Nco">
-                                            <rect key="frame" x="295" y="29" width="64" height="28"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Empty Check" translatesAutoresizingMaskIntoConstraints="NO" id="QAI-Ma-gNP">
+                                            <rect key="frame" x="337" y="32" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" image="Empty Check"/>
-                                        </button>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
@@ -1272,7 +1271,7 @@
                                 <connections>
                                     <outlet property="fullNameLabel" destination="l0V-jQ-aCa" id="BHt-En-KVO"/>
                                     <outlet property="handleLabel" destination="dD0-Xq-Ozp" id="gCs-Cv-PIE"/>
-                                    <outlet property="invitedCheckButton" destination="b0w-d5-Nco" id="ca7-fH-amf"/>
+                                    <outlet property="invitedView" destination="QAI-Ma-gNP" id="OO1-k9-oFJ"/>
                                     <outlet property="profilePhotoView" destination="Lmy-S7-e5e" id="29L-sn-kFh"/>
                                 </connections>
                             </tableViewCell>
@@ -1287,7 +1286,7 @@
                         <barButtonItem key="rightBarButtonItem" image="AddBttn" id="Nq0-Jb-chI" userLabel="Invite User Button">
                             <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <action selector="inviteFriendButtonPressed:" destination="ZLj-Cl-JuV" id="IWj-dd-iws"/>
+                                <action selector="inviteAllUsersPressed:" destination="Cm6-4J-qHM" id="0bS-8G-XvF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -2,7 +2,7 @@
 //  UserTableViewCell.swift
 //  Flokk
 //
-//  Created by Jared Heyen on 5/24/17.
+//  Created by Gannon Prudhomme on 5/24/17.
 //  Copyright © 2017 Flokk. All rights reserved.
 //
 
@@ -13,7 +13,6 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var profilePhotoView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var handleLabel: UILabel!
-    @IBOutlet weak var invitedCheckButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
