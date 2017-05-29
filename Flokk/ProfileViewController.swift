@@ -66,6 +66,8 @@ class ProfileViewController: UIViewController {
         self.headerConstraintRange = (CGFloat(self.headerView.frame.origin.y - self.headerView.frame.size.height)..<CGFloat(self.headerView.frame.origin.y))
         self.view.bringSubview(toFront: self.tableView) // Make sure the table view is always shown on top of the header view
         self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it
+        
+        // Load group(or friend) data about this user
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -21,19 +21,13 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
     let searchController = UISearchController(searchResultsController: nil)
     
     fileprivate let imagePicker = UIImagePickerController()
-    
     var profilePicFromCrop: UIImage! // The profile photo retrieved from the crop
 
     let transitionUp = SlideUpAnimator()
-    
-    var createGroupViewReference: CreateGroupViewController! // What's this for
+    var createGroupViewReference: CreateGroupViewController! // What's this for?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //hard code in the users just for testing
-        //totalUsers.append(tavianUser)
-        //totalUsers.append(jaredUser)
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -44,6 +38,10 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         
         self.selectedUsersCollectionView.delegate = self
         self.selectedUsersCollectionView.dataSource = self
+        
+        // Tell the group picture button image to crop to a circle
+        self.addGroupPictureButton.imageView?.layer.cornerRadius = self.addGroupPictureButton.frame.width / 2
+        self.addGroupPictureButton.clipsToBounds = true
         
         if profilePicFromCrop != nil {
             self.addGroupPictureButton.imageView?.image = profilePicFromCrop
@@ -60,9 +58,44 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         
         // Search bar
         self.searchController.searchResultsUpdater = self
+        self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
-        self.definesPresentationContext = true
+        self.searchController.searchBar.sizeToFit()
         self.tableView.tableHeaderView = self.searchController.searchBar
+        self.searchController.searchBar.delegate = self
+        self.searchController.view.backgroundColor = UIColor(colorLiteralRed: 23/255, green: 23/255, blue: 43/255, alpha: 1)
+        
+        self.definesPresentationContext = true
+        
+        // Load in the friends of this user
+        for handle in mainUser.friendHandles {
+            let userRef = database.ref.child("users").child(handle)
+            userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let values = snapshot.value as? NSDictionary {
+                    let fullName = values["fullName"] as! String
+                    
+                    // Load the profile photo form Storage
+                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                    profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                        if error == nil { // If there wasn't an error
+                            let profilePhoto = UIImage(data: data!)
+                            
+                            // Load the user
+                            let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                            
+                            // Add it to the users count
+                            self.totalUsers.append(user)
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                        } else { // If there was an error
+                            print(error!)
+                        }
+                    })
+                }
+            })
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,15 +116,21 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         
         // Check if all of the fields are filled out correctly first
         
-        let groupRef = database.ref.child("groups").child(groupName)
+        // Generate a reference to the user and a unique Identifier for this group
+        let userRef = database.ref.child("users").child(mainUser.handle)
+        let groupKey = userRef.child("groups").childByAutoId().key // Generate a unique identifier for this group
+        userRef.child("groups").child(groupKey).setValue(true) // Add the group to the mainUser/creators list of groups
+        
+        let groupRef = database.ref.child("groups").child(groupKey)
         groupRef.child("creator").setValue(mainUser.handle)
+        groupRef.child("name").setValue(groupName) // Set the groups name
         
         // Just the user will be a member for now
         let members: [String: Bool] = [mainUser.handle: true]
         groupRef.child("members").setValue(members)
         
         // Upload the groups profile icon to storage
-        storage.ref.child("groups").child(groupName).child("icon/\(groupName).jpg").put(profilePicFromCrop.convertJpegToData(), metadata: nil) { (metadata, error) in
+        storage.ref.child("groups").child(groupKey).child("icon/\(groupKey).jpg").put((self.addGroupPictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 // an error occured
                 
@@ -101,13 +140,28 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
             //let downloadURl = metadata.
         }
         
-        // Invite the selected users here
+        var invitedMembers = [String : Bool]()
         
-        // Add the group to the mainUser/creators list of groups
-        database.ref.child("users").child(mainUser.handle).child("groups").child(groupName).setValue(true)
+        // Invite the selected users here
+        for user in self.selectedUsers {
+            invitedMembers[user.handle] = true
+            
+            let handle = user.handle
+            
+            let userRef = database.ref.child("users").child(handle)
+            userRef.child("groupInvites").child(groupKey).setValue(true) // Tell the database this user has been invited to the group, for verification purposes
+            
+            let notificationKey = database.ref.child("notifications").child(groupKey).childByAutoId().key
+            let notificationRef = database.ref.child("notifications").child(groupKey).child(notificationKey) // Generate a new notification
+            
+            notificationRef.child("type").setValue(NotificationType.GROUP_INVITE.rawValue) // Set the notification's type
+            notificationRef.child("sender").setValue(mainUser.handle) // Set who sent this invite
+            notificationRef.child("group").setValue(groupKey) // Set which group this user has been invited to
+            notificationRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate) // Set when this notification was sent
+        }
         
         // Actually create the group
-        let group = Group(groupName: groupName, image: UIImage(named: "BasketballMob")!, users: [mainUser], creator: mainUser)
+        let group = Group(groupID: groupKey, groupName: groupName, image: UIImage(named: "BasketballMob")!, users: [mainUser], creator: mainUser)
         groups.append(group) // Add this group to the global groups
         
         self.navigationController?.popViewController(animated: true)
@@ -172,7 +226,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
 extension CreateGroupViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! UserTableViewCell
-        let user = selectedUsers[indexPath.row]
+        let user = totalUsers[indexPath.row]
         
         // Set the profilePhotoView picure and crop it to a circle
         cell.profilePhotoView.image = user.profilePhoto
@@ -192,11 +246,11 @@ extension CreateGroupViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredUsers.count
+        return totalUsers.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { //toggle it
-        let user = selectedUsers[indexPath.row]
+        let user = totalUsers[indexPath.row]
         
         if selectedUsers.contains(user) {
             selectedUsers.remove(at: selectedUsers.index(of: user)!)
@@ -277,8 +331,6 @@ extension CreateGroupViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //groupName = textField.text
-        
         textField.endEditing(true)
         
         return false
@@ -291,9 +343,12 @@ extension CreateGroupViewController: UIImagePickerControllerDelegate {
         //let selectedImage: UIImage!
         
         if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            dismiss(animated: false, completion: nil)
-            
             self.profilePicFromCrop = selectedImage
+            self.addGroupPictureButton.imageView?.contentMode = .scaleAspectFill
+            self.addGroupPictureButton.setImage(selectedImage, for: .normal)
+            
+            
+            dismiss(animated: false, completion: nil)
             /*
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let cropView: CropGroupPhotoViewController = storyboard.instantiateViewController(withIdentifier: "CropGroupPhotoViewController") as! CropGroupPhotoViewController

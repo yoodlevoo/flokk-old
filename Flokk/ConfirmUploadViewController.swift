@@ -18,7 +18,11 @@ class ConfirmUploadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad() 
 
-        //imageView.image = image
+        /*
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear */
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,8 +30,8 @@ class ConfirmUploadViewController: UIViewController {
     }
     
     @IBAction func uploadPressed(_ sender: Any) {
-        let postsRef = database.ref.child("groups").child(forGroup.groupName).child("posts") // Database
-        let imageRef = storage.ref.child("groups").child(forGroup.groupName).child("posts") // Storage
+        let postsRef = database.ref.child("groups").child(forGroup.groupID).child("posts") // Database
+        let imageRef = storage.ref.child("groups").child(forGroup.groupID).child("posts") // Storage
         let key = postsRef.childByAutoId().key // Generate random ID for this post
         
         self.image = imageView.image

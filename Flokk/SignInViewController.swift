@@ -41,8 +41,13 @@ class SignInViewController: UIViewController {
     }
     
     func signIn() {
-        let email = usernameEntry.text // Get the entered email
-        let password = passwordEntry.text // Get the entered password
+        var email = usernameEntry.text // Get the entered email
+        var password = passwordEntry.text // Get the entered password
+        
+        if email == "" {
+            email = "gannonprudhomme@gmail.com"
+            password = "gannon123"
+        }
         
         // Authenticate and sign the user in
         FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in

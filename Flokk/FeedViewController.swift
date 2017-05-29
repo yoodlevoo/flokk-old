@@ -62,7 +62,7 @@ class FeedViewController: UIViewController {
                 } else { // This post hasn't been loaded yet, begin to load it
                     let dataDict = data
                     
-                    let postRef = storage.ref.child("groups").child(self.group.groupName).child("posts")
+                    let postRef = storage.ref.child("groups").child(self.group.groupID).child("posts")
                     
                     postRef.child("\(id)/post.jpg").data(withMaxSize: 1 * 3072 * 3072, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
@@ -109,8 +109,8 @@ class FeedViewController: UIViewController {
 
             }
         } else if segue.identifier == "segueFromFeedToGroupSettings" {
-            if let groupSettingsNav = segue.destination as? GroupSettingsNavigationViewController {
-                groupSettingsNav.transitioningDelegate = transitionDown
+            if let groupSettings = segue.destination as? GroupSettingsViewController {
+                groupSettings.group = self.group
             }
         }
     }
@@ -199,6 +199,7 @@ class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
     }
 }
 
+// Tf is this used for
 enum FeedTableViewCellSide {
     case FeedTableViewCellSideLeft
     case FeedtableViewCellSideRight

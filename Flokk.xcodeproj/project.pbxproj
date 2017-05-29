@@ -18,7 +18,7 @@
 		15309E871E6541EE00D1DFA1 /* jaredheyenCouples.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */; };
 		15309E891E65430E00D1DFA1 /* jaredheyen.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E881E65430E00D1DFA1 /* jaredheyen.json */; };
 		153729EB1ED5F2D900381888 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153729EA1ED5F2D900381888 /* UserTableViewCell.swift */; };
-		153729ED1ED6090700381888 /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153729EC1ED6090700381888 /* InviteFriendsViewController.swift */; };
+		153729EF1ED86AA100381888 /* InviteFriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153729EE1ED86AA100381888 /* InviteFriendsTableViewController.swift */; };
 		158F02621EC6A49F00D7552A /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158F02611EC6A49F00D7552A /* Storage.swift */; };
 		158FE22E1E954A81009EFBA6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */; };
 		15B51D3B1ECB82A3009BCB6D /* UserSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B51D3A1ECB82A3009BCB6D /* UserSearchTableViewController.swift */; };
@@ -126,7 +126,7 @@
 		15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyenCouples.json; sourceTree = "<group>"; };
 		15309E881E65430E00D1DFA1 /* jaredheyen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyen.json; sourceTree = "<group>"; };
 		153729EA1ED5F2D900381888 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
-		153729EC1ED6090700381888 /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
+		153729EE1ED86AA100381888 /* InviteFriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsTableViewController.swift; sourceTree = "<group>"; };
 		153A30D91EA7E7E0001540A3 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
 		158F02611EC6A49F00D7552A /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -297,7 +297,7 @@
 				15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */,
 				15C8269E1E8587EF003EE6E4 /* GroupProfileViewController.swift */,
 				15C8269F1E8587EF003EE6E4 /* GroupSettingsViewController.swift */,
-				153729EC1ED6090700381888 /* InviteFriendsViewController.swift */,
+				153729EE1ED86AA100381888 /* InviteFriendsTableViewController.swift */,
 				15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */,
 				15C826A11E8587EF003EE6E4 /* ImageScrollView.swift */,
 				15C826A81E8587EF003EE6E4 /* LoadingTableView.swift */,
@@ -789,7 +789,6 @@
 				15C826DB1E8587EF003EE6E4 /* SignInViewController.swift in Sources */,
 				150789E41E859EFD003C6FB3 /* SlideUpAnimator.swift in Sources */,
 				153729EB1ED5F2D900381888 /* UserTableViewCell.swift in Sources */,
-				153729ED1ED6090700381888 /* InviteFriendsViewController.swift in Sources */,
 				15C826D81E8587EF003EE6E4 /* LoadingTableView.swift in Sources */,
 				15C826E11E8587EF003EE6E4 /* PhotoSelectLayout.swift in Sources */,
 				15C826C81E8587EF003EE6E4 /* Database.swift in Sources */,
@@ -817,6 +816,7 @@
 				7FE0D33D1E91874F000E097D /* ConnectContactsViewController.swift in Sources */,
 				158F02621EC6A49F00D7552A /* Storage.swift in Sources */,
 				15C826C91E8587EF003EE6E4 /* FeedNavigationViewController.swift in Sources */,
+				153729EF1ED86AA100381888 /* InviteFriendsTableViewController.swift in Sources */,
 				15C826D11E8587EF003EE6E4 /* ImageScrollView.swift in Sources */,
 				15C826E51E8587EF003EE6E4 /* Post.swift in Sources */,
 				15FA5E961ECD01470090C701 /* OpenNavigationViewController.swift in Sources */,
