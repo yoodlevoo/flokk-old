@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15073F511EDCF90900CDF92B /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15073F501EDCF90900CDF92B /* UserSearchViewController.swift */; };
+		15073F531EDD020100CDF92B /* InviteFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15073F521EDD020100CDF92B /* InviteFriendsViewController.swift */; };
 		150789E21E859EFD003C6FB3 /* SlideDownAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150789DE1E859EFD003C6FB3 /* SlideDownAnimator.swift */; };
 		150789E41E859EFD003C6FB3 /* SlideUpAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150789E01E859EFD003C6FB3 /* SlideUpAnimator.swift */; };
 		151E60EC1E93CECC00A45227 /* Pods_Flokk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A28DF034D8D231E26FEA16 /* Pods_Flokk.framework */; };
@@ -18,10 +20,8 @@
 		15309E871E6541EE00D1DFA1 /* jaredheyenCouples.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */; };
 		15309E891E65430E00D1DFA1 /* jaredheyen.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E881E65430E00D1DFA1 /* jaredheyen.json */; };
 		153729EB1ED5F2D900381888 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153729EA1ED5F2D900381888 /* UserTableViewCell.swift */; };
-		153729EF1ED86AA100381888 /* InviteFriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153729EE1ED86AA100381888 /* InviteFriendsTableViewController.swift */; };
 		158F02621EC6A49F00D7552A /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158F02611EC6A49F00D7552A /* Storage.swift */; };
 		158FE22E1E954A81009EFBA6 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */; };
-		15B51D3B1ECB82A3009BCB6D /* UserSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B51D3A1ECB82A3009BCB6D /* UserSearchTableViewController.swift */; };
 		15C275911E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C275901E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift */; };
 		15C275951E9FCC7100C62F0D /* AppSettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C275941E9FCC7100C62F0D /* AppSettingsTableViewController.swift */; };
 		15C8268D1E8587DF003EE6E4 /* FirstSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826881E8587DF003EE6E4 /* FirstSignUpViewController.swift */; };
@@ -116,6 +116,8 @@
 /* Begin PBXFileReference section */
 		08116963DDC32F6213EF11B5 /* Pods_FlokkUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlokkUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F6413F9D4AD8FFE064610FB /* Pods-Flokk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flokk.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flokk/Pods-Flokk.release.xcconfig"; sourceTree = "<group>"; };
+		15073F501EDCF90900CDF92B /* UserSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
+		15073F521EDD020100CDF92B /* InviteFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsViewController.swift; sourceTree = "<group>"; };
 		150789DE1E859EFD003C6FB3 /* SlideDownAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideDownAnimator.swift; sourceTree = "<group>"; };
 		150789E01E859EFD003C6FB3 /* SlideUpAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideUpAnimator.swift; sourceTree = "<group>"; };
 		152F02271EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideRightNavigationAnimator.swift; sourceTree = "<group>"; };
@@ -126,11 +128,9 @@
 		15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyenCouples.json; sourceTree = "<group>"; };
 		15309E881E65430E00D1DFA1 /* jaredheyen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyen.json; sourceTree = "<group>"; };
 		153729EA1ED5F2D900381888 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
-		153729EE1ED86AA100381888 /* InviteFriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsTableViewController.swift; sourceTree = "<group>"; };
 		153A30D91EA7E7E0001540A3 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
 		158F02611EC6A49F00D7552A /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		15B51D3A1ECB82A3009BCB6D /* UserSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchTableViewController.swift; sourceTree = "<group>"; };
 		15C275901E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationsSettingsTableViewController.swift; sourceTree = "<group>"; };
 		15C275941E9FCC7100C62F0D /* AppSettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsTableViewController.swift; sourceTree = "<group>"; };
 		15C826881E8587DF003EE6E4 /* FirstSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstSignUpViewController.swift; sourceTree = "<group>"; };
@@ -278,8 +278,8 @@
 				15C826881E8587DF003EE6E4 /* FirstSignUpViewController.swift */,
 				15C826891E8587DF003EE6E4 /* SecondSignUpViewController.swift */,
 				7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */,
+				15073F501EDCF90900CDF92B /* UserSearchViewController.swift */,
 				15C826961E8587EF003EE6E4 /* CreateGroupViewController.swift */,
-				15B51D3A1ECB82A3009BCB6D /* UserSearchTableViewController.swift */,
 				15C826A01E8587EF003EE6E4 /* GroupsViewController.swift */,
 				15C8269A1E8587EF003EE6E4 /* FeedViewController.swift */,
 				15C8268B1E8587DF003EE6E4 /* AddCommentViewController.swift */,
@@ -297,7 +297,7 @@
 				15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */,
 				15C8269E1E8587EF003EE6E4 /* GroupProfileViewController.swift */,
 				15C8269F1E8587EF003EE6E4 /* GroupSettingsViewController.swift */,
-				153729EE1ED86AA100381888 /* InviteFriendsTableViewController.swift */,
+				15073F521EDD020100CDF92B /* InviteFriendsViewController.swift */,
 				15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */,
 				15C826A11E8587EF003EE6E4 /* ImageScrollView.swift */,
 				15C826A81E8587EF003EE6E4 /* LoadingTableView.swift */,
@@ -773,6 +773,7 @@
 				15C275911E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift in Sources */,
 				15C826C41E8587EF003EE6E4 /* ConfirmUploadNavigationViewController.swift in Sources */,
 				15FB666C1EAA8493004D23AF /* GroupProfilePageViewController.swift in Sources */,
+				15073F531EDD020100CDF92B /* InviteFriendsViewController.swift in Sources */,
 				15C826911E8587DF003EE6E4 /* AppDelegate.swift in Sources */,
 				15C826CF1E8587EF003EE6E4 /* GroupSettingsViewController.swift in Sources */,
 				15C826CA1E8587EF003EE6E4 /* FeedViewController.swift in Sources */,
@@ -793,7 +794,6 @@
 				15C826E11E8587EF003EE6E4 /* PhotoSelectLayout.swift in Sources */,
 				15C826C81E8587EF003EE6E4 /* Database.swift in Sources */,
 				15C826C71E8587EF003EE6E4 /* CropGroupPhotoViewController.swift in Sources */,
-				15B51D3B1ECB82A3009BCB6D /* UserSearchTableViewController.swift in Sources */,
 				7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */,
 				15C826C31E8587EF003EE6E4 /* BounceButton.swift in Sources */,
 				15FA9B0D1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift in Sources */,
@@ -805,6 +805,7 @@
 				15C826DF1E8587EF003EE6E4 /* PasswordRecoveryViewController.swift in Sources */,
 				15C826DE1E8587EF003EE6E4 /* OpenViewController.swift in Sources */,
 				15C826E21E8587EF003EE6E4 /* PhotoSelectViewController.swift in Sources */,
+				15073F511EDCF90900CDF92B /* UserSearchViewController.swift in Sources */,
 				15FB666A1EA9396C004D23AF /* ProfileNavigationViewController.swift in Sources */,
 				15C826F11E8587EF003EE6E4 /* User.swift in Sources */,
 				15F74F1D1E898B3F00A23720 /* FriendsNavigationViewController.swift in Sources */,
@@ -816,7 +817,6 @@
 				7FE0D33D1E91874F000E097D /* ConnectContactsViewController.swift in Sources */,
 				158F02621EC6A49F00D7552A /* Storage.swift in Sources */,
 				15C826C91E8587EF003EE6E4 /* FeedNavigationViewController.swift in Sources */,
-				153729EF1ED86AA100381888 /* InviteFriendsTableViewController.swift in Sources */,
 				15C826D11E8587EF003EE6E4 /* ImageScrollView.swift in Sources */,
 				15C826E51E8587EF003EE6E4 /* Post.swift in Sources */,
 				15FA5E961ECD01470090C701 /* OpenNavigationViewController.swift in Sources */,

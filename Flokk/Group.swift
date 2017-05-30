@@ -40,6 +40,12 @@ class Group {
         self.totalPostsCount = 0
     }
     
+    init(groupID: String, groupName: String, image: UIImage) {
+        self.groupID = groupID
+        self.groupName = groupName
+        self.groupIcon = image
+    }
+    
     init(groupID: String, groupName: String, image: UIImage, users: [User], creator: User) {
         self.groupID = groupID
         self.groupName = groupName

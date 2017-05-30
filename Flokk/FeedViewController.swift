@@ -11,6 +11,8 @@ import UIKit
 class FeedViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navigationBar: UINavigationItem!
+    @IBOutlet weak var noPostsImageView: UIImageView!
+    @IBOutlet weak var noPostsLabel: UILabel!
     
     var group: Group! // The group this feed is reading from
     var groupIndex: Int! // The index of this group in the global group variable
@@ -49,6 +51,12 @@ class FeedViewController: UIViewController {
         self.edgesForExtendedLayout = .bottom
         
         self.navigationBar.title = group.groupName
+        
+        // Check if there are no posts, so we know to show the "No Posts" Frowny Face
+        if self.group.postsData.keys.count == 0 { // If there are no posts
+            self.noPostsImageView.isHidden = false
+            self.noPostsLabel.isHidden = false
+        }
         
         // Load posts
         if self.group.posts.count < self.postCount { // If we need to load more posts

@@ -81,6 +81,10 @@ class Notification {
         self.type = type
         self.sender = sender
         self.group = group
+        Notification.textSize = 20
+        
+        print("\(sender.fullName)")
+        print(group.groupName)
         
         // Bold the sender's name and the group name
         let formattedString = NSMutableAttributedString()
@@ -96,6 +100,7 @@ class Notification {
         self.group = group
         self.post = post
         self.comment = comment
+        Notification.textSize = 20
         
         // Bold the sender's name
         let formattedString = NSMutableAttributedString()
@@ -110,6 +115,7 @@ class Notification {
         self.sender = sender
         self.group = group
         self.post = post
+        Notification.textSize = 20
         
         let formattedString = NSMutableAttributedString()
         formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("uploaded a new post to").bold(" \(group.groupName).", Notification.textSize)

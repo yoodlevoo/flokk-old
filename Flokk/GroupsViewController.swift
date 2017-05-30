@@ -57,7 +57,7 @@ class GroupsViewController: UIViewController {
                         
                         // Download the icon for this group
                         let iconRef = storage.ref.child("groups").child(groupID).child("icon/\(groupID).jpg")
-                        iconRef.data(withMaxSize: 1 * 1024 * 1024, completion: { data, error in
+                        iconRef.data(withMaxSize: 1 * 4096 * 4096, completion: { data, error in
                             if error == nil { // If there wasn't an error
                                 // Then the data is returned
                                 let groupIcon = UIImage(data: data!)
@@ -67,7 +67,9 @@ class GroupsViewController: UIViewController {
                                 
                                 groups.append(group) // Add this newly loaded group into the global groups variable
                                 
-                                self.tableView.reloadData() // Reload data every time a group is loaded
+                                DispatchQueue.main.async {
+                                    self.tableView.reloadData() // Reload data every time a group is loaded
+                                }
                             } else { // If there was an error
                                 print(error!)
                                 //continue // Skip this
@@ -181,6 +183,47 @@ extension GroupsViewController {
                             
                             // Add the notification
                             mainUser.notifications.append(notification)
+                            break
+                        case NotificationType.GROUP_INVITE:
+                            let senderHandle = data["sender"] as! String
+                            let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
+                            let groupID = data["groupID"] as! String
+                            
+                            // Load all of the needed data
+                            let groupRef = database.ref.child("groups").child(groupID)
+                            groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                if let values = snapshot.value as? NSDictionary {
+                                    let groupName = values["name"] as! String
+                                    
+                                    let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
+                                    groupIconRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                                        if error == nil {
+                                            let groupPhoto = UIImage(data: data!)
+                                            
+                                            let group = Group(groupID: groupID, groupName: groupName, image: groupPhoto!)
+                                            
+                                            let userProfilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
+                                            userProfilePhotoRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                                                if error == nil {
+                                                    let profilePhoto = UIImage(data: data!)
+                                                    
+                                                    let user = User(handle: senderHandle, profilePhoto: profilePhoto!)
+                                                    
+                                                    let notification = Notification(type: NotificationType.GROUP_INVITE, sender: user, group: group)
+                                                    
+                                                    mainUser.notifications.append(notification)
+                                                } else {
+                                                    print(error!)
+                                                }
+                                                
+                                            })
+                                        } else {
+                                            print(error!)
+                                        }
+                                    })
+                                }
+                            })
+                            
                             break
                         default: break
                         }

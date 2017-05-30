@@ -2,14 +2,17 @@
 //  InviteFriendsTableViewController.swift
 //  Flokk
 //
-//  Created by Gannon Prudhomme on 5/26/17.
+//  Created by Gannon Prudhomme on 5/29/17.
 //  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
 
 // If there is no search, then just show some of the user's friends not in this group
-class InviteFriendsTableViewController: UITableViewController, UISearchResultsUpdating {
+class InviteFriendsViewController: UIViewController {
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var users = [User]()
     var mainUserFriends = [User]() // The main user's friends that have been loaded in for this view
     var selectedUsers = [User]()
@@ -22,68 +25,26 @@ class InviteFriendsTableViewController: UITableViewController, UISearchResultsUp
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //self.searchController.searchBar = self.searchBar
+        
         self.searchController.searchResultsUpdater = self
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.searchBar.sizeToFit()
-        self.tableView.tableHeaderView = self.searchController.searchBar
         self.searchController.searchBar.delegate = self
         self.searchController.searchBar.keyboardAppearance = .dark
+        
+        //self.tableView.tableHeaderView = self.searchController.searchBar
+        
+        self.searchBar.delegate = self
         
         self.searchContent = ""
         
         self.users = self.mainUserFriends // If there isn't a search, set it to the main user's friends
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! InviteFriendsTableViewCell
-        let user = users[indexPath.row]
-        
-        // Add the profile photo and make it crop to a circle
-        cell.profilePhotoView.image = user.profilePhoto
-        cell.profilePhotoView.clipsToBounds = true
-        cell.profilePhotoView.layer.cornerRadius = cell.profilePhotoView.frame.width / 2
-        
-        cell.fullNameLabel.text = user.fullName
-        cell.handleLabel.text = user.handle
-        
-        if self.selectedUsers.contains(user) { // If the user has been selected to be invited
-            cell.invitedView.image = UIImage(named: "Full Check") // Set the invited icon to be filled
-            cell.invited = true
-        } else {
-            cell.invitedView.image = UIImage(named: "Empty Check") // Set the invited icon to be empty
-            cell.invited = false
-        }
-
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = users[indexPath.row]
-        let cell = tableView.cellForRow(at: indexPath) as! InviteFriendsTableViewCell
-        
-        if self.selectedUsers.contains(user) { // If this user has already been selected
-            // Deselect it
-            cell.invitedView.image = UIImage(named: "Empty Check")
-            cell.invited = false
-            self.selectedUsers.remove(at: selectedUsers.index(of: user)!)
-        } else { // If the user has not already been selected
-            // Select it
-            cell.invitedView.image = UIImage(named: "Full Check")
-            self.selectedUsers.append(user)
-        }
     }
     
     // Called when the user is done selecting all of the users and wants to invite them all
@@ -126,14 +87,64 @@ class InviteFriendsTableViewController: UITableViewController, UISearchResultsUp
     func updateSearchResults(for searchController: UISearchController) {
         
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
     }
 }
 
+// Table View Functions
+extension InviteFriendsViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! InviteFriendsTableViewCell
+        let user = users[indexPath.row]
+        
+        // Add the profile photo and make it crop to a circle
+        cell.profilePhotoView.image = user.profilePhoto
+        cell.profilePhotoView.clipsToBounds = true
+        cell.profilePhotoView.layer.cornerRadius = cell.profilePhotoView.frame.width / 2
+        
+        cell.fullNameLabel.text = user.fullName
+        cell.handleLabel.text = user.handle
+        
+        if self.selectedUsers.contains(user) { // If the user has been selected to be invited
+            cell.invitedView.image = UIImage(named: "Full Check") // Set the invited icon to be filled
+            cell.invited = true
+        } else {
+            cell.invitedView.image = UIImage(named: "Empty Check") // Set the invited icon to be empty
+            cell.invited = false
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let user = users[indexPath.row]
+        let cell = tableView.cellForRow(at: indexPath) as! InviteFriendsTableViewCell
+        
+        if self.selectedUsers.contains(user) { // If this user has already been selected
+            // Deselect it
+            cell.invitedView.image = UIImage(named: "Empty Check")
+            cell.invited = false
+            self.selectedUsers.remove(at: selectedUsers.index(of: user)!)
+        } else { // If the user has not already been selected
+            // Select it
+            cell.invitedView.image = UIImage(named: "Full Check")
+            self.selectedUsers.append(user)
+        }
+    }
+}
+
 // Search bar functions
-extension InviteFriendsTableViewController: UISearchBarDelegate {
+extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let searchRef = database.ref.child("users").queryOrdered(byChild: "fullName").queryStarting(atValue: searchBar.text) //insert queryLimited
         
@@ -193,6 +204,10 @@ extension InviteFriendsTableViewController: UISearchBarDelegate {
         self.searchContent = searchBar.text
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.users = self.selectedUsers
         self.tableView.reloadData()
@@ -202,6 +217,7 @@ extension InviteFriendsTableViewController: UISearchBarDelegate {
         if searchBar.text == "" { // If the user isn't searching anything, fill it with the user's friends
             self.users = mainUserFriends
             self.tableView.reloadData()
+            self.searchBar.setShowsCancelButton(false, animated: true)
         }
     }
 }

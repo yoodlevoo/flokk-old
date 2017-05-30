@@ -11,7 +11,10 @@ import Firebase
 import FirebaseDatabase
 import FirebaseStorage
 
-class UserSearchTableViewController: UITableViewController, UISearchResultsUpdating {
+class UserSearchViewController: UIViewController {
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var users = [User]()
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -19,7 +22,9 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.searchBar.delegate = self
+        
         self.searchController.searchResultsUpdater = self
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
@@ -27,6 +32,7 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         self.searchController.searchBar.delegate = self
         self.searchController.searchBar.keyboardAppearance = .dark
         
+        /*
         self.searchController.searchBar.layer.cornerRadius = 2.0
         self.searchController.searchBar.layer.borderColor = UIColor.cyan.cgColor
         //self.searchController.searchBar.layer.backgroundColor = NAVY_COLOR.cgColor
@@ -35,8 +41,9 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         var textField = self.searchController.searchBar.value(forKey: "_searchField") as! UITextField
         textField.textColor = UIColor.brown
         textField.backgroundColor = NAVY_COLOR
-        
-        self.tableView.tableHeaderView = self.searchController.searchBar
+        */
+ 
+        //self.tableView.tableHeaderView = self.searchController.searchBar
         
         self.searchContent = ""
     }
@@ -46,20 +53,33 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         
         self.searchController.searchBar.isHidden = false
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    
+    // Search if there is a user in the database whose fullName matches the search criteria
+    // aysnchronous loading is messing up the tableview
+    func updateSearchResults(for searchController: UISearchController) {
+        
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.searchController.searchBar.isHidden = true
+        
+        if segue.identifier == "segueFromUserSearchToProfile" {
+            if let profileView = segue.destination as? ProfileViewController {
+                let selectedUser = users[(self.tableView.indexPathForSelectedRow?.row)!]
+                
+                profileView.user = selectedUser
+            }
+        }
     }
+}
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+// Table View functions
+extension UserSearchViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! UserTableViewCell
         
         let user = users[indexPath.row]
@@ -75,26 +95,16 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         return cell
     }
     
-    // Search if there is a user in the database whose fullName matches the search criteria
-    // aysnchronous loading is messing up the tableview
-    func updateSearchResults(for searchController: UISearchController) {
-        
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users.count
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        self.searchController.searchBar.isHidden = true
-        
-        if segue.identifier == "segueFromUserSearchToProfile" {
-            if let profileView = segue.destination as? ProfileViewController {
-                let selectedUser = users[(self.tableView.indexPathForSelectedRow?.row)!]
-                
-                profileView.user = selectedUser
-            }
-        }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
 }
 
-extension UserSearchTableViewController: UISearchBarDelegate {
+extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //let usersRef = database.ref.child("users").queryOrdered(byChild: "fullName").queryEqual(toValue: searchBar.text)
         let testRef = database.ref.child("users").queryOrdered(byChild: "fullName").queryStarting(atValue: searchBar.text) //insert queryLimited

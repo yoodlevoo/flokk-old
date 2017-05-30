@@ -9,12 +9,10 @@
 import UIKit
 
 class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    @IBOutlet weak var editName: UITextField!
-    @IBOutlet weak var profilePictureOutlet: UIButton!
+    @IBOutlet weak var fullNameField: UITextField!
+    @IBOutlet weak var profilePictureButton: UIButton!
     
-    @IBOutlet weak var editEmail: UITextField!
-    @IBOutlet weak var editPassword: UITextField!
-    @IBOutlet weak var confirmPassword: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
     
     //var mainUser: User!
     
@@ -47,7 +45,7 @@ class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDe
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             //imageView.contentMode = .scaleAspectFit
-            profilePictureOutlet.setImage(pickedImage, for: UIControlState.normal)
+            profilePictureButton.setImage(pickedImage, for: UIControlState.normal)
         } else {
             print("Something went wrong")
         }

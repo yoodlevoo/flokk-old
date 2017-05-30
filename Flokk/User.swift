@@ -36,6 +36,12 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         loadPicture()
     }
     
+    init(handle: String, profilePhoto: UIImage) {
+        self.handle = handle
+        self.profilePhoto = profilePhoto
+        self.fullName = ""
+    }
+    
     init(handle: String, fullName: String, groupHandles: [String]) {
         self.handle = handle
         self.fullName = fullName

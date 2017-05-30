@@ -107,7 +107,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupSettingsToInviteFriends" {
-            if let inviteFriendsView = segue.destination as? InviteFriendsTableViewController {
+            if let inviteFriendsView = segue.destination as? InviteFriendsViewController {
                 inviteFriendsView.group = self.group
                 
                 // Load all of the user's friends
