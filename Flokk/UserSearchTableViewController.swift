@@ -24,8 +24,19 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.searchBar.sizeToFit()
-        self.tableView.tableHeaderView = self.searchController.searchBar
         self.searchController.searchBar.delegate = self
+        self.searchController.searchBar.keyboardAppearance = .dark
+        
+        self.searchController.searchBar.layer.cornerRadius = 2.0
+        self.searchController.searchBar.layer.borderColor = UIColor.cyan.cgColor
+        //self.searchController.searchBar.layer.backgroundColor = NAVY_COLOR.cgColor
+        self.searchController.searchBar.tintColor =  TEAL_COLOR
+        
+        var textField = self.searchController.searchBar.value(forKey: "_searchField") as! UITextField
+        textField.textColor = UIColor.brown
+        textField.backgroundColor = NAVY_COLOR
+        
+        self.tableView.tableHeaderView = self.searchController.searchBar
         
         self.searchContent = ""
     }

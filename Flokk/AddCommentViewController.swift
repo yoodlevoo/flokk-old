@@ -8,40 +8,77 @@
 
 import UIKit
 
-class AddCommentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class AddCommentViewController: UIViewController {
     @IBOutlet weak var postView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet var keyboardHeightLayoutConstraint : NSLayoutConstraint?
     
+    var loadedComments = [Comment]()
+    
     var post: Post! // A copy of the post
     var postIndex: Int! // The index of the post in the post array
     var groupIndex: Int! // The index of the group in the global groups array
-    //var forGroup: Group
+    var group: Group!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.hideKeyboardWhenTappedAround()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        textField.delegate = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.textField.delegate = self
         
-        postView.image = post.image
+        self.postView.image = post.image
         
         // Tells the notification to
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        // Load in the comments, ordered by most recent?
+        let commentRef = database.ref.child("comments").child(self.group.groupID).child(post.id)
+        commentRef.queryOrdered(byChild: "timestamp").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let children = snapshot.value as? NSDictionary {
+                for (key, data) in children { // Iterate through all of the comments
+                    if let values = data as? NSDictionary {
+                        let commenter = values["poster"] as! String
+                        let content = values["content"] as! String
+                        let timestamp = NSDate(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
+                        
+                        let comment = Comment(userHandle: commenter, content: content, timestamp: timestamp)
+                        
+                        self.loadedComments.append(comment)
+                        
+                        DispatchQueue.main.async {
+                            self.tableView.reloadData()
+                        }
+                    }
+                }
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    @IBAction func posterProfile(_ sender: Any) {
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let feedNav = segue.destination as? FeedNavigationViewController {
+            //feedNav.groupToPass = post.postedGroup
+        }
+    }
+}
+
+// Table View Functions
+extension AddCommentViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CommentsTableViewController
         
-        let comment = post.comments[indexPath.row]
+        let comment = self.loadedComments[indexPath.row]
         cell.userPhotoView.image = comment.user.profilePhoto
         cell.userPhotoView.layer.cornerRadius = cell.userPhotoView.frame.size.width / 2
         cell.userPhotoView.clipsToBounds = true
@@ -58,9 +95,11 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return post.comments.count
     }
+}
 
+// Text Field Functions
+extension AddCommentViewController: UITextFieldDelegate {
     // So the text field doesnt try to line break when we press enter
-    // Upload this comment
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
@@ -90,16 +129,6 @@ class AddCommentViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             UIView.animate(withDuration: duration, delay: TimeInterval(0), options: animationCurve, animations: { self.view.layoutIfNeeded() }, completion: nil)
-        }
-    }
-    
-    @IBAction func posterProfile(_ sender: Any) {
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let feedNav = segue.destination as? FeedNavigationViewController {
-            //feedNav.groupToPass = post.postedGroup
         }
     }
 }

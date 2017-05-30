@@ -28,6 +28,7 @@ class InviteFriendsTableViewController: UITableViewController, UISearchResultsUp
         self.searchController.searchBar.sizeToFit()
         self.tableView.tableHeaderView = self.searchController.searchBar
         self.searchController.searchBar.delegate = self
+        self.searchController.searchBar.keyboardAppearance = .dark
         
         self.searchContent = ""
         
@@ -73,15 +74,15 @@ class InviteFriendsTableViewController: UITableViewController, UISearchResultsUp
         let user = users[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath) as! InviteFriendsTableViewCell
         
-        if selectedUsers.contains(user) { // If this user has already been selected
+        if self.selectedUsers.contains(user) { // If this user has already been selected
             // Deselect it
             cell.invitedView.image = UIImage(named: "Empty Check")
             cell.invited = false
-            selectedUsers.remove(at: selectedUsers.index(of: user)!)
+            self.selectedUsers.remove(at: selectedUsers.index(of: user)!)
         } else { // If the user has not already been selected
             // Select it
             cell.invitedView.image = UIImage(named: "Full Check")
-            selectedUsers.append(user)
+            self.selectedUsers.append(user)
         }
     }
     

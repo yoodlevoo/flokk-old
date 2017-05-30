@@ -125,7 +125,7 @@ class GroupsViewController: UIViewController {
                     
                     feedView.group = group
                     self.tabBarController?.hideTabBar()
-                    self.navigationController?.title = group?.groupName
+                    //self.navigationController?.title = group?.groupName
                     
                     //feedNav.passGroup()
                 }

@@ -34,8 +34,6 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         self.groupImageView.clipsToBounds = true
         
         self.groupNameLabel.text = group.groupName
-
-        self.tabBar.title = group.groupName
         
         // Put an overlay over the image so you know you can change it?
         

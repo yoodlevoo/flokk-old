@@ -68,13 +68,14 @@ class Post {
 // A class that holds the values for comments on Posts
 // I'm not happy this has to be a separate class lol
 class Comment {
-    var user: User // The user who posted the comment
-    var content: String // The text of the comment
-    var date: Date
+    var user: User! // The user who posted the comment
+    var userHandle: String!
+    var content: String! // The text of the comment
+    var timestamp: NSDate!
     
-    init(user: User, content: String) {
-        self.user = user
+    init(userHandle: String, content: String, timestamp: NSDate) {
+        self.userHandle = userHandle
         self.content = content
-        self.date = Date() //later this needs to be loaded alongside the rest of the data, not created here
+        self.timestamp = timestamp
     }
 }

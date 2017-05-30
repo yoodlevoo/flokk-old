@@ -16,6 +16,10 @@ var storage: Storage!
 var groups = [Group]() // Should i do groups like this so they only need to be loaded once?
 var storedUsers = [String : User]() // Dict of all of the loaded users, should probably clean up from time to time, has to have profile photo & handle at the least
 
+// Color constants
+let TEAL_COLOR = UIColor(colorLiteralRed: 56.0/255.0, green: 161.0/255.0, blue: 159.0/255.0, alpha: 1.0)
+let NAVY_COLOR = UIColor(colorLiteralRed: 21.0/255.0, green: 22.0/255.0, blue: 43.0/255.0, alpha: 1.0)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

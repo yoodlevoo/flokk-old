@@ -10,6 +10,7 @@ import UIKit
 
 class FriendsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var totalFriends = [User]() // The total friends of the main users
     var displayedFriends = [User]() // Just the friends that are being displayed

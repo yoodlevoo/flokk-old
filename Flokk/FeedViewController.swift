@@ -126,6 +126,7 @@ class FeedViewController: UIViewController {
                     let post = loadedPosts[tag]
                     
                     commentView.post = post
+                    commentView.group = self.group
                 }
             }
         } else if segue.identifier == "segueFromFeedToPhotoUploadPage" {
