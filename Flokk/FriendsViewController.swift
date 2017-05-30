@@ -10,6 +10,7 @@ import UIKit
 
 class FriendsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var totalFriends = [User]() // The total friends of the main users
     var displayedFriends = [User]() // Just the friends that are being displayed
@@ -76,7 +77,7 @@ class FriendsViewController: UIViewController {
 // Table View Functions
 extension FriendsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! FriendsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! UserTableViewCell
         
         //get which friend should be referenced
         let friend = displayedFriends[indexPath.row]
@@ -93,10 +94,4 @@ extension FriendsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.displayedFriends.count //ranges from [0,
     }
-}
-
-class FriendsTableViewCell: UITableViewCell {
-    @IBOutlet weak var profilePhotoView: UIImageView!
-    @IBOutlet weak var fullNameLabel: UILabel!
-    @IBOutlet weak var handleLabel: UILabel!
 }

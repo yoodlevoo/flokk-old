@@ -20,8 +20,8 @@
     },
 
     "groupinvites": {
-        "friends": true,
-        "football": true
+        "friends": "-Kkv2QyuO9Dgu8mXKZjh",
+        "football": "-Kr2QuiyuO3fgu8mkaljh"
     },
 
     // Private data b/c you have to authenticate to get the UID

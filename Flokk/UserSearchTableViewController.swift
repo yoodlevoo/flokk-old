@@ -24,8 +24,19 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.searchBar.sizeToFit()
-        self.tableView.tableHeaderView = self.searchController.searchBar
         self.searchController.searchBar.delegate = self
+        self.searchController.searchBar.keyboardAppearance = .dark
+        
+        self.searchController.searchBar.layer.cornerRadius = 2.0
+        self.searchController.searchBar.layer.borderColor = UIColor.cyan.cgColor
+        //self.searchController.searchBar.layer.backgroundColor = NAVY_COLOR.cgColor
+        self.searchController.searchBar.tintColor =  TEAL_COLOR
+        
+        var textField = self.searchController.searchBar.value(forKey: "_searchField") as! UITextField
+        textField.textColor = UIColor.brown
+        textField.backgroundColor = NAVY_COLOR
+        
+        self.tableView.tableHeaderView = self.searchController.searchBar
         
         self.searchContent = ""
     }
@@ -49,17 +60,17 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! UserSearchTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! UserTableViewCell
         
         let user = users[indexPath.row]
         
         // Set the profile photo and crop it to a circle
-        cell.profilePicture.image = user.profilePhoto
-        cell.profilePicture.layer.cornerRadius = cell.profilePicture.frame.size.width / 2
-        cell.profilePicture.clipsToBounds = true
+        cell.profilePhotoView.image = user.profilePhoto
+        cell.profilePhotoView.layer.cornerRadius = cell.profilePhotoView.frame.size.width / 2
+        cell.profilePhotoView.clipsToBounds = true
         
         cell.fullNameLabel.text = user.fullName
-        cell.usernameLabel.text = user.handle
+        cell.handleLabel.text = user.handle
         
         return cell
     }
@@ -139,10 +150,4 @@ extension UserSearchTableViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         
     }
-}
-
-class UserSearchTableViewCell: UITableViewCell {
-    @IBOutlet weak var profilePicture: UIImageView!
-    @IBOutlet weak var fullNameLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
 }

@@ -15,6 +15,7 @@ class Group {
     private var groupCreatorHandle: String! // Loaded in in the groups view, not needed immediately so no need to download extra data
     
     var groupIndex: Int! // The index of this group in the global groups array
+    var groupID: String!
     var groupName: String
     //var internalGroupName: String! //this could still be the same as the groupName sometimes
     var groupIcon: UIImage
@@ -29,10 +30,9 @@ class Group {
     
     var numNewPosts: Int! //the amount of new posts the mainUser has missed from this group
     
-    private var postJSON: JSON! //json used in convertToJSON, set by FeedViewController in prepareForSegue
-    
     init() {
-        self.groupName = "filler"
+        self.groupID = "fillerID"
+        self.groupName = "fillerName"
         self.groupIcon = UIImage(named: "HOME ICON")! //just some filler image
         self.groupCreator = User(handle: "filler", fullName: "filler")
         
@@ -40,7 +40,8 @@ class Group {
         self.totalPostsCount = 0
     }
     
-    init(groupName: String, image: UIImage, users: [User], creator: User) {
+    init(groupID: String, groupName: String, image: UIImage, users: [User], creator: User) {
+        self.groupID = groupID
         self.groupName = groupName
         self.groupIcon = image
         self.members = users
@@ -51,7 +52,8 @@ class Group {
         //self.internalGroupName = Group.createFriendlyGroupName(name: groupName)
     }
     
-    init(groupName: String, groupIcon: UIImage, memberHandles: [String], postsData: [String : [String: Any?]], creatorHandle: String) {
+    init(groupID: String, groupName: String, groupIcon: UIImage, memberHandles: [String], postsData: [String : [String: Any?]], creatorHandle: String) {
+        self.groupID = groupID
         self.groupName = groupName
         self.groupIcon = groupIcon
         self.memberHandles = memberHandles

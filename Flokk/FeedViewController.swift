@@ -17,12 +17,13 @@ class FeedViewController: UIViewController {
     
     static let initialPostCount = 10 // The initial amount of posts to load
     var loadedPosts = [Post]() // When there are a lot of posts, this will contain only the most 'x' recent posts
-    //let postIDs = [String] () // IDs of the posts in FIR Storage
     
     let transitionDown = SlideDownAnimator()
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
     var postCount = initialPostCount
+    
+    fileprivate var userProfilePhotos = [String : UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,6 @@ class FeedViewController: UIViewController {
         } else {
             tableView.addSubview(refreshControl)
         }
-        
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -49,11 +49,8 @@ class FeedViewController: UIViewController {
         self.edgesForExtendedLayout = .bottom
         
         self.navigationBar.title = group.groupName
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
+        // Load posts
         if self.group.posts.count < self.postCount { // If we need to load more posts
             for (id, data) in self.group.postsData { //print("postsData count \(self.group.postsData.count)")
                 let matches = self.group.posts.filter{$0.id == id} // Check if there is a loaded post that matches this ID
@@ -62,19 +59,43 @@ class FeedViewController: UIViewController {
                 } else { // This post hasn't been loaded yet, begin to load it
                     let dataDict = data
                     
-                    let postRef = storage.ref.child("groups").child(self.group.groupName).child("posts")
+                    let posterHandle = dataDict["poster"] as! String
+                    let timestamp = NSDate(timeIntervalSinceReferenceDate: (dataDict["timestamp"] as! Double))
                     
+                    // Load this user's profile photo if it hasn't been loaded already
+                    if !userProfilePhotos.keys.contains(posterHandle) {
+                        let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhoto").child("\(posterHandle).jpg")
+                        profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                            if error == nil { // If there wasn't an error
+                                let profilePhoto = UIImage(data: data!) // Load the profile photo from the received data
+                                
+                                self.userProfilePhotos[posterHandle] = profilePhoto
+                            } else {
+                                print(error!)
+                            }
+                        })
+                    }
+                    
+                    // Load the post image
+                    let postRef = storage.ref.child("groups").child(self.group.groupID).child("posts")
                     postRef.child("\(id)/post.jpg").data(withMaxSize: 1 * 3072 * 3072, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let postImage = UIImage(data: data!)
-                            
+                               
                             // Generate the post
-                            let post = Post(posterHandle: dataDict["poster"] as! String, image: postImage!, postID: id)
-                            
+                            let post = Post(posterHandle: posterHandle, image: postImage!, postID: id, timestamp: timestamp)
+                               
                             // Store it in the various arrays
                             self.group.posts.append(post)
+
+                            // Sort the group posts by the upload date, with the more recent posts first
+                            self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate })
+                            
                             self.loadedPosts = self.group.posts
-                            self.tableView.reloadData()
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
                         } else { // If there was an error
                             print(error!)
                         }
@@ -82,6 +103,10 @@ class FeedViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -101,6 +126,7 @@ class FeedViewController: UIViewController {
                     let post = loadedPosts[tag]
                     
                     commentView.post = post
+                    commentView.group = self.group
                 }
             }
         } else if segue.identifier == "segueFromFeedToPhotoUploadPage" {
@@ -109,8 +135,8 @@ class FeedViewController: UIViewController {
 
             }
         } else if segue.identifier == "segueFromFeedToGroupSettings" {
-            if let groupSettingsNav = segue.destination as? GroupSettingsNavigationViewController {
-                groupSettingsNav.transitioningDelegate = transitionDown
+            if let groupSettings = segue.destination as? GroupSettingsViewController {
+                groupSettings.group = self.group
             }
         }
     }
@@ -126,12 +152,14 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         let index = loadedPosts.count - 1 - indexPath.row
         cell.tag = index // Set the tag so prepare for segue can recognize which post was selected
         
-        //let user: User = loadedPosts[index].poster
-        //cell.userImage.image = user.profilePhoto
-        cell.setCustomImage(image: loadedPosts[index].image)
+        let post = loadedPosts[index]
         
-        //cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
-        //cell.userImage.clipsToBounds = true
+        cell.setCustomImage(image: post.image)
+        
+        // Set the poster's profile photo & crop it to a circle
+        cell.userImage.image = self.userProfilePhotos[post.posterHandle] ?? UIImage(named: "AddProfilePic")
+        cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
+        cell.userImage.clipsToBounds = true
         
         //print("\(cell.userImage.image?.size.width) \(cell.userImage.image?.size.height)")
         
@@ -199,6 +227,7 @@ class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
     }
 }
 
+// Tf is this used for
 enum FeedTableViewCellSide {
     case FeedTableViewCellSideLeft
     case FeedtableViewCellSideRight

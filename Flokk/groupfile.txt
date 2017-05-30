@@ -22,7 +22,7 @@
         }
     },
 
-    "invitedusers": { // users who have been invited
+    "invitedUsers": { // users who have been invited
         "taviansims": true,
         "lucasarnold": true
     },

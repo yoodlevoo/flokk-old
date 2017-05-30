@@ -19,6 +19,8 @@ class GroupProfileViewController: UIViewController {
     var headerConstraintRange: Range<CGFloat>! // The range that determines the min/max of the tableView's expansion/contraction
     var headerViewCriteria = CGFloat(0) // Doesn't actually affect the header view, but used for the scroll view calculations
     
+    var invitedReceived = false // If the main user has been invited to this group, by default is false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +30,11 @@ class GroupProfileViewController: UIViewController {
         // Create the range for when the tableView should start/stop moving
         self.headerConstraintRange = (CGFloat(self.headerView.frame.origin.y - self.headerView.frame.size.height)..<CGFloat(self.headerView.frame.origin.y))
         self.view.bringSubview(toFront: tableView) // Make sure the table view is always shown on top of the header view
-        self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it to achieve the desired effect\
+        self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it to achieve the desired effect
+        
+        if self.invitedReceived {
+            
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,16 +69,16 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default") as! GroupParticipantsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "default") as! UserTableViewCell
         
         let user = group.members[indexPath.row]
         
-        cell.profilePictureView.image = user.profilePhoto
-        cell.profilePictureView.layer.cornerRadius = cell.profilePictureView.frame.size.width / 2
-        cell.profilePictureView.clipsToBounds = true
+        cell.profilePhotoView.image = user.profilePhoto
+        cell.profilePhotoView.layer.cornerRadius = cell.profilePhotoView.frame.size.width / 2
+        cell.profilePhotoView.clipsToBounds = true
         
-        cell.nameLabel.text = user.fullName
-        cell.usernameLabel.text = "@\(user.handle)"
+        cell.fullNameLabel.text = user.fullName
+        cell.handleLabel.text = "@\(user.handle)"
         
         return cell
     }
@@ -100,11 +106,4 @@ extension GroupProfileViewController: UITableViewDataSource, UITableViewDelegate
         
         oldContentOffset = scrollView.contentOffset
     }
-}
-
-class GroupParticipantsTableViewCell: UITableViewCell {
-    @IBOutlet weak var profilePictureView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
-    
 }

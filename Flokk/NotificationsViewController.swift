@@ -121,7 +121,8 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
                 return
             }
             
-            //groupProfileView.group = notification.group
+            groupProfileView.group = notification.group
+            groupProfileView.invitedReceived = true
             //groupProfileView.user = notification.sender
             
             //

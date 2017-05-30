@@ -1,4 +1,5 @@
 PODS:
+  - BRYXBanner (0.7.2)
   - Firebase/Analytics (3.15.0):
     - Firebase/Core
   - Firebase/Auth (3.15.0):
@@ -42,6 +43,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.9)
 
 DEPENDENCIES:
+  - BRYXBanner
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
@@ -49,6 +51,7 @@ DEPENDENCIES:
   - Firebase/Storage
 
 SPEC CHECKSUMS:
+  BRYXBanner: ed407a56c53f2add0aaa16f810062eac48d802cf
   Firebase: 2b1cdfba1cda8589f32904a697cc753322bff9d8
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseAuth: cc8a1824170adbd351edb7f994490a3fb5c18be6
@@ -59,6 +62,6 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
 
-PODFILE CHECKSUM: 2210ede09caef5052c10bbd65c4dd5f6b43898f9
+PODFILE CHECKSUM: d61739738c48df56b15fa24e7d4c40ca6bfa4b78
 
 COCOAPODS: 1.2.0

@@ -18,7 +18,11 @@ class ConfirmUploadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad() 
 
-        //imageView.image = image
+        /*
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear */
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,8 +30,8 @@ class ConfirmUploadViewController: UIViewController {
     }
     
     @IBAction func uploadPressed(_ sender: Any) {
-        let postsRef = database.ref.child("groups").child(forGroup.groupName).child("posts") // Database
-        let imageRef = storage.ref.child("groups").child(forGroup.groupName).child("posts") // Storage
+        let postsRef = database.ref.child("groups").child(forGroup.groupID).child("posts") // Database
+        let imageRef = storage.ref.child("groups").child(forGroup.groupID).child("posts") // Storage
         let key = postsRef.childByAutoId().key // Generate random ID for this post
         
         self.image = imageView.image
@@ -37,17 +41,14 @@ class ConfirmUploadViewController: UIViewController {
             guard let metadata = metadata else {
                 return
             }
-            
-            //let downloadURL = metadata.downloadURL()
         }
         
         // Upload the data about this post to the Database
         postsRef.child("\(key)").child("poster").setValue(mainUser.handle)
         postsRef.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         
-        let post = Post(poster: mainUser, image: self.imageView.image!, postID: key)
-            
-        //self.forGroup.posts.append(post) // Appending to a copy will do nothing
+        //let post = Post(poster: mainUser, image: self.imageView.image!, postID: key)
+        let post = Post(posterHandle: mainUser.handle, image: self.imageView.image!, postID: key, timestamp: NSDate(timeIntervalSinceReferenceDate: NSDate.timeIntervalSinceReferenceDate))
         
         // Search for this group's index
         let index = groups.index(where: { (item) -> Bool in
@@ -55,6 +56,7 @@ class ConfirmUploadViewController: UIViewController {
         })
         
         groups[index!].posts.append(post) // Add this post to the group
+        groups[index!].posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate})
         
         // Start storage here
         
