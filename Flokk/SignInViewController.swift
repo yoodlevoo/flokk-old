@@ -45,8 +45,10 @@ class SignInViewController: UIViewController {
         var password = passwordEntry.text // Get the entered password
         
         if email == "" {
-            email = "gannonprudhomme@gmail.com"
-            password = "gannon123"
+            //email = "gannonprudhomme@gmail.com"
+            //password = "gannon123"
+            email = "cheeseman123432@yahoo.com"
+            password = "alex123"
         }
         
         // Authenticate and sign the user in

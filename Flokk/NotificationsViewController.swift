@@ -8,10 +8,14 @@
 
 import UIKit
 
-class NotificationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NotificationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     var notifications = [Notification]()
+    
+    var refreshControl = UIRefreshControl()
+    
+    let initialLoadCount = 20 // The maximum initial amount of notifications to load
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,8 +23,15 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        // Listen for any changes in the user's notification tree
+        // Set the refresh control properties and action
+        self.refreshControl.addTarget(self, action: #selector(NotificationsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
+        self.tableView.refreshControl = refreshControl
+        self.tableView.refreshControl?.beginRefreshing()
+        self.tableView.refreshControl?.endRefreshing()
         
+        // Listen for any changes in the user's notification tree
+        loadNotifications()
     }
     
     // When this view is being transitioned to - check for Notifications?
@@ -46,7 +57,127 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
+    // Called when the user pulls down on this table
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
+
+    func loadNotifications() {
+        // Load notifications too probably, just the first 10
+        database.ref.child("notifications").child(mainUser.handle).queryOrdered(byChild: "timestamp").queryLimited(toFirst: 10).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                for (_, value) in values {
+                    if let data = value as? [String : Any] {
+                        let type = NotificationType(rawValue: data["type"] as! Int)!
+                        
+                        let notification: Notification
+                        
+                        switch(type) {
+                        case NotificationType.FRIEND_REQUESTED:
+                            let senderHandle = data["sender"] as! String
+                            let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
+                            
+                            notification = Notification(type: type, senderHandle: senderHandle)
+                            
+                            // Add the notification
+                            mainUser.notifications.append(notification)
+                            
+                            // Reload the table
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                            
+                            break
+                        case NotificationType.GROUP_INVITE:
+                            let senderHandle = data["sender"] as! String
+                            let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
+                            let groupID = data["groupID"] as! String
+                            
+                            // Load all of the needed data for this type of notification
+                            // The user profile photo & name and the group icon & name
+                            let groupRef = database.ref.child("groups").child(groupID)
+                            groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                if let values = snapshot.value as? NSDictionary {
+                                    let groupName = values["name"] as! String
+                                    
+                                    // Load the group icon first
+                                    let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
+                                    groupIconRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                                        if error == nil {
+                                            let groupPhoto = UIImage(data: data!)
+                                            // Create the group object
+                                            let group = Group(groupID: groupID, groupName: groupName, image: groupPhoto!)
+                                            
+                                            // Load in the user's profile photo
+                                            let userProfilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
+                                            userProfilePhotoRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                                                if error == nil {
+                                                    let profilePhoto = UIImage(data: data!)
+                                                    // Create the user object
+                                                    let user = User(handle: senderHandle, profilePhoto: profilePhoto!)
+                                                    
+                                                    // Create and add the notification
+                                                    let notification = Notification(type: NotificationType.GROUP_INVITE, sender: user, group: group)
+                                                    mainUser.notifications.append(notification)
+                                                    
+                                                    DispatchQueue.main.async {
+                                                        self.tableView.reloadData()
+                                                    }
+                                                } else {
+                                                    print(error!)
+                                                }
+                                            })
+                                        } else {
+                                            print(error!)
+                                        }
+                                    })
+                                }
+                            })
+                            
+                            break
+                        default: break
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        (self.tabBarController as! MainTabBarController).hideTabBar()
+        
+        let indexPath = self.tableView.indexPathForSelectedRow!
+        
+        if segue.identifier == "segueFromNotificationsToProfile" {
+            if let profileView = segue.destination as? ProfileViewController {
+                let notification = notifications[indexPath.row]
+                
+                profileView.user = notification.sender
+            }
+        } else if segue.identifier == "segueFromNotificationsToGroupProfile" {
+            if let groupProfileView = segue.destination as? GroupProfileViewController {
+                let notification = notifications[indexPath.row]
+                
+                groupProfileView.group = notification.group
+            }
+        }
+    }
+}
+
+// Table View Functions
+extension NotificationsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // This is only called once every time the table view reloads, so it's reasonable to check if the
+        // activity indicator needs to disappear
+        self.notifications = mainUser.notifications
+        
+        if self.notifications.count > 0 { // If a certain minimum of posts have been loaded
+            if let refresh = self.tableView.refreshControl {
+                
+            }
+        }
+        
         return notifications.count
     }
     
@@ -58,9 +189,11 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         
         switch notification.type {
         case NotificationType.FRIEND_REQUESTED:
+            // Don't need to do anything extra here
             
             break
         case NotificationType.FRIEND_REQUEST_ACCEPTED:
+            // Probably don't need to do anything extra here
             
             break
         case NotificationType.GROUP_INVITE:
@@ -78,7 +211,7 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
             
             break
         case NotificationType.NEW_POST:
-        
+            
             break
         }
         
@@ -135,26 +268,6 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         case NotificationType.NEW_POST:
             
             break
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        (self.tabBarController as! MainTabBarController).hideTabBar()
-        
-        let indexPath = self.tableView.indexPathForSelectedRow!
-        
-        if segue.identifier == "segueFromNotificationsToProfile" {
-            if let profileView = segue.destination as? ProfileViewController {
-                let notification = notifications[indexPath.row]
-                
-                profileView.user = notification.sender
-            }
-        } else if segue.identifier == "segueFromNotificationsToGroupProfile" {
-            if let groupProfileView = segue.destination as? GroupProfileViewController {
-                let notification = notifications[indexPath.row]
-                
-                groupProfileView.group = notification.group
-            }
         }
     }
 }

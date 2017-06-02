@@ -26,6 +26,8 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var incomingFriendRequests = [String]() // Array of user handles that requested to be this user's friend
     var outgoingFriendRequests = [String]() // Array of user handles this user requested to be friends with
     
+    var groupInvites: [String]! // Array of ID's for the group the user has been invited to
+    
     var notifications = [Notification]() // The user's notifications
     
     init(handle: String, fullName: String) {

@@ -14,6 +14,7 @@ class Group {
     var groupCreator: User! //whoever created the group, has all the "admin" rights on it - this should never be nil
     private var groupCreatorHandle: String! // Loaded in in the groups view, not needed immediately so no need to download extra data
     
+    // rename these just to say index, id, name, icon, etc
     var groupIndex: Int! // The index of this group in the global groups array
     var groupID: String!
     var groupName: String

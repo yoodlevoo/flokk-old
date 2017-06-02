@@ -24,6 +24,7 @@ class UserSearchViewController: UIViewController {
         super.viewDidLoad()
         
         self.searchBar.delegate = self
+        self.searchBar.isHidden = true
         
         self.searchController.searchResultsUpdater = self
         self.searchController.hidesNavigationBarDuringPresentation = false
@@ -43,7 +44,7 @@ class UserSearchViewController: UIViewController {
         textField.backgroundColor = NAVY_COLOR
         */
  
-        //self.tableView.tableHeaderView = self.searchController.searchBar
+        self.tableView.tableHeaderView = self.searchController.searchBar
         
         self.searchContent = ""
     }
@@ -104,6 +105,7 @@ extension UserSearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// Search Bar Functions
 extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //let usersRef = database.ref.child("users").queryOrdered(byChild: "fullName").queryEqual(toValue: searchBar.text)

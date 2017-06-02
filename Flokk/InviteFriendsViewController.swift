@@ -209,7 +209,7 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.users = self.selectedUsers
+        self.users = self.selectedUsers + self.mainUserFriends
         self.tableView.reloadData()
     }
     
@@ -220,6 +220,8 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
             self.searchBar.setShowsCancelButton(false, animated: true)
         }
     }
+    
+    
 }
 
 class InviteFriendsTableViewCell: UITableViewCell {

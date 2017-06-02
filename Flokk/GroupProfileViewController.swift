@@ -32,9 +32,7 @@ class GroupProfileViewController: UIViewController {
         self.view.bringSubview(toFront: tableView) // Make sure the table view is always shown on top of the header view
         self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it to achieve the desired effect
         
-        if self.invitedReceived {
-            
-        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

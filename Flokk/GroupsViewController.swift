@@ -165,73 +165,6 @@ extension GroupsViewController {
             }
         })
         
-        // Load notifications too probably, just the first 10
-        database.ref.child("notifications").child(mainUser.handle).queryOrdered(byChild: "timestamp").queryLimited(toFirst: 10).observeSingleEvent(of: .value, with: { (snapshot) in
-            if let values = snapshot.value as? NSDictionary {
-                for (_, value) in values {
-                    if let data = value as? [String : Any] {
-                        let type = NotificationType(rawValue: data["type"] as! Int)!
-                        
-                        let notification: Notification
-                        
-                        switch(type) {
-                        case NotificationType.FRIEND_REQUESTED:
-                            let senderHandle = data["sender"] as! String
-                            let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
-                            
-                            notification = Notification(type: type, senderHandle: senderHandle)
-                            
-                            // Add the notification
-                            mainUser.notifications.append(notification)
-                            break
-                        case NotificationType.GROUP_INVITE:
-                            let senderHandle = data["sender"] as! String
-                            let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
-                            let groupID = data["groupID"] as! String
-                            
-                            // Load all of the needed data
-                            let groupRef = database.ref.child("groups").child(groupID)
-                            groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                                if let values = snapshot.value as? NSDictionary {
-                                    let groupName = values["name"] as! String
-                                    
-                                    let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
-                                    groupIconRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
-                                        if error == nil {
-                                            let groupPhoto = UIImage(data: data!)
-                                            
-                                            let group = Group(groupID: groupID, groupName: groupName, image: groupPhoto!)
-                                            
-                                            let userProfilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
-                                            userProfilePhotoRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
-                                                if error == nil {
-                                                    let profilePhoto = UIImage(data: data!)
-                                                    
-                                                    let user = User(handle: senderHandle, profilePhoto: profilePhoto!)
-                                                    
-                                                    let notification = Notification(type: NotificationType.GROUP_INVITE, sender: user, group: group)
-                                                    
-                                                    mainUser.notifications.append(notification)
-                                                } else {
-                                                    print(error!)
-                                                }
-                                                
-                                            })
-                                        } else {
-                                            print(error!)
-                                        }
-                                    })
-                                }
-                            })
-                            
-                            break
-                        default: break
-                        }
-                    }
-                }
-            }
-        })
-        
         // Load all of the outgoing friend requests
         database.ref.child("users").child(mainUser.handle).child("outgoingrequests").observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
@@ -247,6 +180,13 @@ extension GroupsViewController {
                 let requestHandles = values.allKeys as! [String]
                 
                 mainUser.incomingFriendRequests = requestHandles
+            }
+        })
+        
+        // Load all of the group invites
+        database.ref.child("users").child(mainUser.handle).child("groupinvites").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                
             }
         })
     }
@@ -266,6 +206,8 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.groupImageView.clipsToBounds = true
         
         cell.tag = indexPath.row //or do i do indexPath.item
+        
+        self.refreshControl.endRefreshing()
         
         return cell
     }

@@ -121,7 +121,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                                 let fullName = values["fullName"] as! String
                                 
                                 // Download the profile photo
-                                let profilePhotoRef = storage.ref.child("users").child(handle)
+                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
                                 profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
                                     if error == nil {
                                         let profilePhoto = UIImage(data: data!)
@@ -129,6 +129,8 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                                         let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                                         
                                         inviteFriendsView.mainUserFriends.append(user)
+                                    } else {
+                                        print(error!)
                                     }
                                 })
                             }
