@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-//how should i determine what this groups unique handle is?
+// A class that represents all groups in Flokk, the whole basis of Flokk
+// On creation, at the very minimum, a group is given a completely unique identifier(groupID), a group name, a creator, and an icon/image.
 class Group {
     var groupCreator: User! //whoever created the group, has all the "admin" rights on it - this should never be nil
     private var groupCreatorHandle: String! // Loaded in in the groups view, not needed immediately so no need to download extra data
@@ -24,6 +25,8 @@ class Group {
     
     var members = [User]() //the users that are in this group
     var memberHandles = [String]() // The user handles that are in this group, not fully loaded until Group Settings b/c useless otherwise?
+    
+    var invitedUsers = [String]() // All of the user handles that have been invited to this group
     
     var posts = [Post]() // The posts that have been loaded in, from newest to oldest
     //var loadedPosts = [Post]() // The posts that have been loaded so far

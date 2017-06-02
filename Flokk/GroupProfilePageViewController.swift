@@ -24,6 +24,8 @@ class GroupProfilePageViewController: UIPageViewController {
             
             viewController1.group = group
             viewControllerPages.append(viewController1)
+        } else {
+            print("Couldn't instantiate GroupProfileViewController1")
         }
         
         // Attempt to initialize the second child view controller
@@ -31,6 +33,8 @@ class GroupProfilePageViewController: UIPageViewController {
             
             viewController2.group = self.group
             viewControllerPages.append(viewController2)
+        } else {
+            print("Couldn't instantiate GroupProfileViewController2")
         }
         
         if mainUser.groupInvites == nil { // If the group invites has been loaded yet
@@ -74,13 +78,21 @@ class GroupProfilePageViewController: UIPageViewController {
     }
     
     func showInviteButtons() {
-        (viewControllerPages[0] as! GroupProfileViewControllerPage1).acceptGroupInviteButton.isHidden = false
-        (viewControllerPages[0] as! GroupProfileViewControllerPage1).declineGroupInviteButton.isHidden = false
+        if let page1 = viewControllerPages[0] as? GroupProfileViewControllerPage1 {
+            if page1.acceptGroupInviteButton != nil && page1.declineGroupInviteButton != nil {
+                page1.acceptGroupInviteButton.isHidden = false
+                page1.declineGroupInviteButton.isHidden = false
+            }
+        }
     }
     
     func hideInviteButtons() {
-        (viewControllerPages[0] as! GroupProfileViewControllerPage1).acceptGroupInviteButton.isHidden = true
-        (viewControllerPages[0] as! GroupProfileViewControllerPage1).declineGroupInviteButton.isHidden = true
+        if let page1 = viewControllerPages[0] as? GroupProfileViewControllerPage1 {
+            if page1.acceptGroupInviteButton != nil && page1.declineGroupInviteButton != nil {
+                page1.acceptGroupInviteButton.isHidden = true
+                page1.declineGroupInviteButton.isHidden = true
+            }
+        }
     }
 }
 
@@ -156,8 +168,7 @@ class GroupProfileViewControllerPage1: UIViewController {
         
         let userRef = database.ref.child("users").child(mainUser.handle)
         userRef.child("groupInvites").child(self.group.groupID).removeValue() // Remove this group from the list of group invites for the user
-        userRef.child("groups").child(self.group.groupID).setValue(true) // Set this group as one of the user's groups
-        
+        userRef.child("groups").child(self.group.groupID).setValue(true) // Set this group as one of the user's group
         
         // Delete the notification for the user
         let notificationRef = database.ref.child("notifications").child(mainUser.handle)
@@ -173,6 +184,21 @@ class GroupProfileViewControllerPage1: UIViewController {
                 }
             }
         })
+        
+        // Add a group join notification
+        
+        // Hide the invite buttons
+        (self.parent as! GroupProfilePageViewController).hideInviteButtons()
+        
+        // Remove the notification somewhere
+        //let matches = mainUser.notifications.filter({$0.group.groupID == self.group.groupID && $0.type == NotificationType.GROUP_INVITE })
+        //if matches.count == 1 {
+            //mainUser.notifications.index(of: matches[0])
+        //}
+        
+        // Add this group to the local list of groups - should both of these really be called?
+        mainUser.groupIDs.append(self.group.groupID)
+        mainUser.groups.append(self.group)
     }
     
     // If the user declines the invite to join this group - most of this is the same as acceptGroupInvitePressed(above)
@@ -198,6 +224,11 @@ class GroupProfileViewControllerPage1: UIViewController {
                 }
             }
         })
+        
+        // Hide the invite buttons
+        (self.parent as! GroupProfilePageViewController).hideInviteButtons()
+        
+        
     }
 }
 

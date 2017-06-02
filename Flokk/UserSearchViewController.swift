@@ -13,7 +13,7 @@ import FirebaseStorage
 
 class UserSearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    //@IBOutlet weak var searchBar: UISearchBar!
     
     var users = [User]()
     let searchController = UISearchController(searchResultsController: nil)
@@ -23,8 +23,11 @@ class UserSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.searchBar.delegate = self
-        self.searchBar.isHidden = true
+        //self.searchBar.delegate = self
+        //self.searchBar.isHidden = true
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
         self.searchController.searchResultsUpdater = self
         self.searchController.hidesNavigationBarDuringPresentation = false
@@ -32,6 +35,8 @@ class UserSearchViewController: UIViewController {
         self.searchController.searchBar.sizeToFit()
         self.searchController.searchBar.delegate = self
         self.searchController.searchBar.keyboardAppearance = .dark
+        
+        self.tableView.tableHeaderView = self.searchController.searchBar
         
         /*
         self.searchController.searchBar.layer.cornerRadius = 2.0
@@ -43,8 +48,6 @@ class UserSearchViewController: UIViewController {
         textField.textColor = UIColor.brown
         textField.backgroundColor = NAVY_COLOR
         */
- 
-        self.tableView.tableHeaderView = self.searchController.searchBar
         
         self.searchContent = ""
     }
@@ -143,7 +146,9 @@ extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating
                                 self.users.append(user)
                                 
                                 // Update the data table
-                                self.tableView.reloadData()
+                                DispatchQueue.main.async {
+                                     self.tableView.reloadData()
+                                }
                             } else { // If there was an error
                                 
                             }

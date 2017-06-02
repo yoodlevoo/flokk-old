@@ -18,7 +18,7 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var profilePhoto: UIImage
     
     var groups = [Group]() // The groups this user is in
-    var groupHandles = [String]() // Passed in from SignIn - for the mainUser
+    var groupIDs = [String]() // The IDs of all the groups this user is in
     
     var friends = [User]() // Array of all friends this user has that have already been loaded
     var friendHandles = [String]() // Array of the handles of friends this user has, don't need all of the user's data the entire time
@@ -44,12 +44,12 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.fullName = ""
     }
     
-    init(handle: String, fullName: String, groupHandles: [String]) {
+    init(handle: String, fullName: String, groupIDs: [String]) {
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = UIImage(named: "AddProfilePic")!
         
-        self.groupHandles = groupHandles
+        self.groupIDs = groupIDs
     }
     
     init(handle: String, fullName: String, profilePhoto: UIImage) {
@@ -58,12 +58,12 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.profilePhoto = profilePhoto
     }
     
-    init(handle: String, fullName: String, profilePhoto: UIImage, groupHandles: [String]) {
+    init(handle: String, fullName: String, profilePhoto: UIImage, groupIDs: [String]) {
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = profilePhoto
         
-        self.groupHandles = groupHandles
+        self.groupIDs = groupIDs
     }
     
     func loadFriends() {

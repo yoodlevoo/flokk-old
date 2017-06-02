@@ -38,8 +38,8 @@ class GroupsViewController: UIViewController {
         self.tableView.dataSource = self
         
         // Attempt to load in all of the groups
-        if groups.count < mainUser.groupHandles.count { // If we dont have all of the groups loaded in
-            for groupID in mainUser.groupHandles {
+        if groups.count < mainUser.groupIDs.count { // If we dont have all of the groups loaded in
+            for groupID in mainUser.groupIDs {
                 let matches = groups.filter{ $0.groupID == groupID } // Check if we already have a group with this ID, probably inefficient
                 if matches.count != 0 { // If we already contain a group with this handle, skip it
                     continue
@@ -64,6 +64,13 @@ class GroupsViewController: UIViewController {
                                 
                                 // And we can finish loading the group
                                 let group = Group(groupID: groupID, groupName: groupName, groupIcon: groupIcon!, memberHandles: Array(memberHandles.keys), postsData: postsData, creatorHandle: creatorHandle)
+                                
+                                // Attemp to load in the user handles that have been invited to this group already
+                                if let invitedUsers = values["invitedUsers"] as? [String : Bool] { // Also checks if there are any invited users or not
+                                    group.invitedUsers = Array(invitedUsers.keys)
+                                } else { // Then there are probably no invites that are still pending for this group
+                                    group.invitedUsers = [String]()
+                                }
                                 
                                 groups.append(group) // Add this newly loaded group into the global groups variable
                                 

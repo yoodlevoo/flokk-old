@@ -71,22 +71,40 @@ class NotificationsViewController: UIViewController {
                     if let data = value as? [String : Any] {
                         let type = NotificationType(rawValue: data["type"] as! Int)!
                         
-                        let notification: Notification
-                        
                         switch(type) {
                         case NotificationType.FRIEND_REQUESTED:
                             let senderHandle = data["sender"] as! String
                             let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
                             
-                            notification = Notification(type: type, senderHandle: senderHandle)
-                            
-                            // Add the notification
-                            mainUser.notifications.append(notification)
-                            
-                            // Reload the table
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
+                            // Load in the sender data
+                            let userRef = database.ref.child("users").child(senderHandle)
+                            userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                if let userValues = snapshot.value as? NSDictionary {
+                                    let fullName = userValues["fullName"] as! String
+                                    
+                                    // Load in the profile photo
+                                    let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
+                                    profilePhotoRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                                        if error == nil { // If there wasn't an error
+                                            let profilePhoto = UIImage(data: data!)
+                                            
+                                            let user = User(handle: senderHandle, fullName: fullName, profilePhoto: profilePhoto!)
+                                            
+                                            let notification = Notification(type: .FRIEND_REQUESTED, sender: user)
+                                            
+                                            // Add the notification
+                                            mainUser.notifications.append(notification)
+                                            
+                                            // Reload the table
+                                            DispatchQueue.main.async {
+                                                self.tableView.reloadData()
+                                            }
+                                        } else {
+                                            print(error!)
+                                        }
+                                    })
+                                }
+                            })
                             
                             break
                         case NotificationType.GROUP_INVITE:
@@ -100,6 +118,7 @@ class NotificationsViewController: UIViewController {
                             groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
                                 if let values = snapshot.value as? NSDictionary {
                                     let groupName = values["name"] as! String
+                                    let memberHandles = values["members"] as! [String : Bool] // This will never be nil/empty, will always have the creator
                                     
                                     // Load the group icon first
                                     let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
@@ -108,24 +127,48 @@ class NotificationsViewController: UIViewController {
                                             let groupPhoto = UIImage(data: data!)
                                             // Create the group object
                                             let group = Group(groupID: groupID, groupName: groupName, image: groupPhoto!)
+                                            group.memberHandles = Array(memberHandles.keys) // Set the member handles to be loaded in the future
                                             
-                                            // Load in the user's profile photo
-                                            let userProfilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
-                                            userProfilePhotoRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
-                                                if error == nil {
-                                                    let profilePhoto = UIImage(data: data!)
-                                                    // Create the user object
-                                                    let user = User(handle: senderHandle, profilePhoto: profilePhoto!)
+                                            // Load user data - we might as well load in everything while we have to
+                                            let userRef = database.ref.child("users").child(senderHandle)
+                                            userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                                if let userValues = snapshot.value as? NSDictionary {
+                                                    // Only load values that are 100% going to exist here
+                                                    // Everything else needs to be in a conditional in the block below, after the user object has been initialized
+                                                    // Or we could just directly load the fullName?
+                                                    let fullName = userValues["fullName"] as! String
                                                     
-                                                    // Create and add the notification
-                                                    let notification = Notification(type: NotificationType.GROUP_INVITE, sender: user, group: group)
-                                                    mainUser.notifications.append(notification)
+                                                    //print(snapshot.children)
                                                     
-                                                    DispatchQueue.main.async {
-                                                        self.tableView.reloadData()
-                                                    }
-                                                } else {
-                                                    print(error!)
+                                                    // Load in the user's profile photo
+                                                    let userProfilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
+                                                    userProfilePhotoRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                                                        if error == nil {
+                                                            let profilePhoto = UIImage(data: data!)
+                                                            // Create the user object
+                                                            let user = User(handle: senderHandle, fullName: fullName, profilePhoto: profilePhoto!)
+                                                        
+                                                            // Set the group IDs
+                                                            if let groups = userValues["groups"] as? [String : Bool] {
+                                                                user.groupIDs = Array(groups.keys)
+                                                            }
+                                                            
+                                                            if let friends = userValues["friends"] as? [String : Bool] {
+                                                                user.friendHandles = Array(friends.keys)
+                                                            }
+                                                                
+                                                            // Create and add the notification
+                                                            let notification = Notification(type: NotificationType.GROUP_INVITE, sender: user, group: group)
+                                                            mainUser.notifications.append(notification)
+                                                            //mainUser.notifications.sort(by: {$0.)
+                                                            
+                                                            DispatchQueue.main.async {
+                                                                self.tableView.reloadData()
+                                                            }
+                                                        } else {
+                                                            print(error!)
+                                                        }
+                                                    })
                                                 }
                                             })
                                         } else {
@@ -199,7 +242,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         case NotificationType.GROUP_INVITE:
             cell = self.tableView.dequeueReusableCell(withIdentifier: "groupInvite") as! NotificationTableViewCell
             
-            cell.groupIconView.image = notification.group.groupIcon
+            cell.groupIconView.image = notification.group!.groupIcon
             cell.groupIconView.layer.cornerRadius = cell.groupIconView.frame.size.width / 2
             cell.groupIconView.clipsToBounds = true
             cell.descriptionLabel.numberOfLines = 0
@@ -213,6 +256,9 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         case NotificationType.NEW_POST:
             
             break
+        case NotificationType.GROUP_JOINED:
+            
+            break
         }
         
         Notification.textSize = Float(cell.descriptionLabel.font.pointSize) // No point in casting back and forth between CGFloat and Float
@@ -220,7 +266,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         cell.descriptionLabel.attributedText = notification.description
         //cell.nameLabel.text = notification.sender.fullName
         
-        cell.profilePictureView.image = notification.sender.profilePhoto
+        cell.profilePictureView.image = notification.sender!.profilePhoto
         cell.profilePictureView.layer.cornerRadius = cell.profilePictureView.frame.size.width / 2
         cell.profilePictureView.clipsToBounds = true
         
@@ -266,6 +312,9 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
             
             break
         case NotificationType.NEW_POST:
+            
+            break
+        case NotificationType.GROUP_JOINED:
             
             break
         }

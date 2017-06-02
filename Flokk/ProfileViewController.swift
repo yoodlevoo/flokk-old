@@ -112,6 +112,10 @@ class ProfileViewController: UIViewController {
             self.addFriendButton.setImage(UIImage(named: "Added Friend New"), for: .normal)
             self.requestSent = true
             
+            // Add this user to the main user's outgoing request array
+            mainUser.outgoingFriendRequests.append(self.user.handle)
+            
+            
         } else { // If the main user requested to be this user's friend, "undo" the request
             // Remove the incoming request for this user
             database.ref.child("users").child(self.user.handle).child("incomingrequests").child(mainUser.handle).removeValue() { error in
@@ -137,6 +141,9 @@ class ProfileViewController: UIViewController {
             
             self.addFriendButton.setImage(UIImage(named: "Add Friend New"), for: .normal)
             self.requestSent = false
+            
+            // Remove this user from the main user's outgoing requests array
+            mainUser.outgoingFriendRequests.remove(at: mainUser.outgoingFriendRequests.index(of: self.user.handle)!)
         }
     }
     
@@ -177,8 +184,7 @@ class ProfileViewController: UIViewController {
         notificationRefLocalUser.child("\(key)").child("sender").setValue(mainUser.handle)
         notificationRefLocalUser.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         
-        // Set these users as friends locally
-        //mainUser.friends.append(self.user)
+        // Set these users as a friend locally
         mainUser.friendHandles.append(self.user.handle)
         
         // Update the local booleans

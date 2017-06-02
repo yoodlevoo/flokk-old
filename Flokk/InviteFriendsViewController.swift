@@ -11,7 +11,7 @@ import UIKit
 // If there is no search, then just show some of the user's friends not in this group
 class InviteFriendsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    //@IBOutlet weak var searchBar: UISearchBar!
     
     var users = [User]()
     var mainUserFriends = [User]() // The main user's friends that have been loaded in for this view
@@ -25,7 +25,8 @@ class InviteFriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.searchController.searchBar = self.searchBar
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
         self.searchController.searchResultsUpdater = self
         self.searchController.hidesNavigationBarDuringPresentation = false
@@ -34,13 +35,43 @@ class InviteFriendsViewController: UIViewController {
         self.searchController.searchBar.delegate = self
         self.searchController.searchBar.keyboardAppearance = .dark
         
-        //self.tableView.tableHeaderView = self.searchController.searchBar
-        
-        self.searchBar.delegate = self
-        
+        self.tableView.tableHeaderView = self.searchController.searchBar
+
         self.searchContent = ""
         
-        self.users = self.mainUserFriends // If there isn't a search, set it to the main user's friends
+        //self.users = self.mainUserFriends // If there isn't a search, set it to the main user's friends
+        
+        for handle in mainUser.friendHandles {
+            if !group.memberHandles.contains(handle) && !group.invitedUsers.contains(handle) { // If this user isn't already a member of the group or already invited, continue to load it
+                let userRef = database.ref.child("users").child(handle)
+                
+                userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let values = snapshot.value as? NSDictionary {
+                        let fullName = values["fullName"] as! String
+                        
+                        // Download the profile photo
+                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                        profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                            if error == nil {
+                                let profilePhoto = UIImage(data: data!)
+                                
+                                let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                
+                                self.mainUserFriends.append(user)
+                                
+                                self.users = self.mainUserFriends
+                                
+                                DispatchQueue.main.async {
+                                    self.tableView.reloadData()
+                                }
+                            } else {
+                                print(error!)
+                            }
+                        })
+                    }
+                })
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -205,7 +236,7 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.searchBar.setShowsCancelButton(true, animated: true)
+        //self.searchBar.setShowsCancelButton(true, animated: true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -217,7 +248,7 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
         if searchBar.text == "" { // If the user isn't searching anything, fill it with the user's friends
             self.users = mainUserFriends
             self.tableView.reloadData()
-            self.searchBar.setShowsCancelButton(false, animated: true)
+            //self.searchBar.setShowsCancelButton(false, animated: true)
         }
     }
     

@@ -112,31 +112,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 // Load all of the user's friends
                 // Should probably do this in the viewDidLoad of inviteFriends
-                for handle in mainUser.friendHandles {
-                    if !group.memberHandles.contains(handle) { // If this user isn't already a member of the group, continue to load it
-                        let userRef = database.ref.child("users").child(handle)
-                        
-                        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                            if let values = snapshot.value as? NSDictionary {
-                                let fullName = values["fullName"] as! String
-                                
-                                // Download the profile photo
-                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
-                                profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
-                                    if error == nil {
-                                        let profilePhoto = UIImage(data: data!)
-                                        
-                                        let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
-                                        
-                                        inviteFriendsView.mainUserFriends.append(user)
-                                    } else {
-                                        print(error!)
-                                    }
-                                })
-                            }
-                        })
-                    }
-                }
+                
             }
         }
     }

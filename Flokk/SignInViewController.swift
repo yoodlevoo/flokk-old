@@ -45,10 +45,13 @@ class SignInViewController: UIViewController {
         var password = passwordEntry.text // Get the entered password
         
         if email == "" {
+            
             //email = "gannonprudhomme@gmail.com"
             //password = "gannon123"
+
             email = "cheeseman123432@yahoo.com"
             password = "alex123"
+            
         }
         
         // Authenticate and sign the user in
@@ -74,10 +77,10 @@ class SignInViewController: UIViewController {
                                         let profilePhoto = UIImage(data: data!) // Load the image
                                         
                                         // Load in the user
-                                        mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupHandles: groupHandles)
+                                        mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupIDs: groupHandles)
                                     } else { // If there was an error
                                         // Load in the user
-                                        mainUser = User(handle: handle, fullName: fullName, groupHandles: groupHandles)
+                                        mainUser = User(handle: handle, fullName: fullName, groupIDs: groupHandles)
                                     }
                                     
                                     // Attemp to load in the friends
