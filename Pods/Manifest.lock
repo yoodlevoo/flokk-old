@@ -41,6 +41,7 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.9)
+  - Toucan (0.6.0)
 
 DEPENDENCIES:
   - BRYXBanner
@@ -49,6 +50,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - Toucan
 
 SPEC CHECKSUMS:
   BRYXBanner: ed407a56c53f2add0aaa16f810062eac48d802cf
@@ -61,7 +63,8 @@ SPEC CHECKSUMS:
   FirebaseStorage: a5c55b23741a49a72af8f30f95b3bb5ddbeda12d
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
+  Toucan: 47485bbc9cb4541ef6318d6886103e6eaf16e919
 
-PODFILE CHECKSUM: d61739738c48df56b15fa24e7d4c40ca6bfa4b78
+PODFILE CHECKSUM: b03e692fc6cb247a78baeb9dadd8098fc7a3beb6
 
 COCOAPODS: 1.2.0
