@@ -27,6 +27,8 @@ class FeedViewController: UIViewController {
     
     fileprivate var userProfilePhotos = [String : UIImage]()
     
+    fileprivate var imagePicker = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,6 +40,8 @@ class FeedViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        self.imagePicker.delegate = self
         
         // Don't load the posts if there are already posts stored
         if loadedPosts.count == 0 {
@@ -121,9 +125,6 @@ class FeedViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func uploadPic(_ sender: AnyObject) {
-    }
-    
     @IBAction func unwindToFeed(segue: UIStoryboardSegue) {
     }
     
@@ -151,7 +152,7 @@ class FeedViewController: UIViewController {
 }
 
 
-// Table View functions
+// Table View Functions
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     // Try to adjust the size of each cell according to the size of the picture
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -198,6 +199,44 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         self.present(commentNav, animated: true, completion: nil)
  
         */
+    }
+}
+
+// Image Picker Functions
+extension FeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        //let selectedImage: UIImage!
+        
+        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            let confirmUpload = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConfirmUploadViewController") as! ConfirmUploadViewController
+            
+            confirmUpload.image = selectedImage
+            
+            dismiss(animated: true, completion: nil)
+            present(confirmUpload, animated: true, completion: nil)
+            //self.parent?.parent?.present(confirmUpload, animated:true, completion: nil)
+            //UIApplication.shared.keyWindow?.rootViewController?.present(confirmUpload, animated: true, completion: nil)
+            
+            if confirmUpload.imageView != nil {
+                confirmUpload.imageView.image = selectedImage
+            }
+        } else {
+            print("Something went wrong")
+            
+            dismiss(animated: false, completion: nil)
+        }
+    }
+    
+    // If the image picker was cancelled
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func uploadPic(_ sender: AnyObject) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        
+        present(imagePicker, animated: true, completion: nil)
     }
 }
 
