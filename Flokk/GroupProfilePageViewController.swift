@@ -54,15 +54,12 @@ class GroupProfilePageViewController: UIPageViewController {
                             self.showInviteButtons()
                         }
                     }
-                } else {
-                    print(snapshot)
-                    print("\n\n\n\n")
-                    print(snapshot.value)
                 }
             })
         } else { // If the groupInvites have been loaded
             if mainUser.groupInvites.contains(self.group.groupID) { // Check if this user has been invited to join
                 self.invitedToJoin = true
+                (viewControllerPages[0] as! GroupProfileViewControllerPage1).invitedToJoin = true
                 
                 // Show the accept and deny invite buttons
                 self.showInviteButtons()
@@ -144,6 +141,7 @@ class GroupProfileViewControllerPage1: UIViewController {
     weak var group: Group! // Why should this be weak?
     
     var activityIndicator = UIActivityIndicatorView()
+    var invitedToJoin = false // Only set when the views are already loaded, so the show call is called before this page's viewDidLoad, resulting in an error
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,6 +151,13 @@ class GroupProfileViewControllerPage1: UIViewController {
         self.groupIconView.clipsToBounds = true
         
         self.groupNameLabel.text = group.groupName
+        
+        // If the group invites have already been loaded and this group has an outgoing invite to the user
+        // We have to show the buttons here, as they're not initialized yet when the page view controller initializes
+        if self.invitedToJoin {
+            self.acceptGroupInviteButton.isHidden = false
+            self.declineGroupInviteButton.isHidden = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -227,8 +232,6 @@ class GroupProfileViewControllerPage1: UIViewController {
         
         // Hide the invite buttons
         (self.parent as! GroupProfilePageViewController).hideInviteButtons()
-        
-        
     }
 }
 

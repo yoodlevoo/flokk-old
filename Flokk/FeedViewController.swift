@@ -32,21 +32,16 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available (iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            tableView.addSubview(refreshControl)
-        }
-        
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.refreshControl.addTarget(self, action: #selector(FeedViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
+        
+        self.tableView.refreshControl = self.refreshControl
         
         //self.imagePicker.delegate = self
         
-        // Don't load the posts if there are already posts stored
-        if loadedPosts.count == 0 {
-            loadedPosts = self.group.posts
-        }
+        self.loadedPosts = self.group.posts
         
         self.tableView.estimatedRowHeight = 200
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -54,18 +49,22 @@ class FeedViewController: UIViewController {
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
         self.edgesForExtendedLayout = .bottom
         
+        // Set the navigation bar title to the group name
         self.navigationBar.title = group.groupName
+        
+        self.loadPosts() // Load the posts
+        self.beginListeners() // Begin listening for changes
         
         // Check if there are no posts, so we know to show the "No Posts" Frowny Face
         if self.group.postsData.keys.count == 0 { // If there are no posts
             self.noPostsImageView.isHidden = false
             self.noPostsLabel.isHidden = false
+            self.refreshControl.endRefreshing() // Don't refresh if there are no posts to load
         }
         
-        // Load posts
-        self.loadPosts()
-        
-        self.beginListeners() // Begin listening for changes
+        if self.loadedPosts.count > 0 { // If there are already posts loading, don't refresh anymore
+            self.refreshControl.endRefreshing()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,59 +85,82 @@ class FeedViewController: UIViewController {
         //present(imagePicker, animated: true, completion: nil)
     }
     
+    // Called when the user pulls down on this table
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
+    
     // Load the posts from the database
     func loadPosts() {
         if self.group.posts.count < self.postCount { // If we need to load more posts
-            for (id, data) in self.group.postsData { //print("postsData count \(self.group.postsData.count)")
-                let matches = self.group.posts.filter{$0.id == id} // Check if there is a loaded post that matches this ID
-                if matches.count != 0 { // If this post has already been loaded
-                    continue // Then skip loading this post
-                } else { // This post hasn't been loaded yet, begin to load it
-                    let dataDict = data
-                    
-                    let posterHandle = dataDict["poster"] as! String
-                    let timestamp = NSDate(timeIntervalSinceReferenceDate: (dataDict["timestamp"] as! Double))
-                    
-                    // Load this user's profile photo if it hasn't been loaded already
-                    if !userProfilePhotos.keys.contains(posterHandle) {
-                        let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhoto").child("\(posterHandle).jpg")
-                        profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
-                            if error == nil { // If there wasn't an error
-                                let profilePhoto = UIImage(data: data!) // Load the profile photo from the received data
-                                
-                                self.userProfilePhotos[posterHandle] = profilePhoto
-                            } else {
-                                print(error!)
-                            }
-                        })
+            self.refreshControl.beginRefreshing()
+            
+            let groupPostsRef = database.ref.child("groups").child(self.group.groupID).child("posts")
+            groupPostsRef.queryOrdered(byChild: "timestamp").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let values = snapshot.value as? [String : [String : Any]] {
+                    if values.count == 0 {
+                        self.refreshControl.endRefreshing()
                     }
                     
-                    // Load the post image
-                    let postRef = storage.ref.child("groups").child(self.group.groupID).child("posts")
-                    postRef.child("\(id)/post.jpg").data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
-                        if error == nil { // If there wasn't an error
-                            let postImage = UIImage(data: data!)
+                    for (id, data) in values {
+                        let matches = self.group.loadingPostIDs.filter{$0 == id} // Check if there is a loaded/loading post that matches this ID
+                        if matches.count != 0 { // If this post has already been loaded
+                            return // Then skip loading this post
+                        } else { // This post hasn't been loaded yet, nor has started to load, begin to load it
+                            groups[self.groupIndex].loadingPostIDs.append(id) // Add this post to the loading posts IDs array to global groups array
                             
-                            // Generate the post
-                            let post = Post(posterHandle: posterHandle, image: postImage!, postID: id, timestamp: timestamp)
+                            // Load in the basic data for this post
+                            let dataDict = data
+                            let posterHandle = dataDict["poster"] as! String // Handle for who uploaded this post
+                            let timestamp = NSDate(timeIntervalSinceReferenceDate: (dataDict["timestamp"] as! Double)) // When this post was uploaded
+                            print("timestamp \(timestamp)")
                             
-                            // Store it in the various arrays
-                            self.group.posts.append(post)
-                            
-                            // Sort the group posts by the upload date, with the more recent posts first
-                            self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate })
-                            
-                            self.loadedPosts = self.group.posts
-                            
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
+                            // Load this user's profile photo if it hasn't been loaded already
+                            if !self.userProfilePhotos.keys.contains(posterHandle) {
+                                let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhoto").child("\(posterHandle).jpg")
+                                profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                    if error == nil { // If there wasn't an error
+                                        let profilePhoto = UIImage(data: data!) // Load the profile photo from the received data
+                                        
+                                        self.userProfilePhotos[posterHandle] = profilePhoto
+                                    } else {
+                                        print(error!)
+                                    }
+                                })
                             }
-                        } else { // If there was an error
-                            print(error!)
+                            
+                            // Load the post image
+                            let postRef = storage.ref.child("groups").child(self.group.groupID).child("posts")
+                            postRef.child("\(id)/post.jpg").data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
+                                if error == nil { // If there wasn't an error
+                                    let postImage = UIImage(data: data!)
+                                    
+                                    // Generate the post
+                                    let post = Post(posterHandle: posterHandle, image: postImage!, postID: id, timestamp: timestamp)
+                                    
+                                    // Store it in the various arrays
+                                    self.group.posts.append(post)
+                                    
+                                    // Sort the group posts by the upload date, with the more recent posts first
+                                    self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate })
+                                    
+                                    self.loadedPosts = self.group.posts
+                                    
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData()
+                                        self.refreshControl.endRefreshing()
+                                    }
+                                } else { // If there was an error
+                                    print(error!)
+                                }
+                            })
                         }
-                    })
+                    }
                 }
-            }
+            })
+        } else { // If all of the posts are loaded
+            // Load the poster profile photos
         }
     }
     

@@ -73,7 +73,7 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                         }
                     }
                     
-                    // Initialize this as empty
+                    // Initialize this as empty, as its not an empty array by default
                     mainUser.groupInvites = [String]()
                     
                     // After creating the user, load it into the mainUser directly,

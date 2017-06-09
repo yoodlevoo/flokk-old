@@ -17,7 +17,7 @@ class GroupsViewController: UIViewController {
     var defaultGroups = [Group]() // An emptyarray of Groups - this is going to be a priorityqueue in a bit
     var groupQueue = PriorityQueue<Group>(sortedBy: <) // Hopefully this doesn't get reset each time
     
-    var refreshControl: UIRefreshControl = UIRefreshControl()
+    var refreshControl = UIRefreshControl()
     
     let transitionDown = SlideDownAnimator()
     let transitionUp = SlideUpAnimator()
@@ -29,9 +29,15 @@ class GroupsViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.refreshControl.addTarget(self, action: #selector(FeedViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
+        
+        self.tableView.refreshControl = self.refreshControl
         
         // Attempt to load in all of the groups
         if groups.count < mainUser.groupIDs.count { // If we dont have all of the groups loaded in
+            self.refreshControl.beginRefreshing()
+            
             for groupID in mainUser.groupIDs {
                 let matches = groups.filter{ $0.groupID == groupID } // Check if we already have a group with this ID, probably inefficient
                 if matches.count != 0 { // If we already contain a group with this handle, skip it
@@ -69,6 +75,7 @@ class GroupsViewController: UIViewController {
                                 
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData() // Reload data every time a group is loaded
+                                    self.refreshControl.endRefreshing()
                                 }
                             } else { // If there was an error
                                 print(error!)
@@ -120,6 +127,11 @@ class GroupsViewController: UIViewController {
         
     }
     
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupToFeed" {
             if let feedView = segue.destination as? FeedViewController {
@@ -127,6 +139,7 @@ class GroupsViewController: UIViewController {
                     weak var group = groups[tag] // I want this to be weak to prevent memory leakage
                     
                     feedView.group = group
+                    feedView.groupIndex = tag // The index of this group globally, for now
                     self.tabBarController?.hideTabBar()
                     //self.navigationController?.title = group?.groupName
                     
@@ -265,7 +278,7 @@ extension GroupsViewController {
         })
         
         // Begin listening for group/posts changes? - this should be encapsulated within the notifications listener, except for things that don't trigger a notification
-        
+        // Begin listening for post changes within groups
     }
 }
 

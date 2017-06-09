@@ -47,11 +47,26 @@ class FirstSignUpViewController: UIViewController {
                     }
                 } else { // If the email isn't valid(has no '@' or '.')
                     self.animateTextField(self.emailField) // Shake the field
+                    
+                    // Check if the password is messed up too
+                    if password.characters.count < MIN_PASSWORD_LENGTH {
+                        self.animateTextField(self.passwordField)
+                    }
+                    
                     return false // Prevent the segue
                 }
             } else { // The email address has not even been typed in, the length is 0
                 self.animateTextField(self.emailField) // Shake the field
+                
+                if password.characters.count < MIN_PASSWORD_LENGTH {
+                    self.animateTextField(self.passwordField)
+                }
+                
                 return false // Prevent the segue
+            }
+            
+            if password.characters.count < MIN_PASSWORD_LENGTH {
+                self.animateTextField(self.passwordField)
             }
         }
         
@@ -70,20 +85,35 @@ class FirstSignUpViewController: UIViewController {
     
     // Animate the text field when data is entered wrong
     func animateTextField(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.05, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
+        let duration = 0.03
+        let delay = 0.08
+        var currDelay = 0.0
+        let dist = CGFloat(15)
         
-        UIView.animate(withDuration: 0.05, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
+        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += dist}, completion: nil)
+        currDelay += delay
         
-        UIView.animate(withDuration: 0.05, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
+        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= dist}, completion: nil)
+        currDelay += delay
         
-        UIView.animate(withDuration: 0.05, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
+        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += dist}, completion: nil)
+        currDelay += delay
         
-        UIView.animate(withDuration: 0.05, delay: 0.4, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 20}, completion: nil)
+        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= dist}, completion: nil)
+        currDelay += delay
+        
+        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += dist}, completion: nil)
+        currDelay += delay
+        
+        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= dist}, completion: nil)
+        currDelay += delay
+        
     }
 }
 
@@ -91,6 +121,39 @@ class FirstSignUpViewController: UIViewController {
 extension FirstSignUpViewController: UITextFieldDelegate {
     // Prevent certain characters from being typed
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return true
+    }
+    
+    // When the "next" button is pressed in the bottom right of the keyboard, go to the next field or the next page
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.emailField {
+            let email = self.emailField.text!
+            
+            if email.characters.count > 0 {
+                if email.contains("@") && email.contains(".") { // If the field has the basic criteria for being an email
+                    // Then it's okay to go to the next field
+                    self.passwordField.becomeFirstResponder() // Focus on the next field
+                    return true
+                } else {
+                    self.animateTextField(self.emailField)
+                    return false
+                }
+            } else {
+                self.animateTextField(self.emailField)
+                return false
+            }
+        } else if textField == self.passwordField {
+            let password = self.passwordField.text!
+            
+            if password.characters.count >= MIN_PASSWORD_LENGTH {
+                // Do Something
+                return true
+            } else {
+                self.animateTextField(self.passwordField)
+                return false
+            }
+        }
+        
         return true
     }
 }

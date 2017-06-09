@@ -27,8 +27,7 @@ class NotificationsViewController: UIViewController {
         self.refreshControl.addTarget(self, action: #selector(NotificationsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         self.refreshControl.tintColor = TEAL_COLOR
         self.tableView.refreshControl = refreshControl
-        self.tableView.refreshControl?.beginRefreshing()
-        self.tableView.refreshControl?.endRefreshing()
+        //self.tableView.refreshControl?.endRefreshing()
         
         // Listen for any changes in the user's notification tree
         loadNotifications()
@@ -64,6 +63,8 @@ class NotificationsViewController: UIViewController {
     }
 
     func loadNotifications() {
+        self.refreshControl.beginRefreshing()
+        
         // Load notifications too probably, just the first 10
         database.ref.child("notifications").child(mainUser.handle).queryOrdered(byChild: "timestamp").queryLimited(toFirst: 10).observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
@@ -164,6 +165,7 @@ class NotificationsViewController: UIViewController {
                                                             
                                                             DispatchQueue.main.async {
                                                                 self.tableView.reloadData()
+                                                                self.refreshControl.endRefreshing()
                                                             }
                                                         } else {
                                                             print(error!)

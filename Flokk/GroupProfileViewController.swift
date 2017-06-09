@@ -13,7 +13,7 @@ class GroupProfileViewController: UIViewController {
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerView: UIView!
     
-    var group: Group! // This is just a copy of the actual group
+    weak var group: Group! // This is just a copy of the actual group
     var notification: Notification? // May not always exist, depending on where we segue from
     
     var oldContentOffset = CGPoint.zero // The previous frame's offset
@@ -35,8 +35,8 @@ class GroupProfileViewController: UIViewController {
         
         // Check what data has been loaded for this group that hasn't been loaded already
         // Probably gonna be the members at the least, so do that now 
-        if self.group.members.count == 0 {
-            for handle in self.group.memberHandles {
+        if self.group.members.count == 0 { // If the members of this gorup haven't been loaded yet
+            for handle in self.group.memberHandles { // Iterate through all of the member handles and load each user - should probably ignore the main user
                 let userRef = database.ref.child("users").child(handle)
                 userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     if let values = snapshot.value as? NSDictionary {
@@ -61,6 +61,7 @@ class GroupProfileViewController: UIViewController {
                                 }
                                 
                                 // Add the user to the local(specific to the view) group to be displayed
+                                // This is going to do nothing as it's not a global change
                                 self.group.members.append(user)
                                 
                                 DispatchQueue.main.async {
