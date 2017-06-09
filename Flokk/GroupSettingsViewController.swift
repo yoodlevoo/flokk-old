@@ -22,11 +22,18 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var members = [User]()
     
+    var refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.refreshControl.addTarget(self, action: #selector(GroupSettingsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
+        
+        self.tableView.addSubview(self.refreshControl)
+        //self.tableView.refreshControl = self.refreshControl
         
         // Add the group image and crop it to a circle
         self.groupImageView.image = group.groupIcon
@@ -34,6 +41,8 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         self.groupImageView.clipsToBounds = true
         
         self.groupNameLabel.text = group.groupName
+        
+        self.refreshControl.beginRefreshing()
         
         // Put an overlay over the image so you know you can change it?
         
@@ -57,6 +66,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                             
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
+                                self.refreshControl.endRefreshing()
                             }
                         } else { // If there was an error
                             print(error!)
@@ -90,6 +100,11 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         cell.handleLabel.text = user.handle
         
         return cell
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     

@@ -24,8 +24,14 @@ class FriendsViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.refreshControl.addTarget(self, action: #selector(FriendsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
+        
+        self.tableView.refreshControl = self.refreshControl
         
         if mainUser.friends.count < mainUser.friendHandles.count { // If there are still more friends to load
+            self.refreshControl.beginRefreshing()
+            
             for handle in mainUser.friendHandles {
                 let matches = mainUser.friends.filter({ $0.handle == handle}) // Check if this user has already been loaded
                 if matches.count > 0 {
@@ -54,6 +60,13 @@ class FriendsViewController: UIViewController {
                                     } else {
                                         // Add this user to the main user's friends array
                                         mainUser.friends.append(user)
+                                        
+                                        self.displayedFriends = mainUser.friends
+                                        
+                                        DispatchQueue.main.async {
+                                            self.tableView.reloadData()
+                                            self.refreshControl.endRefreshing()
+                                        }
                                     }
                                 }
                             })

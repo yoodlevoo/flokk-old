@@ -20,6 +20,8 @@ class UserSearchViewController: UIViewController {
     
     var searchContent: String!
     
+    var refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +39,15 @@ class UserSearchViewController: UIViewController {
         self.searchController.searchBar.keyboardAppearance = .dark
         
         self.tableView.tableHeaderView = self.searchController.searchBar
+        
+        self.refreshControl.addTarget(self, action: #selector(UserSearchViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
+        
+        
+        //self.tableView.addSubview(self.refreshControl)
+        //self.tableView.bringSubview(toFront: self.refreshControl)
+        // self.tableView.refreshControl = self.refreshControl
+        //self.refreshControl.beginRefreshing()
         
         /*
         self.searchController.searchBar.layer.cornerRadius = 2.0
@@ -66,6 +77,11 @@ class UserSearchViewController: UIViewController {
     // aysnchronous loading is messing up the tableview
     func updateSearchResults(for searchController: UISearchController) {
         
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -117,6 +133,7 @@ extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating
         // Clear the users on every new search
         users.removeAll()
         self.tableView.reloadData()
+        self.refreshControl.beginRefreshing() // Start the activity indicator / refresh control
         
         testRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
@@ -147,7 +164,8 @@ extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating
                                 
                                 // Update the data table
                                 DispatchQueue.main.async {
-                                     self.tableView.reloadData()
+                                    self.tableView.reloadData()
+                                    //self.refreshControl.endRefreshing() // Stop the activity indicator/refresh control
                                 }
                             } else { // If there was an error
                                 

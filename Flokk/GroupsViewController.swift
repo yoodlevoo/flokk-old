@@ -29,7 +29,7 @@ class GroupsViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.refreshControl.addTarget(self, action: #selector(FeedViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.addTarget(self, action: #selector(GroupsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         self.refreshControl.tintColor = TEAL_COLOR
         
         self.tableView.refreshControl = self.refreshControl
@@ -239,11 +239,13 @@ extension GroupsViewController {
                                 if type == .GROUP_INVITE || type == .GROUP_JOINED || type == .NEW_POST || type == .NEW_COMMENT {
                                     let groupID = notificationValues["groupID"] as! String
                                     
+                                    // Load the group data - only the group name
                                     let groupRef = database.ref.child("groups").child(groupID)
                                     groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
                                         if let groupValues = snapshot.value as? NSDictionary {
                                             let groupName = groupValues["name"] as! String
                                             
+                                            // Load the group photo
                                             let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
                                             groupIconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (groupData, error) in
                                                 if error == nil { // If there wasn't an error
@@ -253,8 +255,10 @@ extension GroupsViewController {
                                                     
                                                     // This needs to be handled differently eventually
                                                     let notification = Notification(type: type, sender: user, group: group)
-                                                } else { // If there was an error
                                                     
+                                                    mainUser.notifications.append(notification)
+                                                } else { // If there was an error
+                                                    print(error!)
                                                 }
                                             })
                                         }
@@ -278,7 +282,35 @@ extension GroupsViewController {
         })
         
         // Begin listening for group/posts changes? - this should be encapsulated within the notifications listener, except for things that don't trigger a notification
+        
         // Begin listening for post changes within groups
+        // What should i do if the group isn't loaded yet
+        for groupID in mainUser.groupIDs { // Create a listener for each group the user is in
+            let groupRef = database.ref.child("groups").child(groupID).child("posts")
+            // Only listen for post changes after the app launched, otherwise we'll get old posts
+            groupRef.queryOrdered(byChild: "timestamp").queryStarting(atValue: Double(NSDate.timeIntervalSinceReferenceDate)).observe(.childAdded, with: { (snapshot) in
+                if let values = snapshot.value as? NSDictionary {
+                    let postID = snapshot.key
+                    
+                    let posterHandle = values["poster"] as! String
+                    let timestamp = NSDate(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
+                    
+                    // Load the post image from storage
+                    let postRef = storage.ref.child("groups").child(groupID).child("posts").child("\(postID)/post.jpg")
+                    postRef.data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
+                        if error == nil { // If there wasn't an error
+                            let postImage = UIImage(data: data!)
+                            
+                            let post = Post(posterHandle: posterHandle, image: postImage!, postID: postID, timestamp: timestamp)
+                            
+                            // WTF do i do if a group isn't loaded yet - notify the user anyways
+                        } else { // If there was an error
+                            print(error!)
+                        }
+                    })
+                }
+            })
+        }
     }
 }
 

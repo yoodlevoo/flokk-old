@@ -170,7 +170,6 @@ class GroupProfileViewControllerPage1: UIViewController {
         groupRef.child("invitedUsers").child(mainUser.handle).removeValue() // Remove the outgoing invite from the groups json
         groupRef.child("members").child(mainUser.handle).setValue(true) // Tell
         
-        
         let userRef = database.ref.child("users").child(mainUser.handle)
         userRef.child("groupInvites").child(self.group.groupID).removeValue() // Remove this group from the list of group invites for the user
         userRef.child("groups").child(self.group.groupID).setValue(true) // Set this group as one of the user's group
@@ -201,9 +200,24 @@ class GroupProfileViewControllerPage1: UIViewController {
             //mainUser.notifications.index(of: matches[0])
         //}
         
-        // Add this group to the local list of groups - should both of these really be called?
+        // Load the rest of the group data - mainly just the posts data
+        groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let postsData = values["posts"] as? [String : [String : Any]] ?? [String : [String : Any]]() // Default empty dictionary incase there are no posts
+                
+                self.group.postsData = postsData
+                self.group.memberHandles.append(mainUser.handle)
+                self.group.members.append(mainUser)
+                
+                groups.append(self.group)
+            }
+        })
+        
+        // Remove this group as a local incoming group invite
+        mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.groupID)!)
+        
+        // Add this group to the local list of groups
         mainUser.groupIDs.append(self.group.groupID)
-        mainUser.groups.append(self.group)
     }
     
     // If the user declines the invite to join this group - most of this is the same as acceptGroupInvitePressed(above)
@@ -232,6 +246,9 @@ class GroupProfileViewControllerPage1: UIViewController {
         
         // Hide the invite buttons
         (self.parent as! GroupProfilePageViewController).hideInviteButtons()
+        
+        // Remove this group as a local incoming group invite
+        mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.groupID)!)
     }
 }
 
