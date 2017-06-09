@@ -84,7 +84,7 @@ class NotificationsViewController: UIViewController {
                                     
                                     // Load in the profile photo
                                     let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
-                                    profilePhotoRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                                    profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                         if error == nil { // If there wasn't an error
                                             let profilePhoto = UIImage(data: data!)
                                             
@@ -122,7 +122,7 @@ class NotificationsViewController: UIViewController {
                                     
                                     // Load the group icon first
                                     let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
-                                    groupIconRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                                    groupIconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                         if error == nil {
                                             let groupPhoto = UIImage(data: data!)
                                             // Create the group object
@@ -142,7 +142,7 @@ class NotificationsViewController: UIViewController {
                                                     
                                                     // Load in the user's profile photo
                                                     let userProfilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
-                                                    userProfilePhotoRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                                                    userProfilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                                         if error == nil {
                                                             let profilePhoto = UIImage(data: data!)
                                                             // Create the user object

@@ -55,7 +55,7 @@ class AddCommentViewController: UIViewController {
                         // Load in the profile photo for the commenter
                         if !self.userProfilePhotos.keys.contains(commenterHandle) { // If we haven't loaded this user's profile photo already
                             let profilePhotoRef = storage.ref.child("users").child(commenterHandle).child("profilePhoto").child("\(commenterHandle).jpg")
-                            profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                            profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!)
                                     

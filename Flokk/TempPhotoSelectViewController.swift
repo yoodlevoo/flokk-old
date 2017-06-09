@@ -1,3 +1,4 @@
+
 //
 //  TempPhotoSelectViewController.swift
 //  Flokk
@@ -37,7 +38,7 @@ class TempPhotoSelectViewController: UIViewController {
         self.collectionView!.contentInset = UIEdgeInsets(top: 23, left: 5, bottom: 10, right: 5)
         
         let fetchOptions = PHFetchOptions()
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: true)]
+        //fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: true)]
         let collection: PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: fetchOptions)
         
         if let firstObj: AnyObject = collection.firstObject {

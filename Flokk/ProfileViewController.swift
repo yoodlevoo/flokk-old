@@ -178,7 +178,7 @@ class ProfileViewController: UIViewController {
         database.ref.child("users").child(mainUser.handle).child("friends").child(self.user.handle).setValue(true)
         
         // Send a notification to this user that the mainUser accepted their friend request
-        let notificationRefLocalUser = database.ref.child("notifcations").child(self.user.handle)
+        let notificationRefLocalUser = database.ref.child("notifications").child(self.user.handle)
         let key = notificationRefLocalUser.childByAutoId().key // Unique ID for this notification
         notificationRefLocalUser.child("\(key)").child("type").setValue(NotificationType.FRIEND_REQUEST_ACCEPTED.rawValue)
         notificationRefLocalUser.child("\(key)").child("sender").setValue(mainUser.handle)

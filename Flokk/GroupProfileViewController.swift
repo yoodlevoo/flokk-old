@@ -44,7 +44,7 @@ class GroupProfileViewController: UIViewController {
                         
                         // Load in the profile photo for this user
                         let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
-                        profilePhotoRef.data(withMaxSize: 1 * 4096 * 4096, completion: { (data, error) in
+                        profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil { // If there wasn't an error
                                 let profilePhoto = UIImage(data: data!)
                                 

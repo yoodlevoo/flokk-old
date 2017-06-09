@@ -27,7 +27,7 @@ class FeedViewController: UIViewController {
     
     fileprivate var userProfilePhotos = [String : UIImage]()
     
-    fileprivate var imagePicker = UIImagePickerController()
+    //fileprivate var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class FeedViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        self.imagePicker.delegate = self
+        //self.imagePicker.delegate = self
         
         // Don't load the posts if there are already posts stored
         if loadedPosts.count == 0 {
@@ -63,6 +63,31 @@ class FeedViewController: UIViewController {
         }
         
         // Load posts
+        self.loadPosts()
+        
+        self.beginListeners() // Begin listening for changes
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    @IBAction func unwindToFeed(segue: UIStoryboardSegue) {
+    }
+    
+    @IBAction func uploadPic(_ sender: AnyObject) {
+        //imagePicker.allowsEditing = false
+        //imagePicker.sourceType = .photoLibrary
+        
+        //present(imagePicker, animated: true, completion: nil)
+    }
+    
+    // Load the posts from the database
+    func loadPosts() {
         if self.group.posts.count < self.postCount { // If we need to load more posts
             for (id, data) in self.group.postsData { //print("postsData count \(self.group.postsData.count)")
                 let matches = self.group.posts.filter{$0.id == id} // Check if there is a loaded post that matches this ID
@@ -77,7 +102,7 @@ class FeedViewController: UIViewController {
                     // Load this user's profile photo if it hasn't been loaded already
                     if !userProfilePhotos.keys.contains(posterHandle) {
                         let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhoto").child("\(posterHandle).jpg")
-                        profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                        profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil { // If there wasn't an error
                                 let profilePhoto = UIImage(data: data!) // Load the profile photo from the received data
                                 
@@ -90,16 +115,16 @@ class FeedViewController: UIViewController {
                     
                     // Load the post image
                     let postRef = storage.ref.child("groups").child(self.group.groupID).child("posts")
-                    postRef.child("\(id)/post.jpg").data(withMaxSize: 1 * 3072 * 3072, completion: { (data, error) in
+                    postRef.child("\(id)/post.jpg").data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let postImage = UIImage(data: data!)
-                               
+                            
                             // Generate the post
                             let post = Post(posterHandle: posterHandle, image: postImage!, postID: id, timestamp: timestamp)
-                               
+                            
                             // Store it in the various arrays
                             self.group.posts.append(post)
-
+                            
                             // Sort the group posts by the upload date, with the more recent posts first
                             self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate })
                             
@@ -117,15 +142,10 @@ class FeedViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    @IBAction func unwindToFeed(segue: UIStoryboardSegue) {
+    // Begin listening for changes in this group
+    // That being mainly post uploads, but also comments, group invites, group additions/accepts, someone changing the profile photo
+    func beginListeners() {
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -203,6 +223,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 // Image Picker Functions
+/*
 extension FeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         //let selectedImage: UIImage!
@@ -231,14 +252,7 @@ extension FeedViewController: UIImagePickerControllerDelegate, UINavigationContr
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
-    
-    @IBAction func uploadPic(_ sender: AnyObject) {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        
-        present(imagePicker, animated: true, completion: nil)
-    }
-}
+} */
 
 class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
     @IBOutlet weak var userImage: UIImageView!
