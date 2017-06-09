@@ -26,6 +26,9 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
         self.usernameField.becomeFirstResponder() // Set the usernameEntry to be selected by default
         
         self.imagePicker.delegate = self
+        
+        self.addProfilePhotoButton?.layer.cornerRadius = (self.addProfilePhotoButton?.frame.size.width)! / 2
+        self.addProfilePhotoButton?.clipsToBounds = true
     }
     
     @IBAction func addProfilePic(_ sender: Any) {
@@ -73,12 +76,12 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                         }
                     }
                     
-                    // Initialize this as empty, as its not an empty array by default
-                    mainUser.groupInvites = [String]()
-                    
                     // After creating the user, load it into the mainUser directly,
                     // instead of uploading it then downloading it again(b/c thats just stupid)
                     mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                    
+                    // Initialize this as empty, as its not an empty array by default
+                    mainUser.groupInvites = [String]()
                     
                     // Segue to the next view, placed in the completion block so we don't segue when there was an error
                     self.performSegue(withIdentifier: "segueFromSecondSignUpToConnectContacts", sender: self)
