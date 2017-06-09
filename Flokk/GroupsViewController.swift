@@ -27,13 +27,6 @@ class GroupsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*
-        if #available(iOS 10.0, *) {
-            self.tableView.refreshControl = refreshControl
-        } else {
-            self.tableView.addSubview(refreshControl)
-        } */
-        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
