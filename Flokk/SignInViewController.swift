@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 class SignInViewController: UIViewController {
     @IBOutlet weak var usernameEntry: UITextField!
@@ -20,7 +21,6 @@ class SignInViewController: UIViewController {
         usernameEntry.becomeFirstResponder()
 
         passwordEntry.delegate = self
-    
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,7 +33,26 @@ class SignInViewController: UIViewController {
     @IBAction func signInBttn(_ sender: Any) {
         // Make sure the fields are filled in correctly before trying to sign in
         
-        signIn()
+        let email = self.usernameEntry.text!
+        let password = self.passwordEntry.text!
+        
+        self.signIn() // Sign in automatically, just for testing
+        
+        // Check the sign in criteria before signing in
+        if email.characters.count > 0 { // If the user has entered anything in the text field
+            if email.contains("@") && email.contains(".") { // Check if the email has the baseline criteria
+                if password.characters.count > MIN_PASSWORD_LENGTH {
+                    // If the baseline criteria is ok, then attempt to sign in
+                    //self.signIn()
+                } else {
+                    self.animateTextField(self.passwordEntry)
+                }
+            } else {
+                self.animateTextField(self.usernameEntry)
+            }
+        } else {
+            self.animateTextField(self.usernameEntry)
+        }
     }
     
     @IBAction func unwindToSignIn(segue: UIStoryboardSegue) {
@@ -51,7 +70,6 @@ class SignInViewController: UIViewController {
 
             email = "cheeseman123432@yahoo.com"
             password = "alex123"
-            
         }
         
         // Authenticate and sign the user in
@@ -72,7 +90,7 @@ class SignInViewController: UIViewController {
                                 print(fullName)
                                 
                                 let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
-                                profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                                profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                     if error == nil { // If there wasn't an error
                                         let profilePhoto = UIImage(data: data!) // Load the image
                                         
@@ -96,7 +114,7 @@ class SignInViewController: UIViewController {
                                 mainUser = User(handle: handle, fullName: fullName)
                                 
                                 let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
-                                profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                                profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                     if error == nil { // If there wasn't an error
                                         let profilePhoto = UIImage(data: data!)
                                         
@@ -112,6 +130,7 @@ class SignInViewController: UIViewController {
                                         mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
                                     }
                                     
+                                
                                     // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
                                     self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
                                 })
@@ -119,32 +138,47 @@ class SignInViewController: UIViewController {
                         })
                     })
                 }
-            } else { // If there was an error
+            } else { // If there was an error, handle it
                 print(error!)
+                
+                if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
+                    switch errorCode {
+                    case .errorCodeInvalidEmail: // If the user entered an invalid email
+                        
+                        break
+                    case .errorCodeWrongPassword: // If the user entered an invalid password
+                        
+                        break
+                    case .errorCodeNetworkError: // If there was a network error
+                        
+                        break
+                    default: break
+                    }
+                }
             }
         })
     }
     
-    func animateButton() {
+    // Show a shake animation when the text field is filled out incorrectly
+    func animateTextField(_ textField: UITextField) {
         UIView.animate(withDuration: 0.05, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            
-            UIViewAnimationOptions.curveEaseIn, animations: { self.passwordEntry.center.x += 10}, completion: nil)
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
         
         UIView.animate(withDuration: 0.05, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            
-            UIViewAnimationOptions.curveEaseIn, animations: { self.passwordEntry.center.x -= 20}, completion: nil)
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
         
         UIView.animate(withDuration: 0.05, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            
-            UIViewAnimationOptions.curveEaseIn, animations: { self.passwordEntry.center.x += 10}, completion: nil)
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
         
         UIView.animate(withDuration: 0.05, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            
-            UIViewAnimationOptions.curveEaseIn, animations: { self.passwordEntry.center.x -= 20}, completion: nil)
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
         
         UIView.animate(withDuration: 0.05, delay: 0.4, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            
-            UIViewAnimationOptions.curveEaseIn, animations: { self.passwordEntry.center.x += 10}, completion: nil)
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 20}, completion: nil)
+    }
+    
+    func animateButton() {
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

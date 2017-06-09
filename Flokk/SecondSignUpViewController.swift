@@ -59,11 +59,10 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     database.ref.child("uids").child(user.uid).setValue(handle) // Connect this user's UID with their handle, for logging in
                     
                     // While this(below) doesnt need to be synchronous necessarily, if there is an error in the creation,
-                    // I dont want the rest of the user to be added to the database
+                    // I don't want the rest of the user to be added to the database
                     
                     // Write this new user's data to the database
                     let userDataRef = database.ref.child("users").child(handle)
-                    
                     userDataRef.child("fullName").setValue(fullName)
                     userDataRef.child("email").setValue(self.email)
                     
@@ -74,6 +73,9 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                         }
                     }
                     
+                    // Initialize this as empty
+                    mainUser.groupInvites = [String]()
+                    
                     // After creating the user, load it into the mainUser directly,
                     // instead of uploading it then downloading it again(b/c thats just stupid)
                     mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
@@ -83,6 +85,27 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                 }
             } else {
                 print(error!)
+                
+                if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
+                    switch errorCode {
+                    case .errorCodeInvalidEmail: // If the email isn't valid
+                        
+                        
+                        
+                        break
+                    case .errorCodeWeakPassword: // If the password isn't strong enough
+                        
+                        break
+                    case .errorCodeAccountExistsWithDifferentCredential: // If this account already exists
+                        
+                        break
+                    
+                    case .errorCodeNetworkError: // If there was a network error. This should be checked like everywhere
+                        
+                        break
+                    default: break
+                    }
+                }
             }
         })
     }
