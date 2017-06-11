@@ -12,6 +12,7 @@ class GroupProfileViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
     weak var group: Group! // This is just a copy of the actual group
     var notification: Notification? // May not always exist, depending on where we segue from
@@ -27,6 +28,7 @@ class GroupProfileViewController: UIViewController {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.navigationBar.title = self.group.groupName
         
         // Create the range for when the tableView should start/stop moving
         self.headerConstraintRange = (CGFloat(self.headerView.frame.origin.y - self.headerView.frame.size.height)..<CGFloat(self.headerView.frame.origin.y))

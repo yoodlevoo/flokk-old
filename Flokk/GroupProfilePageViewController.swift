@@ -29,7 +29,7 @@ class GroupProfilePageViewController: UIPageViewController {
         }
         
         // Attempt to initialize the second child view controller
-        if let viewController2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GroupProfileViewControllerPage2") as? GroupProfileViewControllerPage2 {
+        if let viewController2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewGroupProfileViewControllerPage2") as? GroupProfileViewControllerPage2 {
             
             viewController2.group = self.group
             viewControllerPages.append(viewController2)
@@ -140,7 +140,7 @@ class GroupProfileViewControllerPage1: UIViewController {
     
     weak var group: Group! // Why should this be weak?
     
-    var activityIndicator = UIActivityIndicatorView()
+    var activityIndicator = UIActivityIndicatorView() // This should be refresh control probably
     var invitedToJoin = false // Only set when the views are already loaded, so the show call is called before this page's viewDidLoad, resulting in an error
     
     override func viewDidLoad() {
@@ -252,24 +252,30 @@ class GroupProfileViewControllerPage1: UIViewController {
     }
 }
 
-
 // Second Page for the group info at the top of the group profile - not shown by default
 // Contains when the group was created, who created it, and how many people are in the group
 class GroupProfileViewControllerPage2: UIViewController {
     @IBOutlet weak var dateCreatedLabel: UILabel!
     @IBOutlet weak var creatorNameLabel: UILabel!
     @IBOutlet weak var groupSizeLabel: UILabel!
+    @IBOutlet weak var creatorProfilePhotoView: UIImageView!
     
-    var group: Group!
+    weak var group: Group!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Temporary check, in the future the groupCreator's name MUST be loaded at this time
-        if self.group.groupCreator == nil || self.group.groupCreator.fullName == "" {
+        if self.group.creator == nil || self.group.creator.fullName == "" {
             self.creatorNameLabel.text = "Could not retrieve"
         } else {
-            self.creatorNameLabel.text = group.groupCreator.fullName
+            self.creatorNameLabel.text = "@\(group.creator.handle)"
+            self.creatorProfilePhotoView.image = group.creator.profilePhoto
+            self.dateCreatedLabel.text = convertDateToCalendar(date: group.creationDate)
+            
+            // Make the profile photo crop to a circle
+            self.creatorProfilePhotoView.layer.cornerRadius = self.creatorProfilePhotoView.frame.size.width / 2
+            self.creatorProfilePhotoView.clipsToBounds = true
         }
         
         self.groupSizeLabel.text = "\(group.members.count)"
@@ -277,5 +283,17 @@ class GroupProfileViewControllerPage2: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func convertDateToCalendar(date: Date) -> String {
+        let calendar = Calendar.current
+        
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        
+        let ret = "\(month)/\(day)/\(year)"
+        
+        return ret
     }
 }
