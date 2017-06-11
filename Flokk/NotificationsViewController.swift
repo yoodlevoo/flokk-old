@@ -120,6 +120,7 @@ class NotificationsViewController: UIViewController {
                                 if let values = snapshot.value as? NSDictionary {
                                     let groupName = values["name"] as! String
                                     let memberHandles = values["members"] as! [String : Bool] // This will never be nil/empty, will always have the creator
+                                    let creatorHandle = values["creator"] as! String
                                     
                                     // Load the group icon first
                                     let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
@@ -129,8 +130,9 @@ class NotificationsViewController: UIViewController {
                                             // Create the group object
                                             let group = Group(groupID: groupID, groupName: groupName, image: groupPhoto!)
                                             group.memberHandles = Array(memberHandles.keys) // Set the member handles to be loaded in the future
+                                            group.creationDate = Date(timeIntervalSinceReferenceDate: Date.timeIntervalSinceReferenceDate) // Set the creation date temporarily
                                             
-                                            // Load user data - we might as well load in everything while we have to
+                                            // Load user data - we might as well load in everything while we're at it
                                             let userRef = database.ref.child("users").child(senderHandle)
                                             userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                                                 if let userValues = snapshot.value as? NSDictionary {
@@ -148,7 +150,7 @@ class NotificationsViewController: UIViewController {
                                                             let profilePhoto = UIImage(data: data!)
                                                             // Create the user object
                                                             let user = User(handle: senderHandle, fullName: fullName, profilePhoto: profilePhoto!)
-                                                        
+                                                            
                                                             // Set the group IDs
                                                             if let groups = userValues["groups"] as? [String : Bool] {
                                                                 user.groupIDs = Array(groups.keys)
@@ -156,6 +158,11 @@ class NotificationsViewController: UIViewController {
                                                             
                                                             if let friends = userValues["friends"] as? [String : Bool] {
                                                                 user.friendHandles = Array(friends.keys)
+                                                            }
+                                                            
+                                                            if senderHandle == creatorHandle { // If the sender and the creator are the same user
+                                                                // Simply set the groups creator as the user we just loaded in
+                                                                group.creator = user
                                                             }
                                                                 
                                                             // Create and add the notification
@@ -168,12 +175,51 @@ class NotificationsViewController: UIViewController {
                                                                 self.refreshControl.endRefreshing()
                                                             }
                                                         } else {
+                                                            // Handle the errors here
                                                             print(error!)
                                                         }
                                                     })
                                                 }
                                             })
+                                            
+                                            // If the inviter is not the creator, load the creator's data - move this to the profile page later
+                                            if creatorHandle != senderHandle {
+                                                // Continue loading the group creator's data
+                                                let creatorRef = database.ref.child("users").child(creatorHandle)
+                                                creatorRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                                    if let creatorValues = snapshot.value as? NSDictionary {
+                                                        let fullName = creatorValues["fullName"] as! String
+                                                        
+                                                        // Load the profile photo for the user
+                                                        let creatorProfilePhotoRef = storage.ref.child("users").child(creatorHandle).child("profilePhoto").child("\(creatorHandle).jpg")
+                                                        creatorProfilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                                            if error == nil {
+                                                                let profilePhoto = UIImage(data: data!)
+                                                                
+                                                                let user = User(handle: creatorHandle, fullName: fullName, profilePhoto: profilePhoto!)
+                                                                
+                                                                // Set the group IDs
+                                                                if let groups = creatorValues["groups"] as? [String : Bool] {
+                                                                    user.groupIDs = Array(groups.keys)
+                                                                }
+                                                                
+                                                                // Set the friend handles
+                                                                if let friends = creatorValues["friends"] as? [String : Bool] {
+                                                                    user.friendHandles = Array(friends.keys)
+                                                                }
+                                                                
+                                                                // Set the group's creator hopefully before we segue - otherwise its going to do nothing probably
+                                                                group.creator = user
+                                                            } else {
+                                                                // Handle the errors later
+                                                                print(error!)
+                                                            }
+                                                        })
+                                                    }
+                                                })
+                                            }
                                         } else {
+                                            // Handle the errors later
                                             print(error!)
                                         }
                                     })

@@ -124,7 +124,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         let groupRef = database.ref.child("groups").child(groupKey)
         groupRef.child("creator").setValue(mainUser.handle) // Set group creator handle
         groupRef.child("name").setValue(groupName) // Set the groups name
-        groupRef.child("createdstamp").setValue(NSDate.timeIntervalSinceReferenceDate) // Set when this
+        groupRef.child("creationDate").setValue(NSDate.timeIntervalSinceReferenceDate) // Set when this
         
         // Only the user will be a member for now
         let members: [String: Bool] = [mainUser.handle: true]
