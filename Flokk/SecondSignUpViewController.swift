@@ -82,6 +82,7 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     
                     // Initialize this as empty, as its not an empty array by default
                     mainUser.groupInvites = [String]()
+                    mainUser.email = self.email
                     
                     // Segue to the next view, placed in the completion block so we don't segue when there was an error
                     self.performSegue(withIdentifier: "segueFromSecondSignUpToConnectContacts", sender: self)

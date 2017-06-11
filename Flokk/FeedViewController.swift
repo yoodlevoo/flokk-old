@@ -69,6 +69,8 @@ class FeedViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.tableView.reloadData() // Reload data every time this view appears, in case we just uploaded a photowe
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,6 +90,8 @@ class FeedViewController: UIViewController {
     // Called when the user pulls down on this table
     func handleRefresh(refreshControl: UIRefreshControl) {
         self.tableView.reloadData()
+        
+        // Have a little delay here
         refreshControl.endRefreshing()
     }
     

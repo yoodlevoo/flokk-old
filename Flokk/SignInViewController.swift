@@ -109,6 +109,8 @@ class SignInViewController: UIViewController {
                                         mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
                                     }
                                     
+                                    mainUser.email = email
+                                    
                                     // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
                                     self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
                                 })
@@ -132,6 +134,8 @@ class SignInViewController: UIViewController {
                                     if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
                                         mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
                                     }
+                                    
+                                    mainUser.email = email
                                     
                                 
                                     // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue

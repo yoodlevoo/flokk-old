@@ -84,7 +84,7 @@ class TempPhotoSelectViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromPhotoSelectToConfirmImage" {
             if let confirmUploadView = segue.destination as? ConfirmUploadViewController {
-                if let tag = (sender as? PhotoSelectCell)?.tag {
+                if let tag = (sender as? TempPhotoSelectCell)?.tag {
                     confirmUploadView.groupIndex = self.groupIndex
                     
                     let screenWidth = UIScreen.main.bounds.width

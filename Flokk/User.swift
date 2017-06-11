@@ -16,6 +16,7 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var handle: String // A completely unique identifier(ie. @gannonprudhomme)
     var fullName: String
     var profilePhoto: UIImage
+    var email: String! // The email of this user, usually not going to be generated
     
     var groups = [Group]() // The groups this user is in
     var groupIDs = [String]() // The IDs of all the groups this user is in

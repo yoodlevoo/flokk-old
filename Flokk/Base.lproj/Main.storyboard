@@ -388,7 +388,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MJj-rn-rgI">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MJj-rn-rgI">
                                 <rect key="frame" x="70" y="268" width="235" height="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="17"/>
@@ -421,7 +421,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vR-uX-ahz">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vR-uX-ahz" userLabel="Save Button">
                                 <rect key="frame" x="72.5" y="585" width="230" height="57"/>
                                 <state key="normal" image="TurquoiseSaveBttn"/>
                                 <connections>
@@ -429,25 +429,28 @@
                                     <segue destination="hol-x6-rFt" kind="unwind" unwindAction="unwindToPersonalProfileWithSegue:" id="Kdl-PV-kIJ"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2EI-B4-TZP">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2EI-B4-TZP" userLabel="Full Name underline">
                                 <rect key="frame" x="70" y="236" width="235" height="3"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mbd-Sw-cF2">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mbd-Sw-cF2" userLabel="email underline">
                                 <rect key="frame" x="70" y="293" width="235" height="3"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZp-l4-dRV">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZp-l4-dRV" userLabel="old password underline">
                                 <rect key="frame" x="70" y="351" width="235" height="3"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bFs-i9-MLa">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bFs-i9-MLa" userLabel="New password underline">
                                 <rect key="frame" x="70" y="415" width="235" height="3"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lw1-Zo-Fpf">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lw1-Zo-Fpf" userLabel="Log Out Button">
                                 <rect key="frame" x="132" y="439" width="111" height="35"/>
                                 <state key="normal" image="LogOutBttn"/>
+                                <connections>
+                                    <segue destination="7Ri-ws-uS1" kind="presentation" identifier="segueFromProfileSettingsToInitial" id="HhL-1I-Hqm"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rpx-oT-0u5">
                                 <rect key="frame" x="107.5" y="50" width="160" height="116"/>
@@ -498,19 +501,12 @@
                             <constraint firstItem="cRr-24-zuS" firstAttribute="centerX" secondItem="Yg6-2p-AqR" secondAttribute="centerX" id="zX6-Xf-LF0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Settings" id="vYO-ci-M4t">
-                        <barButtonItem key="leftBarButtonItem" image="WhiteArrow" id="pVX-7V-FWB">
-                            <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="backPage:" destination="Gnc-hd-ZFe" id="I2N-u4-2GR"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
-                        <outlet property="emailField" destination="MJj-rn-rgI" id="LzQ-E0-P7c"/>
+                        <outlet property="currentPasswordField" destination="7X2-ge-Hv6" id="0BQ-dl-Hzq"/>
+                        <outlet property="emailField" destination="MJj-rn-rgI" id="WUh-Pn-vcm"/>
                         <outlet property="fullNameField" destination="BZd-Gr-KVj" id="phC-7U-5e4"/>
+                        <outlet property="newPasswordField" destination="cRr-24-zuS" id="jd7-0n-KIU"/>
                         <outlet property="profilePictureButton" destination="Rpx-oT-0u5" id="vZ0-dN-GUN"/>
-                        <outlet property="profilePictureOutlet" destination="Rpx-oT-0u5" id="QQ5-7L-5rb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9n2-20-fL0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -718,7 +714,7 @@
                                 <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="uploadPic:" destination="zMU-GR-fPQ" id="a5z-PJ-Ml5"/>
-                                    <segue destination="ZUG-83-qEb" kind="show" identifier="segueFromFeedToPhotoSelect" id="4nE-DD-tTk"/>
+                                    <segue destination="ZUG-83-qEb" kind="show" identifier="segueFromFeedToPhotoUploadPage" id="4nE-DD-tTk"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem image="Settings Button (Green)" id="r70-je-Mcs" userLabel="Settings">
@@ -2544,6 +2540,10 @@
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dwh-w6-ybS">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="3e4-kx-H1H"/>
+                                    <constraint firstAttribute="width" constant="375" id="zL2-CM-JcK"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem image="Crop Icon" width="100" id="RD5-69-Qbp">
                                         <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
