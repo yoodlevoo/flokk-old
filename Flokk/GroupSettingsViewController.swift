@@ -22,11 +22,18 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var members = [User]()
     
+    var refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        self.refreshControl.addTarget(self, action: #selector(GroupSettingsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
+        
+        self.tableView.addSubview(self.refreshControl)
+        //self.tableView.refreshControl = self.refreshControl
         
         // Add the group image and crop it to a circle
         self.groupImageView.image = group.groupIcon
@@ -34,6 +41,8 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         self.groupImageView.clipsToBounds = true
         
         self.groupNameLabel.text = group.groupName
+        
+        self.refreshControl.beginRefreshing()
         
         // Put an overlay over the image so you know you can change it?
         
@@ -46,7 +55,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                     
                     // Load this user's profile Photo
                     let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
-                    profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                    profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
                             
@@ -57,6 +66,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                             
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
+                                self.refreshControl.endRefreshing()
                             }
                         } else { // If there was an error
                             print(error!)
@@ -92,6 +102,11 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
+    
     
     @IBAction func inviteFriendButtonPressed(_ sender: Any) {
         /*
@@ -107,34 +122,12 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupSettingsToInviteFriends" {
-            if let inviteFriendsView = segue.destination as? InviteFriendsTableViewController {
+            if let inviteFriendsView = segue.destination as? InviteFriendsViewController {
                 inviteFriendsView.group = self.group
                 
                 // Load all of the user's friends
                 // Should probably do this in the viewDidLoad of inviteFriends
-                for handle in mainUser.friendHandles {
-                    if !group.memberHandles.contains(handle) { // If this user isn't already a member of the group, continue to load it
-                        let userRef = database.ref.child("users").child(handle)
-                        
-                        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                            if let values = snapshot.value as? NSDictionary {
-                                let fullName = values["fullName"] as! String
-                                
-                                // Download the profile photo
-                                let profilePhotoRef = storage.ref.child("users").child(handle)
-                                profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
-                                    if error == nil {
-                                        let profilePhoto = UIImage(data: data!)
-                                        
-                                        let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
-                                        
-                                        inviteFriendsView.mainUserFriends.append(user)
-                                    }
-                                })
-                            }
-                        })
-                    }
-                }
+                
             }
         }
     }

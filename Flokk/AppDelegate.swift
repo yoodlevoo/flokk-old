@@ -20,6 +20,10 @@ var storedUsers = [String : User]() // Dict of all of the loaded users, should p
 let TEAL_COLOR = UIColor(colorLiteralRed: 56.0/255.0, green: 161.0/255.0, blue: 159.0/255.0, alpha: 1.0)
 let NAVY_COLOR = UIColor(colorLiteralRed: 21.0/255.0, green: 22.0/255.0, blue: 43.0/255.0, alpha: 1.0)
 
+let MIN_PASSWORD_LENGTH = 6
+let MAX_PROFILE_PHOTO_SIZE: Int64 = 1 * 4096 * 4096
+let MAX_POST_SIZE: Int64 = 1 * 4096 * 4096
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -41,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+//         Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
 

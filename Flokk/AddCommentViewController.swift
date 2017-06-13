@@ -21,6 +21,8 @@ class AddCommentViewController: UIViewController {
     var groupIndex: Int! // The index of the group in the global groups array
     var group: Group!
     
+    var userProfilePhotos = [String : UIImage]() // Dict of all of the according profile photos
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,20 +39,41 @@ class AddCommentViewController: UIViewController {
         
         // Load in the comments, ordered by most recent?
         let commentRef = database.ref.child("comments").child(self.group.groupID).child(post.id)
-        commentRef.queryOrdered(byChild: "timestamp").observeSingleEvent(of: .value, with: { (snapshot) in
-            if let children = snapshot.value as? NSDictionary {
+        commentRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot.value)
+            if let children = snapshot.value as? [String : Any] {
                 for (key, data) in children { // Iterate through all of the comments
                     if let values = data as? NSDictionary {
-                        let commenter = values["poster"] as! String
+                        let commenterHandle = values["poster"] as! String
                         let content = values["content"] as! String
                         let timestamp = NSDate(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
                         
-                        let comment = Comment(userHandle: commenter, content: content, timestamp: timestamp)
+                        let comment = Comment(userHandle: commenterHandle, content: content, timestamp: timestamp)
                         
                         self.loadedComments.append(comment)
                         
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
+                        // Load in the profile photo for the commenter
+                        if !self.userProfilePhotos.keys.contains(commenterHandle) { // If we haven't loaded this user's profile photo already
+                            let profilePhotoRef = storage.ref.child("users").child(commenterHandle).child("profilePhoto").child("\(commenterHandle).jpg")
+                            profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                if error == nil { // If there wasn't an error
+                                    let profilePhoto = UIImage(data: data!)
+                                    
+                                    // Set the according profile in the dict
+                                    self.userProfilePhotos[commenterHandle] = profilePhoto
+                                    
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData()
+                                    }
+                                } else { // If there was an error
+                                    print(error!)
+                                }
+                            })
+                        } else { // If the commenters profile photo has already been loaded
+                            // Then we can immediately refresh the able view
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
                         }
                     }
                 }
@@ -79,7 +102,7 @@ extension AddCommentViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CommentsTableViewController
         
         let comment = self.loadedComments[indexPath.row]
-        cell.userPhotoView.image = comment.user.profilePhoto
+        cell.userPhotoView.image = self.userProfilePhotos[comment.userHandle]
         cell.userPhotoView.layer.cornerRadius = cell.userPhotoView.frame.size.width / 2
         cell.userPhotoView.clipsToBounds = true
         
@@ -93,7 +116,7 @@ extension AddCommentViewController: UITableViewDelegate, UITableViewDataSource {
     
     // The number of rows depends on how many comments there are
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return post.comments.count
+        return self.loadedComments.count
     }
 }
 
@@ -104,7 +127,8 @@ extension AddCommentViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         // Upload the comment
-        let commentRef = database.ref.child("groups").child(groups[groupIndex].groupName).child("comments") // Database reference
+        let commentKey = database.ref.child("comments").child(self.group.groupID).child(post.id).childByAutoId().key
+        let commentRef = database.ref.child("comments").child(self.group.groupID).child(post.id).child(commentKey) // Database reference
         commentRef.child("poster").setValue(mainUser.handle) // The handle of the commenter, always going to be the mainUser
         commentRef.child("content").setValue(textField.text!) // The actual content of the comment
         commentRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)

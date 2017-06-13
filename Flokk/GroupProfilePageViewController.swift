@@ -3,7 +3,7 @@
 //  Flokk
 //
 //  Created by Gannon Prudhomme on 4/21/17.
-//  Copyright © 2017 Akaro. All rights reserved.
+//  Copyright © 2017 Flokk. All rights reserved.
 //
 
 import UIKit
@@ -12,6 +12,7 @@ class GroupProfilePageViewController: UIPageViewController {
     var viewControllerPages = [UIViewController]()
     
     var group: Group!
+    var invitedToJoin = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,8 @@ class GroupProfilePageViewController: UIPageViewController {
             
             viewController1.group = group
             viewControllerPages.append(viewController1)
+        } else {
+            print("Couldn't instantiate GroupProfileViewController1")
         }
         
         // Attempt to initialize the second child view controller
@@ -30,6 +33,37 @@ class GroupProfilePageViewController: UIPageViewController {
             
             viewController2.group = self.group
             viewControllerPages.append(viewController2)
+        } else {
+            print("Couldn't instantiate GroupProfileViewController2")
+        }
+        
+        if mainUser.groupInvites == nil { // If the group invites has been loaded yet
+            let userRef = database.ref.child("users").child(mainUser.handle).child("groupInvites")
+            userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let values = snapshot.value as? NSDictionary {
+                    let groupIDs = values.allKeys as! [String]
+                    
+                    mainUser.groupInvites = groupIDs
+                    
+                    // If this group has invited the main user to join
+                    if groupIDs.contains(self.group.groupID) {
+                        self.invitedToJoin = true
+                        
+                        // Show the accept and deny invite buttons
+                        DispatchQueue.main.async {
+                            self.showInviteButtons()
+                        }
+                    }
+                }
+            })
+        } else { // If the groupInvites have been loaded
+            if mainUser.groupInvites.contains(self.group.groupID) { // Check if this user has been invited to join
+                self.invitedToJoin = true
+                (viewControllerPages[0] as! GroupProfileViewControllerPage1).invitedToJoin = true
+                
+                // Show the accept and deny invite buttons
+                self.showInviteButtons()
+            }
         }
         
         // Set the initial view controller
@@ -38,6 +72,24 @@ class GroupProfilePageViewController: UIPageViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func showInviteButtons() {
+        if let page1 = viewControllerPages[0] as? GroupProfileViewControllerPage1 {
+            if page1.acceptGroupInviteButton != nil && page1.declineGroupInviteButton != nil {
+                page1.acceptGroupInviteButton.isHidden = false
+                page1.declineGroupInviteButton.isHidden = false
+            }
+        }
+    }
+    
+    func hideInviteButtons() {
+        if let page1 = viewControllerPages[0] as? GroupProfileViewControllerPage1 {
+            if page1.acceptGroupInviteButton != nil && page1.declineGroupInviteButton != nil {
+                page1.acceptGroupInviteButton.isHidden = true
+                page1.declineGroupInviteButton.isHidden = true
+            }
+        }
     }
 }
 
@@ -83,8 +135,13 @@ extension GroupProfilePageViewController: UIPageViewControllerDataSource {
 class GroupProfileViewControllerPage1: UIViewController {
     @IBOutlet weak var groupIconView: UIImageView!
     @IBOutlet weak var groupNameLabel: UILabel!
+    @IBOutlet weak var acceptGroupInviteButton: UIButton!
+    @IBOutlet weak var declineGroupInviteButton: UIButton!
     
-    var group: Group!
+    weak var group: Group! // Why should this be weak?
+    
+    var activityIndicator = UIActivityIndicatorView()
+    var invitedToJoin = false // Only set when the views are already loaded, so the show call is called before this page's viewDidLoad, resulting in an error
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,10 +151,104 @@ class GroupProfileViewControllerPage1: UIViewController {
         self.groupIconView.clipsToBounds = true
         
         self.groupNameLabel.text = group.groupName
+        
+        // If the group invites have already been loaded and this group has an outgoing invite to the user
+        // We have to show the buttons here, as they're not initialized yet when the page view controller initializes
+        if self.invitedToJoin {
+            self.acceptGroupInviteButton.isHidden = false
+            self.declineGroupInviteButton.isHidden = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // If the user accepts the invite to join this group
+    @IBAction func acceptGroupInvitePressed(_ sender: Any) {
+        let groupRef = database.ref.child("groups").child(self.group.groupID)
+        groupRef.child("invitedUsers").child(mainUser.handle).removeValue() // Remove the outgoing invite from the groups json
+        groupRef.child("members").child(mainUser.handle).setValue(true) // Tell
+        
+        let userRef = database.ref.child("users").child(mainUser.handle)
+        userRef.child("groupInvites").child(self.group.groupID).removeValue() // Remove this group from the list of group invites for the user
+        userRef.child("groups").child(self.group.groupID).setValue(true) // Set this group as one of the user's group
+        
+        // Delete the notification for the user
+        let notificationRef = database.ref.child("notifications").child(mainUser.handle)
+        // Sort by notifications sent from this group
+        notificationRef.queryOrdered(byChild: "groupID").queryEqual(toValue: self.group.groupID).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                for (key, value) in values {
+                    if let dict = value as? [String: Any] {
+                        if dict["type"] as! Int == NotificationType.GROUP_INVITE.rawValue {
+                            notificationRef.child(key as! String).removeValue() // Delete this notification
+                        }
+                    }
+                }
+            }
+        })
+        
+        // Add a group join notification
+        
+        // Hide the invite buttons
+        (self.parent as! GroupProfilePageViewController).hideInviteButtons()
+        
+        // Remove the notification somewhere
+        //let matches = mainUser.notifications.filter({$0.group.groupID == self.group.groupID && $0.type == NotificationType.GROUP_INVITE })
+        //if matches.count == 1 {
+            //mainUser.notifications.index(of: matches[0])
+        //}
+        
+        // Load the rest of the group data - mainly just the posts data
+        groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let postsData = values["posts"] as? [String : [String : Any]] ?? [String : [String : Any]]() // Default empty dictionary incase there are no posts
+                
+                self.group.postsData = postsData
+                self.group.memberHandles.append(mainUser.handle)
+                self.group.members.append(mainUser)
+                
+                groups.append(self.group)
+            }
+        })
+        
+        // Remove this group as a local incoming group invite
+        mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.groupID)!)
+        
+        // Add this group to the local list of groups
+        mainUser.groupIDs.append(self.group.groupID)
+    }
+    
+    // If the user declines the invite to join this group - most of this is the same as acceptGroupInvitePressed(above)
+    @IBAction func decineGroupInvitePressed(_ sender: Any) {
+        let groupRef = database.ref.child("groups").child(self.group.groupID)
+        groupRef.child("invitedUsers").child(mainUser.handle).removeValue() // Remove the outgoing invite from the groups json
+        groupRef.child("members").child(mainUser.handle).setValue(true) // Tell
+        
+        // Remove this group from the list of group invites for the user
+        database.ref.child("users").child(mainUser.handle).child("groupInvites").child(self.group.groupID).removeValue()
+        
+        // Delete the notification for the user
+        let notificationRef = database.ref.child("notifications").child(mainUser.handle)
+        // Sort by notifications sent from this group
+        notificationRef.queryOrdered(byChild: "groupID").queryEqual(toValue: self.group.groupID).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                for (key, value) in values {
+                    if let dict = value as? [String: Any] {
+                        if dict["type"] as! Int == NotificationType.GROUP_INVITE.rawValue {
+                            notificationRef.child(key as! String).removeValue() // Delete this notification
+                        }
+                    }
+                }
+            }
+        })
+        
+        // Hide the invite buttons
+        (self.parent as! GroupProfilePageViewController).hideInviteButtons()
+        
+        // Remove this group as a local incoming group invite
+        mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.groupID)!)
     }
 }
 
@@ -114,7 +265,13 @@ class GroupProfileViewControllerPage2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.creatorNameLabel.text = group.groupCreator.fullName
+        // Temporary check, in the future the groupCreator's name MUST be loaded at this time
+        if self.group.groupCreator == nil || self.group.groupCreator.fullName == "" {
+            self.creatorNameLabel.text = "Could not retrieve"
+        } else {
+            self.creatorNameLabel.text = group.groupCreator.fullName
+        }
+        
         self.groupSizeLabel.text = "\(group.members.count)"
     }
     

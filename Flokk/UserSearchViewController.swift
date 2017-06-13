@@ -11,15 +11,26 @@ import Firebase
 import FirebaseDatabase
 import FirebaseStorage
 
-class UserSearchTableViewController: UITableViewController, UISearchResultsUpdating {
+class UserSearchViewController: UIViewController {
+    @IBOutlet weak var tableView: UITableView!
+    //@IBOutlet weak var searchBar: UISearchBar!
+    
     var users = [User]()
     let searchController = UISearchController(searchResultsController: nil)
     
     var searchContent: String!
     
+    var refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //self.searchBar.delegate = self
+        //self.searchBar.isHidden = true
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
         self.searchController.searchResultsUpdater = self
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
@@ -27,6 +38,18 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         self.searchController.searchBar.delegate = self
         self.searchController.searchBar.keyboardAppearance = .dark
         
+        self.tableView.tableHeaderView = self.searchController.searchBar
+        
+        self.refreshControl.addTarget(self, action: #selector(UserSearchViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
+        
+        
+        //self.tableView.addSubview(self.refreshControl)
+        //self.tableView.bringSubview(toFront: self.refreshControl)
+        // self.tableView.refreshControl = self.refreshControl
+        //self.refreshControl.beginRefreshing()
+        
+        /*
         self.searchController.searchBar.layer.cornerRadius = 2.0
         self.searchController.searchBar.layer.borderColor = UIColor.cyan.cgColor
         //self.searchController.searchBar.layer.backgroundColor = NAVY_COLOR.cgColor
@@ -35,8 +58,7 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         var textField = self.searchController.searchBar.value(forKey: "_searchField") as! UITextField
         textField.textColor = UIColor.brown
         textField.backgroundColor = NAVY_COLOR
-        
-        self.tableView.tableHeaderView = self.searchController.searchBar
+        */
         
         self.searchContent = ""
     }
@@ -46,20 +68,38 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         
         self.searchController.searchBar.isHidden = false
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    
+    // Search if there is a user in the database whose fullName matches the search criteria
+    // aysnchronous loading is messing up the tableview
+    func updateSearchResults(for searchController: UISearchController) {
+        
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.searchController.searchBar.isHidden = true
+        
+        if segue.identifier == "segueFromUserSearchToProfile" {
+            if let profileView = segue.destination as? ProfileViewController {
+                let selectedUser = users[(self.tableView.indexPathForSelectedRow?.row)!]
+                
+                profileView.user = selectedUser
+            }
+        }
+    }
+}
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+// Table View functions
+extension UserSearchViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! UserTableViewCell
         
         let user = users[indexPath.row]
@@ -75,26 +115,17 @@ class UserSearchTableViewController: UITableViewController, UISearchResultsUpdat
         return cell
     }
     
-    // Search if there is a user in the database whose fullName matches the search criteria
-    // aysnchronous loading is messing up the tableview
-    func updateSearchResults(for searchController: UISearchController) {
-        
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return users.count
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        self.searchController.searchBar.isHidden = true
-        
-        if segue.identifier == "segueFromUserSearchToProfile" {
-            if let profileView = segue.destination as? ProfileViewController {
-                let selectedUser = users[(self.tableView.indexPathForSelectedRow?.row)!]
-                
-                profileView.user = selectedUser
-            }
-        }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
 }
 
-extension UserSearchTableViewController: UISearchBarDelegate {
+// Search Bar Functions
+extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //let usersRef = database.ref.child("users").queryOrdered(byChild: "fullName").queryEqual(toValue: searchBar.text)
         let testRef = database.ref.child("users").queryOrdered(byChild: "fullName").queryStarting(atValue: searchBar.text) //insert queryLimited
@@ -102,6 +133,7 @@ extension UserSearchTableViewController: UISearchBarDelegate {
         // Clear the users on every new search
         users.removeAll()
         self.tableView.reloadData()
+        self.refreshControl.beginRefreshing() // Start the activity indicator / refresh control
         
         testRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
@@ -120,7 +152,7 @@ extension UserSearchTableViewController: UISearchBarDelegate {
                     if searchBar.text == fullNameSplit { // If the search equates to this users full name
                         // Retrieve the profile photo
                         let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
-                        profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                        profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil { // If there wasn't an error
                                 let profilePhoto = UIImage(data: data!) // Create an image from the data retrieved
                                 
@@ -131,7 +163,10 @@ extension UserSearchTableViewController: UISearchBarDelegate {
                                 self.users.append(user)
                                 
                                 // Update the data table
-                                self.tableView.reloadData()
+                                DispatchQueue.main.async {
+                                    self.tableView.reloadData()
+                                    //self.refreshControl.endRefreshing() // Stop the activity indicator/refresh control
+                                }
                             } else { // If there was an error
                                 
                             }

@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Toucan.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -52,17 +57,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3D55D11BD64566BCEBDFEF14DE0BEE2A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C052BEBFBD0AB5218CC64BA3450F6547</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>E31022D14734B439F2A029A440D5BAB5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F7554501407752B5C912F07CAFE999A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FDFBD7D967F9BB8F9298890B486315E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

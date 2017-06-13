@@ -17,13 +17,64 @@ class FriendsViewController: UIViewController {
     
     let transitionRight = SlideRightAnimator()
     
+    let refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.refreshControl.addTarget(self, action: #selector(FriendsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
         
+        self.tableView.refreshControl = self.refreshControl
         
+        if mainUser.friends.count < mainUser.friendHandles.count { // If there are still more friends to load
+            self.refreshControl.beginRefreshing()
+            
+            for handle in mainUser.friendHandles {
+                let matches = mainUser.friends.filter({ $0.handle == handle}) // Check if this user has already been loaded
+                if matches.count > 0 {
+                    continue
+                } else { // If the user hasn't already been loaded, continue loading it
+                    let userRef = database.ref.child("users").child(handle)
+                    userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                        // Check if snapshot exists, just in case?
+                        
+                        if let values = snapshot.value as? NSDictionary {
+                            let fullName = values["fullName"] as! String
+                            //are we already loading groupHandles? If so, we might as well add it
+                            
+                            // Load the profile photo of this user
+                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                            profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                if error == nil {
+                                    let profilePhoto = UIImage(data: data!) // load the profile photo from the downloaded data
+                                    
+                                    let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                    
+                                    // Check again if the user hasn't been added
+                                    let matches = mainUser.friends.filter({ $0.handle == handle}) // Check if this user has already been loaded
+                                    if matches.count > 0 { // If there is a match
+                                        return // Ignore this user
+                                    } else {
+                                        // Add this user to the main user's friends array
+                                        mainUser.friends.append(user)
+                                        
+                                        self.displayedFriends = mainUser.friends
+                                        
+                                        DispatchQueue.main.async {
+                                            self.tableView.reloadData()
+                                            self.refreshControl.endRefreshing()
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +95,11 @@ class FriendsViewController: UIViewController {
         totalFriends = mainUser.friends // Fetch all of the main user's friends
         
         displayedFriends = totalFriends // Set the displayed friends to just show all of the friends for testing
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     // Simply dismiss this view manually when the back button is pressed, 

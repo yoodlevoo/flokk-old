@@ -12,6 +12,7 @@ target 'Flokk' do
   pod 'Firebase/Storage'
   pod 'Firebase/Analytics'
   pod 'BRYXBanner'
+  pod 'Toucan'
 
   target 'FlokkTests' do
     inherit! :search_paths

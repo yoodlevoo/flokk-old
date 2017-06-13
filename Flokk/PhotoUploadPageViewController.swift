@@ -20,7 +20,7 @@ class PhotoUploadPageViewController: UIPageViewController, UIPageViewControllerD
         if let firstViewController = orderedViewControllers.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
             
-            if let photoSelect = firstViewController as? PhotoSelectViewController {
+            if let photoSelect = firstViewController as? TempPhotoSelectViewController {
                 photoSelect.forGroup = groupToPass
                 photoSelect.groupIndex = groupIndexToPass
             }

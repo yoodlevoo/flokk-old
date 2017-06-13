@@ -26,6 +26,9 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
         self.usernameField.becomeFirstResponder() // Set the usernameEntry to be selected by default
         
         self.imagePicker.delegate = self
+        
+        self.addProfilePhotoButton?.layer.cornerRadius = (self.addProfilePhotoButton?.frame.size.width)! / 2
+        self.addProfilePhotoButton?.clipsToBounds = true
     }
     
     @IBAction func addProfilePic(_ sender: Any) {
@@ -59,11 +62,10 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     database.ref.child("uids").child(user.uid).setValue(handle) // Connect this user's UID with their handle, for logging in
                     
                     // While this(below) doesnt need to be synchronous necessarily, if there is an error in the creation,
-                    // I dont want the rest of the user to be added to the database
+                    // I don't want the rest of the user to be added to the database
                     
                     // Write this new user's data to the database
                     let userDataRef = database.ref.child("users").child(handle)
-                    
                     userDataRef.child("fullName").setValue(fullName)
                     userDataRef.child("email").setValue(self.email)
                     
@@ -78,11 +80,36 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     // instead of uploading it then downloading it again(b/c thats just stupid)
                     mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                     
+                    // Initialize this as empty, as its not an empty array by default
+                    mainUser.groupInvites = [String]()
+                    mainUser.email = self.email
+                    
                     // Segue to the next view, placed in the completion block so we don't segue when there was an error
                     self.performSegue(withIdentifier: "segueFromSecondSignUpToConnectContacts", sender: self)
                 }
             } else {
                 print(error!)
+                
+                if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
+                    switch errorCode {
+                    case .errorCodeInvalidEmail: // If the email isn't valid
+                        
+                        
+                        
+                        break
+                    case .errorCodeWeakPassword: // If the password isn't strong enough
+                        
+                        break
+                    case .errorCodeAccountExistsWithDifferentCredential: // If this account already exists
+                        
+                        break
+                    
+                    case .errorCodeNetworkError: // If there was a network error. This should be checked like everywhere
+                        
+                        break
+                    default: break
+                    }
+                }
             }
         })
     }
