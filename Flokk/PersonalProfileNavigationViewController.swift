@@ -16,11 +16,11 @@ class PersonalProfileNavigationViewController: UINavigationController {
         super.viewDidLoad()
         
         //self.navigationBar.barTintColor = UIColor(colorLiteralRed: 56, green: 161, blue: 159, alpha: 1)
-        self.navigationBar.tintColor = UIColor(colorLiteralRed: 22, green: 23, blue: 43, alpha: 1)
+        self.navigationBar.tintColor = NAVY_COLOR
         
         self.navigationBar.isHidden = true // Hidden by default
         
-        self.navigationItem.backBarButtonItem?.image = UIImage(named: "WhtieArrow")
+        self.navigationItem.backBarButtonItem?.image = UIImage(named: "WhiteArrow")
     }
 
     override func didReceiveMemoryWarning() {

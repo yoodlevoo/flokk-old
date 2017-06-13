@@ -50,6 +50,8 @@ class PhotoSelectLayout: UICollectionViewLayout {
         return collectionView!.bounds.width - (insets.left + insets.right)
     }
     
+    var updateRequested = true
+    
     override class var layoutAttributesClass : AnyClass {
         return PhotoSelectLayoutAttributes.self
     }
@@ -58,7 +60,7 @@ class PhotoSelectLayout: UICollectionViewLayout {
         // So cache only loads once
         // Work out a different way so we only have to load a certain part of the cache
         // like 'if cache.count < collectionView!.numberOfItems(inSection: 0) {...}'
-        if cache.isEmpty {
+        if self.cache.isEmpty || self.updateRequested {
             // Pre-Calculates the X Offset for every column and adds an array to increment the currently max Y Offset for each column
             let columnWidth = contentWidth / CGFloat(numberOfColumns)
             var xOffset = [CGFloat]()
@@ -70,7 +72,7 @@ class PhotoSelectLayout: UICollectionViewLayout {
             var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
             
             // Iterate throught the list of items in the first collection
-            for item in 0 ..< collectionView!.numberOfItems(inSection: 0) {
+            for item in self.cache.count ..< collectionView!.numberOfItems(inSection: 0) {
                 let indexPath = IndexPath(item: item, section: 0)
                 
                 // Asks the delegate for the height of the picture and the annotation and calculates the cell frame.
@@ -85,7 +87,7 @@ class PhotoSelectLayout: UICollectionViewLayout {
                 attributes.photoHeight = photoHeight
                 attributes.frame = insetFrame
 
-                cache.append(attributes)
+                self.cache.append(attributes)
                 
                 // Updates the collection view content height
                 contentHeight = max(contentHeight, frame.maxY)
@@ -97,6 +99,8 @@ class PhotoSelectLayout: UICollectionViewLayout {
                     column += 1
                 }
             }
+            
+            self.updateRequested = false
         }
     }
     

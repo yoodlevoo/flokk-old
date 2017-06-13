@@ -76,7 +76,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
                     
                     // Load the profile photo form Storage
                     let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
-                    profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                    profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
                             
@@ -122,8 +122,9 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         userRef.child("groups").child(groupKey).setValue(true) // Add the group to the mainUser/creators list of groups
         
         let groupRef = database.ref.child("groups").child(groupKey)
-        groupRef.child("creator").setValue(mainUser.handle)
+        groupRef.child("creator").setValue(mainUser.handle) // Set group creator handle
         groupRef.child("name").setValue(groupName) // Set the groups name
+        groupRef.child("creationDate").setValue(NSDate.timeIntervalSinceReferenceDate) // Set when this
         
         // Only the user will be a member for now
         let members: [String: Bool] = [mainUser.handle: true]
@@ -161,7 +162,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         }
         
         // Actually create the group
-        let group = Group(groupID: groupKey, groupName: groupName, image: UIImage(named: "BasketballMob")!, users: [mainUser], creator: mainUser)
+        let group = Group(groupID: groupKey, groupName: groupName, image: (self.addGroupPictureButton.imageView?.image!)!, users: [mainUser], creator: mainUser)
         groups.append(group) // Add this group to the global groups
         
         self.navigationController?.popViewController(animated: true)

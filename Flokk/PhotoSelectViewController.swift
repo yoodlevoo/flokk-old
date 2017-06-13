@@ -66,19 +66,21 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! PhotoSelectCell
         
-        cell.imageView.image = images[indexPath.item] as? UIImage
-        
-        // Attempt to change this imageView's bounds so the cell shows the full image
-        cell.imageView.contentMode = .scaleAspectFit
-        cell.layer.borderColor = UIColor.black.cgColor
-        cell.layer.borderWidth = 1
-        
-        // Set the cells tag so prepare(for: segue) knows which celll was selected
-        cell.tag = indexPath.item
-        
-        if indexPath.item == self.loadedPostsCount - 1{ // If this is the last photo
-            if self.totalPhotos > self.loadedPostsCount { // If there are still more photos to load
-                self.loadImages(from: self.loadedPostsCount, to: self.loadedPostsCount + PhotoSelectViewController.morePostsToLoad - 1) // Load more posts
+        DispatchQueue.main.async {
+            cell.imageView.image = self.images[indexPath.item] as? UIImage
+            
+            // Attempt to change this imageView's bounds so the cell shows the full image
+            cell.imageView.contentMode = .scaleAspectFit
+            cell.layer.borderColor = UIColor.black.cgColor
+            cell.layer.borderWidth = 1
+            
+            // Set the cells tag so prepare(for: segue) knows which celll was selected
+            cell.tag = indexPath.item
+            
+            if indexPath.item == self.loadedPostsCount - 1{ // If this is the last photo
+                if self.totalPhotos > self.loadedPostsCount { // If there are still more photos to load
+                    self.loadImages(from: self.loadedPostsCount, to: self.loadedPostsCount + PhotoSelectViewController.morePostsToLoad - 1) // Load more posts
+                }
             }
         }
         
@@ -96,6 +98,14 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         height = rect.size.height
         
         return height
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        //print("Disappearing\(indexPath.item)")
+        
+        if self.collectionView.indexPathsForVisibleItems.contains(indexPath) {
+            //self.images.remove(indexPath.item)
+        }
     }
     
     @IBAction func unwindFromConfirmImageToPhotoSelect(segue: UIStoryboardSegue) {
@@ -119,7 +129,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
                 DispatchQueue.main.async {
                     self.images[i] = image! // Set the loaded image in the images array
                     
-                    (self.collectionView.collectionViewLayout as! PhotoSelectLayout).cache.removeAll() // Clear the cache so the new cells will pop up
+                    //(self.collectionView.collectionViewLayout as! PhotoSelectLayout).cache.removeAll() // Clear the cache so the new cells will pop up
                     self.collectionView.collectionViewLayout.invalidateLayout() // Trigger a layout update
                     self.collectionView.reloadData() // Try not to do this every time an image is loaded
                 }

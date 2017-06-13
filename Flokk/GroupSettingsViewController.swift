@@ -22,11 +22,26 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var members = [User]()
     
+    var activityIndicator = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
+       // self.refreshControl.tintColor =
+        
+        self.activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        self.activityIndicator.frame = CGRect(x: self.tableView.frame.width / 2 - 30, y: 0.0, width: 60, height: 60)
+//        self.activityIndicator.scale(factor: 1.25)
+        //self.activityIndicator.center = self.tableView.center
+        self.activityIndicator.color = TEAL_COLOR
+        self.activityIndicator.hidesWhenStopped =  true // what does this do
+        self.activityIndicator.startAnimating() // Start the activity indicator
+        
+        //self.tableView.tableHeaderView = self.activityIndicator
+        self.tableView.addSubview(self.activityIndicator)
         
         // Add the group image and crop it to a circle
         self.groupImageView.image = group.groupIcon
@@ -46,7 +61,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                     
                     // Load this user's profile Photo
                     let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
-                    profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
+                    profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
                             
@@ -57,6 +72,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                             
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
+                                self.activityIndicator.stopAnimating()
                             }
                         } else { // If there was an error
                             print(error!)
@@ -92,7 +108,6 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-    
     @IBAction func inviteFriendButtonPressed(_ sender: Any) {
         /*
         // Check if any friends not in this group are loaded - mainUser.friends. actually nah
@@ -107,39 +122,26 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromGroupSettingsToInviteFriends" {
-            if let inviteFriendsView = segue.destination as? InviteFriendsTableViewController {
+            if let inviteFriendsView = segue.destination as? InviteFriendsViewController {
                 inviteFriendsView.group = self.group
                 
                 // Load all of the user's friends
                 // Should probably do this in the viewDidLoad of inviteFriends
-                for handle in mainUser.friendHandles {
-                    if !group.memberHandles.contains(handle) { // If this user isn't already a member of the group, continue to load it
-                        let userRef = database.ref.child("users").child(handle)
-                        
-                        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                            if let values = snapshot.value as? NSDictionary {
-                                let fullName = values["fullName"] as! String
-                                
-                                // Download the profile photo
-                                let profilePhotoRef = storage.ref.child("users").child(handle)
-                                profilePhotoRef.data(withMaxSize: 1 * 2048 * 2048, completion: { (data, error) in
-                                    if error == nil {
-                                        let profilePhoto = UIImage(data: data!)
-                                        
-                                        let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
-                                        
-                                        inviteFriendsView.mainUserFriends.append(user)
-                                    }
-                                })
-                            }
-                        })
-                    }
-                }
+                
             }
         }
     }
     
     func loadUsers() { // Load more members?
         
+    }
+}
+
+// Put this somewhere else
+extension UIActivityIndicatorView {
+    func scale(factor: CGFloat) {
+        guard factor > 0.0 else { return }
+        
+        transform = CGAffineTransform(scaleX: factor, y: factor)
     }
 }
