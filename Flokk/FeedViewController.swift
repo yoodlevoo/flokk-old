@@ -118,7 +118,7 @@ class FeedViewController: UIViewController {
                             let dataDict = data
                             let posterHandle = dataDict["poster"] as! String // Handle for who uploaded this post
                             let timestamp = NSDate(timeIntervalSinceReferenceDate: (dataDict["timestamp"] as! Double)) // When this post was uploaded
-                            print("timestamp \(timestamp)")
+                            //print("timestamp \(timestamp)")
                             
                             // Load this user's profile photo if it hasn't been loaded already
                             if !self.userProfilePhotos.keys.contains(posterHandle) {

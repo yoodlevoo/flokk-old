@@ -12,6 +12,7 @@ class AddCommentViewController: UIViewController {
     @IBOutlet weak var postView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var profilePhotoBarButton: UIBarButtonItem!
     @IBOutlet var keyboardHeightLayoutConstraint : NSLayoutConstraint?
     
     var loadedComments = [Comment]()
@@ -40,7 +41,7 @@ class AddCommentViewController: UIViewController {
         // Load in the comments, ordered by most recent?
         let commentRef = database.ref.child("comments").child(self.group.groupID).child(post.id)
         commentRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value)
+            //print(snapshot.value)
             if let children = snapshot.value as? [String : Any] {
                 for (key, data) in children { // Iterate through all of the comments
                     if let values = data as? NSDictionary {

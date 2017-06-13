@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import BRYXBanner
 
 class GroupsViewController: UIViewController {
     @IBOutlet weak var groupName: UILabel!
@@ -22,6 +23,8 @@ class GroupsViewController: UIViewController {
     let transitionDown = SlideDownAnimator()
     let transitionUp = SlideUpAnimator()
     
+    fileprivate var groupDict = [String : String]() // [groupID : groupName] i really dont like doing this
+    
     //var handle: FIRAuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
@@ -31,6 +34,7 @@ class GroupsViewController: UIViewController {
         self.tableView.dataSource = self
         self.refreshControl.addTarget(self, action: #selector(GroupsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         self.refreshControl.tintColor = TEAL_COLOR
+        //print(self.refreshControl.frame)
         
         self.tableView.refreshControl = self.refreshControl
         
@@ -73,6 +77,8 @@ class GroupsViewController: UIViewController {
                                 
                                 groups.append(group) // Add this newly loaded group into the global groups variable
                                 
+                                self.groupDict[groupID] = groupName
+                                
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData() // Reload data every time a group is loaded
                                     self.refreshControl.endRefreshing()
@@ -89,6 +95,9 @@ class GroupsViewController: UIViewController {
     
         self.loadUserData()
         self.beginListeners()
+        
+        print("\n\n\n")
+        print(NSDate.timeIntervalSinceReferenceDate)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,9 +150,6 @@ class GroupsViewController: UIViewController {
                     feedView.group = group
                     feedView.groupIndex = tag // The index of this group globally, for now
                     self.tabBarController?.hideTabBar()
-                    //self.navigationController?.title = group?.groupName
-                    
-                    //feedNav.passGroup()
                 }
             }
         } else if segue.identifier == "segueFromGroupToCreateGroup" {
@@ -156,16 +162,6 @@ class GroupsViewController: UIViewController {
 
 // Framework functions
 extension GroupsViewController {
-    func loadGroup(groupHandle: String) -> Group {
-        let groupRef = database.ref.child("groups").child(groupHandle)
-        
-        groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            
-        })
-        
-        return Group()
-    }
-    
     // Load various data about the user immediately
     func loadUserData() {
         // Load the user's friends whenever we can
@@ -295,7 +291,16 @@ extension GroupsViewController {
                     let posterHandle = values["poster"] as! String
                     let timestamp = NSDate(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
                     
-                    // Load the post image from storage
+                    // Create a banner to notify the user
+                    let groupName = self.groupDict[groupID]! // Load in the group ID
+                    let banner = Banner(title: "Post Added", subtitle: "@\(posterHandle) uploaded a post to \(groupName)", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: {
+                        print("tapped")
+                    })
+                    
+                    banner.dismissesOnTap = true
+                    banner.show(duration: 3.0)
+                    
+                    // Load the post image from storage - i probably shouldnt do this here
                     let postRef = storage.ref.child("groups").child(groupID).child("posts").child("\(postID)/post.jpg")
                     postRef.data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
@@ -304,6 +309,9 @@ extension GroupsViewController {
                             let post = Post(posterHandle: posterHandle, image: postImage!, postID: postID, timestamp: timestamp)
                             
                             // WTF do i do if a group isn't loaded yet - notify the user anyways
+                            
+                            
+                            
                         } else { // If there was an error
                             print(error!)
                         }
@@ -311,6 +319,8 @@ extension GroupsViewController {
                 }
             })
         }
+        
+        // Listen for friend requests and group invites
     }
 }
 
