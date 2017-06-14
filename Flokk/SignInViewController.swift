@@ -95,7 +95,7 @@ class SignInViewController: UIViewController {
                                 
                                 print(fullName)
                                 
-                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                                 profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                     if error == nil { // If there wasn't an error
                                         let profilePhoto = UIImage(data: data!) // Load the image
@@ -121,7 +121,7 @@ class SignInViewController: UIViewController {
                             } else { // Then the user is not in any groups
                                 mainUser = User(handle: handle, fullName: fullName)
                                 
-                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                                 profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                     if error == nil { // If there wasn't an error
                                         let profilePhoto = UIImage(data: data!)

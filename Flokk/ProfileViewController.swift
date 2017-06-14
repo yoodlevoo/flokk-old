@@ -63,7 +63,7 @@ class ProfileViewController: UIViewController {
                     
                     self.nameLabel.text = fullName // Set the fullName property
                     
-                    let userProfilePhotoRef = storage.ref.child("users").child(self.userHandle).child("profilePhoto").child("\(self.userHandle).jpg")
+                    let userProfilePhotoRef = storage.ref.child("users").child(self.userHandle).child("profilePhoto.jpg")
                     userProfilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)

@@ -59,7 +59,7 @@ class GroupsViewController: UIViewController {
                         let postsData = values["posts"] as? [String: [String: Any?]] ?? [String: [String: String]]() // In case there are no posts in this group
                         
                         // Download the icon for this group
-                        let iconRef = storage.ref.child("groups").child(groupID).child("icon/\(groupID).jpg")
+                        let iconRef = storage.ref.child("groups").child(groupID).child("icon.jpg")
                         iconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { data, error in
                             if error == nil { // If there wasn't an error
                                 // Then the data is returned
@@ -223,7 +223,7 @@ extension GroupsViewController {
                         let fullName = userValues["fullName"] as! String
                         
                         // Load in the profile photo
-                        let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
+                        let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto.jpg")
                         profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (userData, error) in
                             if error == nil { // If there wasn't an error
                                 let profilePhoto = UIImage(data: userData!)
@@ -244,7 +244,7 @@ extension GroupsViewController {
                                             let memberHandles = Array((groupValues["members"] as! [String : Bool]).keys) // Load all of the handles of the current members, this will never be empty
                                             
                                             // Load the group photo
-                                            let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
+                                            let groupIconRef = storage.ref.child("groups").child(groupID).child("icon.jpg")
                                             groupIconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (groupData, error) in
                                                 if error == nil { // If there wasn't an error
                                                     let groupIcon = UIImage(data: groupData!)

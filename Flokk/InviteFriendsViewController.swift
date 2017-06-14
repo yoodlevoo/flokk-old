@@ -50,7 +50,7 @@ class InviteFriendsViewController: UIViewController {
                         let fullName = values["fullName"] as! String
                         
                         // Download the profile photo
-                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                         profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil {
                                 let profilePhoto = UIImage(data: data!)
@@ -205,7 +205,7 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
                         
                         if searchBar.text == fullNameSplit { // If the search equates to this users full name
                             // Retrieve the profile photo
-                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!) // Create an image from the data retrieved
@@ -219,14 +219,15 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
                                     // Update the data table
                                     self.tableView.reloadData()
                                 } else { // If there was an error
-                                    
+                                    // Handle the error
+                                    print(error!)
                                 }
                             })
                         } else { // If the search doesn't equate to this user
-                            
+                            // Do nothing
                         }
                     } else { // If this user isn't friends with the main user
-                        
+                        // Do nothing
                     }
                 }
             }

@@ -84,7 +84,7 @@ class NotificationsViewController: UIViewController {
                                     let fullName = userValues["fullName"] as! String
                                     
                                     // Load in the profile photo
-                                    let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
+                                    let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto.jpg")
                                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                         if error == nil { // If there wasn't an error
                                             let profilePhoto = UIImage(data: data!)
@@ -123,7 +123,7 @@ class NotificationsViewController: UIViewController {
                                     let creatorHandle = values["creator"] as! String
                                     
                                     // Load the group icon first
-                                    let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
+                                    let groupIconRef = storage.ref.child("groups").child(groupID).child("icon.jpg")
                                     groupIconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                         if error == nil {
                                             let groupPhoto = UIImage(data: data!)
@@ -144,7 +144,7 @@ class NotificationsViewController: UIViewController {
                                                     //print(snapshot.children)
                                                     
                                                     // Load in the user's profile photo
-                                                    let userProfilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
+                                                    let userProfilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto.jpg")
                                                     userProfilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                                         if error == nil {
                                                             let profilePhoto = UIImage(data: data!)
@@ -191,7 +191,7 @@ class NotificationsViewController: UIViewController {
                                                         let fullName = creatorValues["fullName"] as! String
                                                         
                                                         // Load the profile photo for the user
-                                                        let creatorProfilePhotoRef = storage.ref.child("users").child(creatorHandle).child("profilePhoto").child("\(creatorHandle).jpg")
+                                                        let creatorProfilePhotoRef = storage.ref.child("users").child(creatorHandle).child("profilePhoto.jpg")
                                                         creatorProfilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                                             if error == nil {
                                                                 let profilePhoto = UIImage(data: data!)

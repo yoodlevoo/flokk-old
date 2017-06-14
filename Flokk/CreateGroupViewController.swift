@@ -75,7 +75,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
                     let fullName = values["fullName"] as! String
                     
                     // Load the profile photo form Storage
-                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
@@ -131,7 +131,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         groupRef.child("members").setValue(members)
         
         // Upload the groups profile icon to storage
-        storage.ref.child("groups").child(groupKey).child("icon/\(groupKey).jpg").put((self.addGroupPictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) { (metadata, error) in
+        storage.ref.child("groups").child(groupKey).child("icon.jpg").put((self.addGroupPictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 // an error occured
                 return

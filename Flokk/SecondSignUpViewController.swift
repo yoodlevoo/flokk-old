@@ -70,7 +70,7 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     userDataRef.child("email").setValue(self.email)
                     
                     // Attempt to upload this user's profilePhoto to the database
-                    storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg").put(profilePhoto!.convertJpegToData(), metadata: nil) { (metadata, error) in
+                    storage.ref.child("users").child(handle).child("profilePhoto.jpg").put(profilePhoto!.convertJpegToData(), metadata: nil) { (metadata, error) in
                         if error != nil { // If there was an error
                             print(error!)
                         }

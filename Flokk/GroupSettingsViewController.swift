@@ -60,7 +60,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                     let fullName = values["fullName"] as! String
                     
                     // Load this user's profile Photo
-                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
