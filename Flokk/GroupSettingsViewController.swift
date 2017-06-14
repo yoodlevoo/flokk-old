@@ -44,11 +44,11 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.addSubview(self.activityIndicator)
         
         // Add the group image and crop it to a circle
-        self.groupImageView.image = group.groupIcon
+        self.groupImageView.image = group.icon
         self.groupImageView.layer.cornerRadius = self.groupImageView.frame.size.width / 2
         self.groupImageView.clipsToBounds = true
         
-        self.groupNameLabel.text = group.groupName
+        self.groupNameLabel.text = group.name
         
         // Put an overlay over the image so you know you can change it?
         

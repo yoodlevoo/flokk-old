@@ -128,7 +128,7 @@ class NotificationsViewController: UIViewController {
                                         if error == nil {
                                             let groupPhoto = UIImage(data: data!)
                                             // Create the group object
-                                            let group = Group(groupID: groupID, groupName: groupName, image: groupPhoto!)
+                                            let group = Group(id: groupID, name: groupName, icon: groupPhoto!)
                                             group.memberHandles = Array(memberHandles.keys) // Set the member handles to be loaded in the future
                                             group.creationDate = Date(timeIntervalSinceReferenceDate: Date.timeIntervalSinceReferenceDate) // Set the creation date temporarily
                                             
@@ -290,7 +290,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         case NotificationType.GROUP_INVITE:
             cell = self.tableView.dequeueReusableCell(withIdentifier: "groupInvite") as! NotificationTableViewCell
             
-            cell.groupIconView.image = notification.group!.groupIcon
+            cell.groupIconView.image = notification.group!.icon
             cell.groupIconView.layer.cornerRadius = cell.groupIconView.frame.size.width / 2
             cell.groupIconView.clipsToBounds = true
             cell.descriptionLabel.numberOfLines = 0

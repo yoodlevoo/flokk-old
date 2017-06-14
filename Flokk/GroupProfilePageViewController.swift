@@ -46,7 +46,7 @@ class GroupProfilePageViewController: UIPageViewController {
                     mainUser.groupInvites = groupIDs
                     
                     // If this group has invited the main user to join
-                    if groupIDs.contains(self.group.groupID) {
+                    if groupIDs.contains(self.group.id) {
                         self.invitedToJoin = true
                         
                         // Show the accept and deny invite buttons
@@ -57,7 +57,7 @@ class GroupProfilePageViewController: UIPageViewController {
                 }
             })
         } else { // If the groupInvites have been loaded
-            if mainUser.groupInvites.contains(self.group.groupID) { // Check if this user has been invited to join
+            if mainUser.groupInvites.contains(self.group.id) { // Check if this user has been invited to join
                 self.invitedToJoin = true
                 (viewControllerPages[0] as! GroupProfileViewControllerPage1).invitedToJoin = true
                 
@@ -90,6 +90,10 @@ class GroupProfilePageViewController: UIPageViewController {
                 page1.declineGroupInviteButton.isHidden = true
             }
         }
+    }
+    
+    func setProfilePhoto(icon: UIImage) {
+        
     }
 }
 
@@ -146,11 +150,11 @@ class GroupProfileViewControllerPage1: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.groupIconView.image = group.groupIcon
+        self.groupIconView.image = group.icon
         self.groupIconView.layer.cornerRadius = self.groupIconView.frame.size.width / 2
         self.groupIconView.clipsToBounds = true
         
-        self.groupNameLabel.text = group.groupName
+        self.groupNameLabel.text = group.name
         
         // If the group invites have already been loaded and this group has an outgoing invite to the user
         // We have to show the buttons here, as they're not initialized yet when the page view controller initializes
@@ -166,18 +170,18 @@ class GroupProfileViewControllerPage1: UIViewController {
     
     // If the user accepts the invite to join this group
     @IBAction func acceptGroupInvitePressed(_ sender: Any) {
-        let groupRef = database.ref.child("groups").child(self.group.groupID)
+        let groupRef = database.ref.child("groups").child(self.group.id)
         groupRef.child("invitedUsers").child(mainUser.handle).removeValue() // Remove the outgoing invite from the groups json
         groupRef.child("members").child(mainUser.handle).setValue(true) // Tell
         
         let userRef = database.ref.child("users").child(mainUser.handle)
-        userRef.child("groupInvites").child(self.group.groupID).removeValue() // Remove this group from the list of group invites for the user
-        userRef.child("groups").child(self.group.groupID).setValue(true) // Set this group as one of the user's group
+        userRef.child("groupInvites").child(self.group.id).removeValue() // Remove this group from the list of group invites for the user
+        userRef.child("groups").child(self.group.id).setValue(true) // Set this group as one of the user's group
         
         // Delete the notification for the user
         let notificationRef = database.ref.child("notifications").child(mainUser.handle)
         // Sort by notifications sent from this group
-        notificationRef.queryOrdered(byChild: "groupID").queryEqual(toValue: self.group.groupID).observeSingleEvent(of: .value, with: { (snapshot) in
+        notificationRef.queryOrdered(byChild: "groupID").queryEqual(toValue: self.group.id).observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
                 for (key, value) in values {
                     if let dict = value as? [String: Any] {
@@ -214,25 +218,25 @@ class GroupProfileViewControllerPage1: UIViewController {
         })
         
         // Remove this group as a local incoming group invite
-        mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.groupID)!)
+        mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.id)!)
         
         // Add this group to the local list of groups
-        mainUser.groupIDs.append(self.group.groupID)
+        mainUser.groupIDs.append(self.group.id)
     }
     
     // If the user declines the invite to join this group - most of this is the same as acceptGroupInvitePressed(above)
     @IBAction func decineGroupInvitePressed(_ sender: Any) {
-        let groupRef = database.ref.child("groups").child(self.group.groupID)
+        let groupRef = database.ref.child("groups").child(self.group.id)
         groupRef.child("invitedUsers").child(mainUser.handle).removeValue() // Remove the outgoing invite from the groups json
         groupRef.child("members").child(mainUser.handle).setValue(true) // Tell
         
         // Remove this group from the list of group invites for the user
-        database.ref.child("users").child(mainUser.handle).child("groupInvites").child(self.group.groupID).removeValue()
+        database.ref.child("users").child(mainUser.handle).child("groupInvites").child(self.group.id).removeValue()
         
         // Delete the notification for the user
         let notificationRef = database.ref.child("notifications").child(mainUser.handle)
         // Sort by notifications sent from this group
-        notificationRef.queryOrdered(byChild: "groupID").queryEqual(toValue: self.group.groupID).observeSingleEvent(of: .value, with: { (snapshot) in
+        notificationRef.queryOrdered(byChild: "groupID").queryEqual(toValue: self.group.id).observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
                 for (key, value) in values {
                     if let dict = value as? [String: Any] {
@@ -248,7 +252,7 @@ class GroupProfileViewControllerPage1: UIViewController {
         (self.parent as! GroupProfilePageViewController).hideInviteButtons()
         
         // Remove this group as a local incoming group invite
-        mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.groupID)!)
+        mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.id)!)
     }
 }
 

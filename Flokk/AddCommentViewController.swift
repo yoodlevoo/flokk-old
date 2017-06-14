@@ -39,7 +39,7 @@ class AddCommentViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
         // Load in the comments, ordered by most recent?
-        let commentRef = database.ref.child("comments").child(self.group.groupID).child(post.id)
+        let commentRef = database.ref.child("comments").child(self.group.id).child(post.id)
         commentRef.observeSingleEvent(of: .value, with: { (snapshot) in
             //print(snapshot.value)
             if let children = snapshot.value as? [String : Any] {
@@ -128,8 +128,8 @@ extension AddCommentViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         // Upload the comment
-        let commentKey = database.ref.child("comments").child(self.group.groupID).child(post.id).childByAutoId().key
-        let commentRef = database.ref.child("comments").child(self.group.groupID).child(post.id).child(commentKey) // Database reference
+        let commentKey = database.ref.child("comments").child(self.group.id).child(post.id).childByAutoId().key
+        let commentRef = database.ref.child("comments").child(self.group.id).child(post.id).child(commentKey) // Database reference
         commentRef.child("poster").setValue(mainUser.handle) // The handle of the commenter, always going to be the mainUser
         commentRef.child("content").setValue(textField.text!) // The actual content of the comment
         commentRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)

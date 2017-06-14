@@ -50,7 +50,7 @@ class FeedViewController: UIViewController {
         self.edgesForExtendedLayout = .bottom
         
         // Set the navigation bar title to the group name
-        self.navigationBar.title = group.groupName
+        self.navigationBar.title = group.name
         
         self.loadPosts() // Load the posts
         self.beginListeners() // Begin listening for changes
@@ -100,7 +100,7 @@ class FeedViewController: UIViewController {
         if self.group.posts.count < self.postCount { // If we need to load more posts
             self.refreshControl.beginRefreshing()
             
-            let groupPostsRef = database.ref.child("groups").child(self.group.groupID).child("posts")
+            let groupPostsRef = database.ref.child("groups").child(self.group.id).child("posts")
             groupPostsRef.queryOrdered(byChild: "timestamp").observeSingleEvent(of: .value, with: { (snapshot) in
                 if let values = snapshot.value as? [String : [String : Any]] {
                     if values.count == 0 {
@@ -135,7 +135,7 @@ class FeedViewController: UIViewController {
                             }
                             
                             // Load the post image
-                            let postRef = storage.ref.child("groups").child(self.group.groupID).child("posts")
+                            let postRef = storage.ref.child("groups").child(self.group.id).child("posts")
                             postRef.child("\(id)/post.jpg").data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let postImage = UIImage(data: data!)

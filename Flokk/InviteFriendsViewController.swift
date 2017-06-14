@@ -88,7 +88,7 @@ class InviteFriendsViewController: UIViewController {
             return // Will this prevent the rest of the function being called?
         }
         
-        let groupRef = database.ref.child("groups").child(self.group.groupID)
+        let groupRef = database.ref.child("groups").child(self.group.id)
         
         // Notify each user that they have been invited
         for user in self.selectedUsers {
@@ -98,7 +98,7 @@ class InviteFriendsViewController: UIViewController {
             groupRef.child("invitedUsers").child(handle).setValue(NSDate.timeIntervalSinceReferenceDate)
             
             let userRef = database.ref.child("users").child(handle)
-            userRef.child("groupInvites").child(self.group.groupID).setValue(NSDate.timeIntervalSinceReferenceDate) // Set this group as an incoming invite in the user's database
+            userRef.child("groupInvites").child(self.group.id).setValue(NSDate.timeIntervalSinceReferenceDate) // Set this group as an incoming invite in the user's database
             
             // Create a group invite notification for this user
             let notificationKey = database.ref.child("notifications").child(handle).childByAutoId().key // Generate a UID for this notification
@@ -107,7 +107,7 @@ class InviteFriendsViewController: UIViewController {
             // Set the data for this notification
             notificationRef.child("type").setValue(NotificationType.GROUP_INVITE.rawValue) // Set the notification type
             notificationRef.child("sender").setValue(mainUser.handle) // Set who has invited this user
-            notificationRef.child("groupID").setValue(self.group.groupID) // Set the group's ID this user has been invited to
+            notificationRef.child("groupID").setValue(self.group.id) // Set the group's ID this user has been invited to
             notificationRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate) // Set the time this invite has been sent
         }
         

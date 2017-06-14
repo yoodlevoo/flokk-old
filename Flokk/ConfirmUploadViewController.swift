@@ -30,8 +30,8 @@ class ConfirmUploadViewController: UIViewController {
     }
     
     @IBAction func uploadPressed(_ sender: Any) {
-        let postsRef = database.ref.child("groups").child(forGroup.groupID).child("posts") // Database
-        let imageRef = storage.ref.child("groups").child(forGroup.groupID).child("posts") // Storage
+        let postsRef = database.ref.child("groups").child(forGroup.id).child("posts") // Database
+        let imageRef = storage.ref.child("groups").child(forGroup.id).child("posts") // Storage
         let key = postsRef.childByAutoId().key // Generate random ID for this post
         
         self.image = imageView.image
@@ -52,7 +52,7 @@ class ConfirmUploadViewController: UIViewController {
         
         // Search for this group's index
         let index = groups.index(where: { (item) -> Bool in
-            item.groupName == forGroup.groupName
+            item.name == forGroup.name
         })
         
         groups[index!].posts.append(post) // Add this post to the group

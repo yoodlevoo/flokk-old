@@ -74,7 +74,7 @@ class ProfileSettingsViewController: UIViewController {
             //storage = nil
             //database = nil
             
-            // Attempt to actually sign out
+            // Attempt to actually sign out from Firebase
             do {
                 try! FIRAuth.auth()?.signOut()
             } catch let signOutError as Error {

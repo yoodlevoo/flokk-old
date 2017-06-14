@@ -301,11 +301,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         let group = user.groups[indexPath.row]
         
         // Set the group Icon and make it cropped to a circle
-        cell.groupIconView.image = group.groupIcon
+        cell.groupIconView.image = group.icon
         cell.groupIconView.layer.cornerRadius = cell.groupIconView.frame.size.width / 2
         cell.groupIconView.clipsToBounds = true
         
-        cell.groupNameLabel.text = group.groupName
+        cell.groupNameLabel.text = group.name
         
         return cell
     }

@@ -43,7 +43,7 @@ class GroupsViewController: UIViewController {
             self.refreshControl.beginRefreshing()
             
             for groupID in mainUser.groupIDs {
-                let matches = groups.filter{ $0.groupID == groupID } // Check if we already have a group with this ID, probably inefficient
+                let matches = groups.filter{ $0.id == groupID } // Check if we already have a group with this ID, probably inefficient
                 if matches.count != 0 { // If we already contain a group with this handle, skip it
                     continue
                 } else { // Otherwise, load it from the Database
@@ -66,7 +66,7 @@ class GroupsViewController: UIViewController {
                                 let groupIcon = UIImage(data: data!)
                                 
                                 // And we can finish loading the group
-                                let group = Group(groupID: groupID, groupName: groupName, groupIcon: groupIcon!, memberHandles: Array(memberHandles.keys), postsData: postsData, creatorHandle: creatorHandle)
+                                let group = Group(id: groupID, name: groupName, icon: groupIcon!, memberHandles: Array(memberHandles.keys), postsData: postsData, creatorHandle: creatorHandle)
                                 
                                 // Attemp to load in the user handles that have been invited to this group already
                                 if let invitedUsers = values["invitedUsers"] as? [String : Bool] { // Also checks if there are any invited users or not
@@ -249,7 +249,7 @@ extension GroupsViewController {
                                                 if error == nil { // If there wasn't an error
                                                     let groupIcon = UIImage(data: groupData!)
                                                     
-                                                    let group = Group(groupID: groupID, groupName: groupName, image: groupIcon!)
+                                                    let group = Group(id: groupID, name: groupName, icon: groupIcon!)
                                                     
                                                     group.invitedUsers = Array(invitedUsers.keys)
                                                     group.memberHandles = memberHandles
@@ -347,10 +347,10 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! GroupTableViewCell
         
-        cell.groupTitleLabel?.text = groups[indexPath.row].groupName
+        cell.groupTitleLabel?.text = groups[indexPath.row].name
         
         // Set the group icon 
-        cell.groupImageView?.image = groups[indexPath.row].groupIcon
+        cell.groupImageView?.image = groups[indexPath.row].icon
         cell.groupImageView?.layer.cornerRadius = cell.groupImageView.frame.size.width / 2
         cell.groupImageView.clipsToBounds = true
         
