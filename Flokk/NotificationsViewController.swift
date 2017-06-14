@@ -334,6 +334,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
             }
             
             profileView.user = notification.sender
+            profileView.userHandle = notification.sender?.handle
             
             // Then segue to it
             //self.present(profileView, animated: true, completion: nil)

@@ -95,10 +95,10 @@ class InviteFriendsViewController: UIViewController {
             let handle = user.handle
             
             // Tell the groups database that this user has been invited
-            groupRef.child("invitedUsers").child(handle).setValue(true)
+            groupRef.child("invitedUsers").child(handle).setValue(NSDate.timeIntervalSinceReferenceDate)
             
             let userRef = database.ref.child("users").child(handle)
-            userRef.child("groupInvites").child(self.group.groupID).setValue(true) // Set this group as an incoming invite in the user's database
+            userRef.child("groupInvites").child(self.group.groupID).setValue(NSDate.timeIntervalSinceReferenceDate) // Set this group as an incoming invite in the user's database
             
             // Create a group invite notification for this user
             let notificationKey = database.ref.child("notifications").child(handle).childByAutoId().key // Generate a UID for this notification
@@ -136,7 +136,7 @@ extension InviteFriendsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! InviteFriendsTableViewCell
-        let user = users[indexPath.row]
+        let user = self.users[indexPath.row]
         
         // Add the profile photo and make it crop to a circle
         cell.profilePhotoView.image = user.profilePhoto
@@ -194,7 +194,7 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
                     let handle = each.key as! String // Get the handle
                     
                     // Check if this user is a friend of the main user before acting on it
-                    if mainUser.friendHandles.contains(handle) {
+                    if mainUser.friendHandles.contains(handle) && !self.group.memberHandles.contains(handle) && !self.group.invitedUsers.contains(handle) {
                         // If so, continue loading
                         let userData = values[handle] as! Dictionary<String, Any> // Get all the subset of data for this user
                         let fullName = userData["fullName"] as! String // Get the user's full name from the subset of data
@@ -251,8 +251,6 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
             //self.searchBar.setShowsCancelButton(false, animated: true)
         }
     }
-    
-    
 }
 
 class InviteFriendsTableViewCell: UITableViewCell {

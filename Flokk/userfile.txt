@@ -12,11 +12,11 @@
     },
 
     "outgoingrequests": { // Outgoing friend requests
-
+        "noblejones": 512513252.3245712
     },
 
     "incomingrequests" { // Incomign friend requests
-        
+        "alexshilnikov": 512513252.3245712
     },
 
     "groupinvites": {

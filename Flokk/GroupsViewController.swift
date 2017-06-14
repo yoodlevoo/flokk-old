@@ -213,7 +213,7 @@ extension GroupsViewController {
             // That way we don't have to listen to changes for the the friend invites part of the database
             if let notificationValues = snapshot.value as? NSDictionary {
                 let type = NotificationType(rawValue: notificationValues["type"] as! Int)!
-                let timestamp = NSDate(timeIntervalSinceReferenceDate: notificationValues["timestamp"] as! Double)
+                let timestamp = Date(timeIntervalSinceReferenceDate: notificationValues["timestamp"] as! Double)
                 let senderHandle = notificationValues["sender"] as! String // There's always a sender
                 
                 // Initialize the user a little bit
@@ -240,6 +240,8 @@ extension GroupsViewController {
                                     groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
                                         if let groupValues = snapshot.value as? NSDictionary {
                                             let groupName = groupValues["name"] as! String
+                                            let invitedUsers = groupValues["invitedUsers"] as? [String : Bool] ?? [String : Bool]() // Load all of the user handles that have been invited
+                                            let memberHandles = Array((groupValues["members"] as! [String : Bool]).keys) // Load all of the handles of the current members, this will never be empty
                                             
                                             // Load the group photo
                                             let groupIconRef = storage.ref.child("groups").child(groupID).child("icon").child("\(groupID).jpg")
@@ -248,6 +250,9 @@ extension GroupsViewController {
                                                     let groupIcon = UIImage(data: groupData!)
                                                     
                                                     let group = Group(groupID: groupID, groupName: groupName, image: groupIcon!)
+                                                    
+                                                    group.invitedUsers = Array(invitedUsers.keys)
+                                                    group.memberHandles = memberHandles
                                                     
                                                     // This needs to be handled differently eventually
                                                     let notification = Notification(type: type, sender: user, group: group)
@@ -300,27 +305,40 @@ extension GroupsViewController {
                     banner.dismissesOnTap = true
                     banner.show(duration: 3.0)
                     
-                    // Load the post image from storage - i probably shouldnt do this here
-                    let postRef = storage.ref.child("groups").child(groupID).child("posts").child("\(postID)/post.jpg")
-                    postRef.data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
-                        if error == nil { // If there wasn't an error
-                            let postImage = UIImage(data: data!)
-                            
-                            let post = Post(posterHandle: posterHandle, image: postImage!, postID: postID, timestamp: timestamp)
-                            
-                            // WTF do i do if a group isn't loaded yet - notify the user anyways
-                            
-                            
-                            
-                        } else { // If there was an error
-                            print(error!)
-                        }
-                    })
+                    // No point in loading the notification here
                 }
             })
         }
         
         // Listen for friend requests and group invites
+        let friendRequestRef = database.ref.child("users").child(mainUser.handle).child("incomingrequests")
+        friendRequestRef.queryOrderedByValue().queryStarting(atValue: NSDate.timeIntervalSinceReferenceDate).observe(.childAdded, with: { (snapshot) in
+            if let timestamp = snapshot.value as? Double, let senderHandle = snapshot.key as? String {
+                let banner = Banner(title: "Friend Request", subtitle: "@\(senderHandle) requested to be your friend", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: {
+                    // Go to this user's profile
+                    let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+                    
+                    profileView.userHandle = senderHandle
+                })
+                
+                banner.dismissesOnSwipe = true
+                banner.show(duration: 3.0)
+            }
+        })
+        
+        // Listen for group invites=
+        let groupInvitesRef = database.ref.child("users").child(mainUser.handle).child("groupInvites")
+        groupInvitesRef.queryOrderedByValue().queryStarting(atValue: NSDate.timeIntervalSinceReferenceDate).observe(.childAdded, with: { (snapshot) in
+            if let timestamp = snapshot.value as? Double, let groupName = snapshot.key as? String {
+                let banner = Banner(title: "Group Invite", subtitle: "@user hasd invited you to join \(groupName) ", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: {
+                    // Go to the group profile
+                    
+                })
+                
+                banner.dismissesOnSwipe = true
+                banner.show(duration: 3.0)
+            }
+        })
     }
 }
 

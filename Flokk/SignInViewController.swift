@@ -71,11 +71,14 @@ class SignInViewController: UIViewController {
             //email = "cheeseman123432@yahoo.com"
             //password = "alex123"
             
-            email = "latnt1@gmail.com"
-            password = "lucas123"
+            //email = "latnt1@gmail.com"
+            //password = "lucas123"
+            
+            email = "n1ghtk1ng@live.com"
+            password = "noble123"
         }
         
-        // Authenticate and sign the user in
+        // Authenticate and sign the user in - this can be simplified a lot by adding defaultsd
         FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil { // If there wasn't an error
                 if let user = user { // Basically just removes the "optional" from user (so there's no need for doing "(user?.uid)!")
