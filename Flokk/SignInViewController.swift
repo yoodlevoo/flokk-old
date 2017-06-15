@@ -74,8 +74,8 @@ class SignInViewController: UIViewController {
             //email = "latnt1@gmail.com"
             //password = "lucas123"
             
-            email = "n1ghtk1ng@live.com"
-            password = "noble123"
+            //email = "n1ghtk1ng@live.com"
+            //password = "noble123"
         }
         
         // Authenticate and sign the user in - this can be simplified a lot by adding defaultsd

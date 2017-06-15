@@ -66,7 +66,7 @@ class Post {
 
 // A class that holds the values for comments on Posts
 // I'm not happy this has to be a separate class lol
-class Comment {
+struct Comment {
     var user: User! // The user who posted the comment
     var userHandle: String!
     var content: String! // The text of the comment

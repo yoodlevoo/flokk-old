@@ -92,8 +92,33 @@ class GroupProfilePageViewController: UIPageViewController {
         }
     }
     
-    func setProfilePhoto(icon: UIImage) {
-        
+    // Set the icon for the first page view, called from the parent GroupProfileView
+    func setGroupIcon(_ icon: UIImage) {
+        if let page1 = viewControllerPages[0] as? GroupProfileViewControllerPage1 {
+            if page1.groupIconView != nil {
+                page1.groupIconView.image = icon
+            }
+        }
+    }
+    
+    // Set the creator handle for the second page view, called from the parent GroupProfileView
+    func setCreatorHandle(_ handle: String) {
+        if let page2 = viewControllerPages[1] as? GroupProfileViewControllerPage2 {
+            if page2.creatorNameLabel != nil {
+                page2.creatorNameLabel.text = handle
+            }
+        }
+    }
+    
+    func setCreatorProfilePhoto(_ image: UIImage) {
+        if let page2 = viewControllerPages[1] as? GroupProfileViewControllerPage2 {
+            if page2.creatorProfilePhotoView != nil {
+                page2.creatorProfilePhotoView.image = image
+                // Make the profile photo crop to a circle
+                page2.creatorProfilePhotoView.layer.cornerRadius = page2.creatorProfilePhotoView.frame.size.width / 2
+                page2.creatorProfilePhotoView.clipsToBounds = true
+            }
+        }
     }
 }
 
@@ -150,7 +175,12 @@ class GroupProfileViewControllerPage1: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.groupIconView.image = group.icon
+        // If the icon has been set yet
+        if self.group.icon != nil {
+            self.groupIconView.image = self.group.icon!
+        }
+        
+        // Crop the icon to a circle
         self.groupIconView.layer.cornerRadius = self.groupIconView.frame.size.width / 2
         self.groupIconView.clipsToBounds = true
         
@@ -272,6 +302,7 @@ class GroupProfileViewControllerPage2: UIViewController {
         // Temporary check, in the future the groupCreator's name MUST be loaded at this time
         if self.group.creator == nil || self.group.creator.fullName == "" {
             self.creatorNameLabel.text = "Could not retrieve"
+            
         } else {
             self.creatorNameLabel.text = "@\(group.creator.handle)"
             self.creatorProfilePhotoView.image = group.creator.profilePhoto

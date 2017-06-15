@@ -34,14 +34,13 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.usernameLabel.text = "@\(self.userHandle)"
-        
         if self.user != nil { // If the user has already been loaded, continue doing stuff with it
             // Set this profile's data from the according User
-            self.nameLabel.text = user.fullName
+            self.nameLabel.text = self.user.fullName
+            self.userHandle = self.user.handle
             
             // Set the profile pic and make it crop to an image
-            self.profilePhotoView.image = user.profilePhoto
+            self.profilePhotoView.image = self.user.profilePhoto
             self.profilePhotoView.layer.cornerRadius = self.profilePhotoView.frame.size.width / 2
             self.profilePhotoView.clipsToBounds = true
         } else { // If the user hasn't been loaded yet, load it
@@ -83,6 +82,8 @@ class ProfileViewController: UIViewController {
                 }
             })
         }
+        
+        self.usernameLabel.text = self.userHandle!
         
         // If this user is already friends with the main user
         if mainUser.friendHandles.contains(self.userHandle) {
@@ -137,10 +138,10 @@ class ProfileViewController: UIViewController {
             //self.addFriendButton.imageView?.image = UIImage(named: "Add Friend Button New") // Change the buttons image to show that its already been pressed
             
             // Notify the other user the mainUser requested to be their friend
-            database.ref.child("users").child(self.user.handle).child("incomingrequests").child(mainUser.handle).setValue(NSDate.timeIntervalSinceReferenceDate)
+            database.ref.child("users").child(self.user.handle).child("incomingRequests").child(mainUser.handle).setValue(NSDate.timeIntervalSinceReferenceDate)
             
             // Tell the database that the main user has an outgoing friend request to this (self.)user
-            database.ref.child("users").child(mainUser.handle).child("outgoingrequests").child(self.user.handle).setValue(NSDate.timeIntervalSinceReferenceDate)
+            database.ref.child("users").child(mainUser.handle).child("outgoingRequests").child(self.user.handle).setValue(NSDate.timeIntervalSinceReferenceDate)
             
             // This should probably be a server-side function, but we'll do it here
             let key = database.ref.child("notifications").child(self.user.handle).childByAutoId().key
@@ -160,11 +161,11 @@ class ProfileViewController: UIViewController {
             
         } else { // If the main user requested to be this user's friend, "undo" the request
             // Remove the incoming request for this user
-            database.ref.child("users").child(self.user.handle).child("incomingrequests").child(mainUser.handle).removeValue() { error in
+            database.ref.child("users").child(self.user.handle).child("incomingRequests").child(mainUser.handle).removeValue() { error in
             }
             
             // Remove the outgoing request for the main user
-            database.ref.child("users").child(mainUser.handle).child("outgoingrequests").child(self.user.handle).removeValue() { error in
+            database.ref.child("users").child(mainUser.handle).child("outgoingRequests").child(self.user.handle).removeValue() { error in
             }
             
             // Delete the notification for the user
@@ -192,11 +193,11 @@ class ProfileViewController: UIViewController {
     // This button will only be shown if the local(self.) user has requested to be friends with the main User
     @IBAction func acceptFriendRequestPressed(_ sender: Any) {
         // Remove the outgoing request for this user
-        database.ref.child("users").child(self.user.handle).child("outgoingrequests").child(mainUser.handle).removeValue() { error in
+        database.ref.child("users").child(self.user.handle).child("outgoingRequests").child(mainUser.handle).removeValue() { error in
         }
         
         // Remove the incoming request for the main user
-        database.ref.child("users").child(mainUser.handle).child("incomingrequests").child(self.user.handle).removeValue() { error in
+        database.ref.child("users").child(mainUser.handle).child("incomingRequests").child(self.user.handle).removeValue() { error in
         }
         
         // Remove the notification from local memory - mainUser.notifications
@@ -239,11 +240,11 @@ class ProfileViewController: UIViewController {
     // This button will only be shown if the local(self.) user has requested to be friends with the main User
     @IBAction func denyFriendRequestPressed(_ sender: Any) {
         // Remove the outgoing request for this user
-        database.ref.child("users").child(self.user.handle).child("outgoingrequests").child(mainUser.handle).removeValue() { error in
+        database.ref.child("users").child(self.user.handle).child("outgoingRequests").child(mainUser.handle).removeValue() { error in
         }
         
         // Remove the outgoing request for the main user
-        database.ref.child("users").child(mainUser.handle).child("incomingrequests").child(self.user.handle).removeValue() { error in
+        database.ref.child("users").child(mainUser.handle).child("incomingRequests").child(self.user.handle).removeValue() { error in
         }
         
         // Remove the notification from local memory - mainUser.notifications

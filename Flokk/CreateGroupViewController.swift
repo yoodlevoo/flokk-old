@@ -163,6 +163,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         
         // Actually create the group
         let group = Group(id: groupKey, name: groupName, icon: (self.addGroupPictureButton.imageView?.image!)!, users: [mainUser], creator: mainUser)
+        group.memberHandles.append(mainUser.handle)
         groups.append(group) // Add this group to the global groups
         
         self.navigationController?.popViewController(animated: true)

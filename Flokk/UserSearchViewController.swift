@@ -92,6 +92,7 @@ class UserSearchViewController: UIViewController {
                 let selectedUser = users[(self.tableView.indexPathForSelectedRow?.row)!]
                 
                 profileView.user = selectedUser
+                profileView.userHandle = selectedUser.handle
             }
         }
     }

@@ -27,7 +27,7 @@
         "lucasarnold": true
     },
 
-    "requestedusers": { // users who requested to join
+    "requestedUsers": { // users who requested to join
 
     }
 }

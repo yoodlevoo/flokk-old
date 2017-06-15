@@ -160,7 +160,7 @@ class NotificationsViewController: UIViewController {
                                                                 user.friendHandles = Array(friends.keys)
                                                             }
                                                             
-                                                            if senderHandle == creatorHandle { // If the sender and the creator are the same user
+                                                            if senderHandle == creatorHandle { // If the sender and the creator are the same user, to potentially save data
                                                                 // Simply set the groups creator as the user we just loaded in
                                                                 group.creator = user
                                                             }
