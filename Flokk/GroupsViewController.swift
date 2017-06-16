@@ -197,7 +197,9 @@ extension GroupsViewController {
         // Load all of the group invites
         database.ref.child("users").child(mainUser.handle).child("groupInvites").observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
+                let groupInvites = values.allKeys as! [String]
                 
+                mainUser.groupInvites = groupInvites
             }
         })
     }
@@ -295,6 +297,85 @@ extension GroupsViewController {
                     }
                 })
                 
+                // Show the banner for each notification
+                switch type {
+                case .GROUP_INVITE: // If someone invites the mainUser to join a group
+                    // Load only the group name from the database first
+                    
+                    let groupID = notificationValues["group"] as! String // Get the Group UID
+                    
+                    // Load the group name
+                    let groupRef = database.ref.child("groups").child(groupID).child("name")
+                    groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let groupName = snapshot.value as? String {
+                            
+                            // Create and display the banner
+                            let banner = Banner(title: "Group Invite", subtitle: "@(user) has invited you to join \(groupName)", image: UIImage(named: "GROUPS ICON"), backgroundColor: TEAL_COLOR, didTapBlock: { // If the user tapped on this banner
+                                
+                                let group = Group(id: groupID, name: groupName)
+                                
+                                // If this was selected, load the member handles before we segue
+                                let groupMemberHandlesRef = database.ref.child("groups").child(groupID).child("members")
+                                groupMemberHandlesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                    if let memberHandles = snapshot.value as? [String : Bool] {
+                                        group.memberHandles = Array(memberHandles.keys) // Set the member handles in the group
+                                    }
+                                    
+                                    // Whether there are member handles or not, load and segue into the according Group Profile View
+                                    let groupProfileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GroupProfileViewController") as! GroupProfileViewController
+                                    groupProfileView.group = group
+                                    
+                                    self.present(groupProfileView, animated: true, completion: nil) // Segue to the group profile
+                                })
+                            })
+                            
+                            banner.dismissesOnSwipe = true
+                            banner.show(duration: BANNER_DURATION)
+                        }
+                    })
+                    
+                    break
+                case .FRIEND_REQUESTED: // If someone requests to be the mainUser's friend
+                    mainUser.incomingFriendRequests.append(senderHandle)
+                    
+                    // No need to load anything extra, just create and show the banner
+                    let banner = Banner(title: "Friend Request", subtitle: "@\(senderHandle) requested to be your friend.", image: UIImage(named: "Friends Icon"), backgroundColor: TEAL_COLOR, didTapBlock: { // If this banner was tapped
+                        let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+                        
+                        profileView.userHandle = senderHandle
+                        
+                        self.present(profileView, animated: true, completion: nil)
+                    })
+                    
+                    banner.dismissesOnSwipe = true
+                    banner.show(duration: BANNER_DURATION)
+                    
+                    break
+                case .FRIEND_REQUEST_ACCEPTED:
+                    mainUser.outgoingFriendRequests.remove(at: mainUser.outgoingFriendRequests.index(of: senderHandle)!) // Remove this from the local outgoing requests array
+                    mainUser.friendHandles.append(senderHandle) // Add this user to the local friend handles array
+                    
+                    // No needf to load anything, just create and show the banner
+                    let banner = Banner(title: "Friend Request Accepted", subtitle: "@\(senderHandle) accepted your friend request.", image: UIImage(named: "Friends Icon"), backgroundColor: TEAL_COLOR, didTapBlock: { // If this banner was tapped
+                        let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+                        
+                        profileView.userHandle = senderHandle
+                        
+                        self.present(profileView, animated: true, completion: nil)
+                    })
+                    
+                    banner.dismissesOnSwipe = true
+                    banner.show(duration: BANNER_DURATION)
+                    
+                    break
+                default:
+                    let banner = Banner(title: "\(type)", subtitle: "Notification of type:\(type)", backgroundColor: TEAL_COLOR, didTapBlock: {})
+                    
+                    banner.dismissesOnSwipe = true
+                    banner.show(duration: BANNER_DURATION)
+                    
+                    break
+                }
             }
         })
         
@@ -325,62 +406,6 @@ extension GroupsViewController {
                 }
             })
         }
-        
-        // Listen for friend requests and group invites
-        let friendRequestRef = database.ref.child("users").child(mainUser.handle).child("incomingRequests")
-        friendRequestRef.queryOrderedByValue().queryStarting(atValue: NSDate.timeIntervalSinceReferenceDate).observe(.childAdded, with: { (snapshot) in
-            if let timestamp = snapshot.value as? Double, let senderHandle = snapshot.key as? String {
-                let banner = Banner(title: "Friend Request", subtitle: "@\(senderHandle) requested to be your friend", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: {
-                    // Go to this user's profile
-                    let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-                    
-                    profileView.userHandle = senderHandle
-                    
-                    self.present(profileView, animated: true, completion: nil)
-                })
-                
-                banner.dismissesOnSwipe = true
-                banner.show(duration: BANNER_DURATION)
-            }
-        })
-        
-        // Listen for group invites
-        let groupInvitesRef = database.ref.child("users").child(mainUser.handle).child("groupInvites")
-        groupInvitesRef.queryOrderedByValue().queryStarting(atValue: NSDate.timeIntervalSinceReferenceDate).observe(.childAdded, with: { (snapshot) in
-            if let timestamp = snapshot.value as? Double {
-                let groupID = snapshot.key
-                
-                // Load in the group name ONLY right now, only load extra data as we need it
-                let groupNameRef = database.ref.child("groups").child(groupID).child("name")
-                groupNameRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let groupName = snapshot.value as? String {
-                        
-                        // Load in the user handle
-                        let banner = Banner(title: "Group Invite", subtitle: "@user has invited you to join \(groupName) ", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: { // If tapped, then transition to the group profile
-                            let group = Group(id: groupID, name: groupName)
-                            
-                            // If this was selected, load the member handles before we segue
-                            let groupMemberHandlesRef = database.ref.child("groups").child(groupID).child("members")
-                            groupMemberHandlesRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                                if let memberHandles = snapshot.value as? [String : Bool] {
-                                    group.memberHandles = Array(memberHandles.keys) // Set the member handles in the group
-                                }
-                                
-                                // Whether there are member handles or not, load and segue into the according Group Profile View
-                                let groupProfileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GroupProfileViewController") as! GroupProfileViewController
-                                groupProfileView.group = group
-                                
-                                self.present(groupProfileView, animated: true, completion: nil) // Segue to the group profile
-                            })
-                        })
-                        
-                        // Show the banner
-                        banner.dismissesOnSwipe = true
-                        banner.show(duration: BANNER_DURATION)
-                    }
-                })
-            }
-        })
     }
 }
 

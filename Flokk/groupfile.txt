@@ -1,5 +1,6 @@
 {
-    "creator": "gannonprudhomme"
+    "creator": "gannonprudhomme",
+    "name": "GroupName",
     "members": {
         "gannonprudhomme": true,
         "jaredheyen": true
