@@ -99,6 +99,7 @@ class NotificationsViewController: UIViewController {
                                             // Reload the table
                                             DispatchQueue.main.async {
                                                 self.tableView.reloadData()
+                                                self.refreshControl.endRefreshing()
                                             }
                                         } else {
                                             print(error!)
