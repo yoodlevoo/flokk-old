@@ -340,11 +340,11 @@
             </objects>
             <point key="canvasLocation" x="2069.5999999999999" y="-2197.1514242878561"/>
         </scene>
-        <!--Item-->
+        <!--Profile-->
         <scene sceneID="8ZS-7I-ko5">
             <objects>
                 <navigationController id="WpJ-iH-FCG" customClass="PersonalProfileNavigationViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="BQZ-Gz-nDE"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="Profile Icon" selectedImage="Profile Icon" id="BQZ-Gz-nDE"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="9ML-kP-s4Y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2464,7 +2464,7 @@
         <scene sceneID="DVG-lB-2R3">
             <objects>
                 <navigationController storyboardIdentifier="GroupsNavController" title="Groups NavControl" automaticallyAdjustsScrollViewInsets="NO" id="l32-fs-QFF" customClass="GroupsNavigationViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Groups" image="GROUPS ICON" selectedImage="GROUPS ICON" id="f9K-XV-eVC"/>
+                    <tabBarItem key="tabBarItem" title="" image="GROUPS ICON" selectedImage="GROUPS ICON" id="f9K-XV-eVC"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" backIndicatorImage="WhiteArrow" backIndicatorTransitionMaskImage="WhiteArrow" id="eaX-7Q-ghQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -2495,7 +2495,7 @@
         <scene sceneID="2zC-hb-JB9">
             <objects>
                 <navigationController title="Notifications NavControl" automaticallyAdjustsScrollViewInsets="NO" id="jcN-Q9-alX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notifications" image="Flokk of Birds-1" id="oXQ-HB-31e">
+                    <tabBarItem key="tabBarItem" title="Notifications" image="Notification Icon" selectedImage="Notification Icon" id="oXQ-HB-31e">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -3080,7 +3080,7 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rI-5l-Ew2">
-                                <rect key="frame" x="16" y="204" width="32" height="31"/>
+                                <rect key="frame" x="16" y="205" width="39" height="30"/>
                                 <state key="normal" image="Friends Icon"/>
                                 <connections>
                                     <segue destination="XjA-XV-lcK" kind="show" identifier="segueFromPersonalProfileToFriends" id="o63-Fe-h0g"/>
@@ -3108,7 +3108,7 @@
                             <constraint firstItem="Td6-Ek-orj" firstAttribute="top" secondItem="KkB-L1-MnY" secondAttribute="bottom" constant="8" id="xI5-V1-pac"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="HOME ICON" selectedImage="HOME ICON" id="Oda-6T-aew"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="Profile Icon" selectedImage="Profile Icon" id="Oda-6T-aew"/>
                     <navigationItem key="navigationItem" id="mkS-XX-2Qb"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
@@ -3908,15 +3908,16 @@
         <image name="Empty Check" width="28" height="28"/>
         <image name="Flokk Logo" width="336" height="121"/>
         <image name="Flokk Logo 1 NoBackGrnd" width="2287" height="931"/>
-        <image name="Flokk of Birds-1" width="25" height="30"/>
         <image name="Flokk of Geese" width="936" height="1139"/>
-        <image name="Friends Icon" width="32" height="31"/>
+        <image name="Friends Icon" width="39" height="30"/>
         <image name="GROUPS ICON" width="25" height="25"/>
         <image name="HOME ICON" width="25" height="25"/>
         <image name="LogOutBttn" width="111" height="35"/>
         <image name="Navy Settings Icon" width="33" height="33"/>
         <image name="Next - 2" width="414" height="66"/>
         <image name="No Notifications" width="123" height="122"/>
+        <image name="Notification Icon" width="34" height="32"/>
+        <image name="Profile Icon" width="23" height="29"/>
         <image name="Rotate Photo " width="23" height="24"/>
         <image name="SIgn Up (Green)" width="175" height="51"/>
         <image name="Send - 2" width="414" height="66"/>
@@ -3935,7 +3936,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="70L-xp-JEW"/>
-        <segue reference="tEb-ND-eC4"/>
-        <segue reference="60x-m7-f1E"/>
+        <segue reference="kAF-Jz-8br"/>
+        <segue reference="sMK-Mq-ip7"/>
     </inferredMetricsTieBreakers>
 </document>
