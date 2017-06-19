@@ -41,6 +41,7 @@ class InviteFriendsViewController: UIViewController {
         
         //self.users = self.mainUserFriends // If there isn't a search, set it to the main user's friends
         
+        // You can only invite your friends to a group, so iterate over only them
         for handle in mainUser.friendHandles {
             if !group.memberHandles.contains(handle) && !group.invitedUsers.contains(handle) { // If this user isn't already a member of the group or already invited, continue to load it
                 let userRef = database.ref.child("users").child(handle)
@@ -109,6 +110,8 @@ class InviteFriendsViewController: UIViewController {
             notificationRef.child("sender").setValue(mainUser.handle) // Set who has invited this user
             notificationRef.child("groupID").setValue(self.group.id) // Set the group's ID this user has been invited to
             notificationRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate) // Set the time this invite has been sent
+            
+            self.group.invitedUsers.append(handle) // Add these users to the local invited users array
         }
         
         // Go back to group settings

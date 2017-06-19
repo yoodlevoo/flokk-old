@@ -83,7 +83,9 @@ class ProfileViewController: UIViewController {
             })
         }
         
-        self.usernameLabel.text = self.userHandle!
+        self.usernameLabel.text = "@\(self.userHandle!)"
+        
+        let requests = mainUser.incomingFriendRequests
         
         // If this user is already friends with the main user
         if mainUser.friendHandles.contains(self.userHandle) {
@@ -201,6 +203,9 @@ class ProfileViewController: UIViewController {
         }
         
         // Remove the notification from local memory - mainUser.notifications
+        if let index = mainUser.notifications.index(where: {$0.sender!.handle == self.userHandle && $0.type == NotificationType.FRIEND_REQUESTED}) { // Attempt to find this notification
+            mainUser.notifications.remove(at: index) // Then remove it
+        }
         
         // Remove the corresponding notification from the database
         let notificationRefMainUser = database.ref.child("notifications").child(mainUser.handle)
@@ -248,6 +253,9 @@ class ProfileViewController: UIViewController {
         }
         
         // Remove the notification from local memory - mainUser.notifications
+        if let index = mainUser.notifications.index(where: {$0.sender!.handle == self.userHandle && $0.type == NotificationType.FRIEND_REQUESTED}) { // Attempt to find this notification
+            mainUser.notifications.remove(at: index) // Then remove it
+        }
         
         // Remove the corresponding notification from the database
         let notificationRef = database.ref.child("notifications").child(self.user.handle)

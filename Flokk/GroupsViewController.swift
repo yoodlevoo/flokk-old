@@ -148,7 +148,7 @@ class GroupsViewController: UIViewController {
                     weak var group = groups[tag] // I want this to be weak to prevent memory leakage
                     
                     feedView.group = group
-                    feedView.groupIndex = tag // The index of this group globally, for now
+                    //feedView.groupIndex = tag // The index of this group globally, for now
                     self.tabBarController?.hideTabBar()
                 }
             }
@@ -290,7 +290,7 @@ extension GroupsViewController {
                         case .GROUP_INVITE: // If someone invites the mainUser to join a group
                             // Load only the group name from the database first
                             
-                            let groupID = notificationValues["group"] as! String // Get the Group UID
+                            let groupID = notificationValues["groupID"] as! String // Get the Group UID
                             
                             // Load the group name
                             let groupRef = database.ref.child("groups").child(groupID).child("name")
@@ -312,6 +312,7 @@ extension GroupsViewController {
                                             // Whether there are member handles or not, load and segue into the according Group Profile View
                                             let groupProfileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GroupProfileViewController") as! GroupProfileViewController
                                             groupProfileView.group = group
+                                            groupProfileView.groupID = groupID
                                             
                                             self.present(groupProfileView, animated: true, completion: nil) // Segue to the group profile
                                         })

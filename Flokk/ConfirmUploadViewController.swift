@@ -12,7 +12,7 @@ class ConfirmUploadViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     var image: UIImage!
     
-    var forGroup: Group! // This is just a copy of the actual group
+    var group: Group! // This is just a copy of the actual group - no its not you fucking idiot its a reference
     var groupIndex: Int! // The index of this group in the global groups array
     
     override func viewDidLoad() {
@@ -30,8 +30,8 @@ class ConfirmUploadViewController: UIViewController {
     }
     
     @IBAction func uploadPressed(_ sender: Any) {
-        let postsRef = database.ref.child("groups").child(forGroup.id).child("posts") // Database
-        let imageRef = storage.ref.child("groups").child(forGroup.id).child("posts") // Storage
+        let postsRef = database.ref.child("groups").child(group.id).child("posts") // Database
+        let imageRef = storage.ref.child("groups").child(group.id).child("posts") // Storage
         let key = postsRef.childByAutoId().key // Generate random ID for this post
         
         self.image = imageView.image
@@ -52,11 +52,12 @@ class ConfirmUploadViewController: UIViewController {
         
         // Search for this group's index
         let index = groups.index(where: { (item) -> Bool in
-            item.name == forGroup.name
+            item.name == group.name
         })
         
         groups[index!].posts.append(post) // Add this post to the group
-        groups[index!].posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate})
+        groups[index!].posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate}) // Sort the post chronologically
+        
         
         // Start storage here
         

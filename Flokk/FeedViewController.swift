@@ -14,8 +14,7 @@ class FeedViewController: UIViewController {
     @IBOutlet weak var noPostsImageView: UIImageView!
     @IBOutlet weak var noPostsLabel: UILabel!
     
-    var group: Group! // The group this feed is reading from
-    var groupIndex: Int! // The index of this group in the global group variable
+    var group: Group! // The group this feed is reading from - should be a reference
     
     static let initialPostCount = 10 // The initial amount of posts to load
     var loadedPosts = [Post]() // When there are a lot of posts, this will contain only the most 'x' recent posts
@@ -56,13 +55,13 @@ class FeedViewController: UIViewController {
         self.beginListeners() // Begin listening for changes
         
         // Check if there are no posts, so we know to show the "No Posts" Frowny Face
-        if self.group.postsData.keys.count == 0 { // If there are no posts
+        if self.group.postsData.keys.count == 0 && self.group.posts.count == 0 { // If there are no posts
             self.noPostsImageView.isHidden = false
             self.noPostsLabel.isHidden = false
             self.refreshControl.endRefreshing() // Don't refresh if there are no posts to load
         }
         
-        if self.loadedPosts.count > 0 { // If there are already posts loading, don't refresh anymore
+        if self.loadedPosts.count > 0 { // If there are already posts loaded, don't refresh anymore
             self.refreshControl.endRefreshing()
         }
     }
@@ -70,7 +69,7 @@ class FeedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tableView.reloadData() // Reload data every time this view appears, in case we just uploaded a photowe
+        self.tableView.reloadData() // Reload data every time this view appears, in case we just uploaded a phorto
     }
 
     override func didReceiveMemoryWarning() {
@@ -112,7 +111,7 @@ class FeedViewController: UIViewController {
                         if matches.count != 0 { // If this post has already been loaded
                             return // Then skip loading this post
                         } else { // This post hasn't been loaded yet, nor has started to load, begin to load it
-                            groups[self.groupIndex].loadingPostIDs.append(id) // Add this post to the loading posts IDs array to global groups array
+                            self.group.loadingPostIDs.append(id) // Add this post to the loading posts IDs array to global groups array
                             
                             // Load in the basic data for this post
                             let dataDict = data

@@ -31,6 +31,8 @@ class UserSearchViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        self.definesPresentationContext = true // This fucks up the view controller somehow
+        
         self.searchController.searchResultsUpdater = self
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
@@ -66,7 +68,14 @@ class UserSearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.searchController.searchBar.isHidden = false
+        //self.searchController.searchBar.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        //self.searchController.isActive = false
+        //self.searchController.searchBar.endEditing(true) // Deselect this search bar when we segue away, always does weird shit otherwise
     }
     
     override func didReceiveMemoryWarning() {

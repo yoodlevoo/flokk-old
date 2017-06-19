@@ -42,6 +42,15 @@ class Post {
         self.timestamp = timestamp
     }
     
+    func convertToData() -> [String : Any] {
+        var data = [String : Any]()
+        
+        data["poster"] = posterHandle
+        data["timestamp"] = timestamp.timeIntervalSince1970
+        
+        return data
+    }
+    
     /*
     //find the user from the participants in this group just by using their handle
     //when we have the database we can reduce storage by getting this frk
@@ -66,7 +75,7 @@ class Post {
 
 // A class that holds the values for comments on Posts
 // I'm not happy this has to be a separate class lol
-struct Comment {
+class Comment {
     var user: User! // The user who posted the comment
     var userHandle: String!
     var content: String! // The text of the comment

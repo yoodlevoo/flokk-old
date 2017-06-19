@@ -13,7 +13,7 @@ import PhotosUI
 class NewPhotoSelectViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, PhotoSelectLayoutDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var forGroup: Group! // Just passing this around so we can return it to the feed
+    var group: Group! // Just passing this around so we can return it to the feed
     var groupIndex: Int! // The index of this group in the global groups array
     
     var assetCollection: PHAssetCollection = PHAssetCollection()
@@ -155,7 +155,7 @@ class NewPhotoSelectViewController: UIViewController, UICollectionViewDelegate, 
                     let screenWidth = UIScreen.main.bounds.width
                     let screenHeight = UIScreen.main.bounds.height
                     
-                    confirmUploadView.forGroup = self.forGroup
+                    confirmUploadView.group = self.group
                     
                     let asset: PHAsset = self.photosAsset[tag]
                     PHImageManager.default().requestImage(for: asset, targetSize: self.thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: {(result, info)in

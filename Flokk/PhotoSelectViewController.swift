@@ -19,7 +19,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     let imageManager = PHCachingImageManager()
     var thumbnailSize: CGSize!
     
-    var forGroup: Group! // Just passing this around so we can return it to the feed
+    var group: Group! // Just passing this around so we can return it to the feed
     var groupIndex: Int! // The index of this group in the global groups array
     
     static let initialNumPosts = 10 // Load more when scrolling down
@@ -146,7 +146,7 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
                     let screenWidth = UIScreen.main.bounds.width
                     let screenHeight = UIScreen.main.bounds.height
                     
-                    confirmUploadView.forGroup = self.forGroup
+                    confirmUploadView.group = self.group
                     
                     let asset = fetchResult.object(at: tag)
                     imageManager.requestImage(for: asset, targetSize: CGSize(width: screenWidth * 2, height: screenHeight * 2), contentMode: .default, options: nil, resultHandler: { image, _ in

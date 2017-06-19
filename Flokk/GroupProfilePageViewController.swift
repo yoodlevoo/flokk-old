@@ -247,6 +247,11 @@ class GroupProfileViewControllerPage1: UIViewController {
             }
         })
         
+        // Remove the group invite notification
+        if let index = mainUser.notifications.index(where: { $0.group!.id == self.group.id && $0.type == NotificationType.GROUP_INVITE}) { // Attempt to find this notification
+            mainUser.notifications.remove(at: index) // Then remove it
+        }
+        
         // Remove this group as a local incoming group invite
         mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.id)!)
         
@@ -281,6 +286,11 @@ class GroupProfileViewControllerPage1: UIViewController {
         // Hide the invite buttons
         (self.parent as! GroupProfilePageViewController).hideInviteButtons()
         
+        // Remove the group invite notification
+        if let index = mainUser.notifications.index(where: { $0.group!.id == self.group.id && $0.type == NotificationType.GROUP_INVITE}) { // Attempt to find this notification
+            mainUser.notifications.remove(at: index) // Then remove it
+        }
+
         // Remove this group as a local incoming group invite
         mainUser.groupInvites.remove(at: mainUser.groupInvites.index(of: self.group.id)!)
     }
