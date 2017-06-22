@@ -148,7 +148,6 @@ class GroupsViewController: UIViewController {
                     weak var group = groups[tag] // I want this to be weak to prevent memory leakage
                     
                     feedView.group = group
-                    //feedView.groupIndex = tag // The index of this group globally, for now
                     self.tabBarController?.hideTabBar()
                 }
             }
@@ -386,8 +385,8 @@ extension GroupsViewController {
                     
                     // Create a banner to notify the user
                     let groupName = self.groupDict[groupID]! // Load in the group ID
-                    let banner = Banner(title: "Post Added", subtitle: "@\(posterHandle) uploaded a post to \(groupName)", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: {
-                        
+                    let banner = Banner(title: "Post Added", subtitle: "@\(posterHandle) uploaded a post to \(groupName)", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: { // When tapped
+                        // Go to the corresponding group
                     })
                     
                     banner.dismissesOnTap = true

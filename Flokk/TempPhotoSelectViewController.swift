@@ -16,7 +16,6 @@ class TempPhotoSelectViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var group: Group! // Just passing this around so we can return it to the feed
-    var groupIndex: Int! // The index of this group in the global groups array
     
     var assetCollection: PHAssetCollection = PHAssetCollection()
     var photosAsset: PHFetchResult<PHAsset>!
@@ -85,15 +84,13 @@ class TempPhotoSelectViewController: UIViewController {
         if segue.identifier == "segueFromPhotoSelectToConfirmImage" {
             if let confirmUploadView = segue.destination as? ConfirmUploadViewController {
                 if let tag = (sender as? TempPhotoSelectCell)?.tag {
-                    confirmUploadView.groupIndex = self.groupIndex
-                    
                     let screenWidth = UIScreen.main.bounds.width
                     let screenHeight = UIScreen.main.bounds.height
                     
                     confirmUploadView.group = self.group
                     
-                    let asset: PHAsset = self.photosAsset[tag]
-                    PHImageManager.default().requestImage(for: asset, targetSize: self.thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: {(result, info)in
+                    let asset: PHAsset = self.photosAsset[self.totalImageCount - tag - 1]
+                    PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: screenWidth * 2, height: screenHeight * 2), contentMode: .aspectFill, options: nil, resultHandler: {(result, info)in
                         if let image = result {
                             
                             DispatchQueue.main.async {
@@ -139,7 +136,7 @@ extension TempPhotoSelectViewController: UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! TempPhotoSelectCell
         
-        let asset: PHAsset = self.photosAsset[indexPath.item]
+        let asset: PHAsset = self.photosAsset[self.totalImageCount - indexPath.item - 1] // Make this descencding
         
         PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 335 * 2, height: 667 * 2), contentMode: .aspectFill, options: nil, resultHandler: {(result, info)in
             if let image = result {

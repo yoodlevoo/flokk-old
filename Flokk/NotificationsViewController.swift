@@ -38,6 +38,7 @@ class NotificationsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.notifications = mainUser.notifications
+        self.tableView.reloadData() // Reload data every time
         
         // Check if there is a group already selected
         let selectedIndex = self.tableView.indexPathForSelectedRow
@@ -72,8 +73,45 @@ class NotificationsViewController: UIViewController {
                     if let data = value as? [String : Any] {
                         let type = NotificationType(rawValue: data["type"] as! Int)!
                         
+                        // Depending on the type of notification, load them differently
                         switch(type) {
-                        case NotificationType.FRIEND_REQUESTED:
+                        case NotificationType.FRIEND_REQUESTED: // Loaded the same as FRIEND_REQUEST_ACCEPTED
+                            let senderHandle = data["sender"] as! String
+                            let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
+                            
+                            // Load in the sender data
+                            let userRef = database.ref.child("users").child(senderHandle)
+                            userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                                if let userValues = snapshot.value as? NSDictionary {
+                                    let fullName = userValues["fullName"] as! String
+                                    
+                                    // Load in the profile photo
+                                    let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto.jpg")
+                                    profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                        if error == nil { // If there wasn't an error
+                                            let profilePhoto = UIImage(data: data!)
+                                            
+                                            let user = User(handle: senderHandle, fullName: fullName, profilePhoto: profilePhoto!)
+                                            
+                                            let notification = Notification(type: .FRIEND_REQUESTED, sender: user)
+                                            
+                                            // Add the notification
+                                            mainUser.notifications.append(notification)
+                                            
+                                            // Reload the table
+                                            DispatchQueue.main.async {
+                                                self.tableView.reloadData()
+                                                self.refreshControl.endRefreshing()
+                                            }
+                                        } else {
+                                            print(error!)
+                                        }
+                                    })
+                                }
+                            })
+                            
+                            break
+                        case NotificationType.FRIEND_REQUEST_ACCEPTED: // Loaded the same as FRIEND_REQUESTED
                             let senderHandle = data["sender"] as! String
                             let timestamp = NSDate(timeIntervalSinceReferenceDate: data["timestamp"] as! Double)
                             
@@ -252,6 +290,7 @@ class NotificationsViewController: UIViewController {
                 let notification = notifications[indexPath.row]
                 
                 groupProfileView.group = notification.group
+                groupProfileView.groupID = notification.group?.id
             }
         }
     }
@@ -328,9 +367,9 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
         // We will do different things depending on which type of Notification we selected
         switch notification.type {
         case NotificationType.FRIEND_REQUESTED:
-            // Attempt to instantiate a Profile Navigation Object
+            // Attempt to instantiate a Profile View Controller
             guard let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController else {
-                print("Could not instantiate view controller of type Profile Navigation View Controller from Notifications Tab")
+                print("Could not instantiate view controller of type Profile View Controller from Notifications Tab")
                 return
             }
             
@@ -342,6 +381,17 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
             
             break
         case NotificationType.FRIEND_REQUEST_ACCEPTED:
+            // Attempt to instantiate a Profile View Controller
+            guard let profileView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController else {
+                print("Could not instantiate view controller of type Profile View Controller from Notifications Tab")
+                return
+            }
+            
+            profileView.user = notification.sender
+            profileView.userHandle = notification.sender?.handle
+            
+            // Then segue to it
+            //self.present(profileView, animated: true, completion: nil)
             
             break
         case NotificationType.GROUP_INVITE:
@@ -351,6 +401,7 @@ extension NotificationsViewController: UITableViewDataSource, UITableViewDelegat
             }
             
             groupProfileView.group = notification.group
+            groupProfileView.groupID = notification.group?.id
             groupProfileView.invitedReceived = true
             //groupProfileView.user = notification.sender
             

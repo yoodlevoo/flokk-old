@@ -19,7 +19,6 @@ class AddCommentViewController: UIViewController {
     
     var post: Post! // A copy of the post
     var postIndex: Int! // The index of the post in the post array
-    var groupIndex: Int! // The index of the group in the global groups array
     var group: Group!
     
     var userProfilePhotos = [String : UIImage]() // Dict of all of the according profile photos

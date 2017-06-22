@@ -345,7 +345,7 @@
             <objects>
                 <navigationController id="WpJ-iH-FCG" customClass="PersonalProfileNavigationViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="Profile Icon" selectedImage="Profile Icon" id="BQZ-Gz-nDE"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="9ML-kP-s4Y">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="9ML-kP-s4Y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2070,7 +2070,7 @@
             <objects>
                 <navigationController id="7Ri-ws-uS1" sceneMemberID="viewController">
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" backIndicatorImage="WhiteArrow" id="fj0-Xo-wTb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" backIndicatorImage="WhiteArrow" id="fj0-Xo-wTb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.34170821309999999" green="0.62362074850000004" blue="0.61967319249999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -2466,7 +2466,7 @@
                 <navigationController storyboardIdentifier="GroupsNavController" title="Groups NavControl" automaticallyAdjustsScrollViewInsets="NO" id="l32-fs-QFF" customClass="GroupsNavigationViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Groups" image="GROUPS ICON" selectedImage="GROUPS ICON" id="f9K-XV-eVC"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" backIndicatorImage="WhiteArrow" backIndicatorTransitionMaskImage="WhiteArrow" id="eaX-7Q-ghQ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" backIndicatorImage="WhiteArrow" backIndicatorTransitionMaskImage="WhiteArrow" id="eaX-7Q-ghQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.34170821309999999" green="0.62362074850000004" blue="0.61967319249999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -2499,7 +2499,7 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="j4e-ZO-nLu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="j4e-ZO-nLu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2717,7 +2717,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FoK-nm-tmd" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="4iL-lP-21s">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="4iL-lP-21s">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3936,7 +3936,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="70L-xp-JEW"/>
-        <segue reference="60x-m7-f1E"/>
-        <segue reference="sMK-Mq-ip7"/>
+        <segue reference="tEb-ND-eC4"/>
+        <segue reference="VLB-2b-YeH"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -13,7 +13,6 @@ class ConfirmUploadViewController: UIViewController {
     var image: UIImage!
     
     var group: Group! // This is just a copy of the actual group - no its not you fucking idiot its a reference
-    var groupIndex: Int! // The index of this group in the global groups array
     
     override func viewDidLoad() {
         super.viewDidLoad() 
@@ -48,16 +47,16 @@ class ConfirmUploadViewController: UIViewController {
         postsRef.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         
         //let post = Post(poster: mainUser, image: self.imageView.image!, postID: key)
-        let post = Post(posterHandle: mainUser.handle, image: self.imageView.image!, postID: key, timestamp: NSDate(timeIntervalSinceReferenceDate: NSDate.timeIntervalSinceReferenceDate))
+        let post = Post(posterHandle: mainUser.handle, image: self.imageView.image!, postID: key, timestamp: Date(timeIntervalSinceReferenceDate: NSDate.timeIntervalSinceReferenceDate))
         
-        // Search for this group's index
+        // Search for this group's index - I don't want to have to do this and I don't think it's necessary
         let index = groups.index(where: { (item) -> Bool in
             item.name == group.name
         })
         
-        groups[index!].posts.append(post) // Add this post to the group
-        groups[index!].posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate}) // Sort the post chronologically
-        
+        self.group.posts.append(post) // Add this post to the group
+        self.group.loadingPostIDs.append(post.id) // Add this id to the loading post id's, so the feed view doesn't try to load this photo
+        self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate}) // Sort the post chronologically
         
         // Start storage here
         

@@ -20,7 +20,6 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
     var thumbnailSize: CGSize!
     
     var group: Group! // Just passing this around so we can return it to the feed
-    var groupIndex: Int! // The index of this group in the global groups array
     
     static let initialNumPosts = 10 // Load more when scrolling down
     static let morePostsToLoad = 8 // Amount of posts to load each time when we need to on scrolling down
@@ -141,8 +140,6 @@ class PhotoSelectViewController: UIViewController, UICollectionViewDelegate, UIC
         if segue.identifier == "segueFromPhotoSelectToConfirmImage" {
             if let confirmUploadView = segue.destination as? ConfirmUploadViewController {
                 if let tag = (sender as? PhotoSelectCell)?.tag {
-                    confirmUploadView.groupIndex = self.groupIndex
-                    
                     let screenWidth = UIScreen.main.bounds.width
                     let screenHeight = UIScreen.main.bounds.height
                     

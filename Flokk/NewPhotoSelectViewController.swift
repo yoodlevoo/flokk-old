@@ -14,7 +14,6 @@ class NewPhotoSelectViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var collectionView: UICollectionView!
     
     var group: Group! // Just passing this around so we can return it to the feed
-    var groupIndex: Int! // The index of this group in the global groups array
     
     var assetCollection: PHAssetCollection = PHAssetCollection()
     var photosAsset: PHFetchResult<PHAsset>!
@@ -150,7 +149,6 @@ class NewPhotoSelectViewController: UIViewController, UICollectionViewDelegate, 
         if segue.identifier == "segueFromPhotoSelectToConfirmImage" {
             if let confirmUploadView = segue.destination as? ConfirmUploadViewController {
                 if let tag = (sender as? PhotoSelectCell)?.tag {
-                    confirmUploadView.groupIndex = self.groupIndex
                     
                     let screenWidth = UIScreen.main.bounds.width
                     let screenHeight = UIScreen.main.bounds.height

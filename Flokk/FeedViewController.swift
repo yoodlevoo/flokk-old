@@ -22,9 +22,11 @@ class FeedViewController: UIViewController {
     let transitionDown = SlideDownAnimator()
     var refreshControl: UIRefreshControl = UIRefreshControl()
     
-    var postCount = initialPostCount
+    var postCount = initialPostCount // Only really matters when there are more than 10 posts
     
     fileprivate var userProfilePhotos = [String : UIImage]()
+    
+    fileprivate var listenerHandle: UInt!
     
     //fileprivate var imagePicker = UIImagePickerController()
     
@@ -69,6 +71,7 @@ class FeedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.loadedPosts = self.group.posts // This might cause problems when we try to implement pagination
         self.tableView.reloadData() // Reload data every time this view appears, in case we just uploaded a phorto
     }
 
@@ -99,6 +102,7 @@ class FeedViewController: UIViewController {
         if self.group.posts.count < self.postCount { // If we need to load more posts
             self.refreshControl.beginRefreshing()
             
+            // I have posts data stored locally, why tf am i doing this
             let groupPostsRef = database.ref.child("groups").child(self.group.id).child("posts")
             groupPostsRef.queryOrdered(byChild: "timestamp").observeSingleEvent(of: .value, with: { (snapshot) in
                 if let values = snapshot.value as? [String : [String : Any]] {
@@ -107,6 +111,26 @@ class FeedViewController: UIViewController {
                     }
                     
                     for (id, data) in values {
+                        let posterHandle = data["poster"] as! String
+                        
+                        // Load this user's profile photo if it hasn't been loaded already
+                        if !self.userProfilePhotos.keys.contains(posterHandle) {
+                            let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhoto.jpg")
+                            profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                if error == nil { // If there wasn't an error
+                                    let profilePhoto = UIImage(data: data!) // Load the profile photo from the received data
+                                    
+                                    self.userProfilePhotos[posterHandle] = profilePhoto
+                                    
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData()
+                                    }
+                                } else {
+                                    print(error!)
+                                }
+                            })
+                        }
+                        
                         let matches = self.group.loadingPostIDs.filter{$0 == id} // Check if there is a loaded/loading post that matches this ID
                         if matches.count != 0 { // If this post has already been loaded
                             return // Then skip loading this post
@@ -114,24 +138,9 @@ class FeedViewController: UIViewController {
                             self.group.loadingPostIDs.append(id) // Add this post to the loading posts IDs array to global groups array
                             
                             // Load in the basic data for this post
-                            let dataDict = data
-                            let posterHandle = dataDict["poster"] as! String // Handle for who uploaded this post
-                            let timestamp = NSDate(timeIntervalSinceReferenceDate: (dataDict["timestamp"] as! Double)) // When this post was uploaded
+                            let posterHandle = data["poster"] as! String // Handle for who uploaded this post
+                            let timestamp = Date(timeIntervalSinceReferenceDate: (data["timestamp"] as! Double)) // When this post was uploaded
                             //print("timestamp \(timestamp)")
-                            
-                            // Load this user's profile photo if it hasn't been loaded already
-                            if !self.userProfilePhotos.keys.contains(posterHandle) {
-                                let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhoto.jpg")
-                                profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
-                                    if error == nil { // If there wasn't an error
-                                        let profilePhoto = UIImage(data: data!) // Load the profile photo from the received data
-                                        
-                                        self.userProfilePhotos[posterHandle] = profilePhoto
-                                    } else {
-                                        print(error!)
-                                    }
-                                })
-                            }
                             
                             // Load the post image
                             let postRef = storage.ref.child("groups").child(self.group.id).child("posts")
@@ -164,13 +173,57 @@ class FeedViewController: UIViewController {
             })
         } else { // If all of the posts are loaded
             // Load the poster profile photos
+            let groupPostsRef = database.ref.child("groups").child(self.group.id).child("posts")
+            groupPostsRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let values = snapshot.value as? [String : [String : Any]] {
+                    for (id, data) in values {
+                        let posterHandle = data["poster"] as! String
+                        
+                        // Load this user's profile photo if it hasn't been loaded already
+                        if !self.userProfilePhotos.keys.contains(posterHandle) {
+                            let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhoto.jpg")
+                            profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                if error == nil { // If there wasn't an error
+                                    let profilePhoto = UIImage(data: data!) // Load the profile photo from the received data
+                                    
+                                    self.userProfilePhotos[posterHandle] = profilePhoto
+                                    
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData()
+                                    }
+                                } else {
+                                    print(error!)
+                                }
+                            })
+                        }
+                    }
+                }
+            })
         }
     }
     
     // Begin listening for changes in this group
     // That being mainly post uploads, but also comments, group invites, group additions/accepts, someone changing the profile photo
     func beginListeners() {
-        
+        let groupRef = database.ref.child("groups").child(self.group.id).child("posts")
+        self.listenerHandle = groupRef.queryOrdered(byChild: "timestamp").queryStarting(atValue: Double(NSDate.timeIntervalSinceReferenceDate)).observe(.childAdded, with: { (snapshot) in
+            if let values = snapshot.value as? NSDictionary {
+                let postID = snapshot.key
+                let posterHandle = values["poster"] as! String
+                let timestamp = Date(timeIntervalSinceReferenceDate: (values["timestamp"] as! Double))
+                
+                let postRef = storage.ref.child("groups").child(self.group.id).child("posts").child(postID)
+                postRef.data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
+                    if error == nil { // If there wasn't an error
+                        let postImage = UIImage(data: data!)
+                        
+                        let post = Post(posterHandle: posterHandle, image: postImage!, postID: postID, timestamp: timestamp)
+                    } else { // If there was an error
+                        
+                    }
+                })
+            }
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
