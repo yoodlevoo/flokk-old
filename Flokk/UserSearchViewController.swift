@@ -31,6 +31,8 @@ class UserSearchViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        self.definesPresentationContext = true // This fucks up the view controller somehow
+        
         self.searchController.searchResultsUpdater = self
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
@@ -66,7 +68,14 @@ class UserSearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.searchController.searchBar.isHidden = false
+        //self.searchController.searchBar.isHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        //self.searchController.isActive = false
+        //self.searchController.searchBar.endEditing(true) // Deselect this search bar when we segue away, always does weird shit otherwise
     }
     
     override func didReceiveMemoryWarning() {
@@ -92,6 +101,7 @@ class UserSearchViewController: UIViewController {
                 let selectedUser = users[(self.tableView.indexPathForSelectedRow?.row)!]
                 
                 profileView.user = selectedUser
+                profileView.userHandle = selectedUser.handle
             }
         }
     }
@@ -151,7 +161,7 @@ extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating
                     
                     if searchBar.text == fullNameSplit { // If the search equates to this users full name
                         // Retrieve the profile photo
-                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                         profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil { // If there wasn't an error
                                 let profilePhoto = UIImage(data: data!) // Create an image from the data retrieved

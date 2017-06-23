@@ -19,7 +19,7 @@ class ConfirmUploadNavigationViewController: UINavigationController {
         
         let confirmUploadView = viewControllers[0] as! ConfirmUploadViewController
         confirmUploadView.image = imageToPass
-        confirmUploadView.forGroup = groupToPass
+        confirmUploadView.group = groupToPass
         
         // Do any additional setup after loading the view.
     }

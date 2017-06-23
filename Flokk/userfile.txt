@@ -1,4 +1,4 @@
-"users": {
+"gannonprudhomme": {
     "email": "gannonprudhomme@gmail.com"
     "profilephoto": "image.jpg"
 
@@ -11,15 +11,15 @@
         "jaredheyen": true
     },
 
-    "outgoingrequests": { // Outgoing friend requests
-
+    "outgoingRequests": { // Outgoing friend requests
+        "noblejones": 512513252.3245712
     },
 
-    "incomingrequests" { // Incomign friend requests
-        
+    "incomingRequests" { // Incomign friend requests
+        "alexshilnikov": 512513252.3245712
     },
 
-    "groupinvites": {
+    "groupInvites": {
         "friends": "-Kkv2QyuO9Dgu8mXKZjh",
         "football": "-Kr2QuiyuO3fgu8mkaljh"
     },

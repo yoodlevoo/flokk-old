@@ -12,13 +12,13 @@ class AddCommentViewController: UIViewController {
     @IBOutlet weak var postView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var profilePhotoBarButton: UIBarButtonItem!
     @IBOutlet var keyboardHeightLayoutConstraint : NSLayoutConstraint?
     
     var loadedComments = [Comment]()
     
     var post: Post! // A copy of the post
     var postIndex: Int! // The index of the post in the post array
-    var groupIndex: Int! // The index of the group in the global groups array
     var group: Group!
     
     var userProfilePhotos = [String : UIImage]() // Dict of all of the according profile photos
@@ -38,9 +38,9 @@ class AddCommentViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
         // Load in the comments, ordered by most recent?
-        let commentRef = database.ref.child("comments").child(self.group.groupID).child(post.id)
+        let commentRef = database.ref.child("comments").child(self.group.id).child(post.id)
         commentRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value)
+            //print(snapshot.value)
             if let children = snapshot.value as? [String : Any] {
                 for (key, data) in children { // Iterate through all of the comments
                     if let values = data as? NSDictionary {
@@ -54,7 +54,7 @@ class AddCommentViewController: UIViewController {
                         
                         // Load in the profile photo for the commenter
                         if !self.userProfilePhotos.keys.contains(commenterHandle) { // If we haven't loaded this user's profile photo already
-                            let profilePhotoRef = storage.ref.child("users").child(commenterHandle).child("profilePhoto").child("\(commenterHandle).jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(commenterHandle).child("profilePhoto.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!)
@@ -127,8 +127,8 @@ extension AddCommentViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         
         // Upload the comment
-        let commentKey = database.ref.child("comments").child(self.group.groupID).child(post.id).childByAutoId().key
-        let commentRef = database.ref.child("comments").child(self.group.groupID).child(post.id).child(commentKey) // Database reference
+        let commentKey = database.ref.child("comments").child(self.group.id).child(post.id).childByAutoId().key
+        let commentRef = database.ref.child("comments").child(self.group.id).child(post.id).child(commentKey) // Database reference
         commentRef.child("poster").setValue(mainUser.handle) // The handle of the commenter, always going to be the mainUser
         commentRef.child("content").setValue(textField.text!) // The actual content of the comment
         commentRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)

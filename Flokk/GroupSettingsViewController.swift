@@ -22,27 +22,33 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var members = [User]()
     
-    var refreshControl = UIRefreshControl()
+    var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.refreshControl.addTarget(self, action: #selector(GroupSettingsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
-        self.refreshControl.tintColor = TEAL_COLOR
         
-        self.tableView.addSubview(self.refreshControl)
-        //self.tableView.refreshControl = self.refreshControl
+       // self.refreshControl.tintColor =
+        
+        self.activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        self.activityIndicator.frame = CGRect(x: self.tableView.frame.width / 2 - 30, y: 0.0, width: 60, height: 60)
+//        self.activityIndicator.scale(factor: 1.25)
+        //self.activityIndicator.center = self.tableView.center
+        self.activityIndicator.color = TEAL_COLOR
+        self.activityIndicator.hidesWhenStopped =  true // what does this do
+        self.activityIndicator.startAnimating() // Start the activity indicator
+        
+        //self.tableView.tableHeaderView = self.activityIndicator
+        self.tableView.addSubview(self.activityIndicator)
         
         // Add the group image and crop it to a circle
-        self.groupImageView.image = group.groupIcon
+        self.groupImageView.image = group.icon
         self.groupImageView.layer.cornerRadius = self.groupImageView.frame.size.width / 2
         self.groupImageView.clipsToBounds = true
         
-        self.groupNameLabel.text = group.groupName
-        
-        self.refreshControl.beginRefreshing()
+        self.groupNameLabel.text = group.name
         
         // Put an overlay over the image so you know you can change it?
         
@@ -54,7 +60,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                     let fullName = values["fullName"] as! String
                     
                     // Load this user's profile Photo
-                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
@@ -66,7 +72,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                             
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
-                                self.refreshControl.endRefreshing()
+                                self.activityIndicator.stopAnimating()
                             }
                         } else { // If there was an error
                             print(error!)
@@ -102,12 +108,6 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-    func handleRefresh(refreshControl: UIRefreshControl) {
-        self.tableView.reloadData()
-        refreshControl.endRefreshing()
-    }
-    
-    
     @IBAction func inviteFriendButtonPressed(_ sender: Any) {
         /*
         // Check if any friends not in this group are loaded - mainUser.friends. actually nah
@@ -134,5 +134,14 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     
     func loadUsers() { // Load more members?
         
+    }
+}
+
+// Put this somewhere else
+extension UIActivityIndicatorView {
+    func scale(factor: CGFloat) {
+        guard factor > 0.0 else { return }
+        
+        transform = CGAffineTransform(scaleX: factor, y: factor)
     }
 }

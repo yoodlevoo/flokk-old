@@ -71,11 +71,14 @@ class SignInViewController: UIViewController {
             //email = "cheeseman123432@yahoo.com"
             //password = "alex123"
             
-            email = "latnt1@gmail.com"
-            password = "lucas123"
+            //email = "latnt1@gmail.com"
+            //password = "lucas123"
+            
+            //email = "n1ghtk1ng@live.com"
+            //password = "noble123"
         }
         
-        // Authenticate and sign the user in
+        // Authenticate and sign the user in - this can be simplified a lot by adding defaultsd
         FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil { // If there wasn't an error
                 if let user = user { // Basically just removes the "optional" from user (so there's no need for doing "(user?.uid)!")
@@ -92,7 +95,7 @@ class SignInViewController: UIViewController {
                                 
                                 print(fullName)
                                 
-                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                                 profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                     if error == nil { // If there wasn't an error
                                         let profilePhoto = UIImage(data: data!) // Load the image
@@ -118,7 +121,7 @@ class SignInViewController: UIViewController {
                             } else { // Then the user is not in any groups
                                 mainUser = User(handle: handle, fullName: fullName)
                                 
-                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                                 profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                     if error == nil { // If there wasn't an error
                                         let profilePhoto = UIImage(data: data!)
