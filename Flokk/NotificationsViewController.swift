@@ -85,6 +85,8 @@ class NotificationsViewController: UIViewController {
                                 if let userValues = snapshot.value as? NSDictionary {
                                     let fullName = userValues["fullName"] as! String
                                     
+                                    let groupIDs = userValues["groups"] as? [String : Bool] ?? [String : Bool]()
+                                    
                                     // Load in the profile photo
                                     let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto.jpg")
                                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
@@ -92,6 +94,7 @@ class NotificationsViewController: UIViewController {
                                             let profilePhoto = UIImage(data: data!)
                                             
                                             let user = User(handle: senderHandle, fullName: fullName, profilePhoto: profilePhoto!)
+                                            user.groupIDs = Array(groupIDs.keys)
                                             
                                             let notification = Notification(type: .FRIEND_REQUESTED, sender: user)
                                             
