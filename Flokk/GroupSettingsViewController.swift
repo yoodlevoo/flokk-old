@@ -44,11 +44,11 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.addSubview(self.activityIndicator)
         
         // Add the group image and crop it to a circle
-        self.groupImageView.image = group.groupIcon
+        self.groupImageView.image = group.icon
         self.groupImageView.layer.cornerRadius = self.groupImageView.frame.size.width / 2
         self.groupImageView.clipsToBounds = true
         
-        self.groupNameLabel.text = group.groupName
+        self.groupNameLabel.text = group.name
         
         // Put an overlay over the image so you know you can change it?
         
@@ -60,7 +60,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                     let fullName = values["fullName"] as! String
                     
                     // Load this user's profile Photo
-                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)

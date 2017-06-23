@@ -1,5 +1,6 @@
 {
-    "creator": "gannonprudhomme"
+    "creator": "gannonprudhomme",
+    "name": "GroupName",
     "members": {
         "gannonprudhomme": true,
         "jaredheyen": true
@@ -27,7 +28,7 @@
         "lucasarnold": true
     },
 
-    "requestedusers": { // users who requested to join
+    "requestedUsers": { // users who requested to join
 
     }
 }

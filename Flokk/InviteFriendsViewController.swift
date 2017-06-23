@@ -41,6 +41,7 @@ class InviteFriendsViewController: UIViewController {
         
         //self.users = self.mainUserFriends // If there isn't a search, set it to the main user's friends
         
+        // You can only invite your friends to a group, so iterate over only them
         for handle in mainUser.friendHandles {
             if !group.memberHandles.contains(handle) && !group.invitedUsers.contains(handle) { // If this user isn't already a member of the group or already invited, continue to load it
                 let userRef = database.ref.child("users").child(handle)
@@ -50,7 +51,7 @@ class InviteFriendsViewController: UIViewController {
                         let fullName = values["fullName"] as! String
                         
                         // Download the profile photo
-                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                         profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil {
                                 let profilePhoto = UIImage(data: data!)
@@ -88,17 +89,17 @@ class InviteFriendsViewController: UIViewController {
             return // Will this prevent the rest of the function being called?
         }
         
-        let groupRef = database.ref.child("groups").child(self.group.groupID)
+        let groupRef = database.ref.child("groups").child(self.group.id)
         
         // Notify each user that they have been invited
         for user in self.selectedUsers {
             let handle = user.handle
             
             // Tell the groups database that this user has been invited
-            groupRef.child("invitedUsers").child(handle).setValue(true)
+            groupRef.child("invitedUsers").child(handle).setValue(NSDate.timeIntervalSinceReferenceDate)
             
             let userRef = database.ref.child("users").child(handle)
-            userRef.child("groupInvites").child(self.group.groupID).setValue(true) // Set this group as an incoming invite in the user's database
+            userRef.child("groupInvites").child(self.group.id).setValue(NSDate.timeIntervalSinceReferenceDate) // Set this group as an incoming invite in the user's database
             
             // Create a group invite notification for this user
             let notificationKey = database.ref.child("notifications").child(handle).childByAutoId().key // Generate a UID for this notification
@@ -107,8 +108,10 @@ class InviteFriendsViewController: UIViewController {
             // Set the data for this notification
             notificationRef.child("type").setValue(NotificationType.GROUP_INVITE.rawValue) // Set the notification type
             notificationRef.child("sender").setValue(mainUser.handle) // Set who has invited this user
-            notificationRef.child("groupID").setValue(self.group.groupID) // Set the group's ID this user has been invited to
+            notificationRef.child("groupID").setValue(self.group.id) // Set the group's ID this user has been invited to
             notificationRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate) // Set the time this invite has been sent
+            
+            self.group.invitedUsers.append(handle) // Add these users to the local invited users array
         }
         
         // Go back to group settings
@@ -136,7 +139,7 @@ extension InviteFriendsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as! InviteFriendsTableViewCell
-        let user = users[indexPath.row]
+        let user = self.users[indexPath.row]
         
         // Add the profile photo and make it crop to a circle
         cell.profilePhotoView.image = user.profilePhoto
@@ -194,7 +197,7 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
                     let handle = each.key as! String // Get the handle
                     
                     // Check if this user is a friend of the main user before acting on it
-                    if mainUser.friendHandles.contains(handle) {
+                    if mainUser.friendHandles.contains(handle) && !self.group.memberHandles.contains(handle) && !self.group.invitedUsers.contains(handle) {
                         // If so, continue loading
                         let userData = values[handle] as! Dictionary<String, Any> // Get all the subset of data for this user
                         let fullName = userData["fullName"] as! String // Get the user's full name from the subset of data
@@ -205,7 +208,7 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
                         
                         if searchBar.text == fullNameSplit { // If the search equates to this users full name
                             // Retrieve the profile photo
-                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!) // Create an image from the data retrieved
@@ -219,14 +222,15 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
                                     // Update the data table
                                     self.tableView.reloadData()
                                 } else { // If there was an error
-                                    
+                                    // Handle the error
+                                    print(error!)
                                 }
                             })
                         } else { // If the search doesn't equate to this user
-                            
+                            // Do nothing
                         }
                     } else { // If this user isn't friends with the main user
-                        
+                        // Do nothing
                     }
                 }
             }
@@ -251,8 +255,6 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
             //self.searchBar.setShowsCancelButton(false, animated: true)
         }
     }
-    
-    
 }
 
 class InviteFriendsTableViewCell: UITableViewCell {

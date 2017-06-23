@@ -24,6 +24,8 @@ let MIN_PASSWORD_LENGTH = 6
 let MAX_PROFILE_PHOTO_SIZE: Int64 = 1 * 4096 * 4096
 let MAX_POST_SIZE: Int64 = 1 * 4096 * 4096
 
+let BANNER_DURATION: TimeInterval = 3.0
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

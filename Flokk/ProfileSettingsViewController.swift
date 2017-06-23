@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ProfileSettingsViewController: UIViewController {
     @IBOutlet weak var profilePictureButton: UIButton!
@@ -72,6 +73,13 @@ class ProfileSettingsViewController: UIViewController {
             storedUsers.removeAll() // Not used anyways, but clear it just in case
             //storage = nil
             //database = nil
+            
+            // Attempt to actually sign out from Firebase
+            do {
+                try! FIRAuth.auth()?.signOut()
+            } catch let signOutError as Error {
+                print(signOutError)
+            }
         }
     }
 }

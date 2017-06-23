@@ -81,18 +81,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fP7-jE-JTb">
                                 <rect key="frame" x="0.0" y="-4" width="375" height="219"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20c-fx-LN6">
-                                        <rect key="frame" x="59" y="102" width="256" height="39"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="20c-fx-LN6">
+                                        <rect key="frame" x="8" y="102" width="359" height="39"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="39" id="D1g-16-AlH"/>
-                                            <constraint firstAttribute="width" constant="256" id="f9z-tP-lFh"/>
+                                            <constraint firstAttribute="width" constant="359" id="f9z-tP-lFh"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="34"/>
                                         <color key="textColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eec-0E-mJj">
-                                        <rect key="frame" x="59" y="141" width="256" height="21"/>
+                                        <rect key="frame" x="59.5" y="141" width="256" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="0dD-B6-j0l"/>
                                             <constraint firstAttribute="width" constant="256" id="zFB-Bk-oX0"/>
@@ -152,7 +152,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="fwG-a1-qOv" secondAttribute="trailing" constant="142" id="2HI-Vp-IQ3"/>
                                     <constraint firstItem="fwG-a1-qOv" firstAttribute="top" secondItem="fP7-jE-JTb" secondAttribute="top" constant="8" id="Ahb-O9-L68"/>
-                                    <constraint firstItem="20c-fx-LN6" firstAttribute="leading" secondItem="eec-0E-mJj" secondAttribute="leading" id="Hbt-3i-K0i"/>
+                                    <constraint firstItem="20c-fx-LN6" firstAttribute="leading" secondItem="eec-0E-mJj" secondAttribute="leading" constant="-51.5" id="Hbt-3i-K0i"/>
                                     <constraint firstAttribute="height" constant="219" id="PGb-Ef-ykj"/>
                                     <constraint firstItem="20c-fx-LN6" firstAttribute="centerX" secondItem="C4k-DV-l4U" secondAttribute="centerX" id="SSa-DQ-kdE"/>
                                     <constraint firstItem="fwG-a1-qOv" firstAttribute="centerX" secondItem="20c-fx-LN6" secondAttribute="centerX" id="VuR-1U-i3f"/>
@@ -340,11 +340,11 @@
             </objects>
             <point key="canvasLocation" x="2069.5999999999999" y="-2197.1514242878561"/>
         </scene>
-        <!--Item-->
+        <!--Profile-->
         <scene sceneID="8ZS-7I-ko5">
             <objects>
                 <navigationController id="WpJ-iH-FCG" customClass="PersonalProfileNavigationViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="BQZ-Gz-nDE"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="Profile Icon" selectedImage="Profile Icon" id="BQZ-Gz-nDE"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="9ML-kP-s4Y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1094,11 +1094,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="default" rowHeight="90" id="kYG-Z3-AX6" customClass="InviteFriendsTableViewCell" customModule="Flokk" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="90"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="default" rowHeight="80" id="kYG-Z3-AX6" customClass="InviteFriendsTableViewCell" customModule="Flokk" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kYG-Z3-AX6" id="Qu4-NU-PTK">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o8N-lP-pDg">
@@ -2495,7 +2495,7 @@
         <scene sceneID="2zC-hb-JB9">
             <objects>
                 <navigationController title="Notifications NavControl" automaticallyAdjustsScrollViewInsets="NO" id="jcN-Q9-alX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notifications" image="Flokk of Birds-1" id="oXQ-HB-31e">
+                    <tabBarItem key="tabBarItem" title="Notifications" image="Notification Icon" selectedImage="Notification Icon" id="oXQ-HB-31e">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -3008,11 +3008,11 @@
                                     <constraint firstAttribute="width" constant="92" id="Ioq-5i-Icx"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkB-L1-MnY">
-                                <rect key="frame" x="59.5" y="116" width="256" height="39"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="KkB-L1-MnY">
+                                <rect key="frame" x="3" y="116" width="367" height="39"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="39" id="Htm-dS-APq"/>
-                                    <constraint firstAttribute="width" constant="256" id="JNF-08-W5n"/>
+                                    <constraint firstAttribute="width" constant="367" id="JNF-08-W5n"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="40"/>
                                 <color key="textColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3080,7 +3080,7 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rI-5l-Ew2">
-                                <rect key="frame" x="16" y="204" width="32" height="31"/>
+                                <rect key="frame" x="16" y="205" width="39" height="30"/>
                                 <state key="normal" image="Friends Icon"/>
                                 <connections>
                                     <segue destination="XjA-XV-lcK" kind="show" identifier="segueFromPersonalProfileToFriends" id="o63-Fe-h0g"/>
@@ -3104,11 +3104,11 @@
                             <constraint firstItem="KkB-L1-MnY" firstAttribute="top" secondItem="4Ha-0Q-1W0" secondAttribute="bottom" constant="16" id="qov-1n-99g"/>
                             <constraint firstItem="4Ha-0Q-1W0" firstAttribute="centerX" secondItem="z10-8r-mqt" secondAttribute="centerX" id="ueq-ht-5U0"/>
                             <constraint firstItem="Td6-Ek-orj" firstAttribute="centerX" secondItem="z10-8r-mqt" secondAttribute="centerX" id="vMY-iO-DQi"/>
-                            <constraint firstItem="KkB-L1-MnY" firstAttribute="centerX" secondItem="z10-8r-mqt" secondAttribute="centerX" id="vZY-ZM-JRm"/>
+                            <constraint firstItem="KkB-L1-MnY" firstAttribute="centerX" secondItem="z10-8r-mqt" secondAttribute="centerX" constant="-1" id="vZY-ZM-JRm"/>
                             <constraint firstItem="Td6-Ek-orj" firstAttribute="top" secondItem="KkB-L1-MnY" secondAttribute="bottom" constant="8" id="xI5-V1-pac"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="HOME ICON" selectedImage="HOME ICON" id="Oda-6T-aew"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="Profile Icon" selectedImage="Profile Icon" id="Oda-6T-aew"/>
                     <navigationItem key="navigationItem" id="mkS-XX-2Qb"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
@@ -3908,15 +3908,16 @@
         <image name="Empty Check" width="28" height="28"/>
         <image name="Flokk Logo" width="336" height="121"/>
         <image name="Flokk Logo 1 NoBackGrnd" width="2287" height="931"/>
-        <image name="Flokk of Birds-1" width="25" height="30"/>
         <image name="Flokk of Geese" width="936" height="1139"/>
-        <image name="Friends Icon" width="32" height="31"/>
+        <image name="Friends Icon" width="39" height="30"/>
         <image name="GROUPS ICON" width="25" height="25"/>
         <image name="HOME ICON" width="25" height="25"/>
         <image name="LogOutBttn" width="111" height="35"/>
         <image name="Navy Settings Icon" width="33" height="33"/>
         <image name="Next - 2" width="414" height="66"/>
         <image name="No Notifications" width="123" height="122"/>
+        <image name="Notification Icon" width="34" height="32"/>
+        <image name="Profile Icon" width="23" height="29"/>
         <image name="Rotate Photo " width="23" height="24"/>
         <image name="SIgn Up (Green)" width="175" height="51"/>
         <image name="Send - 2" width="414" height="66"/>
@@ -3936,6 +3937,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="70L-xp-JEW"/>
         <segue reference="tEb-ND-eC4"/>
-        <segue reference="60x-m7-f1E"/>
+        <segue reference="VLB-2b-YeH"/>
     </inferredMetricsTieBreakers>
 </document>

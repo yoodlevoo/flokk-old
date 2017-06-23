@@ -14,7 +14,8 @@ class GroupProfileViewController: UIViewController {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var navigationBar: UINavigationItem!
     
-    weak var group: Group! // This is just a copy of the actual group
+    var group: Group! // Is this just a copy of the actual group?
+    var groupID: String!
     var notification: Notification? // May not always exist, depending on where we segue from
     
     var oldContentOffset = CGPoint.zero // The previous frame's offset
@@ -23,20 +24,74 @@ class GroupProfileViewController: UIViewController {
     
     var invitedReceived = false // If the main user has been invited to this group, by default is false
     
+    fileprivate var containerView: GroupProfilePageViewController! // A reference to the container View
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.navigationBar.title = self.group.groupName
+        self.navigationBar.title = self.group.name
         
         // Create the range for when the tableView should start/stop moving
         self.headerConstraintRange = (CGFloat(self.headerView.frame.origin.y - self.headerView.frame.size.height)..<CGFloat(self.headerView.frame.origin.y))
         self.view.bringSubview(toFront: tableView) // Make sure the table view is always shown on top of the header view
         self.headerViewCriteria = self.headerView.frame.origin.y // Variable that uses the headerView's dimensions but doesn't directly affect it to achieve the desired effect
         
+        // If the group icon has already been loaded
+        if self.group.icon != nil {
+            let iconRef = storage.ref.child("groups").child(self.groupID).child("icon.png")
+            iconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                if error == nil { // If there wasn't an error
+                    
+                    let icon = UIImage(data: data!)
+                    
+                    self.group.icon = icon!
+                    
+                    // Set the group icon in the container now that it has loaded
+                    self.containerView.setGroupIcon(icon!)
+                } else { // If there was an error
+                    // Handle the errors
+                    print(error!)
+                }
+            })
+        }
+        
+        // Check if the creator has been loaded in yet for the second page view
+        if self.group.creator == nil {
+            // Find out what the creator handle is first
+            let groupRef = database.ref.child("groups").child(self.groupID).child("creator")
+            groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let creatorHandle = snapshot.value as? String {
+                    // Once we've loaded in the handle, load in the rest about the user
+                    
+                    
+                    
+                    // Load in the full name of the user
+                    let creatorRef = database.ref.child("users").child(creatorHandle).child("fullName")
+                    creatorRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let fullName = snapshot.value as? String {
+                            
+                            // Then, load in the profile photo of the user
+                            let profilePhotoRef = storage.ref.child("users").child(creatorHandle).child("profilePhoto.jpg")
+                            profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                if error == nil { // If there wasn't an error
+                                    let profilePhoto = UIImage(data: data!)
+                                    
+                                    
+                                } else {
+                                    // Handle the error
+                                    print(error!)
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
+        
         // Check what data has been loaded for this group that hasn't been loaded already
-        // Probably gonna be the members at the least, so do that now 
+        // Probably gonna be the members at the least, so do that now
         if self.group.members.count == 0 { // If the members of this gorup haven't been loaded yet
             for handle in self.group.memberHandles { // Iterate through all of the member handles and load each user - should probably ignore the main user
                 let userRef = database.ref.child("users").child(handle)
@@ -45,7 +100,7 @@ class GroupProfileViewController: UIViewController {
                         let fullName = values["fullName"] as! String
                         
                         // Load in the profile photo for this user
-                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto").child("\(handle).jpg")
+                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                         profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil { // If there wasn't an error
                                 let profilePhoto = UIImage(data: data!)

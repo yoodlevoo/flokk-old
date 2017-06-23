@@ -18,7 +18,7 @@ class FeedNavigationViewController: UINavigationController {
         super.viewDidLoad()
         
         
-        self.navigationItem.title = groupToPass.groupName
+        self.navigationItem.title = groupToPass.name
         let feedVC = self.viewControllers[0] as! FeedViewController
         feedVC.group = groupToPass
         //print("view did load feed nav")

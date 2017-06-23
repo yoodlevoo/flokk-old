@@ -59,7 +59,7 @@ class Notification {
                     self.description = formattedString
                     
                     // Download the profile Photo
-                    let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto").child("\(senderHandle).jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhoto.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
@@ -106,7 +106,7 @@ class Notification {
         
         // Bold the sender's name and the group name
         let formattedString = NSMutableAttributedString()
-        formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("invited you to join").bold(" \(group.groupName).", Notification.textSize)
+        formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("invited you to join").bold(" \(group.name).", Notification.textSize)
         
         self.description = formattedString
     }
@@ -122,7 +122,7 @@ class Notification {
         
         // Bold the sender's name
         let formattedString = NSMutableAttributedString()
-        formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("commented \" (comment here) \" in").bold(" \(group.groupName).", Notification.textSize)
+        formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("commented \" (comment here) \" in").bold(" \(group.name).", Notification.textSize)
         
         self.description = formattedString // Figure out how to shorten the comment it fits
     }
@@ -136,7 +136,7 @@ class Notification {
         Notification.textSize = 20
         
         let formattedString = NSMutableAttributedString()
-        formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("uploaded a new post to").bold(" \(group.groupName).", Notification.textSize)
+        formattedString.bold("\(sender.fullName) ", Notification.textSize).normal("uploaded a new post to").bold(" \(group.name).", Notification.textSize)
         
         self.description = formattedString
     }
