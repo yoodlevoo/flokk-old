@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 
 class SignInViewController: UIViewController {
-    @IBOutlet weak var usernameEntry: UITextField!
+    @IBOutlet weak var usernameEntry: UITextField! // This is actually the email, not the username/handle
     @IBOutlet weak var passwordEntry: UITextField!
     
     let transitionRight = SlideRightAnimator()

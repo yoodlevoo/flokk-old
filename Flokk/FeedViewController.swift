@@ -207,7 +207,7 @@ class FeedViewController: UIViewController {
     func beginListeners() {
         let groupRef = database.ref.child("groups").child(self.group.id).child("posts")
         self.listenerHandle = groupRef.queryOrdered(byChild: "timestamp").queryStarting(atValue: Double(NSDate.timeIntervalSinceReferenceDate)).observe(.childAdded, with: { (snapshot) in
-            if let values = snapshot.value as? NSDictionary {
+            if let values = snapshot.value as? NSDictionary { // If there has actually been a new post
                 let postID = snapshot.key
                 let posterHandle = values["poster"] as! String
                 let timestamp = Date(timeIntervalSinceReferenceDate: (values["timestamp"] as! Double))
@@ -218,8 +218,15 @@ class FeedViewController: UIViewController {
                         let postImage = UIImage(data: data!)
                         
                         let post = Post(posterHandle: posterHandle, image: postImage!, postID: postID, timestamp: timestamp)
-                    } else { // If there was an error
                         
+                        self.group.posts.append(post)
+                        
+                        DispatchQueue.main.async {
+                            self.loadedPosts = self.group.posts
+                            self.tableView.reloadData()
+                        }
+                    } else { // If there was an error
+                        print(error!)
                     }
                 })
             }

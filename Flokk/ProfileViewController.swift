@@ -31,6 +31,8 @@ class ProfileViewController: UIViewController {
     fileprivate var headerConstraintRange: Range<CGFloat>!
     fileprivate var headerViewCriteria = CGFloat(0) // Doesn't actually affect the header view, but used for the scroll view calculations
     
+    var refreshControl = UIRefreshControl()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -81,6 +83,53 @@ class ProfileViewController: UIViewController {
                     })
                 }
             })
+        }
+        
+        // One way or another, we're probably going to have to load the groups this user is in, so do that now
+        for groupID in self.user.groupIDs { // Iterate through all of the group IDs
+            let matches = self.user.groups.filter({ $0.id == groupID}) // Check if this group has already been loaded
+            if matches.count == 0 {
+                let groupRef = database.ref.child("groups").child(groupID)
+                groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let values = snapshot.value as? NSDictionary {
+                        let creatorHandle = values["creator"] as! String
+                        let name = values["name"] as! String
+                        let postsData = values["posts"] as? [String : [String : Any]] ?? [String : [String : Any]]()
+                        let creationDate = Date(timeIntervalSinceReferenceDate: values["creationDate"] as! Double)
+                        let memberHandles = values["members"] as! [String : Bool]
+                        
+                        // Create the group
+                        let group = Group(id: groupID, name: name)
+                        group.postsData = postsData
+                        group.creationDate = creationDate
+                        group.creatorHandle = creatorHandle
+                        group.memberHandles = Array(memberHandles.keys)
+                        
+                        DispatchQueue.main.async {
+                            self.user.groups.append(group)
+                            self.tableView.reloadData()
+                        }
+                        
+                        // Then continue to load the group's icon
+                        let groupIconRef = storage.ref.child("groups").child(groupID).child("icon.jpg")
+                        groupIconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                            if error == nil { // If there wasn't an error
+                                let groupIcon = UIImage(data: data!)
+                                
+                                group.icon = groupIcon
+                                
+                                DispatchQueue.main.async {
+                                    self.tableView.reloadData()
+                                }
+                            } else {
+                                
+                            }
+                        })
+                    }
+                })
+            } else { // If it has, don't do shit, maybe check if all of the necessary data is downloaded
+                
+            }
         }
         
         self.usernameLabel.text = "@\(self.userHandle!)"
@@ -292,6 +341,7 @@ class ProfileViewController: UIViewController {
                 let indexPath = self.tableView.indexPathForSelectedRow
                 
                 groupProfileView.group = user.groups[(indexPath?.row)!]
+                groupProfileView.groupID = user.groups[(indexPath?.row)!].id
             }
         }
     }
@@ -307,7 +357,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default") as! ProfileViewGroupTableViewCell
         
         // Load the according group from the user
-        let group = user.groups[indexPath.row]
+        let group = self.user.groups[indexPath.row]
         
         // Set the group Icon and make it cropped to a circle
         cell.groupIconView.image = group.icon
@@ -322,25 +372,27 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let delta =  scrollView.contentOffset.y - oldContentOffset.y
         
-        // We compress the header view
-        if delta > 0 && headerViewCriteria > headerConstraintRange.lowerBound && scrollView.contentOffset.y > 0 {
-            scrollView.contentOffset.y -= delta
-            self.headerViewCriteria -= delta
+        if self.user.groups.count > 4 {
+            // We compress the header view
+            if delta > 0 && headerViewCriteria > headerConstraintRange.lowerBound && scrollView.contentOffset.y > 0 {
+                scrollView.contentOffset.y -= delta
+                self.headerViewCriteria -= delta
+                
+                self.tableView.frame.origin.y -= delta
+                self.tableView.frame.size.height += delta
+            }
             
-            self.tableView.frame.origin.y -= delta
-            self.tableView.frame.size.height += delta
-        }
-        
-        // We expand the header view
-        if delta < 0 && headerViewCriteria < headerConstraintRange.upperBound && scrollView.contentOffset.y < 0{
-            scrollView.contentOffset.y -= delta
-            self.headerViewCriteria -= delta
+            // We expand the header view
+            if delta < 0 && headerViewCriteria < headerConstraintRange.upperBound && scrollView.contentOffset.y < 0{
+                scrollView.contentOffset.y -= delta
+                self.headerViewCriteria -= delta
+                
+                self.tableView.frame.origin.y -= delta
+                self.tableView.frame.size.height += delta
+            }
             
-            self.tableView.frame.origin.y -= delta
-            self.tableView.frame.size.height += delta
+            oldContentOffset = scrollView.contentOffset
         }
-        
-        oldContentOffset = scrollView.contentOffset
     }
 }
 
