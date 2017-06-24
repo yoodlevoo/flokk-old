@@ -89,6 +89,53 @@ class ProfileViewController: UIViewController {
             })
         }
         
+        // One way or another, we're probably going to have to load the groups this user is in, so do that now
+        for groupID in self.user.groupIDs { // Iterate through all of the group IDs
+            let matches = self.user.groups.filter({ $0.id == groupID}) // Check if this group has already been loaded
+            if matches.count == 0 {
+                let groupRef = database.ref.child("groups").child(groupID)
+                groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let values = snapshot.value as? NSDictionary {
+                        let creatorHandle = values["creator"] as! String
+                        let name = values["name"] as! String
+                        let postsData = values["posts"] as? [String : [String : Any]] ?? [String : [String : Any]]()
+                        let creationDate = Date(timeIntervalSinceReferenceDate: values["creationDate"] as! Double)
+                        let memberHandles = values["members"] as! [String : Bool]
+                        
+                        // Create the group
+                        let group = Group(id: groupID, name: name)
+                        group.postsData = postsData
+                        group.creationDate = creationDate
+                        group.creatorHandle = creatorHandle
+                        group.memberHandles = Array(memberHandles.keys)
+                        
+                        DispatchQueue.main.async {
+                            self.user.groups.append(group)
+                            self.tableView.reloadData()
+                        }
+                        
+                        // Then continue to load the group's icon
+                        let groupIconRef = storage.ref.child("groups").child(groupID).child("icon.jpg")
+                        groupIconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                            if error == nil { // If there wasn't an error
+                                let groupIcon = UIImage(data: data!)
+                                
+                                group.icon = groupIcon
+                                
+                                DispatchQueue.main.async {
+                                    self.tableView.reloadData()
+                                }
+                            } else {
+                                
+                            }
+                        })
+                    }
+                })
+            } else { // If it has, don't do shit, maybe check if all of the necessary data is downloaded
+                
+            }
+        }
+        
         self.usernameLabel.text = "@\(self.userHandle!)"
         
         let requests = mainUser.incomingFriendRequests

@@ -154,6 +154,7 @@ extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating
                     let handle = each.key as! String // Get the handle
                     let userData = values[handle] as! Dictionary<String, Any> // Get all the subset of data for this user
                     let fullName = userData["fullName"] as! String // Get the user's full name from the subset of data
+                    let groupIDs = userData["groups"] as? [String : Bool] ?? [String : Bool]() // Load in the group IDs that this user is in
                     
                     // Make sure we're not getting users that don't match the search
                     let range = fullName.startIndex..<(fullName.index(fullName.startIndex, offsetBy: searchCount!))
@@ -168,6 +169,7 @@ extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating
                                 
                                 // Create the user
                                 let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                user.groupIDs = Array(groupIDs.keys)
                                 
                                 // Add it to the list of users
                                 self.users.append(user)
