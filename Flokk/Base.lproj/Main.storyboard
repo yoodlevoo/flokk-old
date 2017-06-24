@@ -891,7 +891,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T7o-JI-AI3">
-                                <rect key="frame" x="0.0" y="252" width="375" height="302"/>
+                                <rect key="frame" x="0.0" y="254" width="375" height="300"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -970,17 +970,6 @@
                                     <segue destination="x15-8V-ONQ" kind="presentation" identifier="segueCreateGroup" id="ME7-O5-4bK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eq6-9f-UES">
-                                <rect key="frame" x="25" y="47" width="105" height="105"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="105" id="d3A-3J-wDp"/>
-                                    <constraint firstAttribute="width" constant="105" id="eqo-2r-qp7"/>
-                                </constraints>
-                                <state key="normal" image="Add Profile Picture New"/>
-                                <connections>
-                                    <action selector="addGroupPicture:" destination="mtH-ru-S40" eventType="touchUpInside" id="Lc9-a2-ZAe"/>
-                                </connections>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xcn-Ch-ccS">
                                 <rect key="frame" x="7" y="180" width="361" height="50"/>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1023,7 +1012,7 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcG-B4-Tfg">
-                                <rect key="frame" x="173" y="83" width="174" height="0.0"/>
+                                <rect key="frame" x="173" y="88" width="174" height="3"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Group Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GDP-98-MUH">
@@ -1040,6 +1029,17 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eq6-9f-UES">
+                                <rect key="frame" x="16" y="37" width="105" height="105"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="105" id="d3A-3J-wDp"/>
+                                    <constraint firstAttribute="width" constant="105" id="eqo-2r-qp7"/>
+                                </constraints>
+                                <state key="normal" image="Add Profile Picture New"/>
+                                <connections>
+                                    <action selector="addGroupPicture:" destination="mtH-ru-S40" eventType="touchUpInside" id="Lc9-a2-ZAe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1052,7 +1052,7 @@
                             <constraint firstAttribute="trailing" secondItem="JGX-KM-sQ1" secondAttribute="trailing" constant="14" id="E7H-XU-pTp"/>
                             <constraint firstItem="lOE-Xo-obp" firstAttribute="top" secondItem="FJv-g0-f9U" secondAttribute="bottom" constant="20" id="F2l-xO-zR7"/>
                             <constraint firstItem="xcn-Ch-ccS" firstAttribute="top" secondItem="eq6-9f-UES" secondAttribute="bottom" constant="28" id="HZK-xX-YhI"/>
-                            <constraint firstItem="EcG-B4-Tfg" firstAttribute="top" secondItem="GDP-98-MUH" secondAttribute="bottom" constant="-11" id="JD7-sN-G89"/>
+                            <constraint firstItem="EcG-B4-Tfg" firstAttribute="top" secondItem="GDP-98-MUH" secondAttribute="bottom" constant="-6" id="JD7-sN-G89"/>
                             <constraint firstItem="xcn-Ch-ccS" firstAttribute="leading" secondItem="FJv-g0-f9U" secondAttribute="leading" constant="-7" id="JRb-p7-xhm"/>
                             <constraint firstItem="xcn-Ch-ccS" firstAttribute="trailing" secondItem="T7o-JI-AI3" secondAttribute="trailing" constant="-7" id="Lhc-5b-Qwx"/>
                             <constraint firstItem="FJv-g0-f9U" firstAttribute="leading" secondItem="kFw-dW-rvi" secondAttribute="leading" constant="14" id="Qc2-fQ-gK6"/>
@@ -1060,8 +1060,8 @@
                             <constraint firstItem="GDP-98-MUH" firstAttribute="top" secondItem="xuv-yT-wBv" secondAttribute="bottom" constant="64" id="dkP-uA-xOI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="EcG-B4-Tfg" secondAttribute="trailing" constant="12" id="hAI-OO-J7h"/>
                             <constraint firstItem="GDP-98-MUH" firstAttribute="leading" secondItem="EcG-B4-Tfg" secondAttribute="leading" id="knV-Vf-DwT"/>
-                            <constraint firstItem="T7o-JI-AI3" firstAttribute="top" secondItem="xcn-Ch-ccS" secondAttribute="bottom" constant="22" id="lFL-iy-dFW"/>
-                            <constraint firstItem="xcn-Ch-ccS" firstAttribute="top" secondItem="EcG-B4-Tfg" secondAttribute="bottom" constant="97" id="smP-kM-2R8"/>
+                            <constraint firstItem="T7o-JI-AI3" firstAttribute="top" secondItem="xcn-Ch-ccS" secondAttribute="bottom" constant="24" id="lFL-iy-dFW"/>
+                            <constraint firstItem="xcn-Ch-ccS" firstAttribute="top" secondItem="EcG-B4-Tfg" secondAttribute="bottom" constant="89" id="smP-kM-2R8"/>
                             <constraint firstItem="eq6-9f-UES" firstAttribute="top" secondItem="xuv-yT-wBv" secondAttribute="bottom" constant="47" id="zd8-NW-fFs"/>
                         </constraints>
                     </view>
@@ -1075,7 +1075,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mu4-aW-skK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="hPw-uj-BLG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2070" y="-3752"/>
+            <point key="canvasLocation" x="2069.5999999999999" y="-3752.4737631184412"/>
         </scene>
         <!--Invite Friends-->
         <scene sceneID="cH4-s8-1dm">
@@ -3935,8 +3935,8 @@
         <image name="turquoiseGroupsArrow" width="13" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="70L-xp-JEW"/>
         <segue reference="tEb-ND-eC4"/>
-        <segue reference="VLB-2b-YeH"/>
+        <segue reference="ME7-O5-4bK"/>
+        <segue reference="60x-m7-f1E"/>
     </inferredMetricsTieBreakers>
 </document>
