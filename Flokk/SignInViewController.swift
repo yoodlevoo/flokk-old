@@ -10,11 +10,18 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
+let ALERT_DISAPPEAR_DELAY = 4.0
+
 class SignInViewController: UIViewController {
     @IBOutlet weak var usernameEntry: UITextField! // This is actually the email, not the username/handle
     @IBOutlet weak var passwordEntry: UITextField!
     
     let transitionRight = SlideRightAnimator()
+    
+    var activityIndicator = UIActivityIndicatorView()
+    var strLabel = UILabel()
+    
+    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +62,6 @@ class SignInViewController: UIViewController {
         }
     }
     
-    @IBAction func unwindToSignIn(segue: UIStoryboardSegue) {
-        
-    }
-    
     func signIn() {
         var email = usernameEntry.text // Get the entered email
         var password = passwordEntry.text // Get the entered password
@@ -78,10 +81,15 @@ class SignInViewController: UIViewController {
             //password = "noble123"
         }
         
+        self.showActivityIndicator("Attempting to sign in")
+        
         // Authenticate and sign the user in - this can be simplified a lot by adding defaultsd
         FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil { // If there wasn't an error
                 if let user = user { // Basically just removes the "optional" from user (so there's no need for doing "(user?.uid)!")
+                    self.removeActivityIndicator()
+                    self.showActivityIndicator("Success! Loading data...")
+                    
                     database.ref.child("uids").child(user.uid).observeSingleEvent(of: .value, with: { (snapshot) in // Check the UID tree and get the user's handle
                         let handle = snapshot.value as! String // Get this user's handle from their UID
                         
@@ -140,7 +148,6 @@ class SignInViewController: UIViewController {
                                     
                                     mainUser.email = email
                                     
-                                
                                     // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
                                     self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
                                 })
@@ -151,15 +158,52 @@ class SignInViewController: UIViewController {
             } else { // If there was an error, handle it
                 print(error!)
                 
+                self.removeActivityIndicator() // Remove the activity indicator alert when there was an error
+                
                 if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                     case .errorCodeInvalidEmail: // If the user entered an invalid email
+                        self.showAlert("Invalid email!")
+                        
+                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
+                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
+                        
+                        }, completion: { (completed) in
+                            UIView.animate(withDuration: 2.0, animations: {
+                                self.effectView.alpha = 0
+                            }, completion: { (completed) in
+                                self.removeActivityIndicator()
+                            })
+                        })
                         
                         break
                     case .errorCodeWrongPassword: // If the user entered an invalid password
+                        self.showAlert("Incorrect password!")
+                        
+                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
+                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
+                        }, completion: { (completed) in
+                            UIView.animate(withDuration: 2.0, animations: {
+                                self.effectView.alpha = 0
+                            }, completion: { (completed) in
+                                self.removeActivityIndicator()
+                            })
+                        })
+                        
                         
                         break
                     case .errorCodeNetworkError: // If there was a network error
+                        self.showAlert("Network error!")
+                        
+                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
+                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
+                        }, completion: { (completed) in
+                            UIView.animate(withDuration: 2.0, animations: {
+                                self.effectView.alpha = 0
+                            }, completion: { (completed) in
+                                self.removeActivityIndicator()
+                            })
+                        })
                         
                         break
                     default: break
@@ -167,6 +211,57 @@ class SignInViewController: UIViewController {
                 }
             }
         })
+    }
+    
+    // Show an alert with an activity indicator
+    func showActivityIndicator(_ title: String) {
+        self.strLabel.removeFromSuperview()
+        self.activityIndicator.removeFromSuperview()
+        self.effectView.removeFromSuperview()
+        self.effectView.alpha = 1 // Just in case it was transparent
+        
+        self.strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 160, height: 46))
+        self.strLabel.text = title
+        self.strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
+        self.strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
+        
+        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2 - 15, y: self.view.frame.height / 3, width: 30 + 46 + (strLabel.attributedText?.width(withConstrainedHeight: 46))!, height: 46)
+        self.effectView.layer.cornerRadius = 15
+        self.effectView.layer.masksToBounds = true
+        
+        self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        self.activityIndicator.frame = CGRect(x: 0, y: 0, width: 46, height: 46)
+        self.activityIndicator.startAnimating()
+        
+        self.effectView.addSubview(activityIndicator)
+        self.effectView.addSubview(strLabel)
+        self.view.addSubview(effectView)
+    }
+    
+    // Show an alert without an activity indicator
+    func showAlert(_ title: String) {
+        self.strLabel.removeFromSuperview()
+        self.effectView.removeFromSuperview()
+        self.effectView.alpha = 1
+        
+        self.strLabel = UILabel(frame: CGRect(x: 5, y: 0, width: 160, height: 46))
+        self.strLabel.text = title
+        self.strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
+        self.strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
+        
+        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2 - 15, y: self.view.frame.height / 3, width: 30 + (strLabel.attributedText?.width(withConstrainedHeight: 46))!, height: 46)
+        self.effectView.layer.cornerRadius = 15
+        self.effectView.layer.masksToBounds = true
+        
+        self.effectView.addSubview(strLabel)
+        self.view.addSubview(effectView)
+    }
+    
+    // Remove either type of alert
+    func removeActivityIndicator() {
+        self.strLabel.removeFromSuperview()
+        self.activityIndicator.removeFromSuperview()
+        self.effectView.removeFromSuperview()
     }
     
     // Show a shake animation when the text field is filled out incorrectly
@@ -198,6 +293,10 @@ class SignInViewController: UIViewController {
         } else if let openView = segue.destination as? OpenViewController {
             //segue.destination.transitioningDelegate = transitionRight
         }
+    }
+    
+    @IBAction func unwindToSignIn(segue: UIStoryboardSegue) {
+        
     }
 }
 

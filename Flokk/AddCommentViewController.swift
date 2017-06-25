@@ -40,7 +40,6 @@ class AddCommentViewController: UIViewController {
         // Load in the comments, ordered by most recent?
         let commentRef = database.ref.child("comments").child(self.group.id).child(post.id)
         commentRef.observeSingleEvent(of: .value, with: { (snapshot) in
-            //print(snapshot.value)
             if let children = snapshot.value as? [String : Any] {
                 for (key, data) in children { // Iterate through all of the comments
                     if let values = data as? NSDictionary {
@@ -50,7 +49,11 @@ class AddCommentViewController: UIViewController {
                         
                         let comment = Comment(userHandle: commenterHandle, content: content, timestamp: timestamp)
                         
+                        // Add the comments
                         self.loadedComments.append(comment)
+                        
+                        // Sort the comments, ascending, so the oldest ones appear at the top
+                        self.loadedComments.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate > $1.timestamp.timeIntervalSinceReferenceDate })
                         
                         // Load in the profile photo for the commenter
                         if !self.userProfilePhotos.keys.contains(commenterHandle) { // If we haven't loaded this user's profile photo already
@@ -69,7 +72,7 @@ class AddCommentViewController: UIViewController {
                                     print(error!)
                                 }
                             })
-                        } else { // If the commenters profile photo has already been loaded
+                        } else { // If the commenters profile photod has already been loaded
                             // Then we can immediately refresh the able view
                             DispatchQueue.main.async {
                                 self.tableView.reloadData()
