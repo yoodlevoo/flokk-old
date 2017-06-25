@@ -97,61 +97,32 @@ class SignInViewController: UIViewController {
                         database.ref.child("users").child(handle).observeSingleEvent(of: .value, with: { (snapshot) in
                             let userValues = snapshot.value as! NSDictionary
                             let fullName = userValues["fullName"] as! String
+                            let groupsDict = userValues["groups"] as? [String : Bool] ?? [String : Bool]()
                             
-                            if let groupsDict = userValues["groups"] as? [String: Bool] {// Bool is basically just a placeholder
-                                let groupHandles = Array(groupsDict.keys)
+                            let groupHandles = Array(groupsDict.keys)
+                            
+                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                            profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                if error == nil { // If there wasn't an error
+                                    let profilePhoto = UIImage(data: data!) // Load the image
+                                    
+                                    // Load in the user
+                                    mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupIDs: groupHandles)
+                                } else { // If there was an error
+                                    // Load in the user
+                                    mainUser = User(handle: handle, fullName: fullName, groupIDs: groupHandles)
+                                }
                                 
-                                print(fullName)
+                                // Attemp to load in the friends
+                                if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
+                                    mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
+                                }
                                 
-                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
-                                profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
-                                    if error == nil { // If there wasn't an error
-                                        let profilePhoto = UIImage(data: data!) // Load the image
-                                        
-                                        // Load in the user
-                                        mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupIDs: groupHandles)
-                                    } else { // If there was an error
-                                        // Load in the user
-                                        mainUser = User(handle: handle, fullName: fullName, groupIDs: groupHandles)
-                                    }
-                                    
-                                    // Attemp to load in the friends
-                                    if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
-                                        mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
-                                    }
-                                    
-                                    mainUser.email = email
-                                    
-                                    // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
-                                    self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
-                                })
+                                mainUser.email = email
                                 
-                            } else { // Then the user is not in any groups
-                                mainUser = User(handle: handle, fullName: fullName)
-                                
-                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
-                                profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
-                                    if error == nil { // If there wasn't an error
-                                        let profilePhoto = UIImage(data: data!)
-                                        
-                                        // Load in the user
-                                        mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
-                                    } else { // If there was an error
-                                        // Load in the user with the minimum criteria
-                                        mainUser = User(handle: handle, fullName: fullName)
-                                    }
-                                    
-                                    // Attemp to load in the friends
-                                    if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
-                                        mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
-                                    }
-                                    
-                                    mainUser.email = email
-                                    
-                                    // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
-                                    self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
-                                })
-                            }
+                                // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
+                                self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
+                            })
                         })
                     })
                 }
