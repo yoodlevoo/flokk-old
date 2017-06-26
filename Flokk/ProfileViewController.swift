@@ -356,7 +356,11 @@ class ProfileViewController: UIViewController {
 // Groups Table View Functions
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return user.groups.count
+        if let user = user {
+            return user.groups.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

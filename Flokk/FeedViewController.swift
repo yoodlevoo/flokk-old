@@ -99,13 +99,13 @@ class FeedViewController: UIViewController {
     
     // Load the posts from the database
     func loadPosts() {
-        if self.group.posts.count < self.postCount { // If we need to load more posts
-            self.refreshControl.beginRefreshing()
+        if self.group.posts.count < self.postCount { // Check if we need to load more posts
+            self.refreshControl.beginRefreshing() // Start the refresh control
             
             // I have posts data stored locally, why tf am i doing this
             let groupPostsRef = database.ref.child("groups").child(self.group.id).child("posts")
             groupPostsRef.queryOrdered(byChild: "timestamp").observeSingleEvent(of: .value, with: { (snapshot) in
-                if let values = snapshot.value as? [String : [String : Any]] {
+                if let values = snapshot.value as? [String : [String : Any]] { // Load the posts as a dictionary of dictionaries
                     if values.count == 0 {
                         self.refreshControl.endRefreshing()
                     }

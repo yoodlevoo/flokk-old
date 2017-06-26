@@ -58,6 +58,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
             userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 if let values = snapshot.value as? NSDictionary { // If the data loaded correctly
                     let fullName = values["fullName"] as! String
+                    let groupsDict = values["groups"] as? [String : Bool] ?? [String : Bool]()
                     
                     // Load this user's profile Photo
                     let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
@@ -67,6 +68,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                             
                             // Load the user
                             let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                            user.groupIDs = Array(groupsDict.keys)
                             
                             self.members.append(user) // Add it to members array
                             
@@ -105,6 +107,8 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         cell.fullNameLabel.text = user.fullName
         cell.handleLabel.text = user.handle
         
+        cell.tag = indexPath.row // Set the cell's tag so we know which tag was selected - only used in tableView(..., didSelectAt: ...)
+        
         return cell
     }
     
@@ -128,6 +132,13 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                 // Load all of the user's friends
                 // Should probably do this in the viewDidLoad of inviteFriends
                 
+            }
+        } else if segue.identifier == "segueFromGroupSettingsToProfile" {
+            if let profileView = segue.destination as? ProfileViewController {
+                let user = self.members[(self.tableView.indexPathForSelectedRow?.row)!]
+                
+                profileView.user = user
+                profileView.userHandle = user.handle
             }
         }
     }

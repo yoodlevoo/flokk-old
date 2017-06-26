@@ -196,6 +196,8 @@ class SignInViewController: UIViewController {
         self.strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
         self.strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
         
+        self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
+        
         self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2 - 15, y: self.view.frame.height / 3, width: 30 + 46 + (strLabel.attributedText?.width(withConstrainedHeight: 46))!, height: 46)
         self.effectView.layer.cornerRadius = 15
         self.effectView.layer.masksToBounds = true
@@ -211,6 +213,7 @@ class SignInViewController: UIViewController {
     
     // Show an alert without an activity indicator
     func showAlert(_ title: String) {
+        // Basically the same function as above, without the activity indicator portion
         self.strLabel.removeFromSuperview()
         self.effectView.removeFromSuperview()
         self.effectView.alpha = 1
@@ -219,6 +222,8 @@ class SignInViewController: UIViewController {
         self.strLabel.text = title
         self.strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
         self.strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
+        
+        self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
         
         self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2 - 15, y: self.view.frame.height / 3, width: 30 + (strLabel.attributedText?.width(withConstrainedHeight: 46))!, height: 46)
         self.effectView.layer.cornerRadius = 15
