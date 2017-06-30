@@ -242,19 +242,19 @@ class SignInViewController: UIViewController {
     
     // Show a shake animation when the text field is filled out incorrectly
     func animateTextField(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.05, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
             UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
         
-        UIView.animate(withDuration: 0.05, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIView.animate(withDuration: 0.1, delay: 0.075, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
             UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
         
-        UIView.animate(withDuration: 0.05, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIView.animate(withDuration: 0.1, delay: 0.15, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
             UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
         
-        UIView.animate(withDuration: 0.05, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIView.animate(withDuration: 0.1, delay: 0.225, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
             UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
         
-        UIView.animate(withDuration: 0.05, delay: 0.4, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIView.animate(withDuration: 0.1, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
             UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 20}, completion: nil)
     }
     
