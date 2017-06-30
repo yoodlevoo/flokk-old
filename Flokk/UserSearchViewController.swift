@@ -25,6 +25,8 @@ class UserSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround()
+        
         //self.searchBar.delegate = self
         //self.searchBar.isHidden = true
         
@@ -44,7 +46,6 @@ class UserSearchViewController: UIViewController {
         
         self.refreshControl.addTarget(self, action: #selector(UserSearchViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
         self.refreshControl.tintColor = TEAL_COLOR
-        
         
         //self.tableView.addSubview(self.refreshControl)
         //self.tableView.bringSubview(toFront: self.refreshControl)
@@ -196,5 +197,10 @@ extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating
     // Search on this as well?
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         
+    }
+    
+    override func dismissKeyboard() {
+        self.searchController.dismissKeyboard()
+        self.searchController.resignFirstResponder()
     }
 }

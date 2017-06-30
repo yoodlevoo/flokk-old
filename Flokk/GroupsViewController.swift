@@ -50,44 +50,45 @@ class GroupsViewController: UIViewController {
                     let groupRef = database.ref.child("groups").child(groupID)
                     
                     groupRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                        let values = snapshot.value as! NSDictionary
-                        
-                        // Load in all of the data for this group
-                        let groupName = values["name"] as! String // Load in the group, will never be empty so no need for a default
-                        let creatorHandle = values["creator"] as! String // No need to add a default, will never be empty
-                        let memberHandles = values["members"] as! [String: Bool] // Again, no need to add a default, will never be empty
-                        let postsData = values["posts"] as? [String: [String: Any?]] ?? [String: [String: String]]() // In case there are no posts in this group
-                        
-                        // Download the icon for this group
-                        let iconRef = storage.ref.child("groups").child(groupID).child("icon.jpg")
-                        iconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { data, error in
-                            if error == nil { // If there wasn't an error
-                                // Then the data is returned
-                                let groupIcon = UIImage(data: data!)
-                                
-                                // And we can finish loading the group
-                                let group = Group(id: groupID, name: groupName, icon: groupIcon!, memberHandles: Array(memberHandles.keys), postsData: postsData, creatorHandle: creatorHandle)
-                                
-                                // Attemp to load in the user handles that have been invited to this group already
-                                if let invitedUsers = values["invitedUsers"] as? [String : Bool] { // Also checks if there are any invited users or not
-                                    group.invitedUsers = Array(invitedUsers.keys)
-                                } else { // Then there are probably no invites that are still pending for this group
-                                    group.invitedUsers = [String]()
+                        if let values = snapshot.value as? NSDictionary {
+                            // Load in all of the data for this group
+                            let groupName = values["name"] as! String // Load in the group, will never be empty so no need for a default
+                            let creatorHandle = values["creator"] as! String // No need to add a default, will never be empty
+                            let memberHandles = values["members"] as! [String: Bool] // Again, no need to add a default, will never be empty
+                            let postsData = values["posts"] as? [String: [String: Any?]] ?? [String: [String: String]]() // In case there are no posts in this group
+                            
+                            // Download the icon for this group
+                            let iconRef = storage.ref.child("groups").child(groupID).child("icon.jpg")
+                            iconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { data, error in
+                                if error == nil { // If there wasn't an error
+                                    // Then the data is returned
+                                    let groupIcon = UIImage(data: data!)
+                                    
+                                    // And we can finish loading the group
+                                    let group = Group(id: groupID, name: groupName, icon: groupIcon!, memberHandles: Array(memberHandles.keys), postsData: postsData, creatorHandle: creatorHandle)
+                                    
+                                    // Attemp to load in the user handles that have been invited to this group already
+                                    if let invitedUsers = values["invitedUsers"] as? [String : Bool] { // Also checks if there are any invited users or not
+                                        group.invitedUsers = Array(invitedUsers.keys)
+                                    } else { // Then there are probably no invites that are still pending for this group
+                                        group.invitedUsers = [String]()
+                                    }
+                                    
+                                    groups.append(group) // Add this newly loaded group into the global groups variable
+                                    
+                                    self.groupDict[groupID] = groupName
+                                    
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData() // Reload data every time a group is loaded
+                                        self.refreshControl.endRefreshing()
+                                    }
+                                } else { // If there was an error
+                                    print(error!)
+                                    //continue // Skip this
                                 }
-                                
-                                groups.append(group) // Add this newly loaded group into the global groups variable
-                                
-                                self.groupDict[groupID] = groupName
-                                
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData() // Reload data every time a group is loaded
-                                    self.refreshControl.endRefreshing()
-                                }
-                            } else { // If there was an error
-                                print(error!)
-                                //continue // Skip this
-                            }
-                        })
+                            })
+                        }
+                        
                     })
                 }
             }
@@ -238,7 +239,7 @@ extension GroupsViewController {
                                         // Create the user
                                         let user = User(handle: senderHandle, fullName: fullName, profilePhoto: profilePhoto!)
                                         
-                                        // If the notification involves a group, load the group
+                                        // If the notification involves a group, load it as well
                                         if type == .GROUP_INVITE || type == .GROUP_JOINED || type == .NEW_POST || type == .NEW_COMMENT {
                                             let groupID = notificationValues["groupID"] as! String
                                             
@@ -277,7 +278,7 @@ extension GroupsViewController {
                                             mainUser.notifications.append(notification)
                                         }
                                     } else { // If there was an error
-                                        // Handle it more in depth
+                                        // TODO: Handle it more in depth
                                         print(error!)
                                     }
                                 })
@@ -313,7 +314,8 @@ extension GroupsViewController {
                                             groupProfileView.group = group
                                             groupProfileView.groupID = groupID
                                             
-                                            self.present(groupProfileView, animated: true, completion: nil) // Segue to the group profile
+                                            self.navigationController?.pushViewController(groupProfileView, animated: true)
+                                            //self.present(groupProfileView, animated: true, completion: nil) // Segue to the group profile
                                         })
                                     })
                                     
@@ -332,7 +334,8 @@ extension GroupsViewController {
                                 
                                 profileView.userHandle = senderHandle
                                 
-                                self.present(profileView, animated: true, completion: nil)
+                                self.navigationController?.pushViewController(profileView, animated: true)
+                                //self.present(profileView, animated: true, completion: nil)
                             })
                             
                             banner.dismissesOnSwipe = true
@@ -349,7 +352,8 @@ extension GroupsViewController {
                                 
                                 profileView.userHandle = senderHandle
                                 
-                                self.present(profileView, animated: true, completion: nil)
+                                self.navigationController?.pushViewController(profileView, animated: true)
+                                //self.present(profileView, animated: true, completion: nil)
                             })
                             
                             banner.dismissesOnSwipe = true

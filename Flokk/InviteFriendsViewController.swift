@@ -25,6 +25,9 @@ class InviteFriendsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.hideKeyboardWhenTappedAround() // Hides the search bar when tapped around
+        self.definesPresentationContext = true // Set this to prevent the search bar from not disapppearing
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
@@ -254,6 +257,12 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
             self.tableView.reloadData()
             //self.searchBar.setShowsCancelButton(false, animated: true)
         }
+    }
+    
+    // Overrides the original function from hideKeyboardWhenTappedAround
+    override func dismissKeyboard() {
+        self.searchController.dismissKeyboard()
+        self.searchController.resignFirstResponder()
     }
 }
 
