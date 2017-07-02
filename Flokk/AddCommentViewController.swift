@@ -136,6 +136,10 @@ extension AddCommentViewController: UITextFieldDelegate {
         commentRef.child("content").setValue(textField.text!) // The actual content of the comment
         commentRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         
+        // Added the comment to the view locally
+        self.loadedComments.append(Comment(userHandle: mainUser.handle, content: textField.text!, timestamp: NSDate(timeIntervalSinceReferenceDate: NSDate.timeIntervalSinceReferenceDate)))
+        self.tableView.reloadData()
+        
         return true
     }
     

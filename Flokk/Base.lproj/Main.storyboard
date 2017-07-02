@@ -434,10 +434,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rpx-oT-0u5">
-                                <rect key="frame" x="107.5" y="50" width="160" height="116"/>
+                                <rect key="frame" x="129" y="48" width="116" height="116"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="116" id="Grv-tr-0d0"/>
-                                    <constraint firstAttribute="width" secondItem="Rpx-oT-0u5" secondAttribute="height" multiplier="40:29" id="LZ2-3G-pPS"/>
+                                    <constraint firstAttribute="width" secondItem="Rpx-oT-0u5" secondAttribute="height" multiplier="40:29" constant="-44" id="LZ2-3G-pPS"/>
                                 </constraints>
                                 <state key="normal" image="Add Profile Picture New"/>
                                 <connections>
@@ -451,10 +451,10 @@
                             <constraint firstItem="bFs-i9-MLa" firstAttribute="leading" secondItem="cRr-24-zuS" secondAttribute="leading" id="4cf-Kc-YWu"/>
                             <constraint firstItem="MJj-rn-rgI" firstAttribute="centerX" secondItem="Yg6-2p-AqR" secondAttribute="centerX" id="54p-xx-pQI"/>
                             <constraint firstItem="lw1-Zo-Fpf" firstAttribute="top" secondItem="bFs-i9-MLa" secondAttribute="bottom" constant="21" id="7p6-VS-AS5"/>
-                            <constraint firstItem="BZd-Gr-KVj" firstAttribute="top" secondItem="Rpx-oT-0u5" secondAttribute="bottom" constant="45" id="8pn-ow-tCb"/>
+                            <constraint firstItem="BZd-Gr-KVj" firstAttribute="top" secondItem="Rpx-oT-0u5" secondAttribute="bottom" constant="47" id="8pn-ow-tCb"/>
                             <constraint firstItem="EZp-l4-dRV" firstAttribute="leading" secondItem="7X2-ge-Hv6" secondAttribute="leading" id="9lO-LT-V7y"/>
                             <constraint firstItem="2EI-B4-TZP" firstAttribute="leading" secondItem="BZd-Gr-KVj" secondAttribute="leading" id="9ok-Vl-uVb"/>
-                            <constraint firstItem="Rpx-oT-0u5" firstAttribute="top" secondItem="WKg-f7-V3t" secondAttribute="bottom" constant="30" id="BXv-lw-dml"/>
+                            <constraint firstItem="Rpx-oT-0u5" firstAttribute="top" secondItem="WKg-f7-V3t" secondAttribute="bottom" constant="28" id="BXv-lw-dml"/>
                             <constraint firstItem="6vR-uX-ahz" firstAttribute="centerX" secondItem="Yg6-2p-AqR" secondAttribute="centerX" id="CY2-YA-tlL"/>
                             <constraint firstItem="cRr-24-zuS" firstAttribute="top" secondItem="7X2-ge-Hv6" secondAttribute="bottom" constant="47" id="GV7-Sw-pr0"/>
                             <constraint firstItem="cRr-24-zuS" firstAttribute="width" secondItem="7X2-ge-Hv6" secondAttribute="width" id="KdN-fb-gQ0"/>
@@ -463,7 +463,7 @@
                             <constraint firstItem="2EI-B4-TZP" firstAttribute="top" secondItem="BZd-Gr-KVj" secondAttribute="bottom" constant="8" id="OcW-lF-MiY"/>
                             <constraint firstItem="7X2-ge-Hv6" firstAttribute="centerX" secondItem="Yg6-2p-AqR" secondAttribute="centerX" id="PN8-Bl-l2x"/>
                             <constraint firstItem="MJj-rn-rgI" firstAttribute="top" secondItem="BZd-Gr-KVj" secondAttribute="bottom" constant="40" id="bMU-FK-EcM"/>
-                            <constraint firstItem="Rpx-oT-0u5" firstAttribute="centerX" secondItem="Yg6-2p-AqR" secondAttribute="centerX" id="bVr-Np-Zje"/>
+                            <constraint firstItem="Rpx-oT-0u5" firstAttribute="centerX" secondItem="Yg6-2p-AqR" secondAttribute="centerX" constant="-0.5" id="bVr-Np-Zje"/>
                             <constraint firstItem="Mbd-Sw-cF2" firstAttribute="trailing" secondItem="MJj-rn-rgI" secondAttribute="trailing" id="eTT-CC-rpw"/>
                             <constraint firstItem="2EI-B4-TZP" firstAttribute="trailing" secondItem="BZd-Gr-KVj" secondAttribute="trailing" id="g1M-rH-VmI"/>
                             <constraint firstItem="BZd-Gr-KVj" firstAttribute="centerX" secondItem="Yg6-2p-AqR" secondAttribute="centerX" id="kF1-9D-C3f"/>

@@ -16,8 +16,6 @@ class ProfileSettingsViewController: UIViewController {
     @IBOutlet weak var currentPasswordField: UITextField!
     @IBOutlet weak var newPasswordField: UITextField!
     
-    //var mainUser: User!
-    
     private let imagePicker = UIImagePickerController()
     
     let transitionRight = SlideRightAnimator()
@@ -37,7 +35,7 @@ class ProfileSettingsViewController: UIViewController {
         self.emailField.text = mainUser.email
         
         // Set the profile photo and make it crop to a circle
-        self.profilePictureButton.imageView?.image = mainUser.profilePhoto
+        self.profilePictureButton.setImage(mainUser.profilePhoto, for: .normal)
         self.profilePictureButton.layer.cornerRadius = self.profilePictureButton.frame.size.width / 2
         self.profilePictureButton.clipsToBounds = true
     }
@@ -57,7 +55,32 @@ class ProfileSettingsViewController: UIViewController {
     }
     
     @IBAction func saveBttn(_ sender: AnyObject) {
+        // Upload the changed data to the database
+        let userRef = database.ref.child("users").child(mainUser.handle)
         
+        // First, compare all of the data to eachother and see if anything has changed
+        if self.fullNameField.text != mainUser.fullName {
+            // Upload the changed full name
+            userRef.child("fullName").setValue(self.fullNameField.text)
+            
+            mainUser.fullName = self.fullNameField.text!
+        }
+        
+        // Check if the profile photo changed
+        if !(self.profilePictureButton.imageView?.image?.isEqual(mainUser.profilePhoto))! { // If the images are not equal, then the user uploaded a different profile photo
+            
+            // Upload the changed profile photo
+            let profilePhotoRef = storage.ref.child("users").child(mainUser.handle).child("icon.jpg")
+            profilePhotoRef.put((self.profilePictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) {(metadata, error) in
+                if error != nil {
+                    print(error!)
+                }
+            }
+            
+            mainUser.profilePhoto = (self.profilePictureButton.imageView?.image!)!
+        }
+        
+        // Check for changes in password i guess
     }
     
     // MARK: - Navigation
