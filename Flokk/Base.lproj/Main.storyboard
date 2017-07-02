@@ -614,6 +614,8 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="noGroupsLabel" destination="Ltf-qf-2gL" id="HsC-IR-lSG"/>
+                        <outlet property="noGroupsView" destination="FuG-YJ-23u" id="Egd-K2-WIb"/>
                         <outlet property="tableView" destination="g8A-sd-EZu" id="ryF-Bu-PyR"/>
                     </connections>
                 </viewController>
