@@ -40,7 +40,7 @@ class GroupsViewController: UIViewController {
         
         self.tableView.refreshControl = self.refreshControl
         
-        if mainUser.groupIDs.count == 0 { // If the user has no groups. .groupIDs should always be loaded in
+        if mainUser.groupIDs.count == 0 { // If the user has no groups. mainUser.groupIDs should always be loaded in
             self.noGroupsView.isHidden = false
             self.noGroupsLabel.isHidden = false
         } else {
