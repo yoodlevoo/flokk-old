@@ -66,19 +66,21 @@ class SignInViewController: UIViewController {
         var email = usernameEntry.text // Get the entered email
         var password = passwordEntry.text // Get the entered password
         
-        if email == "" {
-            
-            //email = "gannonprudhomme@gmail.com"
-            //password = "gannon123"
-
-            //email = "cheeseman123432@yahoo.com"
-            //password = "alex123"
-            
-            //email = "latnt1@gmail.com"
-            //password = "lucas123"
-            
-            //email = "n1ghtk1ng@live.com"
-            //password = "noble123"
+        if email == "gannon" {
+            email = "gannonprudhomme@gmail.com"
+            password = "gannon123"
+        } else if email == "jared" {
+            email = "jaredheyen123@gmail.com"
+            password = "jared123"
+        } else if email == "madi" {
+            email = "gannon@flokk.info"
+            password = "madi123"
+        } else if email == "alex" {
+            email = "cheeseman123432@yahoo.com"
+            password = "alex123"
+        } else if email == "noble" {
+            email = "n1ghtk1ng@live.com"
+            password = "noble123"
         }
         
         self.showActivityIndicator("Attempting to sign in")

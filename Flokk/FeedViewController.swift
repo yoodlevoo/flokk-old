@@ -66,6 +66,11 @@ class FeedViewController: UIViewController {
         if self.loadedPosts.count > 0 { // If there are already posts loaded, don't refresh anymore
             self.refreshControl.endRefreshing()
         }
+        
+        let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(FeedViewController.handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 1.0 // 1 second press
+        longPressGesture.delegate = self
+        self.tableView.addGestureRecognizer(longPressGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -285,59 +290,45 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return loadedPosts.count
     }
-    
-    // Once the post is pressed, go to the comments
-    // In the future this may change to a swipe on the post instead of a tap
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /*
-        let index = loadedPosts.count - 1 - indexPath.row
-        
-        let post = loadedPosts[index] // Get the specific post referred to by the pressed cell
-        
-        // Then transition to the comment view through the comment's navigation controller
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let commentNav:AddCommentNavigationViewController = storyboard.instantiateViewController(withIdentifier: "AddCommentNavigationController") as! AddCommentNavigationViewController
-        
-        commentNav.postToPass = post
-        commentNav.passPost()
-        
-        self.present(commentNav, animated: true, completion: nil)
- 
-        */
-    }
 }
 
-// Image Picker Functions
-/*
-extension FeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        //let selectedImage: UIImage!
-        
-        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            let confirmUpload = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConfirmUploadViewController") as! ConfirmUploadViewController
-            
-            confirmUpload.image = selectedImage
-            
-            dismiss(animated: true, completion: nil)
-            present(confirmUpload, animated: true, completion: nil)
-            //self.parent?.parent?.present(confirmUpload, animated:true, completion: nil)
-            //UIApplication.shared.keyWindow?.rootViewController?.present(confirmUpload, animated: true, completion: nil)
-            
-            if confirmUpload.imageView != nil {
-                confirmUpload.imageView.image = selectedImage
+// Delegates for holding posts to save them
+extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate {
+    // Check for a cell being held
+    func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
+            let touchPoint = longPressGestureRecognizer.location(in: self.view)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                let row = indexPath.row
+                
+                showActionSheet()
             }
-        } else {
-            print("Something went wrong")
-            
-            dismiss(animated: false, completion: nil)
         }
     }
     
-    // If the image picker was cancelled
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+    func showActionSheet() {
+        //Create the AlertController and add Its action like button in Actionsheet
+        let actionSheetControllerIOS8: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            
+        }
+        actionSheetControllerIOS8.addAction(cancelActionButton)
+        
+        let saveActionButton = UIAlertAction(title: "Save to Camera Roll", style: .default)
+        { _ in
+
+        }
+        actionSheetControllerIOS8.addAction(saveActionButton)
+        
+        let deleteActionButton = UIAlertAction(title: "Save to Flokk", style: .default)
+        { _ in
+
+        }
+        actionSheetControllerIOS8.addAction(deleteActionButton)
+        self.present(actionSheetControllerIOS8, animated: true, completion: nil)
     }
-} */
+}
 
 class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
     @IBOutlet weak var userImage: UIImageView!
