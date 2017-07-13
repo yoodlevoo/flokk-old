@@ -48,7 +48,6 @@
 		15C826D11E8587EF003EE6E4 /* ImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826A11E8587EF003EE6E4 /* ImageScrollView.swift */; };
 		15C826D21E8587EF003EE6E4 /* ImageTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826A21E8587EF003EE6E4 /* ImageTransition.swift */; };
 		15C826D81E8587EF003EE6E4 /* LoadingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826A81E8587EF003EE6E4 /* LoadingTableView.swift */; };
-		15C826D91E8587EF003EE6E4 /* OldLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826A91E8587EF003EE6E4 /* OldLoginViewController.swift */; };
 		15C826DB1E8587EF003EE6E4 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826AB1E8587EF003EE6E4 /* SignInViewController.swift */; };
 		15C826DC1E8587EF003EE6E4 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826AC1E8587EF003EE6E4 /* Notification.swift */; };
 		15C826DD1E8587EF003EE6E4 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826AD1E8587EF003EE6E4 /* NotificationsViewController.swift */; };
@@ -63,7 +62,6 @@
 		15C826E61E8587EF003EE6E4 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B61E8587EF003EE6E4 /* PriorityQueue.swift */; };
 		15C826E71E8587EF003EE6E4 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */; };
 		15C826E81E8587EF003EE6E4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */; };
-		15C826E91E8587EF003EE6E4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B91E8587EF003EE6E4 /* SignUpViewController.swift */; };
 		15C826EE1E8587EF003EE6E4 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826BE1E8587EF003EE6E4 /* SwiftyJSON.swift */; };
 		15C826EF1E8587EF003EE6E4 /* TakePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826BF1E8587EF003EE6E4 /* TakePictureViewController.swift */; };
 		15C826F01E8587EF003EE6E4 /* UploadPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826C01E8587EF003EE6E4 /* UploadPhotoViewController.swift */; };
@@ -159,7 +157,6 @@
 		15C826A11E8587EF003EE6E4 /* ImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageScrollView.swift; sourceTree = "<group>"; };
 		15C826A21E8587EF003EE6E4 /* ImageTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTransition.swift; sourceTree = "<group>"; };
 		15C826A81E8587EF003EE6E4 /* LoadingTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingTableView.swift; sourceTree = "<group>"; };
-		15C826A91E8587EF003EE6E4 /* OldLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldLoginViewController.swift; sourceTree = "<group>"; };
 		15C826AB1E8587EF003EE6E4 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		15C826AC1E8587EF003EE6E4 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		15C826AD1E8587EF003EE6E4 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -174,7 +171,6 @@
 		15C826B61E8587EF003EE6E4 /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
 		15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		15C826B91E8587EF003EE6E4 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		15C826BE1E8587EF003EE6E4 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		15C826BF1E8587EF003EE6E4 /* TakePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakePictureViewController.swift; sourceTree = "<group>"; };
 		15C826C01E8587EF003EE6E4 /* UploadPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadPhotoViewController.swift; sourceTree = "<group>"; };
@@ -306,8 +302,6 @@
 				15073F521EDD020100CDF92B /* InviteFriendsViewController.swift */,
 				15C826A11E8587EF003EE6E4 /* ImageScrollView.swift */,
 				15C826A81E8587EF003EE6E4 /* LoadingTableView.swift */,
-				15C826B91E8587EF003EE6E4 /* SignUpViewController.swift */,
-				15C826A91E8587EF003EE6E4 /* OldLoginViewController.swift */,
 				153729EA1ED5F2D900381888 /* UserTableViewCell.swift */,
 				15890CBC1EDF081400418BFB /* NewPhotoSelectViewController.swift */,
 				15B920DA1EE1E95F0091DE96 /* TempPhotoSelectViewController.swift */,
@@ -790,7 +784,6 @@
 				15C826911E8587DF003EE6E4 /* AppDelegate.swift in Sources */,
 				15C826CF1E8587EF003EE6E4 /* GroupSettingsViewController.swift in Sources */,
 				15C826CA1E8587EF003EE6E4 /* FeedViewController.swift in Sources */,
-				15C826E91E8587EF003EE6E4 /* SignUpViewController.swift in Sources */,
 				15C826E61E8587EF003EE6E4 /* PriorityQueue.swift in Sources */,
 				15C826E71E8587EF003EE6E4 /* ProfileSettingsViewController.swift in Sources */,
 				15C8268E1E8587DF003EE6E4 /* SecondSignUpViewController.swift in Sources */,
@@ -825,7 +818,6 @@
 				15C826F11E8587EF003EE6E4 /* User.swift in Sources */,
 				15F74F1D1E898B3F00A23720 /* FriendsNavigationViewController.swift in Sources */,
 				15C826C21E8587EF003EE6E4 /* BinaryHeap.swift in Sources */,
-				15C826D91E8587EF003EE6E4 /* OldLoginViewController.swift in Sources */,
 				15C826E01E8587EF003EE6E4 /* PersonalProfileViewController.swift in Sources */,
 				15C826C61E8587EF003EE6E4 /* CreateGroupViewController.swift in Sources */,
 				15C826D01E8587EF003EE6E4 /* GroupsViewController.swift in Sources */,

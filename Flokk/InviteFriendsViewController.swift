@@ -153,11 +153,11 @@ extension InviteFriendsViewController: UITableViewDelegate, UITableViewDataSourc
         cell.handleLabel.text = user.handle
         
         if self.selectedUsers.contains(user) { // If the user has been selected to be invited
-            cell.invitedView.image = UIImage(named: "Full Check") // Set the invited icon to be filled
+            cell.accessoryType = .checkmark
             cell.invited = true
         } else {
-            cell.invitedView.image = UIImage(named: "Empty Check") // Set the invited icon to be empty
             cell.invited = false
+            cell.accessoryType = .none
         }
         
         return cell
@@ -169,12 +169,12 @@ extension InviteFriendsViewController: UITableViewDelegate, UITableViewDataSourc
         
         if self.selectedUsers.contains(user) { // If this user has already been selected
             // Deselect it
-            cell.invitedView.image = UIImage(named: "Empty Check")
+            cell.accessoryType = .none
             cell.invited = false
             self.selectedUsers.remove(at: selectedUsers.index(of: user)!)
         } else { // If the user has not already been selected
             // Select it
-            cell.invitedView.image = UIImage(named: "Full Check")
+            cell.accessoryType = .checkmark
             self.selectedUsers.append(user)
         }
     }
@@ -270,7 +270,7 @@ class InviteFriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var profilePhotoView: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var handleLabel: UILabel!
-    @IBOutlet weak var invitedView: UIImageView!
+    //@IBOutlet weak var invitedView: UIImageView!
     
     var invited = false // If this user has been selected to be invited
 }
