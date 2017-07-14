@@ -130,6 +130,25 @@ extension SecondSignUpViewController: UITextFieldDelegate {
     }
 }
 
+// Show a shake animation when the text field is filled out incorrectly
+func animateTextField(_ textField: UITextField) {
+    UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
+    
+    UIView.animate(withDuration: 0.1, delay: 0.075, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
+    
+    UIView.animate(withDuration: 0.1, delay: 0.15, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
+    
+    UIView.animate(withDuration: 0.1, delay: 0.225, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
+    
+    UIView.animate(withDuration: 0.1, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+        UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 20}, completion: nil)
+}
+
+
 // Image Picker Functions
 extension SecondSignUpViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -147,3 +166,5 @@ extension SecondSignUpViewController: UIImagePickerControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
 }
+
+
