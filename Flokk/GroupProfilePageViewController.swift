@@ -37,7 +37,8 @@ class GroupProfilePageViewController: UIPageViewController {
             print("Couldn't instantiate GroupProfileViewController2")
         }
         
-        if mainUser.groupInvites == nil { // If the group invites has been loaded yet
+        // If the group invites has been loaded yet
+        if mainUser.groupInvites == nil {
             let userRef = database.ref.child("users").child(mainUser.handle).child("groupInvites")
             userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 if let values = snapshot.value as? NSDictionary {

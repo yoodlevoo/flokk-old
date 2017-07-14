@@ -66,6 +66,11 @@ class FeedViewController: UIViewController {
         if self.loadedPosts.count > 0 { // If there are already posts loaded, don't refresh anymore
             self.refreshControl.endRefreshing()
         }
+        
+        let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(FeedViewController.handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 0.5 // 1 second press
+        longPressGesture.delegate = self
+        self.tableView.addGestureRecognizer(longPressGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -275,7 +280,13 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage.clipsToBounds = true
         
-        //print("\(cell.userImage.image?.size.width) \(cell.userImage.image?.size.height)")
+        // If this post is currently selected to be saveds
+        if loadedPosts[indexPath.row].selectedToSave {
+            // Resize it to be 5 pixels smaller, everywhere
+            let frame = cell.imageView?.frame
+            
+            cell.postedImage?.frame = CGRect(x: (frame?.origin.x)! + 10, y: (frame?.origin.y)! + 10, width: (frame?.size.width)! - 5, height: (frame?.size.height)! - 5)
+        }
         
         // Then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
         
@@ -285,63 +296,81 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return loadedPosts.count
     }
-    
-    // Once the post is pressed, go to the comments
-    // In the future this may change to a swipe on the post instead of a tap
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /*
-        let index = loadedPosts.count - 1 - indexPath.row
-        
-        let post = loadedPosts[index] // Get the specific post referred to by the pressed cell
-        
-        // Then transition to the comment view through the comment's navigation controller
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let commentNav:AddCommentNavigationViewController = storyboard.instantiateViewController(withIdentifier: "AddCommentNavigationController") as! AddCommentNavigationViewController
-        
-        commentNav.postToPass = post
-        commentNav.passPost()
-        
-        self.present(commentNav, animated: true, completion: nil)
- 
-        */
-    }
 }
 
-// Image Picker Functions
-/*
-extension FeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        //let selectedImage: UIImage!
-        
-        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            let confirmUpload = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConfirmUploadViewController") as! ConfirmUploadViewController
-            
-            confirmUpload.image = selectedImage
-            
-            dismiss(animated: true, completion: nil)
-            present(confirmUpload, animated: true, completion: nil)
-            //self.parent?.parent?.present(confirmUpload, animated:true, completion: nil)
-            //UIApplication.shared.keyWindow?.rootViewController?.present(confirmUpload, animated: true, completion: nil)
-            
-            if confirmUpload.imageView != nil {
-                confirmUpload.imageView.image = selectedImage
+// Delegates for holding posts to save them
+extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate {
+    // Check for a cell being held
+    func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
+            let touchPoint = longPressGestureRecognizer.location(in: self.view)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                let row = indexPath.row
+                let post = loadedPosts[row]
+                
+                loadedPosts[row].selectedToSave = true
+                
+                self.tableView.reloadData() // Update the table view so the selected cells are updated
+                
+                // Display the action sheet so the user can decide whether/where to save the postr
+                showActionSheet(post: post)
             }
-        } else {
-            print("Something went wrong")
-            
-            dismiss(animated: false, completion: nil)
         }
     }
     
-    // If the image picker was cancelled
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+    // Show the action sheet to decide where to save the selected post(s)
+    func showActionSheet(post: Post) {
+        // Create the AlertController and add Its action like button in Actionsheet
+        let actionSheetControllerIOS8: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // Create the cancel button
+        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) {
+            (_) in
+            
+        }
+        
+        // Create the save to library button
+        let saveToCameraRollButton = UIAlertAction(title: "Save to Camera Roll", style: .default) {
+            (_) in
+            
+            // Attempt to save the image to the library
+            UIImageWriteToSavedPhotosAlbum(post.image, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        }
+        
+        // Create the save to Flokk button
+        let saveToFlokkButton = UIAlertAction(title: "Save to Flokk", style: .default) {
+            (_) in
+            
+        }
+        
+        // Add all of the buttons to the action sheet
+        actionSheetControllerIOS8.addAction(cancelActionButton)
+        actionSheetControllerIOS8.addAction(saveToCameraRollButton)
+        actionSheetControllerIOS8.addAction(saveToFlokkButton)
+        
+        self.present(actionSheetControllerIOS8, animated: true, completion: nil)
     }
-} */
+    
+    // Add image to Library
+    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Saved!", message: "The image has been saved to your photos.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(ac, animated: true)
+        }
+    }
+}
 
 class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var postedImage: UIImageView!
+    
+    var selectedToSave: Bool = false // Whether this cell has been selected to be saved or not
     
     // Internally calculate the constraint for this aspect fit
     internal var aspectConstraint : NSLayoutConstraint? {

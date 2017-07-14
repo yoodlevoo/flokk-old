@@ -14,7 +14,7 @@ class GroupsNavigationViewController: UINavigationController {
         super.viewDidLoad()
 
         self.navigationBar.tintColor = UIColor(colorLiteralRed: 22, green: 23, blue: 43, alpha: 1)
-        
+        self.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Josefin Sans", size: 20)!]
         
     }
 

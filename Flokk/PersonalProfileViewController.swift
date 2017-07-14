@@ -24,7 +24,7 @@ class PersonalProfileViewController: UIViewController {
         // This normally won't be here - only for testing
         user = mainUser
         
-        profilePic.image = user.profilePhoto
+        profilePic.image = mainUser.profilePhoto
         profilePic.layer.cornerRadius = profilePic.frame.size.width / 2
         profilePic.clipsToBounds = true
         
