@@ -13,6 +13,8 @@ import BRYXBanner
 class GroupsViewController: UIViewController {
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noGroupsView: UIImageView!
+    @IBOutlet weak var noGroupsLabel: UILabel!
     
     //var defaultGroups: [Group: UIImage] = [:] // Makes an empty dictionary
     var defaultGroups = [Group]() // An emptyarray of Groups - this is going to be a priorityqueue in a bit
@@ -37,6 +39,14 @@ class GroupsViewController: UIViewController {
         //print(self.refreshControl.frame)
         
         self.tableView.refreshControl = self.refreshControl
+        
+        if mainUser.groupIDs.count == 0 { // If the user has no groups. mainUser.groupIDs should always be loaded in
+            self.noGroupsView.isHidden = false
+            self.noGroupsLabel.isHidden = false
+        } else {
+            self.noGroupsView.isHidden = true
+            self.noGroupsView.isHidden = true
+        }
         
         // Attempt to load in all of the groups
         if groups.count < mainUser.groupIDs.count { // If we dont have all of the groups loaded in
@@ -387,15 +397,16 @@ extension GroupsViewController {
                     let posterHandle = values["poster"] as! String
                     let timestamp = NSDate(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
                     
-                    // Create a banner to notify the user
-                    let groupName = self.groupDict[groupID]! // Load in the group ID
-                    let banner = Banner(title: "Post Added", subtitle: "@\(posterHandle) uploaded a post to \(groupName)", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: { // When tapped
-                        // Go to the corresponding group
-                    })
-                    
-                    banner.dismissesOnTap = true
-                    banner.show(duration: BANNER_DURATION)
-                    
+                    if posterHandle != mainUser.handle { // Make sure we don't show a banner when the main user uploads a photo
+                        // Create a banner to notify the user
+                        let groupName = self.groupDict[groupID]! // Load in the group ID
+                        let banner = Banner(title: "Post Added", subtitle: "@\(posterHandle) uploaded a post to \(groupName)", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: { // When tapped
+                            // Go to the corresponding group
+                        })
+                        
+                        banner.dismissesOnTap = true
+                        banner.show(duration: BANNER_DURATION)
+                    }
                     // No point in loading the notification here
                 }
             })

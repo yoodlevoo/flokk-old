@@ -66,19 +66,21 @@ class SignInViewController: UIViewController {
         var email = usernameEntry.text // Get the entered email
         var password = passwordEntry.text // Get the entered password
         
-        if email == "" {
-            
-            //email = "gannonprudhomme@gmail.com"
-            //password = "gannon123"
-
-            //email = "cheeseman123432@yahoo.com"
-            //password = "alex123"
-            
-            //email = "latnt1@gmail.com"
-            //password = "lucas123"
-            
-            //email = "n1ghtk1ng@live.com"
-            //password = "noble123"
+        if email == "gannon" {
+            email = "gannonprudhomme@gmail.com"
+            password = "gannon123"
+        } else if email == "jared" {
+            email = "jaredheyen123@gmail.com"
+            password = "jared123"
+        } else if email == "madi" {
+            email = "gannon@flokk.info"
+            password = "madi123"
+        } else if email == "alex" {
+            email = "cheeseman123432@yahoo.com"
+            password = "alex123"
+        } else if email == "noble" {
+            email = "n1ghtk1ng@live.com"
+            password = "noble123"
         }
         
         self.showActivityIndicator("Attempting to sign in")
@@ -133,6 +135,25 @@ class SignInViewController: UIViewController {
                 
                 if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
+                    case .errorCodeUserNotFound:
+                        self.showAlert("Invalid Email")
+                        
+                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
+                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
+                            
+                        }, completion: { (completed) in
+                            UIView.animate(withDuration: 2.0, animations: {
+                                self.effectView.alpha = 0
+                            }, completion: { (completed) in
+                                self.removeActivityIndicator()
+                            })
+                        })
+                        
+                        break
+                    case .errorCodeInvalidCredential:
+                        print("\n\n invalid credentials \n\n")
+                        
+                        break
                     case .errorCodeInvalidEmail: // If the user entered an invalid email
                         self.showAlert("Invalid email!")
                         
@@ -198,7 +219,7 @@ class SignInViewController: UIViewController {
         
         self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
         
-        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2 - 15, y: self.view.frame.height / 3, width: 30 + 46 + (strLabel.attributedText?.width(withConstrainedHeight: 46))!, height: 46)
+        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2 - 23, y: self.view.frame.height / 3, width: 30 + 46 + self.strLabel.frame.size.width, height: 46)
         self.effectView.layer.cornerRadius = 15
         self.effectView.layer.masksToBounds = true
         
@@ -218,14 +239,14 @@ class SignInViewController: UIViewController {
         self.effectView.removeFromSuperview()
         self.effectView.alpha = 1
         
-        self.strLabel = UILabel(frame: CGRect(x: 5, y: 0, width: 160, height: 46))
+        self.strLabel = UILabel(frame: CGRect(x: 10, y: 0, width: 160, height: 46))
         self.strLabel.text = title
         self.strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
         self.strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
         
         self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
         
-        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2 - 15, y: self.view.frame.height / 3, width: 30 + (strLabel.attributedText?.width(withConstrainedHeight: 46))!, height: 46)
+        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2, y: self.view.frame.height / 3, width: 20 + self.strLabel.frame.size.width, height: 46)
         self.effectView.layer.cornerRadius = 15
         self.effectView.layer.masksToBounds = true
         
