@@ -83,37 +83,22 @@ class FirstSignUpViewController: UIViewController {
         }
     }
     
-    // Animate the text field when data is entered wrong
+    // Show a shake animation when the text field is filled out incorrectly
     func animateTextField(_ textField: UITextField) {
-        let duration = 0.03
-        let delay = 0.08
-        var currDelay = 0.0
-        let dist = CGFloat(15)
+        UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
         
-        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += dist}, completion: nil)
-        currDelay += delay
+        UIView.animate(withDuration: 0.1, delay: 0.075, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
         
-        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= dist}, completion: nil)
-        currDelay += delay
+        UIView.animate(withDuration: 0.1, delay: 0.15, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 10}, completion: nil)
         
-        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += dist}, completion: nil)
-        currDelay += delay
+        UIView.animate(withDuration: 0.1, delay: 0.225, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= 20}, completion: nil)
         
-        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= dist}, completion: nil)
-        currDelay += delay
-        
-        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += dist}, completion: nil)
-        currDelay += delay
-        
-        UIView.animate(withDuration: duration, delay: currDelay, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
-            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x -= dist}, completion: nil)
-        currDelay += delay
-        
+        UIView.animate(withDuration: 0.1, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0, options:
+            UIViewAnimationOptions.curveEaseIn, animations: { textField.center.x += 20}, completion: nil)
     }
 }
 
