@@ -271,7 +271,9 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         let index = loadedPosts.count - 1 - indexPath.row
         cell.tag = index // Set the tag so prepare for segue can recognize which post was selected
         
+        // Get the post from the according posts array
         let post = loadedPosts[index]
+        cell.post = post
         
         cell.setCustomImage(image: post.image)
         
@@ -279,14 +281,6 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         cell.userImage.image = self.userProfilePhotos[post.posterHandle] ?? UIImage(named: "AddProfilePic")
         cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage.clipsToBounds = true
-        
-        // If this post is currently selected to be saveds
-        if loadedPosts[indexPath.row].selectedToSave {
-            // Resize it to be 5 pixels smaller, everywhere
-            let frame = cell.imageView?.frame
-            
-            cell.postedImage?.frame = CGRect(x: (frame?.origin.x)! + 10, y: (frame?.origin.y)! + 10, width: (frame?.size.width)! - 5, height: (frame?.size.height)! - 5)
-        }
         
         // Then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
         
@@ -308,7 +302,7 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
                 let row = indexPath.row
                 let post = loadedPosts[row]
                 
-                loadedPosts[row].selectedToSave = true
+                self.loadedPosts[row].selectedToSave = true
                 
                 self.tableView.reloadData() // Update the table view so the selected cells are updated
                 
@@ -351,7 +345,7 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
         self.present(actionSheetControllerIOS8, animated: true, completion: nil)
     }
     
-    // Add image to Library
+    // Add image to Photo Library - I don't know how to rename this correctly, got from SO answer
     func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // we got back an error!
@@ -369,6 +363,7 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
 class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var postedImage: UIImageView!
+    fileprivate var post: Post! // The post this is referring to, used in layoutSubviews()
     
     var selectedToSave: Bool = false // Whether this cell has been selected to be saved or not
     
@@ -388,6 +383,18 @@ class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
     override func prepareForReuse() {
         super.prepareForReuse()
         aspectConstraint = nil
+    }
+    
+    // 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // Check if this post/cell is highlighted or not
+        if self.post != nil && self.post.selectedToSave {
+            let frame = self.postedImage.frame
+            
+            self.postedImage.frame = CGRect(x: frame.origin.x + 5, y: frame.origin.y + 5, width: frame.size.width - 10, height: frame.size.height - 10)
+        }
     }
     
     // Sets the custom constraints for this

@@ -13,6 +13,8 @@ target 'Flokk' do
   pod 'Firebase/Analytics'
   pod 'BRYXBanner'
   pod 'Toucan'
+  pod 'Hero'
+  pod 'Tabman'
 
   target 'FlokkTests' do
     inherit! :search_paths

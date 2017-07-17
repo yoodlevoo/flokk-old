@@ -41,6 +41,12 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.9)
+  - Hero (0.3.6)
+  - Pageboy (1.0.8)
+  - PureLayout (3.0.2)
+  - Tabman (0.5.1):
+    - Pageboy (= 1.0.8)
+    - PureLayout (~> 3.0.0)
   - Toucan (0.6.0)
 
 DEPENDENCIES:
@@ -50,6 +56,8 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - Hero
+  - Tabman
   - Toucan
 
 SPEC CHECKSUMS:
@@ -63,8 +71,12 @@ SPEC CHECKSUMS:
   FirebaseStorage: a5c55b23741a49a72af8f30f95b3bb5ddbeda12d
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
+  Hero: d3c6f4dd80cdcdbb339be64e57ae3b5c3ab9938c
+  Pageboy: dbbb644bcc439687254f774ed160a5f6866a2457
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  Tabman: 7336c5d439bc892163382064f3785ea605e4fe69
   Toucan: 47485bbc9cb4541ef6318d6886103e6eaf16e919
 
-PODFILE CHECKSUM: b03e692fc6cb247a78baeb9dadd8098fc7a3beb6
+PODFILE CHECKSUM: 67801fb2655f8ad140ea19daa51c57ed65ad837c
 
 COCOAPODS: 1.2.1

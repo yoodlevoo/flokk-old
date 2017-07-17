@@ -91,6 +91,9 @@
 		7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */; };
 		7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */; };
 		7FE0D33D1E91874F000E097D /* ConnectContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */; };
+		8787EA451F1C466F005E045E /* PersonalProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA441F1C466F005E045E /* PersonalProfilePageViewController.swift */; };
+		8787EA4C1F1C4840005E045E /* PersonalProfilePageCollectionView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4B1F1C4840005E045E /* PersonalProfilePageCollectionView1.swift */; };
+		8787EA4E1F1C4851005E045E /* PersonalProfilePageCollectionView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4D1F1C4851005E045E /* PersonalProfilePageCollectionView2.swift */; };
 		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
 		AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */ = {isa = PBXBuildFile; fileRef = AD5C0FC01E4A62F200272FD0 /* comments.json */; };
 		FF68FB30F333858091D73795 /* Pods_FlokkUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08116963DDC32F6213EF11B5 /* Pods_FlokkUITests.framework */; };
@@ -209,6 +212,9 @@
 		7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectContactsViewController.swift; sourceTree = "<group>"; };
 		870BBF911EFDF5B900D6EBEC /* Flokk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flokk.entitlements; sourceTree = "<group>"; };
+		8787EA441F1C466F005E045E /* PersonalProfilePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfilePageViewController.swift; sourceTree = "<group>"; };
+		8787EA4B1F1C4840005E045E /* PersonalProfilePageCollectionView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfilePageCollectionView1.swift; sourceTree = "<group>"; };
+		8787EA4D1F1C4851005E045E /* PersonalProfilePageCollectionView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfilePageCollectionView2.swift; sourceTree = "<group>"; };
 		A68DF56A284B426BCD7F3944 /* Pods_FlokkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlokkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD2236981E563E4500112715 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = SOURCE_ROOT; };
 		AD5C0FC01E4A62F200272FD0 /* comments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = comments.json; sourceTree = SOURCE_ROOT; };
@@ -312,6 +318,7 @@
 		15C826871E8587B7003EE6E4 /* Navigation Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8787EA461F1C4684005E045E /* Personal Profile Pages */,
 				158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */,
 				15E743B01E967DA8002D1220 /* GroupsNavigationViewController.swift */,
 				15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */,
@@ -449,6 +456,16 @@
 				152F02271EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift */,
 			);
 			name = Animations;
+			sourceTree = "<group>";
+		};
+		8787EA461F1C4684005E045E /* Personal Profile Pages */ = {
+			isa = PBXGroup;
+			children = (
+				8787EA441F1C466F005E045E /* PersonalProfilePageViewController.swift */,
+				8787EA4B1F1C4840005E045E /* PersonalProfilePageCollectionView1.swift */,
+				8787EA4D1F1C4851005E045E /* PersonalProfilePageCollectionView2.swift */,
+			);
+			name = "Personal Profile Pages";
 			sourceTree = "<group>";
 		};
 		947F3CEDA54916F7D5C90AAD /* Frameworks */ = {
@@ -781,6 +798,7 @@
 				15C826C41E8587EF003EE6E4 /* ConfirmUploadNavigationViewController.swift in Sources */,
 				15FB666C1EAA8493004D23AF /* GroupProfilePageViewController.swift in Sources */,
 				15073F531EDD020100CDF92B /* InviteFriendsViewController.swift in Sources */,
+				8787EA4C1F1C4840005E045E /* PersonalProfilePageCollectionView1.swift in Sources */,
 				15C826911E8587DF003EE6E4 /* AppDelegate.swift in Sources */,
 				15C826CF1E8587EF003EE6E4 /* GroupSettingsViewController.swift in Sources */,
 				15C826CA1E8587EF003EE6E4 /* FeedViewController.swift in Sources */,
@@ -832,12 +850,14 @@
 				15C826D21E8587EF003EE6E4 /* ImageTransition.swift in Sources */,
 				15C826EF1E8587EF003EE6E4 /* TakePictureViewController.swift in Sources */,
 				15C826F01E8587EF003EE6E4 /* UploadPhotoViewController.swift in Sources */,
+				8787EA4E1F1C4851005E045E /* PersonalProfilePageCollectionView2.swift in Sources */,
 				15C826E31E8587EF003EE6E4 /* PhotoUploadPageNavigationViewController.swift in Sources */,
 				15C826CD1E8587EF003EE6E4 /* Group.swift in Sources */,
 				15C8268D1E8587DF003EE6E4 /* FirstSignUpViewController.swift in Sources */,
 				15C826E81E8587EF003EE6E4 /* ProfileViewController.swift in Sources */,
 				15FAA0B11E96C19F004820B9 /* SlideLeftAnimator.swift in Sources */,
 				15C826EE1E8587EF003EE6E4 /* SwiftyJSON.swift in Sources */,
+				8787EA451F1C466F005E045E /* PersonalProfilePageViewController.swift in Sources */,
 				15C826901E8587DF003EE6E4 /* AddCommentViewController.swift in Sources */,
 				15C8268F1E8587DF003EE6E4 /* AddCommentNavigationViewController.swift in Sources */,
 			);
