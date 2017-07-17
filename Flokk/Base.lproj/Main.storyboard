@@ -2890,7 +2890,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Add Profile Picture New" translatesAutoresizingMaskIntoConstraints="NO" id="4Ha-0Q-1W0">
-                                <rect key="frame" x="141.5" y="28" width="92" height="92"/>
+                                <rect key="frame" x="142" y="28" width="92" height="92"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="92" id="4tm-ch-VEJ"/>
                                     <constraint firstAttribute="width" constant="92" id="Ioq-5i-Icx"/>
@@ -2907,7 +2907,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Td6-Ek-orj">
-                                <rect key="frame" x="59.5" y="183" width="256" height="21"/>
+                                <rect key="frame" x="60" y="183" width="256" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="0F1-M5-BeN"/>
                                     <constraint firstAttribute="height" constant="21" id="VtR-l4-Qkn"/>
@@ -2926,7 +2926,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l3x-17-i7a">
-                                <rect key="frame" x="115.5" y="211" width="144" height="56"/>
+                                <rect key="frame" x="116" y="211" width="144" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="3t8-7Z-f1x"/>
                                     <constraint firstAttribute="width" constant="144" id="42m-9k-5NY"/>
@@ -2939,16 +2939,15 @@
                                     <segue destination="Gnc-hd-ZFe" kind="presentation" identifier="segueFromProfileToProfileSettings" id="2Pz-Yt-FTy"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rI-5l-Ew2">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rI-5l-Ew2">
                                 <rect key="frame" x="16" y="228" width="29" height="22"/>
                                 <state key="normal" image="Friends Icon"/>
                                 <connections>
                                     <segue destination="XjA-XV-lcK" kind="show" identifier="segueFromPersonalProfileToFriends" id="o63-Fe-h0g"/>
                                 </connections>
                             </button>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U0z-Ua-pg1">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U0z-Ua-pg1">
                                 <rect key="frame" x="0.0" y="275" width="375" height="392"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="vTe-a2-bYj" kind="embed" id="6AM-3w-5TW"/>
                                 </connections>
@@ -2956,12 +2955,17 @@
                         </subviews>
                         <color key="backgroundColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="U0z-Ua-pg1" firstAttribute="centerX" secondItem="l3x-17-i7a" secondAttribute="centerX" id="3hU-rL-8BN"/>
+                            <constraint firstItem="3rI-5l-Ew2" firstAttribute="centerY" secondItem="l3x-17-i7a" secondAttribute="centerY" id="51O-tm-c7b"/>
+                            <constraint firstItem="U0z-Ua-pg1" firstAttribute="top" secondItem="3rI-5l-Ew2" secondAttribute="bottom" constant="25" id="6Ok-iv-ckL"/>
                             <constraint firstAttribute="trailing" secondItem="zda-kf-oyo" secondAttribute="trailing" constant="16" id="LIo-82-Fa6"/>
                             <constraint firstItem="l3x-17-i7a" firstAttribute="top" secondItem="Td6-Ek-orj" secondAttribute="bottom" constant="7" id="Lce-8k-Q27"/>
                             <constraint firstItem="4Ha-0Q-1W0" firstAttribute="top" secondItem="yLg-sP-GCC" secondAttribute="bottom" constant="8" id="Tew-MF-hhh"/>
+                            <constraint firstItem="U0z-Ua-pg1" firstAttribute="bottom" secondItem="aDj-iW-skd" secondAttribute="top" id="Ut7-uP-Cyf"/>
                             <constraint firstItem="3rI-5l-Ew2" firstAttribute="leading" secondItem="z10-8r-mqt" secondAttribute="leading" constant="16" id="VK5-uD-hTs"/>
                             <constraint firstItem="zda-kf-oyo" firstAttribute="top" secondItem="yLg-sP-GCC" secondAttribute="bottom" constant="203" id="ej6-xe-kmD"/>
                             <constraint firstItem="l3x-17-i7a" firstAttribute="centerX" secondItem="z10-8r-mqt" secondAttribute="centerX" id="iMg-T3-WOn"/>
+                            <constraint firstItem="U0z-Ua-pg1" firstAttribute="leading" secondItem="z10-8r-mqt" secondAttribute="leading" id="kUY-GH-WvO"/>
                             <constraint firstItem="KkB-L1-MnY" firstAttribute="top" secondItem="4Ha-0Q-1W0" secondAttribute="bottom" constant="16" id="qov-1n-99g"/>
                             <constraint firstItem="4Ha-0Q-1W0" firstAttribute="centerX" secondItem="z10-8r-mqt" secondAttribute="centerX" id="ueq-ht-5U0"/>
                             <constraint firstItem="Td6-Ek-orj" firstAttribute="centerX" secondItem="z10-8r-mqt" secondAttribute="centerX" id="vMY-iO-DQi"/>
@@ -3754,10 +3758,10 @@
             </objects>
             <point key="canvasLocation" x="3090" y="-754"/>
         </scene>
-        <!--Personal Profile Collection View Page1-->
+        <!--Personal Profile Saved Page Collection View-->
         <scene sceneID="LjH-1V-Cjt">
             <objects>
-                <collectionViewController id="9pX-tp-uUm" customClass="PersonalProfileCollectionViewPage1" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="PersonalProfileSavedPageCollectionView" id="9pX-tp-uUm" customClass="PersonalProfileSavedPageCollectionView" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="7Km-3k-Jv2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="392"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3801,10 +3805,10 @@
             </objects>
             <point key="canvasLocation" x="3844" y="-948"/>
         </scene>
-        <!--Personal Profile Page Collection View2-->
+        <!--Personal Profile Uploaded Page Collection View-->
         <scene sceneID="bIa-cW-sms">
             <objects>
-                <collectionViewController id="cZl-ML-pNt" customClass="PersonalProfilePageCollectionView2" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="PersonalProfileUploadedPageCollectionView" id="cZl-ML-pNt" customClass="PersonalProfileUploadedPageCollectionView" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="iBA-8Y-70B">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="392"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

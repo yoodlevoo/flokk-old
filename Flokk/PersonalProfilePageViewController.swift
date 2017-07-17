@@ -14,12 +14,13 @@ class PersonalProfilePageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Initialize the first child page
-        let viewController1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileCollectionViewPage1") as! PersonalProfilePageCollectionView1
+        // Initialize the first child page - your saved posts
+        let viewController1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileSavedPageCollectionView") as! PersonalProfileSavedPageCollectionView
         
         viewControllerPages.append(viewController1)
         
-        let viewController2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileCollectionViewPage2") as! PersonalProfilePageCollectionView1
+        // Initialize the second child page - your uploaded posts
+        let viewController2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileUploadedPageCollectionView") as! PersonalProfileUploadedPageCollectionView
         
         viewControllerPages.append(viewController2)
     }

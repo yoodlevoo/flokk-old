@@ -32,6 +32,9 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     
     var notifications = [Notification]() // The user's notifications
     
+    var uploadedPostsData = [String : [String : Double]]() // Dictionary of posts that were saved, with the key being the groupID
+    var savedPostsData = [String : [String : Double]]() // Dictionary of posts that were uploaded, with the key being the groupID
+    
     init(handle: String, fullName: String) {
         self.handle = handle
         self.fullName = fullName

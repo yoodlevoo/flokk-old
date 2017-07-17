@@ -100,6 +100,8 @@ class SignInViewController: UIViewController {
                             let userValues = snapshot.value as! NSDictionary
                             let fullName = userValues["fullName"] as! String
                             let groupsDict = userValues["groups"] as? [String : Bool] ?? [String : Bool]()
+                            let savedPosts = userValues["savedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
+                            let uploadedPosts = userValues["uploadedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
                             
                             let groupHandles = Array(groupsDict.keys)
                             
