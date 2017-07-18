@@ -97,36 +97,40 @@ class SignInViewController: UIViewController {
                         
                         // Get the user data from their handle
                         database.ref.child("users").child(handle).observeSingleEvent(of: .value, with: { (snapshot) in
-                            let userValues = snapshot.value as! NSDictionary
-                            let fullName = userValues["fullName"] as! String
-                            let groupsDict = userValues["groups"] as? [String : Bool] ?? [String : Bool]()
-                            let savedPosts = userValues["savedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
-                            let uploadedPosts = userValues["uploadedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
-                            
-                            let groupHandles = Array(groupsDict.keys)
-                            
-                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
-                            profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
-                                if error == nil { // If there wasn't an error
-                                    let profilePhoto = UIImage(data: data!) // Load the image
+                            if let userValues = snapshot.value as? NSDictionary { // Attempt to load the user data into a dictionary
+                                let fullName = userValues["fullName"] as! String
+                                let groupsDict = userValues["groups"] as? [String : Bool] ?? [String : Bool]()
+                                let savedPosts = userValues["savedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
+                                let uploadedPosts = userValues["uploadedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
+                                
+                                let groupHandles = Array(groupsDict.keys)
+                                
+                                let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                                profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                                    if error == nil { // If there wasn't an error
+                                        let profilePhoto = UIImage(data: data!) // Load the image
+                                        
+                                        // Load in the user
+                                        mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupIDs: groupHandles)
+                                    } else { // If there was an error
+                                        // Load in the user
+                                        mainUser = User(handle: handle, fullName: fullName, groupIDs: groupHandles)
+                                    }
                                     
-                                    // Load in the user
-                                    mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupIDs: groupHandles)
-                                } else { // If there was an error
-                                    // Load in the user
-                                    mainUser = User(handle: handle, fullName: fullName, groupIDs: groupHandles)
-                                }
-                                
-                                // Attemp to load in the friends
-                                if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
-                                    mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
-                                }
-                                
-                                mainUser.email = email
-                                
-                                // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
-                                self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
-                            })
+                                    // Attemp to load in the friends
+                                    if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
+                                        mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
+                                    }
+                                    
+                                    mainUser.email = email
+                                    
+                                    // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
+                                    self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
+                                })
+                            } else { // If we couldnt load the user data into a dict, there was an error
+                                self.removeActivityIndicator()
+                                self.showAlert("There was an error logging in.")
+                            }
                         })
                     })
                 }

@@ -94,8 +94,6 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     switch errorCode {
                     case .errorCodeInvalidEmail: // If the email isn't valid
                         
-                        
-                        
                         break
                     case .errorCodeWeakPassword: // If the password isn't strong enough
                         

@@ -3750,10 +3750,10 @@
             </objects>
             <point key="canvasLocation" x="5084" y="891"/>
         </scene>
-        <!--Page View Controller-->
+        <!--Personal Profile Page View Controller-->
         <scene sceneID="LQc-p4-LWM">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="vTe-a2-bYj" sceneMemberID="viewController"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="vTe-a2-bYj" customClass="PersonalProfilePageViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rc8-jQ-IBZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3090" y="-754"/>

@@ -25,7 +25,15 @@ class PersonalProfileSavedPageCollectionView: UICollectionViewController {
                 
                 // Get the image from storage
                 let imageRef = storage.ref.child(groupID).child("posts").child(postID)
-                
+                imageRef.data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
+                    if error == nil {
+                        let image = UIImage(data: data!)
+                        
+                        
+                    } else {
+                        print(error!)
+                    }
+                })
             }
         }
     }
