@@ -7,12 +7,39 @@
 //
 
 import UIKit
+import Tabman
+import Pageboy
+import PureLayout
 
-class PersonalProfilePageViewController: UIPageViewController {
+class PersonalProfilePageViewController: TabmanViewController {
     var viewControllerPages = [UIViewController]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.dataSource = self
+        
+        self.bar.style = .buttonBar
+        self.bar.appearance = TabmanBar.Appearance({ (appearance) in
+            appearance.layout.itemDistribution = TabmanBar.Appearance.Layout.ItemDistribution.centered
+            appearance.indicator.compresses = true
+            appearance.text.font = UIFont(name: "Josefin Sans", size: 17.5)
+            appearance.indicator.color = TEAL_COLOR // Set the color to use for the bar indicator
+            appearance.state.color = TEAL_COLOR // Set the color to use for unselected items
+            appearance.state.selectedColor = TEAL_COLOR
+            
+            appearance.style.background = TabmanBarBackgroundView.BackgroundStyle.solid(color: NAVY_COLOR)
+        })
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+}
+
+extension PersonalProfilePageViewController: PageboyViewControllerDataSource {
+    func viewControllers(forPageboyViewController pageboyViewController: PageboyViewController) -> [UIViewController]? {
+        self.bar.items = [TabmanBarItem(title: "Saved Posts"), TabmanBarItem(title: "Uploaded Posts")] // Configure the bar
         
         // Initialize the first child page - your saved posts
         let viewController1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileSavedPageCollectionView") as! PersonalProfileSavedPageCollectionView
@@ -23,46 +50,11 @@ class PersonalProfilePageViewController: UIPageViewController {
         let viewController2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileUploadedPageCollectionView") as! PersonalProfileUploadedPageCollectionView
         
         viewControllerPages.append(viewController2)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-}
-
-// Page View Controller Functions - basically just copied from GroupProfileView, serves same purpose
-extension PersonalProfilePageViewController: UIPageViewControllerDataSource {
-    // Return what view controller should be shown when swiping left
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = viewControllerPages.index(of: viewController) else {
-            return nil
-        }
         
-        if viewControllerIndex == 1 {
-            return viewControllerPages[0]
-        }
-        
-        return nil
+        return viewControllerPages
     }
     
-    // Return what view controller should be shown when swiping right
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = viewControllerPages.index(of: viewController) else {
-            return nil
-        }
-        
-        if viewControllerIndex == 0 {
-            return viewControllerPages[1]
-        }
-        
-        return nil
-    }
-    
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return 2 // No need to do viewControllerPages.count, this will always be 2
-    }
-    
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
+    func defaultPageIndex(forPageboyViewController pageboyViewController: PageboyViewController) -> PageboyViewController.PageIndex? {
+        return nil // Use the default index
     }
 }

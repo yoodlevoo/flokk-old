@@ -15,6 +15,8 @@ target 'Flokk' do
   pod 'Toucan'
   pod 'Hero'
   pod 'Tabman'
+  pod 'Pageboy'
+  pod 'PureLayout'
 
   target 'FlokkTests' do
     inherit! :search_paths

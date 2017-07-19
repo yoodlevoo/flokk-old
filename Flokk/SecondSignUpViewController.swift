@@ -21,6 +21,11 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
     var email: String!
     var password: String!
     
+    // Activity alert variables
+    var activityIndicator = UIActivityIndicatorView()
+    var strLabel = UILabel()
+    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usernameField.becomeFirstResponder() // Set the usernameEntry to be selected by default
@@ -56,6 +61,8 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
         // Create this user, these calls aren't asynchronous so no worries using it as a function - I think
         //database.createNewUser(email: email, password: passwordField.text!, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
         
+        self.showActivityIndicator("Uploading data to the server.")
+        
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
             if error == nil { // If there wasn't an error
                 if let user = user { // Make sure we authenticate this new user without error - might be redundant
@@ -69,23 +76,29 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     userDataRef.child("fullName").setValue(fullName)
                     userDataRef.child("email").setValue(self.email)
                     
+                    self.removeActivityIndicator()
+                    self.showActivityIndicator("Success! Uploading the profile photo to the server.")
+                    
                     // Attempt to upload this user's profilePhoto to the database
                     storage.ref.child("users").child(handle).child("profilePhoto.jpg").put(profilePhoto!.convertJpegToData(), metadata: nil) { (metadata, error) in
-                        if error != nil { // If there was an error
+                        if error == nil { // If there wasn't an error
+                            self.removeActivityIndicator()
+                            self.showActivityIndicator("Success! Logging in.")
+                            
+                            // After creating the user, load it into the mainUser directly,
+                            // instead of uploading it then downloading it again(b/c thats just stupid)
+                            mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                            
+                            // Initialize this as empty, as its not an empty array by default
+                            mainUser.groupInvites = [String]()
+                            mainUser.email = self.email
+                            
+                            // Segue to the next view, placed in the completion block so we don't segue when there was an error
+                            self.performSegue(withIdentifier: "segueFromSecondSignUpToMainTabBar", sender: self)
+                        } else { // If there was an error
                             print(error!)
                         }
                     }
-                    
-                    // After creating the user, load it into the mainUser directly,
-                    // instead of uploading it then downloading it again(b/c thats just stupid)
-                    mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
-                    
-                    // Initialize this as empty, as its not an empty array by default
-                    mainUser.groupInvites = [String]()
-                    mainUser.email = self.email
-                    
-                    // Segue to the next view, placed in the completion block so we don't segue when there was an error
-                    self.performSegue(withIdentifier: "segueFromSecondSignUpToMainTabBar", sender: self)
                 }
             } else {
                 print(error!)
@@ -110,6 +123,62 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                 }
             }
         })
+    }
+    
+    // Show an alert with an activity indicator
+    func showActivityIndicator(_ title: String) {
+        self.strLabel.removeFromSuperview()
+        self.activityIndicator.removeFromSuperview()
+        self.effectView.removeFromSuperview()
+        self.effectView.alpha = 1 // Just in case it was transparent
+        
+        self.strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 160, height: 46))
+        self.strLabel.text = title
+        self.strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
+        self.strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
+        
+        self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
+        
+        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2 - 23, y: self.view.frame.height / 3, width: 30 + 46 + self.strLabel.frame.size.width, height: 46)
+        self.effectView.layer.cornerRadius = 15
+        self.effectView.layer.masksToBounds = true
+        
+        self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        self.activityIndicator.frame = CGRect(x: 0, y: 0, width: 46, height: 46)
+        self.activityIndicator.startAnimating()
+        
+        self.effectView.addSubview(activityIndicator)
+        self.effectView.addSubview(strLabel)
+        self.view.addSubview(effectView)
+    }
+    
+    // Show an alert without an activity indicator
+    func showAlert(_ title: String) {
+        // Basically the same function as above, without the activity indicator portion
+        self.strLabel.removeFromSuperview()
+        self.effectView.removeFromSuperview()
+        self.effectView.alpha = 1
+        
+        self.strLabel = UILabel(frame: CGRect(x: 10, y: 0, width: 160, height: 46))
+        self.strLabel.text = title
+        self.strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
+        self.strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
+        
+        self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
+        
+        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2, y: self.view.frame.height / 3, width: 20 + self.strLabel.frame.size.width, height: 46)
+        self.effectView.layer.cornerRadius = 15
+        self.effectView.layer.masksToBounds = true
+        
+        self.effectView.addSubview(strLabel)
+        self.view.addSubview(effectView)
+    }
+    
+    // Remove either type of alert
+    func removeActivityIndicator() {
+        self.strLabel.removeFromSuperview()
+        self.activityIndicator.removeFromSuperview()
+        self.effectView.removeFromSuperview()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

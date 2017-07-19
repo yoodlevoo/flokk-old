@@ -18,9 +18,9 @@ class SignInViewController: UIViewController {
     
     let transitionRight = SlideRightAnimator()
     
+    // Activity alert variables
     var activityIndicator = UIActivityIndicatorView()
     var strLabel = UILabel()
-    
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
    
     override func viewDidLoad() {

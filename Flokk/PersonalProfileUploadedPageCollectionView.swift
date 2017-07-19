@@ -33,7 +33,11 @@ class PersonalProfileUploadedPageCollectionView: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! PersonalPostsCollectionViewCell
+        
+        let post = posts[indexPath.item]
+        
+        cell.postImageView.image = post.image
         
         return cell
     }

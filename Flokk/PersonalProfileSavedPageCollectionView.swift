@@ -18,6 +18,8 @@ class PersonalProfileSavedPageCollectionView: UICollectionViewController {
         
         // First, check if there are any saved posts in the first place
         
+        posts.append(Post(posterHandle: "gannonprudhomme", image: UIImage(named: "BasketballFreethrow")!, postID: "nil"))
+        
         // Load the posts from the savedPostsData
         for (groupID, postsData) in mainUser.savedPostsData { // Iterate through all of the groups
             for (postID, time) in postsData { // Iterate through all of the posts in the specific groups
@@ -43,16 +45,20 @@ class PersonalProfileSavedPageCollectionView: UICollectionViewController {
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 0
+        return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return posts.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! PersonalPostsCollectionViewCell
     
+        let post = posts[indexPath.item]
+        
+        cell.postImageView.image = post.image
+        
         return cell
     }
 }
