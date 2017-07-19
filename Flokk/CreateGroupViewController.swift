@@ -61,7 +61,7 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.searchBar.sizeToFit()
-        self.tableView.tableHeaderView = self.searchController.searchBar
+        //self.tableView.tableHeaderView = self.searchController.searchBar
         self.searchController.searchBar.delegate = self
         self.searchController.view.backgroundColor = UIColor(colorLiteralRed: 23/255, green: 23/255, blue: 43/255, alpha: 1)
         
