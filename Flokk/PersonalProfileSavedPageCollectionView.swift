@@ -16,7 +16,7 @@ class PersonalProfileSavedPageCollectionView: UICollectionViewController {
         super.viewDidLoad()
         self.clearsSelectionOnViewWillAppear = true // It might default to this
         
-        // First, check if there are any saved posts
+        // First, check if there are any saved posts in the first place
         
         // Load the posts from the savedPostsData
         for (groupID, postsData) in mainUser.savedPostsData { // Iterate through all of the groups

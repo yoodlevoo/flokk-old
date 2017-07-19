@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class ProfileSettingsViewController: UIViewController {
+class EditProfileViewController: UIViewController {
     @IBOutlet weak var profilePictureButton: UIButton!
     @IBOutlet weak var fullNameField: UITextField!
     @IBOutlet weak var emailField: UITextField!
@@ -108,7 +108,7 @@ class ProfileSettingsViewController: UIViewController {
 }
 
 // Text Field Functions
-extension ProfileSettingsViewController: UITextFieldDelegate {
+extension EditProfileViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == self.fullNameField {
             
@@ -125,7 +125,7 @@ extension ProfileSettingsViewController: UITextFieldDelegate {
 }
 
 // Image Picker Functions
-extension ProfileSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             //imageView.contentMode = .scaleAspectFit

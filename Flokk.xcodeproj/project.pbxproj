@@ -60,7 +60,7 @@
 		15C826E41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */; };
 		15C826E51E8587EF003EE6E4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B51E8587EF003EE6E4 /* Post.swift */; };
 		15C826E61E8587EF003EE6E4 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B61E8587EF003EE6E4 /* PriorityQueue.swift */; };
-		15C826E71E8587EF003EE6E4 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */; };
+		15C826E71E8587EF003EE6E4 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B71E8587EF003EE6E4 /* EditProfileViewController.swift */; };
 		15C826E81E8587EF003EE6E4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */; };
 		15C826EE1E8587EF003EE6E4 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826BE1E8587EF003EE6E4 /* SwiftyJSON.swift */; };
 		15C826EF1E8587EF003EE6E4 /* TakePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826BF1E8587EF003EE6E4 /* TakePictureViewController.swift */; };
@@ -173,7 +173,7 @@
 		15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoUploadPageViewController.swift; sourceTree = "<group>"; };
 		15C826B51E8587EF003EE6E4 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		15C826B61E8587EF003EE6E4 /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
-		15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
+		15C826B71E8587EF003EE6E4 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		15C826BE1E8587EF003EE6E4 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		15C826BF1E8587EF003EE6E4 /* TakePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakePictureViewController.swift; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 				15C826AD1E8587EF003EE6E4 /* NotificationsViewController.swift */,
 				15C826AF1E8587EF003EE6E4 /* PasswordRecoveryViewController.swift */,
 				15C826B01E8587EF003EE6E4 /* PersonalProfileViewController.swift */,
-				15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */,
+				15C826B71E8587EF003EE6E4 /* EditProfileViewController.swift */,
 				15C275941E9FCC7100C62F0D /* AppSettingsTableViewController.swift */,
 				15C275901E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift */,
 				7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */,
@@ -806,7 +806,7 @@
 				15C826CF1E8587EF003EE6E4 /* GroupSettingsViewController.swift in Sources */,
 				15C826CA1E8587EF003EE6E4 /* FeedViewController.swift in Sources */,
 				15C826E61E8587EF003EE6E4 /* PriorityQueue.swift in Sources */,
-				15C826E71E8587EF003EE6E4 /* ProfileSettingsViewController.swift in Sources */,
+				15C826E71E8587EF003EE6E4 /* EditProfileViewController.swift in Sources */,
 				15C8268E1E8587DF003EE6E4 /* SecondSignUpViewController.swift in Sources */,
 				15C275951E9FCC7100C62F0D /* AppSettingsTableViewController.swift in Sources */,
 				15FB666F1EB1225E004D23AF /* GroupProfileNavigationViewController.swift in Sources */,
