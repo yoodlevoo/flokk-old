@@ -40,6 +40,8 @@ class PersonalProfileViewController: UIViewController {
         self.navigationController?.hideNavigationBar()
         //self.navigationController?.navigationBar.isHidden = true
         self.tabBarController?.showTabBar()
+        self.tabBarController?.hideTabBar()
+        self.tabBarController?.showTabBar()
     }
 
     override func didReceiveMemoryWarning() {

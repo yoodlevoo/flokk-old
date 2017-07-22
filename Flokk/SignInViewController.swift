@@ -123,6 +123,8 @@ class SignInViewController: UIViewController {
                                     }
                                     
                                     mainUser.email = email
+                                    mainUser.uploadedPostsData = uploadedPosts
+                                    mainUser.savedPostsData = savedPosts
                                     
                                     // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
                                     self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view

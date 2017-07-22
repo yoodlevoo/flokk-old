@@ -56,13 +56,6 @@ class FeedViewController: UIViewController {
         self.loadPosts() // Load the posts
         self.beginListeners() // Begin listening for changes
         
-        // Check if there are no posts, so we know to show the "No Posts" Frowny Face
-        if self.group.postsData.keys.count == 0 && self.group.posts.count == 0 { // If there are no posts
-            self.noPostsImageView.isHidden = false
-            self.noPostsLabel.isHidden = false
-            self.refreshControl.endRefreshing() // Don't refresh if there are no posts to load
-        }
-        
         if self.loadedPosts.count > 0 { // If there are already posts loaded, don't refresh anymore
             self.refreshControl.endRefreshing()
         }
@@ -77,7 +70,14 @@ class FeedViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.loadedPosts = self.group.posts // This might cause problems when we try to implement pagination
-        self.tableView.reloadData() // Reload data every time this view appears, in case we just uploaded a phorto
+        self.tableView.reloadData() // Reload data every time this view appears, in case we just uploaded a photo
+        
+        // Check if there are no posts, so we know to show the "No Posts" Frowny Face
+        if self.group.postsData.keys.count == 0 && self.group.posts.count == 0 { // If there are no posts
+            self.noPostsImageView.isHidden = false
+            self.noPostsLabel.isHidden = false
+            self.refreshControl.endRefreshing() // Don't refresh if there are no posts to load
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -335,6 +335,13 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
         let saveToFlokkButton = UIAlertAction(title: "Save to Flokk", style: .default) {
             (_) in
             
+            let groupID = self.group.id
+            let postID = post.id
+            
+            let saveRef = database.ref.child("users").child(mainUser.handle).child("savedPosts").child(groupID).child(postID!)
+            saveRef.setValue(NSDate.timeIntervalSinceReferenceDate)
+            
+            mainUser.savedPostsData[self.group.id]?[post.id] = NSDate.timeIntervalSinceReferenceDate
         }
         
         // Add all of the buttons to the action sheet

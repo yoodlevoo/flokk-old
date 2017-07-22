@@ -39,7 +39,7 @@ class PersonalProfilePageViewController: TabmanViewController {
 
 extension PersonalProfilePageViewController: PageboyViewControllerDataSource {
     func viewControllers(forPageboyViewController pageboyViewController: PageboyViewController) -> [UIViewController]? {
-        self.bar.items = [TabmanBarItem(title: "Saved Posts"), TabmanBarItem(title: "Uploaded Posts")] // Configure the bar
+        self.bar.items = [TabmanBarItem(title: "Saved"), TabmanBarItem(title: "Uploaded")] // Configure the bar
         
         // Initialize the first child page - your saved posts
         let viewController1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileSavedPageCollectionView") as! PersonalProfileSavedPageCollectionView

@@ -14,30 +14,45 @@ class PersonalProfileSavedPageCollectionView: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.clearsSelectionOnViewWillAppear = true // It might default to this
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        // First, check if there are any saved posts in the first place
+        // Get the relevant post data from each group?
         
-        posts.append(Post(posterHandle: "gannonprudhomme", image: UIImage(named: "BasketballFreethrow")!, postID: "nil"))
-        
-        // Load the posts from the savedPostsData
+        // Check to see if any posts need to be loaded - this might get inefficient
         for (groupID, postsData) in mainUser.savedPostsData { // Iterate through all of the groups
             for (postID, time) in postsData { // Iterate through all of the posts in the specific groups
-                // Get the relevant post data from each group?
-                
-                // Get the image from storage
-                let imageRef = storage.ref.child(groupID).child("posts").child(postID)
-                imageRef.data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
-                    if error == nil {
-                        let image = UIImage(data: data!)
-                        
-                        
-                    } else {
-                        print(error!)
-                    }
-                })
+                if !posts.contains(where: {$0.id == postID }) { // If this post is not already loaded, THEN we can load it
+                    // Get the relevant post data from each group?
+                    
+                    // Get the image from storage
+                    let imageRef = storage.ref.child("groups").child(groupID).child("posts").child(postID).child("post.jpg")
+                    imageRef.data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
+                        if error == nil {
+                            let image = UIImage(data: data!)
+                            
+                            let post = Post(posterHandle: "someone", image: image!, postID: postID)
+                            post.timestamp = Date(timeIntervalSinceReferenceDate: time)
+                            
+                            self.posts.append(post)
+                            
+                            // Every time a post is loaded, reload
+                            DispatchQueue.main.async {
+                                self.collectionView?.reloadData()
+                            }
+                        } else {
+                            print(error!)
+                        }
+                    })
+                }
             }
         }
+        
+        self.collectionView?.reloadData() // Reload the collection view every time
     }
 
     override func didReceiveMemoryWarning() {

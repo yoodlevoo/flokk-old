@@ -58,10 +58,14 @@ class ConfirmUploadViewController: UIViewController {
         self.group.loadingPostIDs.append(post.id) // Add this id to the loading post id's, so the feed view doesn't try to load this photo
         self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate}) // Sort the post chronologically
         
-        // Start storage here
+        // Add a reference to this post in uploaded posts for the main user to be accessed in the personal profile
+        let uploadedPostsRef = database.ref.child("users/\(mainUser.handle)/uploadedPosts/\(self.group.id)/\(post.id!)")
+        uploadedPostsRef.setValue(NSDate.timeIntervalSinceReferenceDate)
+        
+        // Add the data locally to the uploadedPostsData
+        mainUser.uploadedPostsData[self.group.id]?[post.id] = NSDate.timeIntervalSinceReferenceDate
         
         self.performSegue(withIdentifier: "unwindToFeedFromConfirmUpload", sender: self)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
