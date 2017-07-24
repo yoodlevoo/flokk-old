@@ -44,7 +44,7 @@ class ConfirmUploadViewController: UIViewController {
         
         // Resize/compress the image to reduce file size and upload it
         self.image = imageView.image?.resized(withPercentage: 0.5)
-        imageRef.child("\(key)/compressed.jpg").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
+        imageRef.child("\(key)/postCompressed.jpg").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 return
             }

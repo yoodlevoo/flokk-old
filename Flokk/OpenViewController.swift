@@ -21,7 +21,7 @@ class OpenViewController: UIViewController {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = UIColor.clear
         
-        tempReuploadProfilePhotos()
+        tempReuploadPosts()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,6 +61,28 @@ class OpenViewController: UIViewController {
                             print(error!)
                         }
                     })
+                }
+            }
+        })
+    }
+    
+    private func tempReuploadPosts() {
+        database.ref.child("groups").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? [String : [String : Any]] {
+                for (groupID, data) in values {
+                    if let posts = data["posts"] as? [String : [String : Any]] {
+                        for (postID, _) in posts {
+                            storage.ref.child("groups").child(groupID).child("posts").child(postID).child("post.jpg").data(withMaxSize: MAX_POST_SIZE, completion: { (data, error) in
+                                if error == nil {
+                                    let image = UIImage(data: data!)
+                                    
+                                    let compressed = image?.resized(withPercentage: 0.5)
+                                    
+                                    storage.ref.child("groups").child(groupID).child("posts").child(postID).child("postCompressed.jpg").put((compressed?.convertJpegToData())!, metadata: nil) { (metadata, error) in }
+                                }
+                            })
+                        }
+                    }
                 }
             }
         })
