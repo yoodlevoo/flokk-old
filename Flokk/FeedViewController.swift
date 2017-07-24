@@ -120,7 +120,7 @@ class FeedViewController: UIViewController {
                         
                         // Load this user's profile photo if it hasn't been loaded already
                         if !self.userProfilePhotos.keys.contains(posterHandle) {
-                            let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhoto.jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhotoIcon.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!) // Load the profile photo from the received data
@@ -186,7 +186,7 @@ class FeedViewController: UIViewController {
                         
                         // Load this user's profile photo if it hasn't been loaded already
                         if !self.userProfilePhotos.keys.contains(posterHandle) {
-                            let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhoto.jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(posterHandle).child("profilePhotoIcon.jpg") // Download the smaller image first
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!) // Load the profile photo from the received data

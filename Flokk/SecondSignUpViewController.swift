@@ -79,24 +79,30 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     self.removeActivityIndicator()
                     self.showActivityIndicator("Success! Uploading the profile photo to the server.")
                     
-                    // Attempt to upload this user's profilePhoto to the database
-                    storage.ref.child("users").child(handle).child("profilePhoto.jpg").put(profilePhoto!.convertJpegToData(), metadata: nil) { (metadata, error) in
-                        if error == nil { // If there wasn't an error
-                            self.removeActivityIndicator()
-                            self.showActivityIndicator("Success! Logging in.")
-                            
-                            // After creating the user, load it into the mainUser directly,
-                            // instead of uploading it then downloading it again(b/c thats just stupid)
-                            mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
-                            
-                            // Initialize this as empty, as its not an empty array by default
-                            mainUser.groupInvites = [String]()
-                            mainUser.email = self.email
-                            
-                            // Segue to the next view, placed in the completion block so we don't segue when there was an error
-                            self.performSegue(withIdentifier: "segueFromSecondSignUpToMainTabBar", sender: self)
-                        } else { // If there was an error
-                            print(error!)
+                    // Compress the image by 50%
+                    let reducedImage = profilePhoto?.resized(withPercentage: 0.5)
+                    // Attempt to upload the compressed image to the database
+                    storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg").put((reducedImage?.convertJpegToData())!, metadata: nil) { (metadata, error) in
+                        
+                        // Attempt to upload this user's profilePhoto to the database
+                        storage.ref.child("users").child(handle).child("profilePhoto.jpg").put(profilePhoto!.convertJpegToData(), metadata: nil) { (metadata, error) in
+                            if error == nil { // If there wasn't an error
+                                self.removeActivityIndicator()
+                                self.showActivityIndicator("Success! Logging in.")
+                                
+                                // After creating the user, load it into the mainUser directly,
+                                // instead of uploading it then downloading it again(b/c thats just stupid)
+                                mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                
+                                // Initialize this as empty, as its not an empty array by default
+                                mainUser.groupInvites = [String]()
+                                mainUser.email = self.email
+                                
+                                // Segue to the next view, placed in the completion block so we don't segue when there was an error
+                                self.performSegue(withIdentifier: "segueFromSecondSignUpToMainTabBar", sender: self)
+                            } else { // If there was an error
+                                print(error!)
+                            }
                         }
                     }
                 }
@@ -121,6 +127,10 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     
                     case .errorCodeNetworkError: // If there was a network error. This should be checked like everywhere
                         self.showAlert("Network Error")
+                        
+                        break
+                    case .errorCodeEmailAlreadyInUse:
+                        self.showAlert("Email Already In Use.")
                         
                         break
                     default:

@@ -105,6 +105,7 @@ class SignInViewController: UIViewController {
                                 
                                 let groupHandles = Array(groupsDict.keys)
                                 
+                                // Attempt to load the full profile photo first
                                 let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
                                 profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                     if error == nil { // If there wasn't an error

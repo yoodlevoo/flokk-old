@@ -46,7 +46,7 @@ class FriendsViewController: UIViewController {
                             //are we already loading groupHandles? If so, we might as well add it
                             
                             // Load the profile photo of this user
-                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil {
                                     let profilePhoto = UIImage(data: data!) // load the profile photo from the downloaded data

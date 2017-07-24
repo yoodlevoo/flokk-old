@@ -70,7 +70,16 @@ class EditProfileViewController: UIViewController {
         if !(self.profilePictureButton.imageView?.image?.isEqual(mainUser.profilePhoto))! { // If the images are not equal, then the user uploaded a different profile photo
             
             // Upload the changed profile photo
-            let profilePhotoRef = storage.ref.child("users").child(mainUser.handle).child("profilePhoto.jpg")
+            var profilePhotoRef = storage.ref.child("users").child(mainUser.handle).child("profilePhoto.jpg")
+            profilePhotoRef.put((self.profilePictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) {(metadata, error) in
+                if error != nil {
+                    print(error!)
+                }
+            }
+            
+            // Upload the profile photo again, but reduced
+            let compressed = self.profilePictureButton.imageView?.image?.resized(withPercentage: 0.5)
+            profilePhotoRef = storage.ref.child("users").child(mainUser.handle).child("profilePhotoIcon.jpg")
             profilePhotoRef.put((self.profilePictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) {(metadata, error) in
                 if error != nil {
                     print(error!)
