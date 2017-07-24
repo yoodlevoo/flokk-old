@@ -102,23 +102,31 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                 }
             } else {
                 print(error!)
+                self.removeActivityIndicator()
                 
                 if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                     case .errorCodeInvalidEmail: // If the email isn't valid
+                        self.showAlert("Invalid Email")
                         
                         break
                     case .errorCodeWeakPassword: // If the password isn't strong enough
+                        self.showAlert("Weak Password")
                         
                         break
                     case .errorCodeAccountExistsWithDifferentCredential: // If this account already exists
+                        self.showAlert("Account Exists")
                         
                         break
                     
                     case .errorCodeNetworkError: // If there was a network error. This should be checked like everywhere
+                        self.showAlert("Network Error")
                         
                         break
-                    default: break
+                    default:
+                        self.showAlert("Error! Please Try Again.")
+                        
+                        break
                     }
                 }
             }

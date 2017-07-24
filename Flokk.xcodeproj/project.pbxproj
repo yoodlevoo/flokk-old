@@ -96,6 +96,7 @@
 		8787EA4C1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4B1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift */; };
 		8787EA4E1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */; };
 		8787EA531F1EF529005E045E /* PersonalPostsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA521F1EF529005E045E /* PersonalPostsCollectionViewCell.swift */; };
+		87E2A8851F2589F50040255F /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E2A8841F2589F50040255F /* ImageUtils.swift */; };
 		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
 		AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */ = {isa = PBXBuildFile; fileRef = AD5C0FC01E4A62F200272FD0 /* comments.json */; };
 		FF68FB30F333858091D73795 /* Pods_FlokkUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08116963DDC32F6213EF11B5 /* Pods_FlokkUITests.framework */; };
@@ -219,6 +220,7 @@
 		8787EA4B1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileSavedPageCollectionView.swift; sourceTree = "<group>"; };
 		8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileUploadedPageCollectionView.swift; sourceTree = "<group>"; };
 		8787EA521F1EF529005E045E /* PersonalPostsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalPostsCollectionViewCell.swift; sourceTree = "<group>"; };
+		87E2A8841F2589F50040255F /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
 		A68DF56A284B426BCD7F3944 /* Pods_FlokkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlokkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD2236981E563E4500112715 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = SOURCE_ROOT; };
 		AD5C0FC01E4A62F200272FD0 /* comments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = comments.json; sourceTree = SOURCE_ROOT; };
@@ -369,6 +371,7 @@
 				15C8269B1E8587EF003EE6E4 /* FileUtils.swift */,
 				15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */,
 				158F02611EC6A49F00D7552A /* Storage.swift */,
+				87E2A8841F2589F50040255F /* ImageUtils.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -858,6 +861,7 @@
 				15C826EF1E8587EF003EE6E4 /* TakePictureViewController.swift in Sources */,
 				7FA0B8431F1487A10052CF17 /* WalkthroughPageViewController.swift in Sources */,
 				15C826F01E8587EF003EE6E4 /* UploadPhotoViewController.swift in Sources */,
+				87E2A8851F2589F50040255F /* ImageUtils.swift in Sources */,
 				8787EA4E1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift in Sources */,
 				15C826E31E8587EF003EE6E4 /* PhotoUploadPageNavigationViewController.swift in Sources */,
 				15C826CD1E8587EF003EE6E4 /* Group.swift in Sources */,
