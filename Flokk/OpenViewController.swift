@@ -21,7 +21,9 @@ class OpenViewController: UIViewController {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = UIColor.clear
         
-        tempReuploadPosts()
+        //tempReuploadPosts()
+        //tempReuploadProfilePhotos()
+        tempReuploadGroupIcons()
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,7 +55,7 @@ class OpenViewController: UIViewController {
                         if error == nil {
                             let image = UIImage(data: data!)
                             
-                            let compressed = image?.resized(withPercentage: 0.5)
+                            let compressed = image?.resized(withPercentage: 0.3)
                             
                             storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg").put((compressed?.convertJpegToData())!, metadata: nil) { (metadata, error) in }
                             
@@ -83,6 +85,26 @@ class OpenViewController: UIViewController {
                             })
                         }
                     }
+                }
+            }
+        })
+    }
+    
+    private func tempReuploadGroupIcons() {
+        database.ref.child("groups").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
+            if let values = snapshot.value as? [String : [String : Any]] {
+                for (groupID, data) in values {
+                    storage.ref.child("groups").child(groupID).child("icon.jpg").data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                        if error == nil {
+                            let image = UIImage(data: data!)
+                            
+                            let compressed = image?.resized(withPercentage: 0.5)
+                            
+                            storage.ref.child("groups").child(groupID).child("iconCompressed.jpg").put((compressed?.convertJpegToData())!, metadata: nil) { (metadata, error) in
+                            
+                            }
+                        }
+                    })
                 }
             }
         })

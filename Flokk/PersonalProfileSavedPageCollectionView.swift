@@ -12,10 +12,20 @@ import UIKit
 class PersonalProfileSavedPageCollectionView: UICollectionViewController {
     var posts = [Post]()
     
+    var activityIndicator = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.clearsSelectionOnViewWillAppear = true // It might default to this
+        
+        let width = self.activityIndicator.frame.size.width
+        let topY = self.activityIndicator.frame.minY
+        
+        self.activityIndicator.frame = CGRect(x: 337 / 2 - (width / 2), y: topY / 2 - (width / 2), width: width, height: width)
+        
+        self.collectionView?.addSubview(self.activityIndicator)
+        //self.activityIndicator.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,6 +62,7 @@ class PersonalProfileSavedPageCollectionView: UICollectionViewController {
             }
         }
         
+        //self.activityIndicator.stopAnimating()
         self.collectionView?.reloadData() // Reload the collection view every time
     }
 

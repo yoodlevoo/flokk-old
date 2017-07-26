@@ -61,7 +61,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                     let groupsDict = values["groups"] as? [String : Bool] ?? [String : Bool]()
                     
                     // Load this user's profile Photo
-                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)

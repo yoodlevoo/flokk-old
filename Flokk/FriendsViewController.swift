@@ -43,6 +43,7 @@ class FriendsViewController: UIViewController {
                         
                         if let values = snapshot.value as? NSDictionary {
                             let fullName = values["fullName"] as! String
+                            let groupHandles = values["groups"] as? [String : Bool] ?? [String : Bool]()
                             //are we already loading groupHandles? If so, we might as well add it
                             
                             // Load the profile photo of this user
@@ -52,6 +53,7 @@ class FriendsViewController: UIViewController {
                                     let profilePhoto = UIImage(data: data!) // load the profile photo from the downloaded data
                                     
                                     let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                    user.groupIDs = Array(groupHandles.keys)
                                     
                                     // Check again if the user hasn't been added
                                     let matches = mainUser.friends.filter({ $0.handle == handle}) // Check if this user has already been loaded

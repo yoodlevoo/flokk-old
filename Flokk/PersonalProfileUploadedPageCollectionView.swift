@@ -12,10 +12,15 @@ import UIKit
 class PersonalProfileUploadedPageCollectionView: UICollectionViewController {
     var posts = [Post]()
     
+    var activityIndicator = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.clearsSelectionOnViewWillAppear = true // It might default to this
+        
+        self.collectionView?.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,6 +56,7 @@ class PersonalProfileUploadedPageCollectionView: UICollectionViewController {
         }
         
         self.collectionView?.reloadData()
+      //  self.activityIndicator.stopAnimating()
     }
     
     override func didReceiveMemoryWarning() {

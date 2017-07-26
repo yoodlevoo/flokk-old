@@ -73,7 +73,7 @@ class GroupProfileViewController: UIViewController {
                         if let fullName = snapshot.value as? String {
                             
                             // Then, load in the profile photo of the user
-                            let profilePhotoRef = storage.ref.child("users").child(creatorHandle).child("profilePhoto.jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(creatorHandle).child("profilePhotoIcon.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!)
@@ -100,7 +100,7 @@ class GroupProfileViewController: UIViewController {
                         let fullName = values["fullName"] as! String
                         
                         // Load in the profile photo for this user
-                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg")
                         profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil { // If there wasn't an error
                                 let profilePhoto = UIImage(data: data!)
@@ -155,6 +155,14 @@ class GroupProfileViewController: UIViewController {
         if segue.identifier == "embedSegueGroupProfileContainer" {
             if let groupProfilePageView = segue.destination as? GroupProfilePageViewController {
                 groupProfilePageView.group = self.group
+            }
+        } else if segue.identifier == "segueFromGroupProfileToProfile" {
+            if let profileView = segue.destination as? ProfileViewController {
+                let indexPath = self.tableView.indexPathForSelectedRow
+                
+                let user = self.group.members[(indexPath?.row)!]
+                
+                profileView.user = user
             }
         }
     }

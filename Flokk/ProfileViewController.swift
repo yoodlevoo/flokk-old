@@ -319,7 +319,7 @@ class ProfileViewController: UIViewController {
                         }
                         
                         // Then continue to load the group's icon
-                        let groupIconRef = storage.ref.child("groups").child(groupID).child("icon.jpg")
+                        let groupIconRef = storage.ref.child("groups").child(groupID).child("iconCompressed.jpg")
                         groupIconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil { // If there wasn't an error
                                 let groupIcon = UIImage(data: data!)
