@@ -72,7 +72,6 @@
 		15F74F1D1E898B3F00A23720 /* FriendsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F74F1C1E898B3F00A23720 /* FriendsNavigationViewController.swift */; };
 		15F998171E65525C003F1773 /* gannonprudhommeBasketball.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */; };
 		15F9981D1E655562003F1773 /* gannonprudhommeLadies_and_G.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */; };
-		15FA5E961ECD01470090C701 /* OpenNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FA5E951ECD01470090C701 /* OpenNavigationViewController.swift */; };
 		15FA9B0D1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FA9B0C1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift */; };
 		15FAA0B11E96C19F004820B9 /* SlideLeftAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */; };
 		15FB666A1EA9396C004D23AF /* ProfileNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */; };
@@ -97,6 +96,7 @@
 		8787EA4E1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */; };
 		8787EA531F1EF529005E045E /* PersonalPostsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA521F1EF529005E045E /* PersonalPostsCollectionViewCell.swift */; };
 		87E2A8851F2589F50040255F /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E2A8841F2589F50040255F /* ImageUtils.swift */; };
+		87E2A8871F2B833E0040255F /* OpenNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E2A8861F2B833E0040255F /* OpenNavigationViewController.swift */; };
 		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
 		AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */ = {isa = PBXBuildFile; fileRef = AD5C0FC01E4A62F200272FD0 /* comments.json */; };
 		FF68FB30F333858091D73795 /* Pods_FlokkUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08116963DDC32F6213EF11B5 /* Pods_FlokkUITests.framework */; };
@@ -187,7 +187,6 @@
 		15F74F1C1E898B3F00A23720 /* FriendsNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsNavigationViewController.swift; sourceTree = "<group>"; };
 		15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeBasketball.json; sourceTree = "<group>"; };
 		15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeLadies_and_G.json; sourceTree = "<group>"; };
-		15FA5E951ECD01470090C701 /* OpenNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenNavigationViewController.swift; sourceTree = "<group>"; };
 		15FA9B0C1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSettingsNavigationViewController.swift; sourceTree = "<group>"; };
 		15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideLeftAnimator.swift; sourceTree = "<group>"; };
 		15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileNavigationViewController.swift; sourceTree = "<group>"; };
@@ -221,6 +220,7 @@
 		8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileUploadedPageCollectionView.swift; sourceTree = "<group>"; };
 		8787EA521F1EF529005E045E /* PersonalPostsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalPostsCollectionViewCell.swift; sourceTree = "<group>"; };
 		87E2A8841F2589F50040255F /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
+		87E2A8861F2B833E0040255F /* OpenNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenNavigationViewController.swift; sourceTree = "<group>"; };
 		A68DF56A284B426BCD7F3944 /* Pods_FlokkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlokkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD2236981E563E4500112715 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = SOURCE_ROOT; };
 		AD5C0FC01E4A62F200272FD0 /* comments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = comments.json; sourceTree = SOURCE_ROOT; };
@@ -339,7 +339,7 @@
 				15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */,
 				15C826B31E8587EF003EE6E4 /* PhotoUploadPageNavigationViewController.swift */,
 				15FB666E1EB1225E004D23AF /* GroupProfileNavigationViewController.swift */,
-				15FA5E951ECD01470090C701 /* OpenNavigationViewController.swift */,
+				87E2A8861F2B833E0040255F /* OpenNavigationViewController.swift */,
 			);
 			name = "Navigation Controllers";
 			sourceTree = "<group>";
@@ -823,6 +823,7 @@
 				15C826DD1E8587EF003EE6E4 /* NotificationsViewController.swift in Sources */,
 				15C826DB1E8587EF003EE6E4 /* SignInViewController.swift in Sources */,
 				150789E41E859EFD003C6FB3 /* SlideUpAnimator.swift in Sources */,
+				87E2A8871F2B833E0040255F /* OpenNavigationViewController.swift in Sources */,
 				153729EB1ED5F2D900381888 /* UserTableViewCell.swift in Sources */,
 				15C826D81E8587EF003EE6E4 /* LoadingTableView.swift in Sources */,
 				15C826E11E8587EF003EE6E4 /* PhotoSelectLayout.swift in Sources */,
@@ -853,7 +854,6 @@
 				15C826C91E8587EF003EE6E4 /* FeedNavigationViewController.swift in Sources */,
 				15C826D11E8587EF003EE6E4 /* ImageScrollView.swift in Sources */,
 				15C826E51E8587EF003EE6E4 /* Post.swift in Sources */,
-				15FA5E961ECD01470090C701 /* OpenNavigationViewController.swift in Sources */,
 				150789E21E859EFD003C6FB3 /* SlideDownAnimator.swift in Sources */,
 				8787EA531F1EF529005E045E /* PersonalPostsCollectionViewCell.swift in Sources */,
 				152F02281EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift in Sources */,

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 import BRYXBanner
 
 class GroupsViewController: UIViewController {
@@ -32,6 +33,31 @@ class GroupsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // FIRST, check if the user is still signed in and if the mainUser data hasn't been loaded yet
+        if FIRAuth.auth()?.currentUser != nil && mainUser == nil{
+            self.loadInitialUserData() // Load the user data like you would if you were signing in
+        } else if FIRAuth.auth()?.currentUser != nil && mainUser != nil { // If the user is logged in but the data has already been loaded(we came from sign up/sign in)
+            // Since we already have all of the user data loaded, we can load in the groups
+            self.loadGroups()
+            
+            // As well as beginning loading various small stuff and beginning listening for changes
+            self.loadExtraUserData()
+            self.beginListeners()
+            
+            // Check to see if we should show the "no group" icon
+            self.checkGroupCount()
+        } else {
+            // Segue to the Open/Initial/Title Screen View Controller
+            /*
+            let VC1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OpenViewController") as! OpenViewController
+            let navController = OpenNavigationViewController(rootViewController: VC1) // Creating a navigation controller with VC1 at the root of the navigation stack.
+            self.present(navController, animated:true, completion: nil)
+             */
+            
+            let openNavView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OpenNavigationViewController") as! OpenNavigationViewController
+            self.present(openNavView, animated: false, completion: nil)
+        }
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.refreshControl.addTarget(self, action: #selector(GroupsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
@@ -40,6 +66,54 @@ class GroupsViewController: UIViewController {
         
         self.tableView.refreshControl = self.refreshControl
         
+        //print("\n\n\n")
+        //print(NSDate.timeIntervalSinceReferenceDate)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Make sure the user is loaded in first before checking the group count
+        if mainUser != nil {
+            self.checkGroupCount()
+        }
+        
+        // If the tab bar was previously hidden(like from the feed view), unhide it
+        self.tabBarController?.showTabBar()
+        self.navigationController?.showNavigationBar() // Unhide the nav bar
+        
+        // Check if there is a group already selected
+        let selectedIndex = self.tableView.indexPathForSelectedRow
+        if selectedIndex != nil { // If there is then deselect it
+            self.tableView.deselectRow(at: selectedIndex!, animated: false)
+        }
+        
+        self.tableView.reloadData() // Reload the data incase we added a new group??? should i do this in create group segue
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        //FIRAuth.auth()?.removeStateDidChangeListener(handle!)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+    }
+    
+    @IBAction func unwindToGroup(segue: UIStoryboardSegue) {
+        
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
+    
+    // Check how many groups there are to see if we need to show the No Group Icon
+    func checkGroupCount() {
+        // Check if the user has no groups to display
         if mainUser.groupIDs.count == 0 { // If the user has no groups. mainUser.groupIDs should always be loaded in
             self.noGroupsView.isHidden = false
             self.noGroupsLabel.isHidden = false
@@ -47,7 +121,84 @@ class GroupsViewController: UIViewController {
             self.noGroupsView.isHidden = true
             self.noGroupsView.isHidden = true
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueFromGroupToFeed" {
+            if let feedView = segue.destination as? FeedViewController {
+                if let tag = (sender as? GroupTableViewCell)?.tag {
+                    weak var group = groups[tag] // I want this to be weak to prevent memory leakage
+                    
+                    feedView.group = group
+                    self.tabBarController?.hideTabBar()
+                }
+            }
+        } else if segue.identifier == "segueFromGroupToCreateGroup" {
+            if let createGroupView = segue.destination as? CreateGroupViewController {
+                createGroupView.transitioningDelegate = transitionDown
+            }
+        }
+    }
+}
+
+// Framework functions
+extension GroupsViewController {
+    // Load the data that would otherwise be loaded in the Sign In View
+    func loadInitialUserData() {
+        let uid = FIRAuth.auth()?.currentUser?.uid
         
+        // Get the user data from their handle
+        database.ref.child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let userValues = snapshot.value as? NSDictionary { // Attempt to load the user data into a dictionary
+                // Load the various user data into objects
+                let fullName = userValues["fullName"] as? String ?? "Error McDangit" // Load in the full name
+                let handle = userValues["handle"] as? String ?? "Error" // Load in the handle
+                let email = userValues["email"] as? String ?? "error@flokk.info" // Load in the email
+                let groupsDict = userValues["groups"] as? [String : Bool] ?? [String : Bool]()
+                let savedPosts = userValues["savedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
+                let uploadedPosts = userValues["uploadedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
+                
+                let groupHandles = Array(groupsDict.keys)
+                
+                // Attempt to load the (full) profile photo first
+                let profilePhotoRef = storage.ref.child("users").child(uid!).child("profilePhoto.jpg")
+                profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                    if error == nil { // If there wasn't an error
+                        let profilePhoto = UIImage(data: data!) // Load the image
+                        
+                        // Load in the user
+                        mainUser = User(uid: uid!, handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupIDs: groupHandles)
+                    } else { // If there was an error
+                        // Load in the user
+                        mainUser = User(uid: uid!, handle: handle, fullName: fullName, groupIDs: groupHandles)
+                    }
+                    
+                    // Attemp to load in the friends
+                    if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
+                        mainUser.friendIDs = Array(friendsDict.keys) // Set the friends for this user
+                    }
+                    
+                    mainUser.email = email
+                    mainUser.uploadedPostsData = uploadedPosts
+                    mainUser.savedPostsData = savedPosts
+                    
+                    // Once we have all of the user data loaded, we can continue loading the groups
+                    self.loadGroups()
+                    
+                    // As well as beginning loading various small stuff and beginning listening for changes
+                    self.loadExtraUserData()
+                    self.beginListeners()
+                    
+                    self.checkGroupCount()
+                })
+            } else { // If we couldnt load the user data into a dict, there was an error
+                //self.showAlert("There was an error logging in.")
+            }
+        })
+    }
+    
+    // Load data about the groups
+    func loadGroups() {
         // Attempt to load in all of the groups
         if groups.count < mainUser.groupIDs.count { // If we dont have all of the groups loaded in
             self.refreshControl.beginRefreshing()
@@ -103,77 +254,10 @@ class GroupsViewController: UIViewController {
                 }
             }
         }
-    
-        self.loadUserData()
-        self.beginListeners()
-        
-        //print("\n\n\n")
-        //print(NSDate.timeIntervalSinceReferenceDate)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Attach this to any view that requires information about this user??
-//        handle = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
-//            
-//        })
-        
-        // If the tab bar was previously hidden(like from the feed view), unhide it
-        self.tabBarController?.showTabBar()
-        self.navigationController?.showNavigationBar() // Unhide the nav bar
-        
-        // Check if there is a group already selected
-        let selectedIndex = self.tableView.indexPathForSelectedRow
-        if selectedIndex != nil { // If there is then deselect it
-            self.tableView.deselectRow(at: selectedIndex!, animated: false)
-        }
-        
-        self.tableView.reloadData() // Reload the data incase we added a new group??? should i do this in create group segue
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        //FIRAuth.auth()?.removeStateDidChangeListener(handle!)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
-    
-    @IBAction func unwindToGroup(segue: UIStoryboardSegue) {
-        
-    }
-    
-    func handleRefresh(refreshControl: UIRefreshControl) {
-        self.tableView.reloadData()
-        refreshControl.endRefreshing()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromGroupToFeed" {
-            if let feedView = segue.destination as? FeedViewController {
-                if let tag = (sender as? GroupTableViewCell)?.tag {
-                    weak var group = groups[tag] // I want this to be weak to prevent memory leakage
-                    
-                    feedView.group = group
-                    self.tabBarController?.hideTabBar()
-                }
-            }
-        } else if segue.identifier == "segueFromGroupToCreateGroup" {
-            if let createGroupView = segue.destination as? CreateGroupViewController {
-                createGroupView.transitioningDelegate = transitionDown
-            }
-        }
-    }
-}
-
-// Framework functions
-extension GroupsViewController {
     // Load various data about the user immediately
-    func loadUserData() {
+    func loadExtraUserData() {
         // Load the user's friends whenever we can
         database.ref.child("users").child(mainUser.uid).child("friends").observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {

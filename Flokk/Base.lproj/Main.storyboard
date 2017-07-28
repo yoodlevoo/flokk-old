@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7Ri-ws-uS1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="x15-8V-ONQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -1193,14 +1193,14 @@
                                 <rect key="frame" x="-1" y="0.0" width="376" height="254"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bgJ-TI-7aa">
-                                        <rect key="frame" x="128" y="23" width="120" height="120"/>
+                                        <rect key="frame" x="128" y="15" width="120" height="120"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="120" id="NK5-Qi-Y9A"/>
                                             <constraint firstAttribute="height" constant="120" id="qdm-rY-XuD"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iX-hF-55t">
-                                        <rect key="frame" x="23" y="161" width="331" height="44"/>
+                                        <rect key="frame" x="23" y="145" width="331" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="331" id="2Mq-dr-TFp"/>
                                             <constraint firstAttribute="height" constant="44" id="sOf-lH-jjz"/>
@@ -1209,15 +1209,22 @@
                                         <color key="textColor" red="0.069421157240000003" green="0.069742165509999995" blue="0.1379233003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccz-Wh-TmO">
+                                        <rect key="frame" x="150" y="189" width="77" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="LogOutBttn">
+                                            <color key="titleColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="4iX-hF-55t" firstAttribute="top" secondItem="bgJ-TI-7aa" secondAttribute="bottom" constant="18" id="10v-Rf-AAQ"/>
+                                    <constraint firstItem="4iX-hF-55t" firstAttribute="top" secondItem="bgJ-TI-7aa" secondAttribute="bottom" constant="10" id="10v-Rf-AAQ"/>
                                     <constraint firstItem="4iX-hF-55t" firstAttribute="centerX" secondItem="bgJ-TI-7aa" secondAttribute="centerX" id="SaV-ka-xpW"/>
-                                    <constraint firstAttribute="bottom" secondItem="4iX-hF-55t" secondAttribute="bottom" constant="49" id="Ybq-BR-aFD"/>
+                                    <constraint firstAttribute="bottom" secondItem="4iX-hF-55t" secondAttribute="bottom" constant="65" id="Ybq-BR-aFD"/>
                                     <constraint firstAttribute="height" constant="254" id="Ymp-eQ-xhT"/>
                                     <constraint firstItem="bgJ-TI-7aa" firstAttribute="centerX" secondItem="XaZ-4K-4Gq" secondAttribute="centerX" id="c7V-sk-OpH"/>
-                                    <constraint firstItem="bgJ-TI-7aa" firstAttribute="centerY" secondItem="XaZ-4K-4Gq" secondAttribute="centerY" constant="-44" id="zPg-o6-Qhb"/>
+                                    <constraint firstItem="bgJ-TI-7aa" firstAttribute="centerY" secondItem="XaZ-4K-4Gq" secondAttribute="centerY" constant="-52" id="zPg-o6-Qhb"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="73" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="n1u-3g-PHP">
@@ -2161,12 +2168,12 @@
             </objects>
             <point key="canvasLocation" x="-2330.4000000000001" y="-1352.473763118441"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Open Navigation View Controller-->
         <scene sceneID="mEw-Og-hSD">
             <objects>
-                <navigationController id="7Ri-ws-uS1" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="OpenNavigationViewController" id="7Ri-ws-uS1" customClass="OpenNavigationViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" backIndicatorImage="WhiteArrow" id="fj0-Xo-wTb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" backIndicatorImage="WhiteArrow" id="fj0-Xo-wTb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.34170821309999999" green="0.62362074850000004" blue="0.61967319249999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -2183,10 +2190,10 @@
             </objects>
             <point key="canvasLocation" x="-4230" y="-2197"/>
         </scene>
-        <!--Open-->
+        <!--Open View Controller-->
         <scene sceneID="6rr-NR-XZR">
             <objects>
-                <viewController title="Open" id="b5U-De-KjE" customClass="OpenViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OpenViewController" id="b5U-De-KjE" customClass="OpenViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ldy-pU-mCp"/>
                         <viewControllerLayoutGuide type="bottom" id="ZhX-AA-6ZU"/>
@@ -4148,7 +4155,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ME7-O5-4bK"/>
-        <segue reference="60x-m7-f1E"/>
+        <segue reference="owq-mU-2cS"/>
         <segue reference="tEb-ND-eC4"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

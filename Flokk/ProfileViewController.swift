@@ -41,6 +41,7 @@ class ProfileViewController: UIViewController {
             // Set this profile's data from the according User
             self.nameLabel.text = self.user.fullName
             self.userID = self.user.uid
+            self.userHandle = self.user.handle
             
             // Set the profile pic and make it crop to an image
             self.profilePhotoView.image = self.user.profilePhoto

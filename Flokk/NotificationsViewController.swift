@@ -178,8 +178,8 @@ class NotificationsViewController: UIViewController {
                                     let memberHandles = values["members"] as! [String : Bool] // This will never be nil/empty, will always have the creator
                                     let creatorID = values["creator"] as! String
                                     
-                                    // Load the group icon first
-                                    let groupIconRef = storage.ref.child("groups").child(groupID).child("icon.jpg")
+                                    // Load the (compressed) group icon first
+                                    let groupIconRef = storage.ref.child("groups").child(groupID).child("iconCompressed.jpg")
                                     groupIconRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                         if error == nil {
                                             let groupPhoto = UIImage(data: data!)
@@ -197,8 +197,6 @@ class NotificationsViewController: UIViewController {
                                                     // Or we could just directly load the fullName?
                                                     let fullName = userValues["fullName"] as! String
                                                     let handle = userValues["handle"] as! String
-                                                    
-                                                    //print(snapshot.children)
                                                     
                                                     // Load in the user's profile photo
                                                     let userProfilePhotoRef = storage.ref.child("users").child(senderID).child("profilePhotoIcon.jpg")
