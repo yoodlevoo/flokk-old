@@ -61,7 +61,7 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
         // Create this user, these calls aren't asynchronous so no worries using it as a function - I think
         //database.createNewUser(email: email, password: passwordField.text!, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
         
-        self.showActivityIndicator("Uploading data to the server.")
+        self.showActivityIndicator("Uploading data to the server...")
         
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
             if error == nil { // If there wasn't an error
@@ -72,30 +72,32 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     // I don't want the rest of the user to be added to the database
                     
                     // Write this new user's data to the database
-                    let userDataRef = database.ref.child("users").child(handle)
+                    let userDataRef = database.ref.child("users").child(user.uid)
                     userDataRef.child("fullName").setValue(fullName)
                     userDataRef.child("email").setValue(self.email)
+                    userDataRef.child("handle").setValue(handle)
                     
                     self.removeActivityIndicator()
-                    self.showActivityIndicator("Success! Uploading the profile photo to the server.")
+                    self.showActivityIndicator("Success! Uploading the profile photo...")
                     
                     // Compress the image by 50%
                     let reducedImage = profilePhoto?.resized(withPercentage: 0.5)
                     // Attempt to upload the compressed image to the database
-                    storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg").put((reducedImage?.convertJpegToData())!, metadata: nil) { (metadata, error) in
+                    storage.ref.child("users").child(user.uid).child("profilePhotoIcon.jpg").put((reducedImage?.convertJpegToData())!, metadata: nil) { (metadata, error) in
                         
                         // Attempt to upload this user's profilePhoto to the database
-                        storage.ref.child("users").child(handle).child("profilePhoto.jpg").put(profilePhoto!.convertJpegToData(), metadata: nil) { (metadata, error) in
+                        storage.ref.child("users").child(user.uid).child("profilePhoto.jpg").put(profilePhoto!.convertJpegToData(), metadata: nil) { (metadata, error) in
                             if error == nil { // If there wasn't an error
                                 self.removeActivityIndicator()
-                                self.showActivityIndicator("Success! Logging in.")
+                                self.showActivityIndicator("Success! Logging in...")
                                 
                                 // After creating the user, load it into the mainUser directly,
                                 // instead of uploading it then downloading it again(b/c thats just stupid)
-                                mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                mainUser = User(uid: user.uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                                 
                                 // Initialize this as empty, as its not an empty array by default
                                 mainUser.groupInvites = [String]()
+                                
                                 mainUser.email = self.email
                                 
                                 // Segue to the next view, placed in the completion block so we don't segue when there was an error

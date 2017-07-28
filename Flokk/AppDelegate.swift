@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import FirebaseMessaging
+import FirebaseInstanceID
 import UserNotifications
 
 var mainUser: User!
@@ -27,9 +29,10 @@ let MAX_POST_SIZE: Int64 = 1 * 4096 * 4096
 
 let BANNER_DURATION: TimeInterval = 3.0
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+let RESIZED_ICON_WIDTH = CGFloat(337)
 
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -39,7 +42,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let token = FIRInstanceID.instanceID().token()
         
-        registerForPushNotifications()
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            
+            UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {_, _ in })
+            // For iOS 10 data message (sent via FCM
+            FIRMessaging.messaging().remoteMessageDelegate = self
+        } else {
+            let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        
+        application.registerForRemoteNotifications()
         
         return true
     }
@@ -67,13 +84,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, handler) in
-            print("Permission Granted: \(granted)")
-            
-            guard granted else { return }
-            self.getNotificationSettings()
-        })
+    /// The callback to handle data message received via FCM for devices running iOS 10 or above.
+    func applicationReceivedRemoteMessage(_ remoteMessage: FIRMessagingRemoteMessage) {
+        print(remoteMessage.appData)
     }
     
     func getNotificationSettings() {

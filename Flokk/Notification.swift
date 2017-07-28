@@ -24,7 +24,7 @@ let GROUP_INVITE_DESCRIPTION = ""
 class Notification {
     var type: NotificationType
     var sender: User? // Whoever caused this notification
-    var senderHandle: String!
+    var senderID: String!
     var receiver: User? // Receiver is always going to be this(main) user
     var group: Group? // Optional, not all notifications are going to involve a group
     var post: Post? // Optional, not all notifications are going to involve a post
@@ -38,15 +38,16 @@ class Notification {
     // Friend Request or Friend Accepted Your Friend Request
     init(type: NotificationType, senderHandle: String) {
         self.type = type
-        self.senderHandle = senderHandle
+        self.senderID = senderHandle
         Notification.textSize = 20
         
         // Load the user
-        if !storedUsers.keys.contains(senderHandle) { // If the user hasn't been loaded yet
+        if !storedUsers.keys.contains(senderID) { // If the user hasn't been loaded yet
             // Careful doing this, it's going to load all of the child data, not just the fullName
-            database.ref.child("users").child(senderHandle).observeSingleEvent(of: .value, with: { (snapshot) in
+            database.ref.child("users").child(senderID).observeSingleEvent(of: .value, with: { (snapshot) in
                 if let values = snapshot.value as? [String : Any] {
                     let fullName = values["fullName"] as! String
+                    let handle = values["handle"] as! String
                     
                     // Bold the sender's name
                     let formattedString = NSMutableAttributedString()
@@ -59,12 +60,12 @@ class Notification {
                     self.description = formattedString
                     
                     // Download the profile Photo
-                    let profilePhotoRef = storage.ref.child("users").child(senderHandle).child("profilePhotoIcon.jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(self.senderID).child("profilePhotoIcon.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
                             
-                            self.sender = User(handle: senderHandle, fullName: fullName, profilePhoto: profilePhoto!)
+                            self.sender = User(uid: self.senderID, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                             storedUsers[senderHandle] = self.sender // Add this value to the stored user dict
                         } else { // If there was an error
                             print(error!)

@@ -29,33 +29,34 @@ class FriendsViewController: UIViewController {
         
         self.tableView.refreshControl = self.refreshControl
         
-        if mainUser.friends.count < mainUser.friendHandles.count { // If there are still more friends to load
+        if mainUser.friends.count < mainUser.friendIDs.count { // If there are still more friends to load
             self.refreshControl.beginRefreshing()
             
-            for handle in mainUser.friendHandles {
-                let matches = mainUser.friends.filter({ $0.handle == handle}) // Check if this user has already been loaded
+            for uid in mainUser.friendIDs {
+                let matches = mainUser.friends.filter({ $0.uid == uid}) // Check if this user has already been loaded
                 if matches.count > 0 {
                     continue
                 } else { // If the user hasn't already been loaded, continue loading it
-                    let userRef = database.ref.child("users").child(handle)
+                    let userRef = database.ref.child("users").child(uid)
                     userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                         // Check if snapshot exists, just in case?
                         
                         if let values = snapshot.value as? NSDictionary {
                             let fullName = values["fullName"] as! String
+                            let handle = values["handle"] as! String
                             let groupHandles = values["groups"] as? [String : Bool] ?? [String : Bool]()
                             //are we already loading groupHandles? If so, we might as well add it
                             
                             // Load the profile photo of this user
-                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil {
                                     let profilePhoto = UIImage(data: data!) // load the profile photo from the downloaded data
                                     
-                                    let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                    let user = User(uid: uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                                     user.groupIDs = Array(groupHandles.keys)
                                     
-                                    // Check again if the user hasn't been added
+                                    // Check AGAIN if the user hasn't been added
                                     let matches = mainUser.friends.filter({ $0.handle == handle}) // Check if this user has already been loaded
                                     if matches.count > 0 { // If there is a match
                                         return // Ignore this user

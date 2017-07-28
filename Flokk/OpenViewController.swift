@@ -50,14 +50,14 @@ class OpenViewController: UIViewController {
     private func tempReuploadProfilePhotos() {
         database.ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? [String : [String : Any]] {
-                for (handle, _) in values {
-                    storage.ref.child("users").child(handle).child("profilePhoto.jpg").data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+                for (uid, _) in values {
+                    storage.ref.child("users").child(uid).child("profilePhoto.jpg").data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil {
                             let image = UIImage(data: data!)
                             
-                            let compressed = image?.resized(withPercentage: 0.3)
+                            let compressed = image?.resized(toWidth: RESIZED_ICON_WIDTH)
                             
-                            storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg").put((compressed?.convertJpegToData())!, metadata: nil) { (metadata, error) in }
+                            storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg").put((compressed?.convertJpegToData())!, metadata: nil) { (metadata, error) in }
                             
                         } else {
                             print(error!)
@@ -78,7 +78,7 @@ class OpenViewController: UIViewController {
                                 if error == nil {
                                     let image = UIImage(data: data!)
                                     
-                                    let compressed = image?.resized(withPercentage: 0.5)
+                                    let compressed = image?.resized(toWidth: RESIZED_ICON_WIDTH)
                                     
                                     storage.ref.child("groups").child(groupID).child("posts").child(postID).child("postCompressed.jpg").put((compressed?.convertJpegToData())!, metadata: nil) { (metadata, error) in }
                                 }
@@ -98,10 +98,12 @@ class OpenViewController: UIViewController {
                         if error == nil {
                             let image = UIImage(data: data!)
                             
-                            let compressed = image?.resized(withPercentage: 0.5)
+                            let compressed = image?.resized(toWidth: 337)
                             
                             storage.ref.child("groups").child(groupID).child("iconCompressed.jpg").put((compressed?.convertJpegToData())!, metadata: nil) { (metadata, error) in
                             
+                                
+                            print("image: \(image?.size.width) compressed: \(compressed?.size.width)")
                             }
                         }
                     })

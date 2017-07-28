@@ -53,21 +53,22 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         // Put an overlay over the image so you know you can change it?
         
         // Load all of the friends
-        for handle in group.memberHandles { // Iterate through all the member handles
-            let userRef = database.ref.child("users").child(handle)
+        for uid in group.memberIDs { // Iterate through all the member handles
+            let userRef = database.ref.child("users").child(uid)
             userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 if let values = snapshot.value as? NSDictionary { // If the data loaded correctly
                     let fullName = values["fullName"] as! String
+                    let handle = values["handle"] as! String
                     let groupsDict = values["groups"] as? [String : Bool] ?? [String : Bool]()
                     
                     // Load this user's profile Photo
-                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
                             
                             // Load the user
-                            let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                            let user = User(uid: uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                             user.groupIDs = Array(groupsDict.keys)
                             
                             self.members.append(user) // Add it to members array
@@ -138,6 +139,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                 let user = self.members[(self.tableView.indexPathForSelectedRow?.row)!]
                 
                 profileView.user = user
+                profileView.userID = user.uid
                 profileView.userHandle = user.handle
             }
         }

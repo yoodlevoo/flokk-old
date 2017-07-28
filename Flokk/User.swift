@@ -23,10 +23,10 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var groupIDs = [String]() // The IDs of all the groups this user is in
     
     var friends = [User]() // Array of all friends this user has that have already been loaded
-    var friendHandles = [String]() // Array of the handles of friends this user has, don't need all of the user's data the entire time
+    var friendIDs = [String]() // Array of the ids of friends this user has, don't need all of the user's data the entire time
     
-    var incomingFriendRequests = [String]() // Array of user handles that requested to be this user's friend
-    var outgoingFriendRequests = [String]() // Array of user handles this user requested to be friends with
+    var incomingFriendRequests = [String]() // Array of user ids that requested to be this user's friend
+    var outgoingFriendRequests = [String]() // Array of user ids this user requested to be friends with
     
     var groupInvites: [String]! // Array of ID's for the group the user has been invited to
     
@@ -35,7 +35,8 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var uploadedPostsData = [String : [String : Double]]() // Dictionary of posts that were saved, with the key being the groupID
     var savedPostsData = [String : [String : Double]]() // Dictionary of posts that were uploaded, with the key being the groupID
     
-    init(handle: String, fullName: String) {
+    init(uid: String, handle: String, fullName: String) {
+        self.uid = uid
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = UIImage(named: "AddProfilePic")! //temporary
@@ -43,13 +44,15 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         loadPicture()
     }
     
-    init(handle: String, profilePhoto: UIImage) {
+    init(uid: String, handle: String, profilePhoto: UIImage) {
+        self.uid = uid
         self.handle = handle
         self.profilePhoto = profilePhoto
         self.fullName = ""
     }
     
-    init(handle: String, fullName: String, groupIDs: [String]) {
+    init(uid: String, handle: String, fullName: String, groupIDs: [String]) {
+        self.uid = uid
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = UIImage(named: "AddProfilePic")!
@@ -57,13 +60,15 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.groupIDs = groupIDs
     }
     
-    init(handle: String, fullName: String, profilePhoto: UIImage) {
+    init(uid: String, handle: String, fullName: String, profilePhoto: UIImage) {
+        self.uid = uid
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = profilePhoto
     }
     
-    init(handle: String, fullName: String, profilePhoto: UIImage, groupIDs: [String]) {
+    init(uid:String, handle: String, fullName: String, profilePhoto: UIImage, groupIDs: [String]) {
+        self.uid = uid
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = profilePhoto

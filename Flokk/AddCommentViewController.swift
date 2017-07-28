@@ -132,7 +132,7 @@ extension AddCommentViewController: UITextFieldDelegate {
         // Upload the comment
         let commentKey = database.ref.child("comments").child(self.group.id).child(post.id).childByAutoId().key
         let commentRef = database.ref.child("comments").child(self.group.id).child(post.id).child(commentKey) // Database reference
-        commentRef.child("poster").setValue(mainUser.handle) // The handle of the commenter, always going to be the mainUser
+        commentRef.child("poster").setValue(mainUser.uid) // The handle of the commenter, always going to be the mainUser
         commentRef.child("content").setValue(textField.text!) // The actual content of the comment
         commentRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         

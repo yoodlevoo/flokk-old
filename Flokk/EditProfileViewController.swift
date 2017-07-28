@@ -56,7 +56,7 @@ class EditProfileViewController: UIViewController {
     
     @IBAction func saveBttn(_ sender: AnyObject) {
         // Upload the changed data to the database
-        let userRef = database.ref.child("users").child(mainUser.handle)
+        let userRef = database.ref.child("users").child(mainUser.uid)
         
         // First, compare all of the data to eachother and see if anything has changed
         if self.fullNameField.text != mainUser.fullName {
@@ -70,7 +70,7 @@ class EditProfileViewController: UIViewController {
         if !(self.profilePictureButton.imageView?.image?.isEqual(mainUser.profilePhoto))! { // If the images are not equal, then the user uploaded a different profile photo
             
             // Upload the changed profile photo
-            var profilePhotoRef = storage.ref.child("users").child(mainUser.handle).child("profilePhoto.jpg")
+            var profilePhotoRef = storage.ref.child("users").child(mainUser.uid).child("profilePhoto.jpg")
             profilePhotoRef.put((self.profilePictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) {(metadata, error) in
                 if error != nil {
                     print(error!)
@@ -78,8 +78,8 @@ class EditProfileViewController: UIViewController {
             }
             
             // Upload the profile photo again, but reduced
-            let compressed = self.profilePictureButton.imageView?.image?.resized(withPercentage: 0.5)
-            profilePhotoRef = storage.ref.child("users").child(mainUser.handle).child("profilePhotoIcon.jpg")
+            let compressed = self.profilePictureButton.imageView?.image?.resized(toWidth: RESIZED_ICON_WIDTH)
+            profilePhotoRef = storage.ref.child("users").child(mainUser.uid).child("profilePhotoIcon.jpg")
             profilePhotoRef.put((self.profilePictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) {(metadata, error) in
                 if error != nil {
                     print(error!)

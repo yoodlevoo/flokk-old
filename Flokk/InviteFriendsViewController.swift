@@ -45,21 +45,22 @@ class InviteFriendsViewController: UIViewController {
         //self.users = self.mainUserFriends // If there isn't a search, set it to the main user's friends
         
         // You can only invite your friends to a group, so iterate over only them
-        for handle in mainUser.friendHandles {
-            if !group.memberHandles.contains(handle) && !group.invitedUsers.contains(handle) { // If this user isn't already a member of the group or already invited, continue to load it
-                let userRef = database.ref.child("users").child(handle)
+        for uid in mainUser.friendIDs {
+            if !group.memberIDs.contains(uid) && !group.invitedUsers.contains(uid) { // If this user isn't already a member of the group or already invited, continue to load it
+                let userRef = database.ref.child("users").child(uid)
                 
                 userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     if let values = snapshot.value as? NSDictionary {
                         let fullName = values["fullName"] as! String
+                        let handle = values["handle"] as! String
                         
                         // Download the profile photo
-                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg")
+                        let profilePhotoRef = storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg")
                         profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil {
                                 let profilePhoto = UIImage(data: data!)
                                 
-                                let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                let user = User(uid: uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                                 
                                 self.mainUserFriends.append(user)
                                 
@@ -97,24 +98,25 @@ class InviteFriendsViewController: UIViewController {
         // Notify each user that they have been invited
         for user in self.selectedUsers {
             let handle = user.handle
+            let uid = user.uid!
             
             // Tell the groups database that this user has been invited
-            groupRef.child("invitedUsers").child(handle).setValue(NSDate.timeIntervalSinceReferenceDate)
+            groupRef.child("invitedUsers").child(uid).setValue(NSDate.timeIntervalSinceReferenceDate)
             
-            let userRef = database.ref.child("users").child(handle)
+            let userRef = database.ref.child("users").child(uid)
             userRef.child("groupInvites").child(self.group.id).setValue(NSDate.timeIntervalSinceReferenceDate) // Set this group as an incoming invite in the user's database
             
             // Create a group invite notification for this user
-            let notificationKey = database.ref.child("notifications").child(handle).childByAutoId().key // Generate a UID for this notification
-            let notificationRef = database.ref.child("notifications").child(handle).child(notificationKey)
+            let notificationKey = database.ref.child("notifications").child(uid).childByAutoId().key // Generate a UID for this notification
+            let notificationRef = database.ref.child("notifications").child(uid).child(notificationKey)
             
             // Set the data for this notification
             notificationRef.child("type").setValue(NotificationType.GROUP_INVITE.rawValue) // Set the notification type
-            notificationRef.child("sender").setValue(mainUser.handle) // Set who has invited this user
+            notificationRef.child("sender").setValue(mainUser.uid) // Set who has invited this user
             notificationRef.child("groupID").setValue(self.group.id) // Set the group's ID this user has been invited to
             notificationRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate) // Set the time this invite has been sent
             
-            self.group.invitedUsers.append(handle) // Add these users to the local invited users array
+            self.group.invitedUsers.append(uid) // Add these users to the local invited users array
         }
         
         // Go back to group settings
@@ -197,13 +199,14 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
                     let searchCount = searchBar.text?.characters.count // The number of characters in this search to compare
                     
                     // Get the user data
-                    let handle = each.key as! String // Get the handle
+                    let uid = each.key as! String // Get the uid
                     
                     // Check if this user is a friend of the main user before acting on it
-                    if mainUser.friendHandles.contains(handle) && !self.group.memberHandles.contains(handle) && !self.group.invitedUsers.contains(handle) {
+                    if mainUser.friendIDs.contains(uid) && !self.group.memberIDs.contains(uid) && !self.group.invitedUsers.contains(uid) {
                         // If so, continue loading
-                        let userData = values[handle] as! Dictionary<String, Any> // Get all the subset of data for this user
+                        let userData = values[uid] as! Dictionary<String, Any> // Get all the subset of data for this user
                         let fullName = userData["fullName"] as! String // Get the user's full name from the subset of data
+                        let handle = userData["handle"] as! String
                         
                         // Make sure we're not getting users that don't match the search
                         let range = fullName.startIndex..<(fullName.index(fullName.startIndex, offsetBy: searchCount!))
@@ -211,13 +214,13 @@ extension InviteFriendsViewController: UISearchBarDelegate, UISearchResultsUpdat
                         
                         if searchBar.text == fullNameSplit { // If the search equates to this users full name
                             // Retrieve the profile photo
-                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhotoIcon.jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!) // Create an image from the data retrieved
                                     
                                     // Create the user
-                                    let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                    let user = User(uid: uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                                     
                                     // Add it to the list of users
                                     self.users.append(user)

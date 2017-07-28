@@ -338,7 +338,7 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
             let groupID = self.group.id
             let postID = post.id
             
-            let saveRef = database.ref.child("users").child(mainUser.handle).child("savedPosts").child(groupID).child(postID!)
+            let saveRef = database.ref.child("users").child(mainUser.uid).child("savedPosts").child(groupID).child(postID!)
             saveRef.setValue(NSDate.timeIntervalSinceReferenceDate)
             
             mainUser.savedPostsData[self.group.id]?[post.id] = NSDate.timeIntervalSinceReferenceDate

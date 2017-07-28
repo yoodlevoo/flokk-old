@@ -43,7 +43,7 @@ class ConfirmUploadViewController: UIViewController {
         }
         
         // Resize/compress the image to reduce file size and upload it
-        self.image = imageView.image?.resized(withPercentage: 0.5)
+        self.image = imageView.image?.resized(toWidth: RESIZED_ICON_WIDTH)
         imageRef.child("\(key)/postCompressed.jpg").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 return
@@ -51,7 +51,7 @@ class ConfirmUploadViewController: UIViewController {
         }
         
         // Upload the data about this post to the Database
-        postsRef.child("\(key)").child("poster").setValue(mainUser.handle)
+        postsRef.child("\(key)").child("poster").setValue(mainUser.uid)
         postsRef.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         
         //let post = Post(poster: mainUser, image: self.imageView.image!, postID: key)
@@ -67,7 +67,7 @@ class ConfirmUploadViewController: UIViewController {
         self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate}) // Sort the post chronologically
         
         // Add a reference to this post in uploaded posts for the main user to be accessed in the personal profile
-        let uploadedPostsRef = database.ref.child("users/\(mainUser.handle)/uploadedPosts/\(self.group.id)/\(post.id!)")
+        let uploadedPostsRef = database.ref.child("users/\(mainUser.uid)/uploadedPosts/\(self.group.id)/\(post.id!)")
         uploadedPostsRef.setValue(NSDate.timeIntervalSinceReferenceDate)
         
         // Add the data locally to the uploadedPostsData
