@@ -33,6 +33,16 @@ class GroupsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.refreshControl.addTarget(self, action: #selector(GroupsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = TEAL_COLOR
+        //print(self.refreshControl.frame)
+        
+        self.tableView.refreshControl = self.refreshControl
+
+        self.refreshControl.beginRefreshing()
+        
         // FIRST, check if the user is still signed in and if the mainUser data hasn't been loaded yet
         if FIRAuth.auth()?.currentUser != nil && mainUser == nil{
             self.loadInitialUserData() // Load the user data like you would if you were signing in
@@ -57,17 +67,6 @@ class GroupsViewController: UIViewController {
             let openNavView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OpenNavigationViewController") as! OpenNavigationViewController
             self.present(openNavView, animated: false, completion: nil)
         }
-        
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.refreshControl.addTarget(self, action: #selector(GroupsViewController.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
-        self.refreshControl.tintColor = TEAL_COLOR
-        //print(self.refreshControl.frame)
-        
-        self.tableView.refreshControl = self.refreshControl
-        
-        //print("\n\n\n")
-        //print(NSDate.timeIntervalSinceReferenceDate)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,7 +140,7 @@ class GroupsViewController: UIViewController {
     }
 }
 
-// Framework functions
+// MARK: Framework functions
 extension GroupsViewController {
     // Load the data that would otherwise be loaded in the Sign In View
     func loadInitialUserData() {
@@ -488,15 +487,26 @@ extension GroupsViewController {
                     let posterID = values["poster"] as! String
                     let timestamp = NSDate(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
                     
-                    if posterID != mainUser.uid { // Make sure we don't show a banner when the main user uploads a photo
-                        // Create a banner to notify the user
-                        let groupName = self.groupDict[groupID]! // Load in the group ID
-                        let banner = Banner(title: "Post Added", subtitle: "@\(posterID) uploaded a post to \(groupName)", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: { // When tapped
-                            // Go to the corresponding group
-                        })
+                    // TODO: Add the post to the group's post data property
+                    /*
+                    if let matches = groups.filter({$0.id == groupID}) {
                         
-                        banner.dismissesOnTap = true
-                        banner.show(duration: BANNER_DURATION)
+                    } */
+                    
+                    if posterID != mainUser.uid { // Make sure we don't show a banner when the main user uploads a photo
+                        let posterRef = database.ref.child("users").child(posterID).child("handle")
+                        posterRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                            if let handle = snapshot.value as? String {
+                                // Create a banner to notify the user
+                                let groupName = self.groupDict[groupID]! // Load in the group ID
+                                let banner = Banner(title: "Post Added", subtitle: "@\(handle) uploaded a post to \(groupName)", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: { // When tapped
+                                    // TODO: Go to the corresponding group
+                                })
+                                
+                                banner.dismissesOnTap = true
+                                banner.show(duration: BANNER_DURATION)
+                            }
+                        })
                     }
                     // No point in loading the notification here
                 }
@@ -505,7 +515,7 @@ extension GroupsViewController {
     }
 }
 
-// Table View Functions
+// MARK: Table View Functions
 extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! GroupTableViewCell
@@ -529,9 +539,10 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// Custom Table View Cell Class
+// MARK: Custom Table View Cell Class
 class GroupTableViewCell: UITableViewCell {
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupTitleLabel: UILabel!
+    @IBOutlet weak var timeOfLastPostLabel: UILabel!
     
 }

@@ -99,7 +99,7 @@ class AddCommentViewController: UIViewController {
     }
 }
 
-// Table View Functions
+// MARK: Table View Functions
 extension AddCommentViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CommentsTableViewController
@@ -123,7 +123,7 @@ extension AddCommentViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// Text Field Functions
+// MARK: Text Field Functions
 extension AddCommentViewController: UITextFieldDelegate {
     // So the text field doesnt try to line break when we press enter
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

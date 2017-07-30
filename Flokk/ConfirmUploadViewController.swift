@@ -67,7 +67,7 @@ class ConfirmUploadViewController: UIViewController {
         self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate}) // Sort the post chronologically
         
         // Add a reference to this post in uploaded posts for the main user to be accessed in the personal profile
-        let uploadedPostsRef = database.ref.child("users/\(mainUser.uid)/uploadedPosts/\(self.group.id)/\(post.id!)")
+        let uploadedPostsRef = database.ref.child("users/\(mainUser.uid!)/uploadedPosts/\(self.group.id)/\(post.id!)")
         uploadedPostsRef.setValue(NSDate.timeIntervalSinceReferenceDate)
         
         // Add the data locally to the uploadedPostsData

@@ -33,6 +33,8 @@ class PersonalProfileSavedPageCollectionView: UICollectionViewController {
         
         // Get the relevant post data from each group?
         
+        let user = mainUser
+        
         // Check to see if any posts need to be loaded - this might get inefficient
         for (groupID, postsData) in mainUser.savedPostsData { // Iterate through all of the groups
             for (postID, time) in postsData { // Iterate through all of the posts in the specific groups

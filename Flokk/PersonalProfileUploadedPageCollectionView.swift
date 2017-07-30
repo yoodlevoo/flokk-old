@@ -26,6 +26,8 @@ class PersonalProfileUploadedPageCollectionView: UICollectionViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        let user = mainUser
+        
         // Check to see if any posts need to be loaded
         for (groupID, postsData) in mainUser.uploadedPostsData { // Iterate through all of the groups
             for (postID, time) in postsData { // Iterate through all of the posts in the specific groups
