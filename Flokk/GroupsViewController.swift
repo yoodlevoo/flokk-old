@@ -488,10 +488,18 @@ extension GroupsViewController {
                     let timestamp = NSDate(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
                     
                     // TODO: Add the post to the group's post data property
-                    /*
-                    if let matches = groups.filter({$0.id == groupID}) {
+                    
+                    let matches = groups.filter({$0.id == groupID})
+                    if matches.count == 0 { // It should always equal 1
+                        let group = matches[0] // Get the actual group
                         
-                    } */
+                        var data = [String : Any]()
+                        data["poster"] = posterID
+                        data["timestamp"] = timestamp
+                        
+                        // Add the post data to the group
+                        group.postsData[groupID]?[postID] = data
+                    }
                     
                     if posterID != mainUser.uid { // Make sure we don't show a banner when the main user uploads a photo
                         let posterRef = database.ref.child("users").child(posterID).child("handle")
