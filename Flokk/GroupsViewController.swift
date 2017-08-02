@@ -107,7 +107,7 @@ class GroupsViewController: UIViewController {
     
     func handleRefresh(refreshControl: UIRefreshControl) {
         self.tableView.reloadData()
-        refreshControl.endRefreshing()
+        self.refreshControl.endRefreshing()
     }
     
     // Check how many groups there are to see if we need to show the No Group Icon
@@ -487,19 +487,24 @@ extension GroupsViewController {
                     let posterID = values["poster"] as! String
                     let timestamp = NSDate(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
                     
-                    // TODO: Add the post to the group's post data property
-                    
+                    // Add the post to the group's post data property
                     let matches = groups.filter({$0.id == groupID})
-                    if matches.count == 0 { // It should always equal 1
-                        let group = matches[0] // Get the actual group
+                    //if matches.count == 1 { // It should always equal 1
+                    let group = matches[0] // Get the actual group
                         
-                        var data = [String : Any]()
-                        data["poster"] = posterID
-                        data["timestamp"] = timestamp
-                        
-                        // Add the post data to the group
-                        group.postsData[groupID]?[postID] = data
-                    }
+                    var data = [String : Any]()
+                    data["poster"] = posterID
+                    data["timestamp"] = timestamp.timeIntervalSinceReferenceDate
+                
+                    print("\n\n")
+                    print(group.postsData)
+                    
+                    // Add the post data to the group
+                    group.postsData[postID] = data
+                    
+                    print("\n\n")
+                    print(group.postsData)
+                    //}
                     
                     if posterID != mainUser.uid { // Make sure we don't show a banner when the main user uploads a photo
                         let posterRef = database.ref.child("users").child(posterID).child("handle")

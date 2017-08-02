@@ -37,8 +37,10 @@ class ConfirmUploadViewController: UIViewController {
         
         // Upload the full post image to Storage
         imageRef.child("\(key)/post.jpg").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
-            guard let metadata = metadata else {
-                return
+            if error == nil { // If there wasn't an error
+                // Upload the data about this post to the Database, only after this is done uploading
+                postsRef.child("\(key)").child("poster").setValue(mainUser.uid)
+                postsRef.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
             }
         }
         
@@ -49,10 +51,6 @@ class ConfirmUploadViewController: UIViewController {
                 return
             }
         }
-        
-        // Upload the data about this post to the Database
-        postsRef.child("\(key)").child("poster").setValue(mainUser.uid)
-        postsRef.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         
         //let post = Post(poster: mainUser, image: self.imageView.image!, postID: key)
         let post = Post(posterHandle: mainUser.handle, image: self.imageView.image!, postID: key, timestamp: Date(timeIntervalSinceReferenceDate: NSDate.timeIntervalSinceReferenceDate))

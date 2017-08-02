@@ -31,7 +31,7 @@ class Group {
     
     var posts = [Post]() // The posts that have been loaded in, from newest to oldest
     //var loadedPosts = [Post]() // The posts that have been loaded so far
-    var postsData = [String : [String: Any?]]() // loaded in in the Groups view, then used by the feedView to quickly download the post images
+    var postsData = [String : [String: Any]]() // loaded in in the Groups view, then used by the feedView to quickly download the post images
     var loadingPostIDs = [String]() // ID of posts that are loading/are loaded
     
     var numNewPosts: Int! //the amount of new posts the mainUser has missed from this group

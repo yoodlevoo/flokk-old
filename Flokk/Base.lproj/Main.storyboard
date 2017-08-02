@@ -512,7 +512,7 @@
         <!--Groups-->
         <scene sceneID="bcU-22-3dx">
             <objects>
-                <viewController title="Groups" id="KFV-bB-sMD" customClass="GroupsViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Groups" hidesBottomBarWhenPushed="YES" id="KFV-bB-sMD" customClass="GroupsViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Mc9-UJ-Sf1"/>
                         <viewControllerLayoutGuide type="bottom" id="Ox1-Lt-1AU"/>
@@ -899,11 +899,11 @@
                         <viewControllerLayoutGuide type="bottom" id="lOE-Xo-obp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kFw-dW-rvi">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T7o-JI-AI3">
-                                <rect key="frame" x="0.0" y="219" width="375" height="335"/>
+                                <rect key="frame" x="0.0" y="239" width="375" height="379"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -960,7 +960,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJv-g0-f9U">
-                                <rect key="frame" x="14" y="480" width="148" height="57"/>
+                                <rect key="frame" x="14" y="544" width="148" height="57"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="57" id="YaG-VR-qbX"/>
                                     <constraint firstAttribute="width" constant="148" id="ygw-se-sdg"/>
@@ -971,7 +971,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGX-KM-sQ1">
-                                <rect key="frame" x="213" y="480" width="148" height="57"/>
+                                <rect key="frame" x="213" y="544" width="148" height="57"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="57" id="GfQ-i7-H4H"/>
                                     <constraint firstAttribute="width" constant="148" id="QQd-4q-Oss"/>
@@ -983,7 +983,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xcn-Ch-ccS">
-                                <rect key="frame" x="7" y="154" width="361" height="50"/>
+                                <rect key="frame" x="7" y="174" width="361" height="50"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="o1E-d4-97m"/>
@@ -1024,11 +1024,11 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcG-B4-Tfg">
-                                <rect key="frame" x="132" y="114" width="220" height="2"/>
+                                <rect key="frame" x="132" y="134" width="220" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eq6-9f-UES">
-                                <rect key="frame" x="16" y="37" width="90" height="90"/>
+                                <rect key="frame" x="16" y="57" width="90" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="90" id="d3A-3J-wDp"/>
                                     <constraint firstAttribute="width" constant="90" id="eqo-2r-qp7"/>
@@ -1039,7 +1039,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Group Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GDP-98-MUH">
-                                <rect key="frame" x="132" y="76" width="220" height="30"/>
+                                <rect key="frame" x="132" y="96" width="220" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="aa2-Bg-Jb4"/>
                                 </constraints>
@@ -1077,6 +1077,7 @@
                             <constraint firstItem="eq6-9f-UES" firstAttribute="top" secondItem="xuv-yT-wBv" secondAttribute="bottom" constant="37" id="zd8-NW-fFs"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="addGroupPictureButton" destination="eq6-9f-UES" id="plT-0h-OUm"/>
                         <outlet property="groupNameField" destination="GDP-98-MUH" id="Pzb-Jg-Wcq"/>
