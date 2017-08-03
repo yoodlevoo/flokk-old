@@ -318,10 +318,7 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
         let actionSheetControllerIOS8: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         // Create the cancel button
-        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) {
-            (_) in
-            
-        }
+        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
         
         // Create the save to library button
         let saveToCameraRollButton = UIAlertAction(title: "Save to Camera Roll", style: .default) {
@@ -348,6 +345,33 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
         actionSheetControllerIOS8.addAction(cancelActionButton)
         actionSheetControllerIOS8.addAction(saveToCameraRollButton)
         actionSheetControllerIOS8.addAction(saveToFlokkButton)
+        
+        // Create the delete post button if the user has the permissions to
+        if self.group.creatorID == mainUser.uid {
+            let deletePostButton = UIAlertAction(title: "Delete Post", style: .default) { (_) in
+                // If this option is selected
+                
+                // Remove it from the group's post array(and the tableView)
+                self.group.posts.remove(at: self.group.posts.index(where: { $0.id == post.id })!)
+                self.loadedPosts = self.group.posts
+                
+                // Remove it from this group's postData locally
+                self.group.postsData.removeValue(forKey: post.id)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+                // Remove it from the group's postdata in the database
+                let groupRef = database.ref.child("groups/\(self.group.id)/posts/\(post.id)")
+                groupRef.removeValue()
+                
+                
+            }
+            
+            // Add this button to the action sheet controller that pops up
+            actionSheetControllerIOS8.addAction(deletePostButton)
+        }
         
         self.present(actionSheetControllerIOS8, animated: true, completion: nil)
     }
