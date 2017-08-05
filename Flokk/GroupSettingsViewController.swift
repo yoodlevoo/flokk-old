@@ -13,6 +13,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tabBar: UINavigationItem!
+    @IBOutlet weak var leaveGroupButton: UIButton!
     
     let transitionUp = SlideUpAnimator()
     
@@ -84,6 +85,11 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                 }
             })
         }
+        
+        // If the mainUser created the group, then they should not be able to leave it
+        if self.group.creatorID == mainUser.uid {
+            self.leaveGroupButton.isHidden = true
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -123,6 +129,20 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         self.present(inviteFriendsView, animated: true, completion: nil) */
+    }
+    
+    @IBAction func leaveGroupBuyttonPressed(_ sender: Any) {
+        // Show an alert asking to confirm leaving the group
+        let alert = UIAlertController(title: "Leave Group", message: "Are you sure you want to leave \(self.group.name)?", preferredStyle: .alert)
+        
+        let confirmActionButton = UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
+            // TODO: Connect leaving to the database
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in })
+        
+        alert.addAction(cancelAction)
+        alert.addAction(confirmActionButton)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

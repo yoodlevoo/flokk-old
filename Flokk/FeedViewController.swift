@@ -276,7 +276,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         cell.setCustomImage(image: post.image)
         
         // Set the poster's profile photo & crop it to a circle
-        cell.userImage.image = self.userProfilePhotos[post.posterHandle] ?? UIImage(named: "AddProfilePic")
+        cell.userImage.image = self.userProfilePhotos[post.posterID] ?? UIImage(named: "AddProfilePic")
         cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
         cell.userImage.clipsToBounds = true
         
@@ -347,7 +347,7 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
         actionSheetControllerIOS8.addAction(saveToFlokkButton)
         
         // Create the delete post button if the user has the permissions to
-        if self.group.creatorID == mainUser.uid {
+        if self.group.creatorID == mainUser.uid || post.posterID == mainUser.uid {
             let deletePostButton = UIAlertAction(title: "Delete Post", style: .default) { (_) in
                 // If this option is selected
                 

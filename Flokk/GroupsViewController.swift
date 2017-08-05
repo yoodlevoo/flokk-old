@@ -74,6 +74,7 @@ class GroupsViewController: UIViewController {
         
         // Make sure the user is loaded in first before checking the group count
         if mainUser != nil {
+            // Check if the no group icon needs to be shown or not
             self.checkGroupCount()
         }
         

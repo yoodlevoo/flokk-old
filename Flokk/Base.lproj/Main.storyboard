@@ -1217,6 +1217,9 @@
                                         <state key="normal" image="LeaveGroupButton">
                                             <color key="titleColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="leaveGroupBuyttonPressed:" destination="ZLj-Cl-JuV" eventType="touchUpInside" id="Ybn-Ga-Wba"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1311,6 +1314,7 @@
                     <connections>
                         <outlet property="groupImageView" destination="bgJ-TI-7aa" id="W88-Fu-nnA"/>
                         <outlet property="groupNameLabel" destination="4iX-hF-55t" id="kCo-wG-OEq"/>
+                        <outlet property="leaveGroupButton" destination="ccz-Wh-TmO" id="Y8I-hp-Lac"/>
                         <outlet property="tabBar" destination="bJV-5C-gpr" id="iv7-E3-KHS"/>
                         <outlet property="tableView" destination="n1u-3g-PHP" id="8Gg-K1-cUg"/>
                     </connections>

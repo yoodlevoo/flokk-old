@@ -13,7 +13,7 @@ import UIKit
 // This class will contain all of a posts likes, the image itself, and all of the comments on it.
 class Post {
     var poster: User! // The user who posted the image
-    var posterHandle: String! // The Handle of the user who posted the image, no need to retrieve user data we're not going to use
+    var posterID: String! // The Handle of the user who posted the image, no need to retrieve user data we're not going to use
     var image: UIImage // The image posted
     
     var comments = [Comment]() // Holds all the comments, hopefully stored in order
@@ -31,25 +31,16 @@ class Post {
     }
     
     init(posterHandle: String, image: UIImage, postID: String) {
-        self.posterHandle = posterHandle
+        self.posterID = posterHandle
         self.image = image
         self.id = postID
     }
     
     init(posterHandle: String, image: UIImage, postID: String, timestamp: Date) {
-        self.posterHandle = posterHandle
+        self.posterID = posterHandle
         self.image = image
         self.id = postID
         self.timestamp = timestamp
-    }
-    
-    func convertToData() -> [String : Any] {
-        var data = [String : Any]()
-        
-        data["poster"] = posterHandle
-        data["timestamp"] = timestamp.timeIntervalSince1970
-        
-        return data
     }
     
     /*
