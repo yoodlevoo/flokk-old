@@ -512,7 +512,7 @@
         <!--Groups-->
         <scene sceneID="bcU-22-3dx">
             <objects>
-                <viewController title="Groups" hidesBottomBarWhenPushed="YES" id="KFV-bB-sMD" customClass="GroupsViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Groups" id="KFV-bB-sMD" customClass="GroupsViewController" customModule="Flokk" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Mc9-UJ-Sf1"/>
                         <viewControllerLayoutGuide type="bottom" id="Ox1-Lt-1AU"/>

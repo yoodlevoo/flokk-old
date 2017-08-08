@@ -30,6 +30,7 @@ let MAX_POST_SIZE: Int64 = 1 * 4096 * 4096
 let BANNER_DURATION: TimeInterval = 3.0
 
 let RESIZED_ICON_WIDTH = CGFloat(337)
+let MAX_POST_WIDTH = CGFloat(337 * 2)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate {

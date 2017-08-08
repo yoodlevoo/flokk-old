@@ -33,7 +33,9 @@ class ConfirmUploadViewController: UIViewController {
         let imageRef = storage.ref.child("groups").child(group.id).child("posts") // Storage
         let key = postsRef.childByAutoId().key // Generate random ID for this post
         
-        self.image = imageView.image
+        // Resize the image to a certain size, 2 times the max resolution?
+        self.image = imageView.image?.resized(toWidth: MAX_POST_WIDTH)
+
         
         // Upload the full post image to Storage
         imageRef.child("\(key)/post.jpg").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
@@ -53,7 +55,7 @@ class ConfirmUploadViewController: UIViewController {
         }
         
         //let post = Post(poster: mainUser, image: self.imageView.image!, postID: key)
-        let post = Post(posterHandle: mainUser.handle, image: self.imageView.image!, postID: key, timestamp: Date(timeIntervalSinceReferenceDate: NSDate.timeIntervalSinceReferenceDate))
+        let post = Post(posterHandle: mainUser.uid, image: self.imageView.image!, postID: key, timestamp: Date(timeIntervalSinceReferenceDate: NSDate.timeIntervalSinceReferenceDate))
         
         // Search for this group's index - I don't want to have to do this and I don't think it's necessary
         let index = groups.index(where: { (item) -> Bool in
@@ -61,6 +63,7 @@ class ConfirmUploadViewController: UIViewController {
         })
         
         self.group.posts.append(post) // Add this post to the group
+        self.group.mostRecentPost = post.timestamp // Set the most recent post
         self.group.loadingPostIDs.append(post.id) // Add this id to the loading post id's, so the feed view doesn't try to load this photo
         self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate}) // Sort the post chronologically
         

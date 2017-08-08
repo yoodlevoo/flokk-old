@@ -9,6 +9,14 @@
 import Foundation
 import UIKit
 
+extension Date {
+    func getFormattedDate() -> String {
+        return ""
+    }
+    
+    
+}
+
 // Added two functions
 extension NSMutableAttributedString {
     @discardableResult func bold(_ text: String, _ size: Float) -> NSMutableAttributedString {

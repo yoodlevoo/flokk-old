@@ -19,7 +19,6 @@ class GroupsViewController: UIViewController {
     
     //var defaultGroups: [Group: UIImage] = [:] // Makes an empty dictionary
     var defaultGroups = [Group]() // An emptyarray of Groups - this is going to be a priorityqueue in a bit
-    var groupQueue = PriorityQueue<Group>(sortedBy: <) // Hopefully this doesn't get reset each time
     
     var refreshControl = UIRefreshControl()
     
@@ -227,6 +226,21 @@ extension GroupsViewController {
                                     
                                     // And we can finish loading the group
                                     let group = Group(id: groupID, name: groupName, icon: groupIcon!, memberIDs: Array(memberHandles.keys), postsData: postsData, creatorID: creatorHandle)
+                                    
+                                    var mostRecentPostStamp = 0.0
+                                    
+                                    // Check for the most recent post
+                                    for (postID, data) in postsData {
+                                        let timestamp = data["timestamp"] as! Double
+                                        
+                                        // If this post was "sooner"(greater than in nano/milliseconds), then this was more recent
+                                        if timestamp > mostRecentPostStamp {
+                                            mostRecentPostStamp = timestamp
+                                        }
+                                    }
+                                    
+                                    // Set the most recent post property for the group
+                                    group.mostRecentPost = Date(timeIntervalSinceReferenceDate: mostRecentPostStamp)
                                     
                                     // Attemp to load in the user handles that have been invited to this group already
                                     if let invitedUsers = values["invitedUsers"] as? [String : Bool] { // Also checks if there are any invited users or not
@@ -486,7 +500,7 @@ extension GroupsViewController {
                     let postID = snapshot.key
                     
                     let posterID = values["poster"] as! String
-                    let timestamp = NSDate(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
+                    let timestamp = Date(timeIntervalSinceReferenceDate: values["timestamp"] as! Double)
                     
                     // Add the post to the group's post data property
                     let matches = groups.filter({$0.id == groupID})
@@ -497,28 +511,29 @@ extension GroupsViewController {
                     data["poster"] = posterID
                     data["timestamp"] = timestamp.timeIntervalSinceReferenceDate
                 
-                    print("\n\n")
-                    print(group.postsData)
-                    
                     // Add the post data to the group
                     group.postsData[postID] = data
                     
-                    print("\n\n")
-                    print(group.postsData)
-                    //}
+                    // Set the most recent post
+                    group.mostRecentPost = timestamp
                     
                     if posterID != mainUser.uid { // Make sure we don't show a banner when the main user uploads a photo
+                        // Load the handle of the poster
                         let posterRef = database.ref.child("users").child(posterID).child("handle")
                         posterRef.observeSingleEvent(of: .value, with: { (snapshot) in
                             if let handle = snapshot.value as? String {
                                 // Create a banner to notify the user
                                 let groupName = self.groupDict[groupID]! // Load in the group ID
-                                let banner = Banner(title: "Post Added", subtitle: "@\(handle) uploaded a post to \(groupName)", image: UIImage(named: "Request to be Added New"), backgroundColor: TEAL_COLOR, didTapBlock: { // When tapped
+                                let banner = Banner(title: "Post Added", subtitle: "@\(handle) uploaded a post to \(groupName)", image: group.icon, backgroundColor: TEAL_COLOR, didTapBlock: { // When tapped
                                     // TODO: Go to the corresponding group
                                 })
                                 
                                 banner.dismissesOnTap = true
                                 banner.show(duration: BANNER_DURATION)
+                            }
+                            
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
                             }
                         })
                     }
@@ -534,14 +549,44 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! GroupTableViewCell
         
-        cell.groupTitleLabel?.text = groups[indexPath.row].name
+        let group = groups[indexPath.row]
+        
+        cell.groupTitleLabel?.text = group.name
         
         // Set the group icon 
-        cell.groupImageView?.image = groups[indexPath.row].icon
+        cell.groupImageView?.image = group.icon
         cell.groupImageView?.layer.cornerRadius = cell.groupImageView.frame.size.width / 2
         cell.groupImageView.clipsToBounds = true
         
         cell.tag = indexPath.row //or do i do indexPath.item
+        
+        // Check what we should set for the timeOfLastPost label
+        let calendar = Calendar.current
+        let date = group.mostRecentPost
+        // Check if the post was today
+        if calendar.isDateInToday(date) {
+            // Get the individual components from the most recent post
+            var hour = calendar.component(.hour, from: date)
+            let minutes = calendar.component(.minute, from: date)
+            
+            // check if this was in the AM or PM
+            var amPM = "AM"
+            if hour > 12 {
+                amPM = "PM"
+                hour -= 12
+            }
+            
+            cell.timeOfLastPostLabel.text = "\(hour):\(minutes) \(amPM)"
+        } else if calendar.isDateInTomorrow(date) {
+            cell.timeOfLastPostLabel.text = "Yesterday"
+        } else {
+            let month = calendar.component(.month, from: date)
+            let day = calendar.component(.day, from: date)
+            let year = calendar.component(.year, from: date)
+            
+            cell.timeOfLastPostLabel.text = "\(month)/\(day)/\(year)"
+        }
+        
         
         self.refreshControl.endRefreshing()
         

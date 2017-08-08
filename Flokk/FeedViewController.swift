@@ -362,11 +362,27 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
                     self.tableView.reloadData()
                 }
                 
+                print("\n\ngroups/\(self.group.id)/posts/\(post.id!) \n\n")
+                
                 // Remove it from the group's postdata in the database
-                let groupRef = database.ref.child("groups/\(self.group.id)/posts/\(post.id)")
+                //let groupRef = database.ref.child("groups/\(self.group.id)/posts/\(post.id)")
+                let groupRef = database.ref.child("groups").child(self.group.id).child("posts").child(post.id!)
                 groupRef.removeValue()
                 
+                // Remove the post(uncompressed) from the group's storage
+                let storageRef = storage.ref.child("groups/\(self.group.id)/posts/\(post.id!)")
+                storageRef.child("post.jpg").delete(completion: { (error) in
+                    if error != nil {
+                        print(error!)
+                    }
+                })
                 
+                // Delete the compressed image
+                storageRef.child("postCompressed.jpg").delete(completion: { (error) in
+                    if error != nil {
+                        print(error!)
+                    }
+                })
             }
             
             // Add this button to the action sheet controller that pops up

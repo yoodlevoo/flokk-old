@@ -31,11 +31,11 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-       // self.refreshControl.tintColor =
+        //self.refreshControl.tintColor =
         
         self.activityIndicator.activityIndicatorViewStyle = .whiteLarge
         self.activityIndicator.frame = CGRect(x: self.tableView.frame.width / 2 - 30, y: 0.0, width: 60, height: 60)
-//        self.activityIndicator.scale(factor: 1.25)
+        //self.activityIndicator.scale(factor: 1.25)
         //self.activityIndicator.center = self.tableView.center
         self.activityIndicator.color = TEAL_COLOR
         self.activityIndicator.hidesWhenStopped =  true // what does this do
@@ -120,15 +120,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func inviteFriendButtonPressed(_ sender: Any) {
-        /*
-        // Check if any friends not in this group are loaded - mainUser.friends. actually nah
-        let inviteFriendsView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InviteFriendsTableViewController") as! InviteFriendsTableViewController
-        var loadedUsers = 0
         
-        
-        }
-        
-        self.present(inviteFriendsView, animated: true, completion: nil) */
     }
     
     @IBAction func leaveGroupBuyttonPressed(_ sender: Any) {
@@ -136,13 +128,26 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         let alert = UIAlertController(title: "Leave Group", message: "Are you sure you want to leave \(self.group.name)?", preferredStyle: .alert)
         
         let confirmActionButton = UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
-            // TODO: Connect leaving to the database
+            // Remove the user from the members data from the group's database
+            database.ref.child("groups/\(self.group.id)/members").child(mainUser.uid).removeValue()
+            
+            // Remove the group from the main user's group's data in the database
+            database.ref.child("users").child(mainUser.uid).child("groups").child(self.group.id).removeValue()
+            
+            // Remove the group from the main user's group array locally
+            groups.remove(at: groups.index(where: {$0.id == self.group.id })!)
+            mainUser.groups.remove(at: mainUser.groups.index(where: {$0.id == self.group.id })!)
+            
+            // Remove the group from the main user's groupIDs array locally
+            mainUser.groupIDs.remove(at: mainUser.groupIDs.index(where: {$0 == self.group.id})!)
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in })
         
         alert.addAction(cancelAction)
         alert.addAction(confirmActionButton)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

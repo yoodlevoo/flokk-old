@@ -36,6 +36,8 @@ class Group {
     
     var numNewPosts: Int! //the amount of new posts the mainUser has missed from this group
     
+    var mostRecentPost = Date() // The Date of the most recent post
+    
     init() {
         self.id = "fillerID"
         self.name = "fillerName"
