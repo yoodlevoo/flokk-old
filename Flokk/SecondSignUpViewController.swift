@@ -159,7 +159,7 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
         
         self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
         
-        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2 - 23, y: self.view.frame.height / 3, width: 30 + 46 + self.strLabel.frame.size.width, height: 46)
+        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width - 46 - 30, y: self.view.frame.height / 3, width: 30 + 46 + self.strLabel.frame.size.width, height: 46)
         self.effectView.layer.cornerRadius = 15
         self.effectView.layer.masksToBounds = true
         
@@ -186,7 +186,7 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
         
         self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
         
-        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width/2, y: self.view.frame.height / 3, width: 20 + self.strLabel.frame.size.width, height: 46)
+        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width - 20, y: self.view.frame.height / 3, width: 20 + self.strLabel.frame.size.width, height: 46)
         self.effectView.layer.cornerRadius = 15
         self.effectView.layer.masksToBounds = true
         

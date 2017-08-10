@@ -42,12 +42,12 @@ extension PersonalProfilePageViewController: PageboyViewControllerDataSource {
         self.bar.items = [TabmanBarItem(title: "Saved"), TabmanBarItem(title: "Uploaded")] // Configure the bar
         
         // Initialize the first child page - your saved posts
-        let viewController1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileSavedPageCollectionView") as! PersonalProfileSavedPageCollectionView
+        let viewController1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileSavedPageView") as! PersonalProfileSavedPageView
         
         viewControllerPages.append(viewController1)
         
         // Initialize the second child page - your uploaded posts
-        let viewController2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileUploadedPageCollectionView") as! PersonalProfileUploadedPageCollectionView
+        let viewController2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PersonalProfileUploadedPageView") as! PersonalProfileUploadedPageView
         
         viewControllerPages.append(viewController2)
         

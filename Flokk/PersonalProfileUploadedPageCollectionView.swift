@@ -9,15 +9,21 @@
 import UIKit
 
 // Your uploaded posts - basically the exact same thing as the saved page view
-class PersonalProfileUploadedPageCollectionView: UICollectionViewController {
+class PersonalProfileUploadedPageView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var posts = [Post]()
     
     var activityIndicator = UIActivityIndicatorView()
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var noUploadedPostsLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.clearsSelectionOnViewWillAppear = true // It might default to this
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        
+        //self.clearsSelectionOnViewWillAppear = true // It might default to this
         
         self.collectionView?.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
@@ -57,6 +63,12 @@ class PersonalProfileUploadedPageCollectionView: UICollectionViewController {
             }
         }
         
+        if mainUser.uploadedPostsData.count == 0 {
+            self.noUploadedPostsLabel.isHidden = false
+        } else {
+            self.noUploadedPostsLabel.isHidden = true
+        }
+        
         self.collectionView?.reloadData()
       //  self.activityIndicator.stopAnimating()
     }
@@ -65,15 +77,15 @@ class PersonalProfileUploadedPageCollectionView: UICollectionViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "default", for: indexPath) as! PersonalPostsCollectionViewCell
         
         let post = posts[indexPath.item]
