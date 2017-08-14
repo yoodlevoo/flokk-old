@@ -34,7 +34,7 @@ class ConfirmUploadViewController: UIViewController {
         let key = postsRef.childByAutoId().key // Generate random ID for this post
         
         // Resize the image to a certain size, 2 times the max resolution?
-        self.image = imageView.image?.resized(toWidth: MAX_POST_WIDTH)
+        self.image = imageView.image?.resized(toWidth: 10)
 
         
         // Upload the full post image to Storage
