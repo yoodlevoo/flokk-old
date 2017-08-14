@@ -141,7 +141,7 @@ class FeedViewController: UIViewController {
                     self.group.loadingPostIDs.append(id) // Add this post to the loading posts IDs array to global groups array
                     
                     // Load in the basic data for this post
-                    let posterHandle = data["poster"] as! String // Handle for who uploaded this post
+                    let posterID = data["poster"] as! String // Handle for who uploaded this post
                     let timestamp = Date(timeIntervalSinceReferenceDate: (data["timestamp"] as! Double)) // When this post was uploaded
                     //print("timestamp \(timestamp)")
                     
@@ -151,21 +151,39 @@ class FeedViewController: UIViewController {
                         if error == nil { // If there wasn't an error
                             let postImage = UIImage(data: data!)
                             
-                            // Generate the post
-                            let post = Post(posterHandle: posterHandle, image: postImage!, postID: id, timestamp: timestamp)
+                            // Load the user's full name and handle too
+                            let userRef = database.ref.child("users").child(posterID)
+                            userRef.child("fullName").observeSingleEvent(of: .value, with: { (nameSnapshot) in
+                                if let fullName = nameSnapshot.value as? String {
+                                    
+                                    // Load the handle
+                                    userRef.child("handle").observeSingleEvent(of: .value, with: { (handleSnapshot) in
+                                        if let handle = handleSnapshot.value as? String {
+                                            // Create the user
+                                            let user = User(uid: posterID, handle: handle, fullName: fullName)
+                                            
+                                            // Generate the post
+                                            let post = Post(poster: user, image: postImage!, postID: id, timestamp: timestamp)
+                                            
+                                            // Store it in the various arrays
+                                            self.group.posts.append(post)
+                                            
+                                            // Sort the group posts by the upload date, with the more recent posts first
+                                            self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate })
+                                            
+                                            self.loadedPosts = self.group.posts
+                                            
+                                            // Reload the table view
+                                            DispatchQueue.main.async {
+                                                self.tableView.reloadData()
+                                                self.refreshControl.endRefreshing()
+                                            }
+                                        }
+                                    })
+                                }
+                            })
                             
-                            // Store it in the various arrays
-                            self.group.posts.append(post)
                             
-                            // Sort the group posts by the upload date, with the more recent posts first
-                            self.group.posts.sort(by: { $0.timestamp.timeIntervalSinceReferenceDate < $1.timestamp.timeIntervalSinceReferenceDate })
-                            
-                            self.loadedPosts = self.group.posts
-                            
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                                self.refreshControl.endRefreshing()
-                            }
                         } else { // If there was an error
                             print(error!)
                             // Remove the post from the list of loading ids, so we can attempt to load it later

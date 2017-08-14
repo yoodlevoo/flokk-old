@@ -43,6 +43,14 @@ class Post {
         self.timestamp = timestamp
     }
     
+    init(poster: User, image: UIImage, postID: String, timestamp: Date) {
+        self.posterID = poster.uid
+        self.poster = poster
+        self.image = image
+        self.id = postID
+        self.timestamp = timestamp
+    }
+    
     /*
     //find the user from the participants in this group just by using their handle
     //when we have the database we can reduce storage by getting this frk

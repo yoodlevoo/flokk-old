@@ -45,7 +45,7 @@ class NotificationsViewController: UIViewController {
 
         // Check every time to see if there are any notifications
         // To prevent the no notifications icon from being displayed when it should not
-        if !self.notifications.isEmpty {
+        if !self.notifications.isEmpty && mainUser.notifications.isEmpty {
             // Hide the no notifications icon
             self.noNotificationsLabel.isHidden = true
             self.noNotificationsImageView.isHidden = true

@@ -2395,14 +2395,8 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TCI-CC-gtk">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="163"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="163" id="yRU-bg-19b"/>
-                                </constraints>
-                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="79" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wkr-bc-EJg">
-                                <rect key="frame" x="0.0" y="164" width="375" height="390"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.81168407200000003" green="0.8118211031" blue="0.81166607140000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2449,28 +2443,35 @@
                             </tableView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="say something..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Epa-jn-qJP">
                                 <rect key="frame" x="0.0" y="553" width="375" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="it9-Ca-zHZ"/>
+                                </constraints>
                                 <color key="textColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="yes" keyboardAppearance="alert" returnKeyType="send"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No comments." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6up-T3-m7w">
+                                <rect key="frame" x="125.5" y="290" width="124.5" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="TCI-CC-gtk" firstAttribute="leading" secondItem="FZ1-KK-cdr" secondAttribute="leading" id="8SK-9Q-AEJ"/>
+                            <constraint firstItem="wkr-bc-EJg" firstAttribute="bottom" secondItem="rC6-E3-ntc" secondAttribute="top" id="6Uo-oK-57L"/>
                             <constraint firstAttribute="bottom" secondItem="Epa-jn-qJP" secondAttribute="bottom" constant="20" symbolic="YES" id="8cg-An-WZ7"/>
-                            <constraint firstItem="wkr-bc-EJg" firstAttribute="centerX" secondItem="Epa-jn-qJP" secondAttribute="centerX" id="DfF-mf-GF7"/>
-                            <constraint firstItem="wkr-bc-EJg" firstAttribute="bottom" secondItem="rC6-E3-ntc" secondAttribute="top" id="GLc-DM-l0a"/>
-                            <constraint firstItem="wkr-bc-EJg" firstAttribute="top" secondItem="TCI-CC-gtk" secondAttribute="bottom" constant="1" id="JMP-ox-ezf"/>
-                            <constraint firstAttribute="trailing" secondItem="TCI-CC-gtk" secondAttribute="trailing" id="ag7-WZ-5ng"/>
-                            <constraint firstItem="TCI-CC-gtk" firstAttribute="trailing" secondItem="wkr-bc-EJg" secondAttribute="trailing" id="nC3-hW-A9v"/>
+                            <constraint firstItem="wkr-bc-EJg" firstAttribute="leading" secondItem="Epa-jn-qJP" secondAttribute="leading" id="LdL-dR-L5n"/>
+                            <constraint firstItem="6up-T3-m7w" firstAttribute="centerY" secondItem="FZ1-KK-cdr" secondAttribute="centerY" id="eIT-wI-Spd"/>
+                            <constraint firstAttribute="trailing" secondItem="wkr-bc-EJg" secondAttribute="trailing" id="nNZ-E5-KCm"/>
                             <constraint firstItem="Epa-jn-qJP" firstAttribute="leading" secondItem="FZ1-KK-cdr" secondAttribute="leadingMargin" constant="-16" id="nbj-Yj-agv"/>
-                            <constraint firstItem="TCI-CC-gtk" firstAttribute="leading" secondItem="wkr-bc-EJg" secondAttribute="leading" id="qg4-w2-jHK"/>
-                            <constraint firstItem="TCI-CC-gtk" firstAttribute="top" secondItem="lM2-P9-Kw5" secondAttribute="bottom" id="u9t-Fr-d9b"/>
+                            <constraint firstItem="wkr-bc-EJg" firstAttribute="top" secondItem="lM2-P9-Kw5" secondAttribute="bottom" id="vUa-Vv-jqA"/>
+                            <constraint firstItem="6up-T3-m7w" firstAttribute="centerX" secondItem="FZ1-KK-cdr" secondAttribute="centerX" id="z5f-rg-baX"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Comments" id="oT3-g3-95p">
-                        <barButtonItem key="rightBarButtonItem" image="ellipse-3" id="H4C-y0-slr">
-                            <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem key="rightBarButtonItem" title="Profile" id="H4C-y0-slr">
+                            <color key="tintColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="posterProfile:" destination="n5W-Aj-Eyg" id="90j-On-QPe"/>
                             </connections>
@@ -2479,7 +2480,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="keyboardHeightLayoutConstraint" destination="8cg-An-WZ7" id="34J-cW-j9m"/>
-                        <outlet property="postView" destination="TCI-CC-gtk" id="RLW-xg-orU"/>
+                        <outlet property="noCommentsLabel" destination="6up-T3-m7w" id="F6G-vf-2JB"/>
                         <outlet property="profilePhotoBarButton" destination="H4C-y0-slr" id="yDU-T3-S0a"/>
                         <outlet property="tableView" destination="wkr-bc-EJg" id="bta-rK-kDP"/>
                         <outlet property="textField" destination="Epa-jn-qJP" id="XbD-Mv-2bx"/>

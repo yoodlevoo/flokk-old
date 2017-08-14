@@ -9,19 +9,24 @@
 import UIKit
 
 class AddCommentViewController: UIViewController {
-    @IBOutlet weak var postView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var profilePhotoBarButton: UIBarButtonItem!
+    @IBOutlet weak var postedByLabel: UILabel!
+    @IBOutlet weak var postedDateLabel: UILabel!
+    @IBOutlet weak var noCommentsLabel: UILabel!
+    
     @IBOutlet var keyboardHeightLayoutConstraint : NSLayoutConstraint?
     
     var loadedComments = [Comment]()
     
     var post: Post! // A copy of the post
-    var postIndex: Int! // The index of the post in the post array
     var group: Group!
     
     var userProfilePhotos = [String : UIImage]() // Dict of all of the according profile photos
+    
+    // If the comments have been checked yet
+    private var checkedForComments = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +37,28 @@ class AddCommentViewController: UIViewController {
         self.tableView.dataSource = self
         self.textField.delegate = self
         
-        self.postView.image = post.image
+        //self.postedByLabel.text = "Posted by \(post.poster.fullName)"
+
+        // Get the date the post was uploaded
+        let date = post.timestamp!
+        let calendar = Calendar.current
+        
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let year = calendar.component(.year, from: date)
+        
+        // Get the individual components from the most recent post
+        var hour = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
+        
+        // check if this was in the AM or PM
+        var amPM = "AM"
+        if hour > 12 {
+            amPM = "PM"
+            hour -= 12
+        }
+        
+        //self.postedDateLabel.text = "\(month)/\(day)/\(year) at \(hour):\(minutes) \(amPM)"
         
         // Tells the notification to
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
@@ -82,6 +108,20 @@ class AddCommentViewController: UIViewController {
                 }
             }
         })
+        
+        self.checkedForComments = true
+        
+        self.checkCommentsCount()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // If we've already checked for comments
+        if self.checkedForComments {
+            // Check if we should show the no comments icon or not
+            self.checkCommentsCount()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -90,6 +130,15 @@ class AddCommentViewController: UIViewController {
     
     @IBAction func posterProfile(_ sender: Any) {
         
+    }
+    
+    // Check if we should show the no comments icon or not
+    private func checkCommentsCount() {
+        if self.loadedComments.count == 0 {
+            self.noCommentsLabel.isHidden = false
+        } else {
+            self.noCommentsLabel.isHidden = true
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

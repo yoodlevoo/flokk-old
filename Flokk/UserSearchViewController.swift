@@ -122,7 +122,7 @@ extension UserSearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.profilePhotoView.clipsToBounds = true
         
         cell.fullNameLabel.text = user.fullName
-        cell.handleLabel.text = user.handle
+        cell.handleLabel.text = "@\(user.handle)"
         
         return cell
     }
