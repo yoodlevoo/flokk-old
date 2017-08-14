@@ -589,7 +589,7 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.timeOfLastPostLabel.text = "Yesterday"
         } else if date.timeIntervalSinceReferenceDate == 0 {
             // If there are no posts, dont put anything there
-            cell.timeOfLastPostLabel = ""
+            cell.timeOfLastPostLabel.text = ""
         } else {
             let month = calendar.component(.month, from: date)
             let day = calendar.component(.day, from: date)

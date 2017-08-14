@@ -26,7 +26,7 @@ class PersonalProfileUploadedPageView: UIViewController, UICollectionViewDelegat
         //self.clearsSelectionOnViewWillAppear = true // It might default to this
         
         self.collectionView?.addSubview(self.activityIndicator)
-        self.activityIndicator.startAnimating()
+        //self.activityIndicator.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
