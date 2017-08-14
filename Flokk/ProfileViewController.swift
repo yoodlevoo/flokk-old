@@ -34,6 +34,8 @@ class ProfileViewController: UIViewController {
     
     var refreshControl = UIRefreshControl()
     
+    fileprivate var alert = Alert()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -169,6 +171,8 @@ class ProfileViewController: UIViewController {
             // Add this user to the main user's outgoing request array
             mainUser.outgoingFriendRequests.append(self.user.uid)
             
+            // Notify the user that the request was sent
+            self.alert.showDisappearingAlert(self.view, "Request Sent!")
             
         } else { // If the main user requested to be this user's friend, "undo" the request
             // Remove the incoming request for this user
@@ -249,6 +253,9 @@ class ProfileViewController: UIViewController {
         self.alreadyFriends = true
         self.acceptFriendRequestButton.isHidden = true
         self.denyFriendRequestButton.isHidden = true
+        
+        // Notify the user that a friend request was accepted
+        self.alert.showDisappearingAlert(self.view, "Request Accepted!")
     }
     
     // This button will only be shown if the local(self.) user has requested to be friends with the main User
@@ -279,6 +286,9 @@ class ProfileViewController: UIViewController {
                 }
             }
         })
+        
+        // Notify the user that a friend request was denied
+        self.alert.showDisappearingAlert(self.view, "Request Denied.")
     }
     
     @IBAction func profileSettings(_ sender: AnyObject) {
@@ -356,7 +366,7 @@ class ProfileViewController: UIViewController {
     }
 }
 
-// Groups Table View Functions
+// MARK: Groups Table View Functions
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let user = user {

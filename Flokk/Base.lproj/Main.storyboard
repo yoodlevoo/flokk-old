@@ -3261,7 +3261,7 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="rbC-h3-Wrf">
+                            <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="rbC-h3-Wrf">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="I4c-Ma-Fqj"/>
@@ -3274,7 +3274,7 @@
                                 </scopeButtonTitles>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="82" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1Kk-un-VbA">
-                                <rect key="frame" x="0.0" y="44" width="375" height="510"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -3335,7 +3335,7 @@
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="rbC-h3-Wrf" secondAttribute="trailing" id="FFK-hq-dLd"/>
-                            <constraint firstItem="1Kk-un-VbA" firstAttribute="top" secondItem="rbC-h3-Wrf" secondAttribute="bottom" id="J5Y-I7-bf6"/>
+                            <constraint firstItem="1Kk-un-VbA" firstAttribute="top" secondItem="rbC-h3-Wrf" secondAttribute="bottom" constant="-44" id="J5Y-I7-bf6"/>
                             <constraint firstItem="rbC-h3-Wrf" firstAttribute="top" secondItem="uff-HS-moB" secondAttribute="bottom" id="a8h-PJ-iHy"/>
                             <constraint firstAttribute="trailing" secondItem="1Kk-un-VbA" secondAttribute="trailing" id="ba7-vV-Er5"/>
                             <constraint firstItem="1Kk-un-VbA" firstAttribute="leading" secondItem="9OD-zD-yg6" secondAttribute="leading" id="pzn-37-hTM"/>
@@ -3359,7 +3359,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vDq-qa-Lej" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Slm-R5-n0r" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1246" y="-754"/>
+            <point key="canvasLocation" x="1245.5999999999999" y="-754.27286356821594"/>
         </scene>
         <!--CreatorGroupSettings-->
         <scene sceneID="3Zv-3A-lKB">
@@ -4160,7 +4160,7 @@
                                             </cells>
                                         </collectionView>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstItem="fYB-PP-zEq" firstAttribute="centerY" secondItem="QYK-uv-fLP" secondAttribute="centerY" id="1Pt-qF-Pnx"/>
                                         <constraint firstItem="fYB-PP-zEq" firstAttribute="centerX" secondItem="QYK-uv-fLP" secondAttribute="centerX" id="FYe-Mp-wrT"/>
@@ -4195,13 +4195,13 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Uploaded Posts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5B-EF-DhA">
-                                <rect key="frame" x="113.5" y="188" width="147.5" height="20.5"/>
+                                <rect key="frame" x="113" y="188" width="147.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="AkW-qO-3Ju" secondAttribute="trailing" id="3ED-uI-u6q"/>
                             <constraint firstItem="AkW-qO-3Ju" firstAttribute="bottom" secondItem="kDK-fd-W7C" secondAttribute="top" id="FZO-OI-wYl"/>
@@ -4264,8 +4264,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ME7-O5-4bK"/>
-        <segue reference="owq-mU-2cS"/>
-        <segue reference="tEb-ND-eC4"/>
+        <segue reference="kAF-Jz-8br"/>
+        <segue reference="sMK-Mq-ip7"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -22,6 +22,8 @@ class SignInViewController: UIViewController {
     var activityIndicator = UIActivityIndicatorView()
     var strLabel = UILabel()
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    
+    fileprivate var alert = Alert()
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,14 +68,14 @@ class SignInViewController: UIViewController {
         var email = usernameEntry.text // Get the entered email
         var password = passwordEntry.text // Get the entered password
         
-        self.showActivityIndicator("Attempting to sign in")
+        self.alert.showActivityIndicator(self.view, "Attempting to sign in")
         
         // Authenticate and sign the user in - this can be simplified a lot by adding defaultsd
         FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil { // If there wasn't an error
                 if let user = user { // Basically just removes the "optional" from user (so there's no need for doing "(user?.uid)!")
-                    self.removeActivityIndicator()
-                    self.showActivityIndicator("Success! Loading data...")
+                    self.alert.removeActivityIndicator()
+                    self.alert.showActivityIndicator(self.view, "Success! Loading data...")
                     
                     // Get the user data from their handle
                     database.ref.child("users").child(user.uid).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -113,31 +115,20 @@ class SignInViewController: UIViewController {
                                 self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
                             })
                         } else { // If we couldnt load the user data into a dict, there was an error
-                            self.removeActivityIndicator()
-                            self.showAlert("There was an error logging in.")
+                            self.alert.removeActivityIndicator()
+                            self.alert.showDisappearingAlert(self.view, "There was an error logging in.")
                         }
                     })
                 }
             } else { // If there was an error, handle it
                 print(error!)
                 
-                self.removeActivityIndicator() // Remove the activity indicator alert when there was an error
+                self.alert.removeActivityIndicator() // Remove the activity indicator alert when there was an error
                 
                 if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                     case .errorCodeUserNotFound:
-                        self.showAlert("Invalid Email")
-                        
-                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
-                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
-                            
-                        }, completion: { (completed) in
-                            UIView.animate(withDuration: 2.0, animations: {
-                                self.effectView.alpha = 0
-                            }, completion: { (completed) in
-                                self.removeActivityIndicator()
-                            })
-                        })
+                        self.alert.showDisappearingAlert(self.view, "Invalid Email")
                         
                         break
                     case .errorCodeInvalidCredential:
@@ -145,47 +136,15 @@ class SignInViewController: UIViewController {
                         
                         break
                     case .errorCodeInvalidEmail: // If the user entered an invalid email
-                        self.showAlert("Invalid email!")
-                        
-                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
-                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
-                        
-                        }, completion: { (completed) in
-                            UIView.animate(withDuration: 2.0, animations: {
-                                self.effectView.alpha = 0
-                            }, completion: { (completed) in
-                                self.removeActivityIndicator()
-                            })
-                        })
+                        self.alert.showDisappearingAlert(self.view, "Invalid email!")
                         
                         break
                     case .errorCodeWrongPassword: // If the user entered an invalid password
-                        self.showAlert("Incorrect password!")
-                        
-                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
-                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
-                        }, completion: { (completed) in
-                            UIView.animate(withDuration: 2.0, animations: {
-                                self.effectView.alpha = 0
-                            }, completion: { (completed) in
-                                self.removeActivityIndicator()
-                            })
-                        })
-                        
+                        self.alert.showDisappearingAlert(self.view, "Incorrect password!")
                         
                         break
                     case .errorCodeNetworkError: // If there was a network error
-                        self.showAlert("Network error!")
-                        
-                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
-                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
-                        }, completion: { (completed) in
-                            UIView.animate(withDuration: 2.0, animations: {
-                                self.effectView.alpha = 0
-                            }, completion: { (completed) in
-                                self.removeActivityIndicator()
-                            })
-                        })
+                        self.alert.showDisappearingAlert(self.view, "Network error!")
                         
                         break
                     default: break

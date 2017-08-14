@@ -88,6 +88,7 @@
 		8787EA4C1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4B1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift */; };
 		8787EA4E1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */; };
 		8787EA531F1EF529005E045E /* PersonalPostsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA521F1EF529005E045E /* PersonalPostsCollectionViewCell.swift */; };
+		87E1C2CC1F3F614600005ABD /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E1C2CB1F3F614600005ABD /* Alert.swift */; };
 		87E2A8851F2589F50040255F /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E2A8841F2589F50040255F /* ImageUtils.swift */; };
 		87E2A8871F2B833E0040255F /* OpenNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E2A8861F2B833E0040255F /* OpenNavigationViewController.swift */; };
 		FF68FB30F333858091D73795 /* Pods_FlokkUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08116963DDC32F6213EF11B5 /* Pods_FlokkUITests.framework */; };
@@ -203,6 +204,7 @@
 		8787EA4B1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileSavedPageCollectionView.swift; sourceTree = "<group>"; };
 		8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileUploadedPageCollectionView.swift; sourceTree = "<group>"; };
 		8787EA521F1EF529005E045E /* PersonalPostsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalPostsCollectionViewCell.swift; sourceTree = "<group>"; };
+		87E1C2CB1F3F614600005ABD /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		87E2A8841F2589F50040255F /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
 		87E2A8861F2B833E0040255F /* OpenNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenNavigationViewController.swift; sourceTree = "<group>"; };
 		A68DF56A284B426BCD7F3944 /* Pods_FlokkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlokkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -332,6 +334,7 @@
 		15C826F41E858844003EE6E4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				87E1C2CB1F3F614600005ABD /* Alert.swift */,
 				15C826921E8587EF003EE6E4 /* BinaryHeap.swift */,
 				15C826981E8587EF003EE6E4 /* Database.swift */,
 				15C8269B1E8587EF003EE6E4 /* FileUtils.swift */,
@@ -811,6 +814,7 @@
 				15C826D11E8587EF003EE6E4 /* ImageScrollView.swift in Sources */,
 				15C826E51E8587EF003EE6E4 /* Post.swift in Sources */,
 				150789E21E859EFD003C6FB3 /* SlideDownAnimator.swift in Sources */,
+				87E1C2CC1F3F614600005ABD /* Alert.swift in Sources */,
 				8787EA531F1EF529005E045E /* PersonalPostsCollectionViewCell.swift in Sources */,
 				152F02281EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift in Sources */,
 				15C826D21E8587EF003EE6E4 /* ImageTransition.swift in Sources */,

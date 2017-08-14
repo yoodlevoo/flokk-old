@@ -47,9 +47,12 @@ class NotificationsViewController: UIViewController {
         // To prevent the no notifications icon from being displayed when it should not
         if !self.notifications.isEmpty {
             // Hide the no notifications icon
-            noNotificationsLabel.isHidden = true
-            noNotificationsImageView.isHidden = true
+            self.noNotificationsLabel.isHidden = true
+            self.noNotificationsImageView.isHidden = true
             self.refreshControl.endRefreshing()
+        } else {
+            self.noNotificationsLabel.isHidden = false
+            self.noNotificationsImageView.isHidden = false
         }
         
         // Check if there is a group already selected

@@ -55,15 +55,12 @@ class GroupsViewController: UIViewController {
             
             // Check to see if we should show the "no group" icon
             self.checkGroupCount()
-        } else {
-            // Segue to the Open/Initial/Title Screen View Controller
-            /*
-            let VC1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OpenViewController") as! OpenViewController
-            let navController = OpenNavigationViewController(rootViewController: VC1) // Creating a navigation controller with VC1 at the root of the navigation stack.
-            self.present(navController, animated:true, completion: nil)
-             */
             
+            self.sortGroups()
+        } else { // If the user is not logged in at all
+            // Segue to the Open/Initial/Title Screen View Controller
             let openNavView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OpenNavigationViewController") as! OpenNavigationViewController
+            
             self.present(openNavView, animated: false, completion: nil)
         }
     }
@@ -75,6 +72,9 @@ class GroupsViewController: UIViewController {
         if mainUser != nil {
             // Check if the no group icon needs to be shown or not
             self.checkGroupCount()
+            
+            // Sort the groups, with the group with the most recent post first
+            self.sortGroups()
         }
         
         // If the tab bar was previously hidden(like from the feed view), unhide it
@@ -116,6 +116,9 @@ class GroupsViewController: UIViewController {
         if mainUser.groupIDs.count == 0 { // If the user has no groups. mainUser.groupIDs should always be loaded in
             self.noGroupsView.isHidden = false
             self.noGroupsLabel.isHidden = false
+            
+            // Make sure the activity indicator/refresh control isn't activated when there's no groups
+            self.refreshControl.endRefreshing()
         } else {
             self.noGroupsView.isHidden = true
             self.noGroupsView.isHidden = true
@@ -541,6 +544,11 @@ extension GroupsViewController {
                 }
             })
         }
+    }
+    
+    // Sort the group, with the group with the most recent post first
+    func sortGroups() {
+        groups.sort(by: {$0.mostRecentPost.timeIntervalSinceReferenceDate > $1.mostRecentPost.timeIntervalSinceReferenceDate})
     }
 }
 

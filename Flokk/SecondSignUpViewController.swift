@@ -21,10 +21,7 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
     var email: String!
     var password: String!
     
-    // Activity alert variables
-    var activityIndicator = UIActivityIndicatorView()
-    var strLabel = UILabel()
-    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    fileprivate var alert = Alert()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +58,7 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
         // Create this user, these calls aren't asynchronous so no worries using it as a function - I think
         //database.createNewUser(email: email, password: passwordField.text!, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
         
-        self.showActivityIndicator("Uploading data to the server...")
+        self.alert.showActivityIndicator(self.view, "Uploading data to the server...")
         
         FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
             if error == nil { // If there wasn't an error
@@ -77,19 +74,19 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                     userDataRef.child("email").setValue(self.email)
                     userDataRef.child("handle").setValue(handle)
                     
-                    self.removeActivityIndicator()
-                    self.showActivityIndicator("Success! Uploading the profile photo...")
+                    self.alert.removeActivityIndicator()
+                    self.alert.showActivityIndicator(self.view, "Success! Uploading the profile photo...")
                     
-                    // Compress the image by 50%
-                    let reducedImage = profilePhoto?.resized(withPercentage: 0.5)
+                    let compressedIcon = profilePhoto?.resized(toWidth: RESIZED_ICON_WIDTH)
+                    let furtherCompresedIcon = profilePhoto?.resized(toWidth: RESIZED_ICON_WIDTH / 2.0)
                     // Attempt to upload the compressed image to the database
-                    storage.ref.child("users").child(user.uid).child("profilePhotoIcon.jpg").put((reducedImage?.convertJpegToData())!, metadata: nil) { (metadata, error) in
+                    storage.ref.child("users").child(user.uid).child("profilePhotoIcon.jpg").put((furtherCompresedIcon?.convertJpegToData())!, metadata: nil) { (metadata, error) in
                         
                         // Attempt to upload this user's profilePhoto to the database
-                        storage.ref.child("users").child(user.uid).child("profilePhoto.jpg").put(profilePhoto!.convertJpegToData(), metadata: nil) { (metadata, error) in
+                        storage.ref.child("users").child(user.uid).child("profilePhoto.jpg").put((compressedIcon?.convertJpegToData())!, metadata: nil) { (metadata, error) in
                             if error == nil { // If there wasn't an error
-                                self.removeActivityIndicator()
-                                self.showActivityIndicator("Success! Logging in...")
+                                self.alert.removeActivityIndicator()
+                                self.alert.showActivityIndicator(self.view, "Success! Logging in...")
                                 
                                 // After creating the user, load it into the mainUser directly,
                                 // instead of uploading it then downloading it again(b/c thats just stupid)
@@ -110,95 +107,39 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                 }
             } else {
                 print(error!)
-                self.removeActivityIndicator()
+                self.alert.removeActivityIndicator()
                 
                 if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                     case .errorCodeInvalidEmail: // If the email isn't valid
-                        self.showAlert("Invalid Email")
+                        self.alert.showDisappearingAlert(self.view, "Invalid Email")
                         
                         break
                     case .errorCodeWeakPassword: // If the password isn't strong enough
-                        self.showAlert("Weak Password")
+                        self.alert.showDisappearingAlert(self.view, "Weak Password")
                         
                         break
                     case .errorCodeAccountExistsWithDifferentCredential: // If this account already exists
-                        self.showAlert("Account Exists")
+                        self.alert.showDisappearingAlert(self.view, "Account Exists")
                         
                         break
                     
                     case .errorCodeNetworkError: // If there was a network error. This should be checked like everywhere
-                        self.showAlert("Network Error")
+                        self.alert.showDisappearingAlert(self.view, "Network Error")
                         
                         break
                     case .errorCodeEmailAlreadyInUse:
-                        self.showAlert("Email Already In Use.")
+                        self.alert.showDisappearingAlert(self.view, "Email Already In Use.")
                         
                         break
                     default:
-                        self.showAlert("Error! Please Try Again.")
+                        self.alert.showDisappearingAlert(self.view, "Error! Please Try Again.")
                         
                         break
                     }
                 }
             }
         })
-    }
-    
-    // Show an alert with an activity indicator
-    func showActivityIndicator(_ title: String) {
-        self.strLabel.removeFromSuperview()
-        self.activityIndicator.removeFromSuperview()
-        self.effectView.removeFromSuperview()
-        self.effectView.alpha = 1 // Just in case it was transparent
-        
-        self.strLabel = UILabel(frame: CGRect(x: 50, y: 0, width: 160, height: 46))
-        self.strLabel.text = title
-        self.strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
-        self.strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
-        
-        self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
-        
-        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width - 46 - 30, y: self.view.frame.height / 3, width: 30 + 46 + self.strLabel.frame.size.width, height: 46)
-        self.effectView.layer.cornerRadius = 15
-        self.effectView.layer.masksToBounds = true
-        
-        self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
-        self.activityIndicator.frame = CGRect(x: 0, y: 0, width: 46, height: 46)
-        self.activityIndicator.startAnimating()
-        
-        self.effectView.addSubview(activityIndicator)
-        self.effectView.addSubview(strLabel)
-        self.view.addSubview(effectView)
-    }
-    
-    // Show an alert without an activity indicator
-    func showAlert(_ title: String) {
-        // Basically the same function as above, without the activity indicator portion
-        self.strLabel.removeFromSuperview()
-        self.effectView.removeFromSuperview()
-        self.effectView.alpha = 1
-        
-        self.strLabel = UILabel(frame: CGRect(x: 10, y: 0, width: 160, height: 46))
-        self.strLabel.text = title
-        self.strLabel.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightMedium)
-        self.strLabel.textColor = UIColor(white: 0.9, alpha: 0.7)
-        
-        self.strLabel.frame.size.width = (self.strLabel.attributedText?.width(withConstrainedHeight: 46))!
-        
-        self.effectView.frame = CGRect(x: self.view.frame.midX - self.strLabel.frame.width - 20, y: self.view.frame.height / 3, width: 20 + self.strLabel.frame.size.width, height: 46)
-        self.effectView.layer.cornerRadius = 15
-        self.effectView.layer.masksToBounds = true
-        
-        self.effectView.addSubview(strLabel)
-        self.view.addSubview(effectView)
-    }
-    
-    // Remove either type of alert
-    func removeActivityIndicator() {
-        self.strLabel.removeFromSuperview()
-        self.activityIndicator.removeFromSuperview()
-        self.effectView.removeFromSuperview()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
