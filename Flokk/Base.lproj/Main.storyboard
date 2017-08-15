@@ -2396,13 +2396,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="79" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wkr-bc-EJg">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="66" width="375" height="488"/>
                                 <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="0.81168407200000003" green="0.8118211031" blue="0.81166607140000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <view key="tableHeaderView" alpha="0.34999999999999998" contentMode="scaleToFill" id="gRK-sf-dNn">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="3"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="default" rowHeight="79" id="IWe-nn-AwR" customClass="CommentsTableViewController" customModule="Flokk" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="79"/>
+                                        <rect key="frame" x="0.0" y="31" width="375" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IWe-nn-AwR" id="MCj-mD-7Yf">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
@@ -2456,6 +2461,24 @@
                                 <color key="textColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kq5-Ky-UyP">
+                                <rect key="frame" x="16" y="8" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Full Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="66W-pY-9XE">
+                                <rect key="frame" x="74" y="11" width="223" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date Posted" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Amx-gR-Rhk">
+                                <rect key="frame" x="74" y="31" width="193" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="JosefinSans" family="Josefin Sans" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.085038982329999999" green="0.08916374296" blue="0.17014801500000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -2465,7 +2488,7 @@
                             <constraint firstItem="6up-T3-m7w" firstAttribute="centerY" secondItem="FZ1-KK-cdr" secondAttribute="centerY" id="eIT-wI-Spd"/>
                             <constraint firstAttribute="trailing" secondItem="wkr-bc-EJg" secondAttribute="trailing" id="nNZ-E5-KCm"/>
                             <constraint firstItem="Epa-jn-qJP" firstAttribute="leading" secondItem="FZ1-KK-cdr" secondAttribute="leadingMargin" constant="-16" id="nbj-Yj-agv"/>
-                            <constraint firstItem="wkr-bc-EJg" firstAttribute="top" secondItem="lM2-P9-Kw5" secondAttribute="bottom" id="vUa-Vv-jqA"/>
+                            <constraint firstItem="wkr-bc-EJg" firstAttribute="top" secondItem="lM2-P9-Kw5" secondAttribute="bottom" constant="66" id="vUa-Vv-jqA"/>
                             <constraint firstItem="6up-T3-m7w" firstAttribute="centerX" secondItem="FZ1-KK-cdr" secondAttribute="centerX" id="z5f-rg-baX"/>
                         </constraints>
                     </view>
@@ -2479,8 +2502,11 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="datePostedLabel" destination="Amx-gR-Rhk" id="4Vw-nD-LmG"/>
+                        <outlet property="fullNameLabel" destination="66W-pY-9XE" id="Wud-r5-BoC"/>
                         <outlet property="keyboardHeightLayoutConstraint" destination="8cg-An-WZ7" id="34J-cW-j9m"/>
                         <outlet property="noCommentsLabel" destination="6up-T3-m7w" id="F6G-vf-2JB"/>
+                        <outlet property="posterImage" destination="Kq5-Ky-UyP" id="Qh0-sK-wN3"/>
                         <outlet property="profilePhotoBarButton" destination="H4C-y0-slr" id="yDU-T3-S0a"/>
                         <outlet property="tableView" destination="wkr-bc-EJg" id="bta-rK-kDP"/>
                         <outlet property="textField" destination="Epa-jn-qJP" id="XbD-Mv-2bx"/>

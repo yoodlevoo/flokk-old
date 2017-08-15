@@ -102,11 +102,19 @@ class Group {
         
     }
     
-    //Load all of the most recent Posts from this group - uses SwiftyJSONb
-    func loadPosts(numPostsToLoad: Int) -> [Post] {
-        var posts = [Post]()
+    // Check for the most recent post
+    func updateMostRecentPost() {
+        var timestamp = 0.0
         
-        return posts
+        for post in self.posts {
+            // If this timestamp is greater than the previous, then it was more recent
+            if post.timestamp.timeIntervalSinceReferenceDate > timestamp {
+                timestamp = post.timestamp.timeIntervalSinceReferenceDate
+            }
+        }
+        
+        
+        self.mostRecentPost = Date(timeIntervalSinceReferenceDate: timestamp)
     }
     
     /*

@@ -84,6 +84,7 @@
 		7FA0B8431F1487A10052CF17 /* WalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA0B8421F1487A10052CF17 /* WalkthroughPageViewController.swift */; };
 		7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */; };
 		7FE0D33D1E91874F000E097D /* ConnectContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */; };
+		877410221F427E860074594D /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877410211F427E860074594D /* DateUtils.swift */; };
 		8787EA451F1C466F005E045E /* PersonalProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA441F1C466F005E045E /* PersonalProfilePageViewController.swift */; };
 		8787EA4C1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4B1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift */; };
 		8787EA4E1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */; };
@@ -200,6 +201,7 @@
 		7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectContactsViewController.swift; sourceTree = "<group>"; };
 		870BBF911EFDF5B900D6EBEC /* Flokk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flokk.entitlements; sourceTree = "<group>"; };
+		877410211F427E860074594D /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		8787EA441F1C466F005E045E /* PersonalProfilePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfilePageViewController.swift; sourceTree = "<group>"; };
 		8787EA4B1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileSavedPageCollectionView.swift; sourceTree = "<group>"; };
 		8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileUploadedPageCollectionView.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */,
 				158F02611EC6A49F00D7552A /* Storage.swift */,
 				87E2A8841F2589F50040255F /* ImageUtils.swift */,
+				877410211F427E860074594D /* DateUtils.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -790,6 +793,7 @@
 				15C826C71E8587EF003EE6E4 /* CropGroupPhotoViewController.swift in Sources */,
 				15890CBD1EDF081400418BFB /* NewPhotoSelectViewController.swift in Sources */,
 				7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */,
+				877410221F427E860074594D /* DateUtils.swift in Sources */,
 				15C826C31E8587EF003EE6E4 /* BounceButton.swift in Sources */,
 				15FA9B0D1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift in Sources */,
 				15E743B11E967DA8002D1220 /* GroupsNavigationViewController.swift in Sources */,

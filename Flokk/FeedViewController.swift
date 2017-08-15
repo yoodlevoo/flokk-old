@@ -28,6 +28,8 @@ class FeedViewController: UIViewController {
     
     fileprivate var listenerHandle: UInt!
     
+    fileprivate var alert = Alert()
+    
     //fileprivate var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -315,17 +317,15 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
         if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
             let touchPoint = longPressGestureRecognizer.location(in: self.view)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
-                let row = indexPath.row
-                let post = loadedPosts[row]
-                
-                print("\n\(row)\n")
+                let row = self.loadedPosts.count - indexPath.row - 1
+                let post = self.loadedPosts[row]
                 
                 self.loadedPosts[row].selectedToSave = true
                 
                 self.tableView.reloadData() // Update the table view so the selected cells are updated
                 
                 // Display the action sheet so the user can decide whether/where to save the postr
-                showActionSheet(post: post)
+                self.showActionSheet(post: post)
             }
         }
     }
@@ -357,6 +357,8 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
             saveRef.setValue(NSDate.timeIntervalSinceReferenceDate)
             
             mainUser.savedPostsData[self.group.id]?[post.id] = NSDate.timeIntervalSinceReferenceDate
+            
+            self.alert.showDisappearingAlert(self.view, "Saved to Flokk!")
         }
         
         // Add all of the buttons to the action sheet
@@ -380,8 +382,6 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
                     self.tableView.reloadData()
                 }
                 
-                print("\n\ngroups/\(self.group.id)/posts/\(post.id!) \n\n")
-                
                 // Remove it from the group's postdata in the database
                 //let groupRef = database.ref.child("groups/\(self.group.id)/posts/\(post.id)")
                 let groupRef = database.ref.child("groups").child(self.group.id).child("posts").child(post.id!)
@@ -401,6 +401,9 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
                         print(error!)
                     }
                 })
+                
+                // Update the most recent post variable, in case the post we deleted was the most recent
+                self.group.updateMostRecentPost()
             }
             
             // Add this button to the action sheet controller that pops up
@@ -414,13 +417,9 @@ extension FeedViewController: UIGestureRecognizerDelegate, UIActionSheetDelegate
     func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // we got back an error!
-            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            self.present(ac, animated: true)
+            self.alert.showDisappearingAlert(self.view, "Save Error!")
         } else {
-            let ac = UIAlertController(title: "Saved!", message: "The image has been saved to your photos.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default))
-            self.present(ac, animated: true)
+            self.alert.showDisappearingAlert(self.view, "The image has been save to your photos")
         }
     }
 }

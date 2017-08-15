@@ -12,9 +12,10 @@ class AddCommentViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var profilePhotoBarButton: UIBarButtonItem!
-    @IBOutlet weak var postedByLabel: UILabel!
-    @IBOutlet weak var postedDateLabel: UILabel!
     @IBOutlet weak var noCommentsLabel: UILabel!
+    @IBOutlet weak var posterImage: UIImageView!
+    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var datePostedLabel: UILabel!
     
     @IBOutlet var keyboardHeightLayoutConstraint : NSLayoutConstraint?
     
@@ -37,19 +38,17 @@ class AddCommentViewController: UIViewController {
         self.tableView.dataSource = self
         self.textField.delegate = self
         
-        //self.postedByLabel.text = "Posted by \(post.poster.fullName)"
-
         // Get the date the post was uploaded
         let date = post.timestamp!
         let calendar = Calendar.current
         
-        let month = calendar.component(.month, from: date)
-        let day = calendar.component(.day, from: date)
-        let year = calendar.component(.year, from: date)
+        let month = date.getMonth()
+        let day = date.getDay()
+        let year = date.getYear()
         
         // Get the individual components from the most recent post
-        var hour = calendar.component(.hour, from: date)
-        let minutes = calendar.component(.minute, from: date)
+        var hour = date.getHour()
+        let minutes = date.getMinute()
         
         // check if this was in the AM or PM
         var amPM = "AM"
@@ -58,10 +57,28 @@ class AddCommentViewController: UIViewController {
             hour -= 12
         }
         
-        //self.postedDateLabel.text = "\(month)/\(day)/\(year) at \(hour):\(minutes) \(amPM)"
+        // Check how recent this post was
+        // If it was under an hour ago
+        
+        
         
         // Tells the notification to
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        // Load in the poster's profile photo
+        let userRef = storage.ref.child("users").child(self.post.poster.uid).child("profilePhotoIcon.jpg")
+        userRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+            if error == nil { // If there wasn't an error
+                let profilePhoto = UIImage(data: data!)
+                
+                self.post.poster.profilePhoto = profilePhoto!
+                
+                self.posterImage.image = profilePhoto!
+            } else { // If there was an error
+                // TODO: Handle the error if the profile photo didnt load correctly
+                print(error!)
+            }
+        })
         
         // Load in the comments, ordered by most recent?
         let commentRef = database.ref.child("comments").child(self.group.id).child(post.id)
