@@ -98,7 +98,7 @@ class SecondSignUpViewController: UIViewController, UINavigationControllerDelega
                                 mainUser.email = self.email
                                 
                                 // Segue to the next view, placed in the completion block so we don't segue when there was an error
-                                self.performSegue(withIdentifier: "segueFromSecondSignUpToMainTabBar", sender: self)
+                                self.performSegue(withIdentifier: "segueFromSecondSignUpToWalkthrough", sender: self)
                             } else { // If there was an error
                                 print(error!)
                             }

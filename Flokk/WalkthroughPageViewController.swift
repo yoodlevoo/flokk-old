@@ -8,82 +8,89 @@
 
 import UIKit
 
-class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerDataSource {
-    var groupToPass: Group!
+class WalkthroughPageViewController: UIPageViewController {
+    var viewControllerPages = [UIViewController]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataSource = self
+        // Make the nav bar transparent
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
         
-        if let firstViewController = orderedViewControllers.first {
-            setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
-            
-            if let photoSelect = firstViewController as? TempPhotoSelectViewController {
-                photoSelect.group = groupToPass
-            }
-        }
+        self.dataSource = self
+        
+        // Attempt to initialize the first child view controller
+        let viewController1 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WalkthroughPage1")
+        viewControllerPages.append(viewController1)
+        
+        // Attempt to initialize the second child view controller
+        let viewController2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WalkthroughPage2")
+        viewControllerPages.append(viewController2)
+        
+        // Attempt to initialize the third child view controller
+        let viewController3 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WalkthroughPage3")
+        viewControllerPages.append(viewController3)
+        
+        // Set the initial view controller
+        self.setViewControllers([viewControllerPages[0]], direction: .forward, animated: true, completion: nil)
+        
+        // Customize the page control indicator dots
+        let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [UIPageViewController.self])
+        pageControl.pageIndicatorTintColor = UIColor.init(colorLiteralRed: 43/255.0, green: 170/255.0, blue: 226/255.0, alpha: 0.4)
+        pageControl.currentPageIndicatorTintColor = TEAL_COLOR
+        pageControl.backgroundColor = NAVY_COLOR
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
-    // Returns the view controller to be shown next
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        
-        guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
-            return nil
-        }
-        
-        if viewControllerIndex == 0 {
-            return orderedViewControllers.last
-        }
-        
-        return nil
-    }
-    
-    // Returns the view controller to be shown before this one
+}
+
+// Page View Controller functions
+extension WalkthroughPageViewController: UIPageViewControllerDataSource {
+    // Return what view controller should be shown when swiping left
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        
-        guard let viewControllerIndex = orderedViewControllers.index(of: viewController) else {
+        guard let viewControllerIndex = viewControllerPages.index(of: viewController) else {
             return nil
         }
         
         if viewControllerIndex == 1 {
-            return orderedViewControllers.first
+            return viewControllerPages[0]
+        }
+        
+        if viewControllerIndex == 2 {
+            return viewControllerPages[1]
         }
         
         return nil
     }
     
-    // Returns the number of items to be shown on the page indicator
+    // Return what view controller should be shown when swiping right
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let viewControllerIndex = viewControllerPages.index(of: viewController) else {
+            return nil
+        }
+        
+        if viewControllerIndex == 0 {
+            return viewControllerPages[1]
+        }
+        
+        if viewControllerIndex == 1 {
+            return viewControllerPages[2]
+        }
+        
+        return nil
+    }
+    
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return orderedViewControllers.count
+        return viewControllerPages.count
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard let firstViewController = viewControllers?.first, let firstViewControllerIndex = orderedViewControllers.index(of: firstViewController) else {
-            return 0
-        }
-        
-        return firstViewControllerIndex
-    }
-    
-    private func newColoredViewController(kind: String) -> UIViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "\(kind)ViewController")
-    }
-    
-    private(set) lazy var orderedViewControllers: [UIViewController] = {
-        return [self.newColoredViewController(kind: "PhotoSelect"), self.newColoredViewController(kind: "TakePhoto")]
-    }()
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueFromPhotoSelectPageToFeed" {
-            if let feedNav = segue.destination as? FeedNavigationViewController {
-                feedNav.groupToPass = groupToPass
-            }
-        }
+        return 0
     }
 }

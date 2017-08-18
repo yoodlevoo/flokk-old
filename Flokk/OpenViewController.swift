@@ -16,6 +16,7 @@ class OpenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Make the nav bar transparent
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
