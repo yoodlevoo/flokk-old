@@ -284,25 +284,35 @@ class FeedViewController: UIViewController {
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     // Try to adjust the size of each cell according to the size of the picture
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
+        let post = self.group.posts[indexPath.row]
         
-        let index = loadedPosts.count - 1 - indexPath.row
-        cell.tag = index // Set the tag so prepare for segue can recognize which post was selected
-        
-        // Get the post from the according posts array
-        let post = loadedPosts[index]
-        cell.post = post
-        
-        cell.setCustomImage(image: post.image)
-        
-        // Set the poster's profile photo & crop it to a circle
-        cell.userImage.image = self.userProfilePhotos[post.posterID] ?? UIImage(named: "AddProfilePic")
-        cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
-        cell.userImage.clipsToBounds = true
-        
-        // Then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
-        
-        return cell
+        if post.image != nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! FeedTableViewCell
+            
+            let index = loadedPosts.count - 1 - indexPath.row
+            cell.tag = index // Set the tag so prepare for segue can recognize which post was selected
+            
+            // Get the post from the according posts array
+            let post = loadedPosts[index]
+            cell.post = post
+            
+            cell.setCustomImage(image: post.image)
+            
+            // Set the poster's profile photo & crop it to a circle
+            cell.userImage.image = self.userProfilePhotos[post.posterID] ?? UIImage(named: "AddProfilePic")
+            cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
+            cell.userImage.clipsToBounds = true
+            
+            // Then adjust the size of the cell according to the photos - this is done in the FeedTableViewCell class
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "empty", for: indexPath)
+            
+            cell.tag = loadedPosts.count - 1 - indexPath.row
+            
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

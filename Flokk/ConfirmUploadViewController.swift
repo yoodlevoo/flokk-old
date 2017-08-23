@@ -35,7 +35,6 @@ class ConfirmUploadViewController: UIViewController {
         
         // Resize the image to a certain size, 2 times the max resolution?
         self.image = imageView.image?.resized(toWidth: 10)
-
         
         // Upload the full post image to Storage
         imageRef.child("\(key)/post.jpg").put(image.convertJpegToData(), metadata: nil) { (metadata, error) in
@@ -43,6 +42,8 @@ class ConfirmUploadViewController: UIViewController {
                 // Upload the data about this post to the Database, only after this is done uploading
                 postsRef.child("\(key)").child("poster").setValue(mainUser.uid)
                 postsRef.child("\(key)").child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
+                postsRef.child(key).child("width").setValue(self.image.size.width)
+                postsRef.child(key).child("height").setValue(self.image.size.height)
             }
         }
         
@@ -73,6 +74,9 @@ class ConfirmUploadViewController: UIViewController {
         
         // Add the data locally to the uploadedPostsData
         mainUser.uploadedPostsData[self.group.id]?[post.id] = NSDate.timeIntervalSinceReferenceDate
+        
+        // Update the most recent posts, append it to the front?
+        self.group.sortedPostsKeys.insert(post.id, at: 0)
         
         self.performSegue(withIdentifier: "unwindToFeedFromConfirmUpload", sender: self)
     }

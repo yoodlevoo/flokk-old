@@ -32,6 +32,7 @@ class Group {
     var posts = [Post]() // The posts that have been loaded in, from newest to oldest
     //var loadedPosts = [Post]() // The posts that have been loaded so far
     var postsData = [String : [String: Any]]() // loaded in in the Groups view, then used by the feedView to quickly download the post images
+    var sortedPostsKeys = [String]() // The keys
     var loadingPostIDs = [String]() // ID of posts that are loading/are loaded
     
     var numNewPosts: Int! //the amount of new posts the mainUser has missed from this group
@@ -115,6 +116,24 @@ class Group {
         
         
         self.mostRecentPost = Date(timeIntervalSinceReferenceDate: timestamp)
+    }
+    
+    // Go through all of postsData and put the keys with the most recent first at the beginning of sortedPostKeys
+    // Try not to run this too much cause it's really inefficient
+    func sortPostsData() {
+        var sortDict = [String : Double]() // Dictionary of the postIDs and dates
+        
+        // Fill the sort dict with postIDs and the relevant timestamps
+        for (id, data) in self.postsData {
+            let timestamp = data["timestamp"] as! Double
+            
+            sortDict[id] = timestamp
+        }
+        
+        let sortedKeys = Array(sortDict.keys).sorted(by: <)
+        
+        // Set the sortedPostsKeys variable to the more recent and reletave post
+        self.sortedPostsKeys = sortedKeys
     }
     
     /*

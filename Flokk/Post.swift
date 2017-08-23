@@ -14,7 +14,7 @@ import UIKit
 class Post {
     var poster: User! // The user who posted the image
     var posterID: String! // The Handle of the user who posted the image, no need to retrieve user data we're not going to use
-    var image: UIImage // The image posted
+    var image: UIImage!// The image posted
     
     var comments = [Comment]() // Holds all the comments, hopefully stored in order
     var index: Int! // Represents this posts position in the post array from the group
@@ -49,6 +49,17 @@ class Post {
         self.image = image
         self.id = postID
         self.timestamp = timestamp
+    }
+    
+    // Initializer for when a post is empty
+    init(posterID: String, postID: String, timestamp: Date) {
+        self.posterID = posterID
+        self.id = postID
+    }
+    
+    init(poster: User, postID: String) {
+        self.poster = poster
+        self.id = postID
     }
     
     /*
