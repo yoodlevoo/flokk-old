@@ -686,7 +686,7 @@
                                             <outlet property="userImage" destination="q7l-ZK-G3C" id="69n-yA-cXz"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="empty" rowHeight="207" id="WL0-4U-Th3" customClass="FeedTableViewCell" customModule="Flokk" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="empty" rowHeight="207" id="WL0-4U-Th3" customClass="FeedTableViewLoadingCell" customModule="Flokk" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="235" width="375" height="207"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WL0-4U-Th3" id="Vya-wd-d5I">
@@ -705,6 +705,10 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="progressTintColor" red="0.21960784310000001" green="0.63137254899999995" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </progressView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sKk-NH-Guh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="207"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="aiq-rO-ziJ" firstAttribute="leading" secondItem="Vya-wd-d5I" secondAttribute="leadingMargin" id="JfU-t8-E1P"/>
@@ -712,6 +716,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="postedImage" destination="sKk-NH-Guh" id="Zdp-vC-Ltb"/>
+                                            <outlet property="progressView" destination="pCs-3R-DZe" id="sNm-0z-OCU"/>
                                             <outlet property="userImage" destination="aiq-rO-ziJ" id="Wk2-zJ-LGe"/>
                                             <segue destination="n5W-Aj-Eyg" kind="show" identifier="segueFromFeedToComment" id="qLZ-hP-bag"/>
                                         </connections>

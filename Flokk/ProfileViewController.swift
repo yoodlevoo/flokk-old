@@ -73,6 +73,9 @@ class ProfileViewController: UIViewController {
                     
                     self.loadGroups() // Load the groups once the
                     
+                    // Set the profile photo as the initials before the profile photo is loaded
+                    self.profilePhotoView.image = UIImage.generateProfilePhotoWithText(text: self.user.getInitials())
+
                     let userProfilePhotoRef = storage.ref.child("users").child(self.userID).child("profilePhoto.jpg")
                     userProfilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error

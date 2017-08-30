@@ -298,8 +298,19 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             cell.setCustomImage(image: post.image)
             
+            // If this profile photo isn't loaded yet
+            if self.userProfilePhotos[post.posterID] == nil {
+                // Then create a temporary one with their initials
+                var textImage = UIImage(named: "Empty Profile Picture")
+                
+                // Add the initials to the image
+                cell.userImage.image = UIImage.generateProfilePhotoWithText(text: post.poster.getInitials())
+            } else {
+                cell.userImage.image = self.userProfilePhotos[post.posterID]
+            }
+            
+            
             // Set the poster's profile photo & crop it to a circle
-            cell.userImage.image = self.userProfilePhotos[post.posterID] ?? UIImage(named: "AddProfilePic")
             cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
             cell.userImage.clipsToBounds = true
             
@@ -307,9 +318,15 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "empty", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "empty", for: indexPath) as! FeedTableViewLoadingCell
             
-            cell.tag = loadedPosts.count - 1 - indexPath.row
+            let index = loadedPosts.count - 1 - indexPath.row
+            cell.tag = index
+            
+            let post = loadedPosts[index]
+            
+            let width = post
+            
             
             return cell
         }
@@ -484,10 +501,53 @@ class FeedTableViewCell: UITableViewCell/*, UIScrollViewDelegate */ {
     }
 }
 
-// Tf is this used for
-enum FeedTableViewCellSide {
-    case FeedTableViewCellSideLeft
-    case FeedtableViewCellSideRight
+class FeedTableViewLoadingCell: UITableViewCell {
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var postedImage: UIImageView!
+    fileprivate var post: Post! // The post this is referring to, used in layoutSubviews()
+    @IBOutlet weak var progressView: UIProgressView!
+    
+    
+    var selectedToSave: Bool = false // Whether this cell has been selected to be saved or not
+    
+    // Internally calculate the constraint for this aspect fit
+    internal var aspectConstraint : NSLayoutConstraint? {
+        didSet {
+            if oldValue != nil {
+                postedImage.removeConstraint(oldValue!)
+            }
+            
+            if aspectConstraint != nil {
+                postedImage.addConstraint(aspectConstraint!)
+            }
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        aspectConstraint = nil
+    }
+    
+    //
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+    }
+    
+    // Sets the custom constraints for this
+    func setCustomImage(image: UIImage) {
+        let aspect = image.size.width / image.size.height
+        let constraint = NSLayoutConstraint(item: postedImage, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: postedImage, attribute: NSLayoutAttribute.height, multiplier: aspect, constant: 0.0)
+        constraint.priority = 999
+        
+        aspectConstraint = constraint
+        
+        postedImage.image = image
+    }
+    
+    func setEmptyImage() {
+        
+    }
 }
 
 extension UIRefreshControl {

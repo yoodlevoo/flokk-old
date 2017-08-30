@@ -47,22 +47,35 @@ class FriendsViewController: UIViewController {
                             let groupHandles = values["groups"] as? [String : Bool] ?? [String : Bool]()
                             //are we already loading groupHandles? If so, we might as well add it
                             
+                            let user = User(uid: uid, handle: handle, fullName: fullName)
+                            user.groupIDs = Array(groupHandles.keys)
+                            
+                            // Create the temp profile photo first
+                            let tempProfilePhoto = UIImage.generateProfilePhotoWithText(text: user.getInitials())
+                            
+                            // Set the profile photo for the user
+                            user.profilePhoto = tempProfilePhoto
+                            
+                            // Add the user to the list of friends
+                            mainUser.friends.append(user)
+                            self.displayedFriends = mainUser.friends
+                            
+                            // Refresh the table view
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                                self.refreshControl.endRefreshing()
+                            }
+                            
                             // Load the profile photo of this user
                             let profilePhotoRef = storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil {
                                     let profilePhoto = UIImage(data: data!) // load the profile photo from the downloaded data
                                     
-                                    let user = User(uid: uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
-                                    user.groupIDs = Array(groupHandles.keys)
-                                    
                                     // Check AGAIN if the user hasn't been added
                                     let matches = mainUser.friends.filter({ $0.handle == handle}) // Check if this user has already been loaded
                                     if matches.count > 0 { // If there is a match
-                                        return // Ignore this user
-                                    } else {
-                                        // Add this user to the main user's friends array
-                                        mainUser.friends.append(user)
+                                        matches[0].profilePhoto = profilePhoto!
                                         
                                         self.displayedFriends = mainUser.friends
                                         

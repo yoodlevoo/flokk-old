@@ -40,8 +40,6 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = UIImage(named: "AddProfilePic")! //temporary
-        
-        loadPicture()
     }
     
     init(uid: String, handle: String, profilePhoto: UIImage) {
@@ -76,22 +74,22 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.groupIDs = groupIDs
     }
     
-    func loadFriends() {
+    func getInitials() -> String {
+        // Split the name by the spaces
+        let array = self.fullName.components(separatedBy: " ")
         
-    }
-    
-    func isFriendsWith(user: User) -> Bool {
-        return false
-    }
-    
-    // Call this function if this user(the main user) requests to be friends with another user
-    func sendFriendRequestTo(_ user: User) {
-        
-    }
-    
-    // Load in this user's profile photo from the database
-    // For now just set it manually
-    private func loadPicture() {
+        if array.count > 1 {
+            // Get the first and last words from the array
+            let firstName = array[0]
+            let lastName = array[array.count - 1]
+            
+            
+            return "\(firstName[firstName.startIndex])\(lastName[lastName.startIndex])"
+        } else {
+            let string = array[0]
+            
+            return "\(string[string.startIndex])"
+        }
     }
     
     // Method needed to implement hashable

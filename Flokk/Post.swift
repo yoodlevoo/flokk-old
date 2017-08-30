@@ -23,10 +23,14 @@ class Post {
     
     var selectedToSave: Bool = false // Used when selecting images to be saved
     
+    var width: Int!
+    var height: Int!
+    
     init(poster: User, image: UIImage, postID: String) {
         self.poster = poster
         self.image = image
         self.id = postID
+        
         //self.postedGroup = postedGroup
     }
     
