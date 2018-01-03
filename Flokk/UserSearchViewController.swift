@@ -102,6 +102,7 @@ class UserSearchViewController: UIViewController {
                 let selectedUser = users[(self.tableView.indexPathForSelectedRow?.row)!]
                 
                 profileView.user = selectedUser
+                profileView.userID = selectedUser.uid
                 profileView.userHandle = selectedUser.handle
             }
         }
@@ -121,7 +122,7 @@ extension UserSearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.profilePhotoView.clipsToBounds = true
         
         cell.fullNameLabel.text = user.fullName
-        cell.handleLabel.text = user.handle
+        cell.handleLabel.text = "@\(user.handle)"
         
         return cell
     }
@@ -152,9 +153,10 @@ extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating
                     let searchCount = searchBar.text?.characters.count // The number of characters in this search to compare
                     
                     // Get the user data
-                    let handle = each.key as! String // Get the handle
-                    let userData = values[handle] as! Dictionary<String, Any> // Get all the subset of data for this user
+                    let uid = each.key as! String // Get the uid
+                    let userData = values[uid] as! Dictionary<String, Any> // Get all the subset of data for this user
                     let fullName = userData["fullName"] as! String // Get the user's full name from the subset of data
+                    let handle = userData["handle"] as! String // Get the user's handle from the subset of data
                     let groupIDs = userData["groups"] as? [String : Bool] ?? [String : Bool]() // Load in the group IDs that this user is in
                     
                     // Make sure we're not getting users that don't match the search
@@ -163,13 +165,13 @@ extension UserSearchViewController: UISearchBarDelegate, UISearchResultsUpdating
                     
                     if searchBar.text == fullNameSplit { // If the search equates to this users full name
                         // Retrieve the profile photo
-                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                        let profilePhotoRef = storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg")
                         profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil { // If there wasn't an error
                                 let profilePhoto = UIImage(data: data!) // Create an image from the data retrieved
                                 
                                 // Create the user
-                                let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                let user = User(uid: uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                                 user.groupIDs = Array(groupIDs.keys)
                                 
                                 // Add it to the list of users

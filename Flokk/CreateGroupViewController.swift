@@ -61,27 +61,28 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
         self.searchController.searchBar.sizeToFit()
-        self.tableView.tableHeaderView = self.searchController.searchBar
+        //self.tableView.tableHeaderView = self.searchController.searchBar
         self.searchController.searchBar.delegate = self
         self.searchController.view.backgroundColor = UIColor(colorLiteralRed: 23/255, green: 23/255, blue: 43/255, alpha: 1)
         
         self.definesPresentationContext = true
         
-        // Load in the friends of this user
-        for handle in mainUser.friendHandles {
-            let userRef = database.ref.child("users").child(handle)
+        // Load in the friends of this user, sorted by UIDs
+        for uid in mainUser.friendIDs {
+            let userRef = database.ref.child("users").child(uid)
             userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 if let values = snapshot.value as? NSDictionary {
                     let fullName = values["fullName"] as! String
+                    let handle = values["handle"] as! String
                     
                     // Load the profile photo form Storage
-                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
                             
                             // Load the user
-                            let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                            let user = User(uid: uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                             
                             // Add it to the users count
                             self.totalUsers.append(user)
@@ -117,21 +118,30 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         // Check if all of the fields are filled out correctly first
         
         // Generate a reference to the user and a unique Identifier for this group
-        let userRef = database.ref.child("users").child(mainUser.handle)
+        let userRef = database.ref.child("users").child(mainUser.uid)
         let groupKey = userRef.child("groups").childByAutoId().key // Generate a unique identifier for this group
         userRef.child("groups").child(groupKey).setValue(true) // Add the group to the mainUser/creators list of groups
         
         let groupRef = database.ref.child("groups").child(groupKey)
-        groupRef.child("creator").setValue(mainUser.handle) // Set group creator handle
+        groupRef.child("creator").setValue(mainUser.uid) // Set group creator handle
         groupRef.child("name").setValue(groupName) // Set the groups name
         groupRef.child("creationDate").setValue(NSDate.timeIntervalSinceReferenceDate) // Set when this
         
         // Only the user will be a member for now
-        let members: [String: Bool] = [mainUser.handle: true]
+        let members: [String: Bool] = [mainUser.uid: true]
         groupRef.child("members").setValue(members)
         
         // Upload the groups profile icon to storage
         storage.ref.child("groups").child(groupKey).child("icon.jpg").put((self.addGroupPictureButton.imageView?.image?.convertJpegToData())!, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                // an error occured
+                return
+            }
+        }
+        
+        // Upload the compressed icon
+        let compressedIcon = self.addGroupPictureButton.imageView?.image?.resized(toWidth: RESIZED_ICON_WIDTH)
+        storage.ref.child("groups").child(groupKey).child("iconCompressed.jpg").put((compressedIcon!.convertJpegToData()), metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
                 // an error occured
                 return
@@ -143,27 +153,28 @@ class CreateGroupViewController: UIViewController, UINavigationControllerDelegat
         // Invite the selected users here
         for user in self.selectedUsers {
             let handle = user.handle
+            let uid = user.uid!
             invitedMembers[handle] = true
             
             // Tell the groups database that this user has been invited
-            groupRef.child("invitedUsers").child(handle).setValue(true)
+            groupRef.child("invitedUsers").child(uid).setValue(true)
             
-            let userRef = database.ref.child("users").child(handle)
+            let userRef = database.ref.child("users").child(uid)
             userRef.child("groupInvites").child(groupKey).setValue(true) // Tell the database this user has been invited to the group, for verification purposes
             
             // Create a group invite notification for this user
-            let notificationKey = database.ref.child("notifications").child(groupKey).childByAutoId().key
-            let notificationRef = database.ref.child("notifications").child(groupKey).child(notificationKey) // Generate a new notification
+            let notificationKey = database.ref.child("notifications").child(uid).childByAutoId().key
+            let notificationRef = database.ref.child("notifications").child(uid).child(notificationKey) // Generate a new notification
             
             notificationRef.child("type").setValue(NotificationType.GROUP_INVITE.rawValue) // Set the notification's type
-            notificationRef.child("sender").setValue(mainUser.handle) // Set who sent this invite
+            notificationRef.child("sender").setValue(mainUser.uid) // Set who sent this invite
             notificationRef.child("groupID").setValue(groupKey) // Set which group this user has been invited to
             notificationRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate) // Set when this notification was sent
         }
         
         // Actually create the group
         let group = Group(id: groupKey, name: groupName, icon: (self.addGroupPictureButton.imageView?.image!)!, users: [mainUser], creator: mainUser)
-        group.memberHandles.append(mainUser.handle)
+        group.memberIDs.append(mainUser.uid)
         groups.append(group) // Add this group to the global groups
         
         self.navigationController?.popViewController(animated: true)

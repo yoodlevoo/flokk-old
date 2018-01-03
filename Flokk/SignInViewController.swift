@@ -18,10 +18,12 @@ class SignInViewController: UIViewController {
     
     let transitionRight = SlideRightAnimator()
     
+    // Activity alert variables
     var activityIndicator = UIActivityIndicatorView()
     var strLabel = UILabel()
-    
     let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    
+    fileprivate var alert = Alert()
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,88 +68,67 @@ class SignInViewController: UIViewController {
         var email = usernameEntry.text // Get the entered email
         var password = passwordEntry.text // Get the entered password
         
-        if email == "gannon" {
-            email = "gannonprudhomme@gmail.com"
-            password = "gannon123"
-        } else if email == "jared" {
-            email = "jaredheyen123@gmail.com"
-            password = "jared123"
-        } else if email == "madi" {
-            email = "gannon@flokk.info"
-            password = "madi123"
-        } else if email == "alex" {
-            email = "cheeseman123432@yahoo.com"
-            password = "alex123"
-        } else if email == "noble" {
-            email = "n1ghtk1ng@live.com"
-            password = "noble123"
-        }
-        
-        self.showActivityIndicator("Attempting to sign in")
+        self.alert.showActivityIndicator(self.view, "Attempting to sign in")
         
         // Authenticate and sign the user in - this can be simplified a lot by adding defaultsd
         FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil { // If there wasn't an error
                 if let user = user { // Basically just removes the "optional" from user (so there's no need for doing "(user?.uid)!")
-                    self.removeActivityIndicator()
-                    self.showActivityIndicator("Success! Loading data...")
+                    self.alert.removeActivityIndicator()
+                    self.alert.showActivityIndicator(self.view, "Success! Loading data...")
                     
-                    database.ref.child("uids").child(user.uid).observeSingleEvent(of: .value, with: { (snapshot) in // Check the UID tree and get the user's handle
-                        let handle = snapshot.value as! String // Get this user's handle from their UID
-                        
-                        // Get the user data from their handle
-                        database.ref.child("users").child(handle).observeSingleEvent(of: .value, with: { (snapshot) in
-                            let userValues = snapshot.value as! NSDictionary
+                    // Get the user data from their handle
+                    database.ref.child("users").child(user.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let userValues = snapshot.value as? NSDictionary { // Attempt to load the user data into a dictionary
+                            // Load the various user data into objects
                             let fullName = userValues["fullName"] as! String
                             let groupsDict = userValues["groups"] as? [String : Bool] ?? [String : Bool]()
+                            let savedPosts = userValues["savedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
+                            let uploadedPosts = userValues["uploadedPosts"] as? [String: [String : Double]] ?? [String : [String : Double]]()
+                            let handle = userValues["handle"] as? String ?? "" // Load in the handle
                             
                             let groupHandles = Array(groupsDict.keys)
                             
-                            let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                            // Attempt to load the full profile photo first
+                            let profilePhotoRef = storage.ref.child("users").child(user.uid).child("profilePhoto.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!) // Load the image
                                     
                                     // Load in the user
-                                    mainUser = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupIDs: groupHandles)
+                                    mainUser = User(uid: user.uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!, groupIDs: groupHandles)
                                 } else { // If there was an error
                                     // Load in the user
-                                    mainUser = User(handle: handle, fullName: fullName, groupIDs: groupHandles)
+                                    mainUser = User(uid: user.uid, handle: handle, fullName: fullName, groupIDs: groupHandles)
                                 }
                                 
                                 // Attemp to load in the friends
                                 if let friendsDict = userValues["friends"] as? [String : Bool] { // If the user has any friends or not
-                                    mainUser.friendHandles = Array(friendsDict.keys) // Set the friends for this user
+                                    mainUser.friendIDs = Array(friendsDict.keys) // Set the friends for this user
                                 }
                                 
                                 mainUser.email = email
+                                mainUser.uploadedPostsData = uploadedPosts
+                                mainUser.savedPostsData = savedPosts
                                 
                                 // Whether there was an error in loading the profilePhoto or not, the mainUser will still exist so we can continue
                                 self.performSegue(withIdentifier: "segueFromSignInToGroups", sender: self) // Once we're done, segue to the next view
                             })
-                        })
+                        } else { // If we couldnt load the user data into a dict, there was an error
+                            self.alert.removeActivityIndicator()
+                            self.alert.showDisappearingAlert(self.view, "There was an error logging in.")
+                        }
                     })
                 }
             } else { // If there was an error, handle it
                 print(error!)
                 
-                self.removeActivityIndicator() // Remove the activity indicator alert when there was an error
+                self.alert.removeActivityIndicator() // Remove the activity indicator alert when there was an error
                 
                 if let errorCode = FIRAuthErrorCode(rawValue: error!._code) {
                     switch errorCode {
                     case .errorCodeUserNotFound:
-                        self.showAlert("Invalid Email")
-                        
-                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
-                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
-                            
-                        }, completion: { (completed) in
-                            UIView.animate(withDuration: 2.0, animations: {
-                                self.effectView.alpha = 0
-                            }, completion: { (completed) in
-                                self.removeActivityIndicator()
-                            })
-                        })
+                        self.alert.showDisappearingAlert(self.view, "Invalid Email")
                         
                         break
                     case .errorCodeInvalidCredential:
@@ -155,47 +136,15 @@ class SignInViewController: UIViewController {
                         
                         break
                     case .errorCodeInvalidEmail: // If the user entered an invalid email
-                        self.showAlert("Invalid email!")
-                        
-                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
-                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
-                        
-                        }, completion: { (completed) in
-                            UIView.animate(withDuration: 2.0, animations: {
-                                self.effectView.alpha = 0
-                            }, completion: { (completed) in
-                                self.removeActivityIndicator()
-                            })
-                        })
+                        self.alert.showDisappearingAlert(self.view, "Invalid email!")
                         
                         break
                     case .errorCodeWrongPassword: // If the user entered an invalid password
-                        self.showAlert("Incorrect password!")
-                        
-                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
-                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
-                        }, completion: { (completed) in
-                            UIView.animate(withDuration: 2.0, animations: {
-                                self.effectView.alpha = 0
-                            }, completion: { (completed) in
-                                self.removeActivityIndicator()
-                            })
-                        })
-                        
+                        self.alert.showDisappearingAlert(self.view, "Incorrect password!")
                         
                         break
                     case .errorCodeNetworkError: // If there was a network error
-                        self.showAlert("Network error!")
-                        
-                        // Wait for "ALERT_DISAPPEAR_DELAY" amount of seconds, then make the alert disappear
-                        UIView.animate(withDuration: ALERT_DISAPPEAR_DELAY, animations: {
-                        }, completion: { (completed) in
-                            UIView.animate(withDuration: 2.0, animations: {
-                                self.effectView.alpha = 0
-                            }, completion: { (completed) in
-                                self.removeActivityIndicator()
-                            })
-                        })
+                        self.alert.showDisappearingAlert(self.view, "Network error!")
                         
                         break
                     default: break

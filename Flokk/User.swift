@@ -23,30 +23,34 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
     var groupIDs = [String]() // The IDs of all the groups this user is in
     
     var friends = [User]() // Array of all friends this user has that have already been loaded
-    var friendHandles = [String]() // Array of the handles of friends this user has, don't need all of the user's data the entire time
+    var friendIDs = [String]() // Array of the ids of friends this user has, don't need all of the user's data the entire time
     
-    var incomingFriendRequests = [String]() // Array of user handles that requested to be this user's friend
-    var outgoingFriendRequests = [String]() // Array of user handles this user requested to be friends with
+    var incomingFriendRequests = [String]() // Array of user ids that requested to be this user's friend
+    var outgoingFriendRequests = [String]() // Array of user ids this user requested to be friends with
     
     var groupInvites: [String]! // Array of ID's for the group the user has been invited to
     
     var notifications = [Notification]() // The user's notifications
     
-    init(handle: String, fullName: String) {
+    var uploadedPostsData = [String : [String : Double]]() // Dictionary of posts that were saved, with the key being the groupID
+    var savedPostsData = [String : [String : Double]]() // Dictionary of posts that were uploaded, with the key being the groupID
+    
+    init(uid: String, handle: String, fullName: String) {
+        self.uid = uid
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = UIImage(named: "AddProfilePic")! //temporary
-        
-        loadPicture()
     }
     
-    init(handle: String, profilePhoto: UIImage) {
+    init(uid: String, handle: String, profilePhoto: UIImage) {
+        self.uid = uid
         self.handle = handle
         self.profilePhoto = profilePhoto
         self.fullName = ""
     }
     
-    init(handle: String, fullName: String, groupIDs: [String]) {
+    init(uid: String, handle: String, fullName: String, groupIDs: [String]) {
+        self.uid = uid
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = UIImage(named: "AddProfilePic")!
@@ -54,13 +58,15 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.groupIDs = groupIDs
     }
     
-    init(handle: String, fullName: String, profilePhoto: UIImage) {
+    init(uid: String, handle: String, fullName: String, profilePhoto: UIImage) {
+        self.uid = uid
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = profilePhoto
     }
     
-    init(handle: String, fullName: String, profilePhoto: UIImage, groupIDs: [String]) {
+    init(uid:String, handle: String, fullName: String, profilePhoto: UIImage, groupIDs: [String]) {
+        self.uid = uid
         self.handle = handle
         self.fullName = fullName
         self.profilePhoto = profilePhoto
@@ -68,22 +74,22 @@ class User: Hashable { // Hashable so it can be used as a key in a dictionary(fo
         self.groupIDs = groupIDs
     }
     
-    func loadFriends() {
+    func getInitials() -> String {
+        // Split the name by the spaces
+        let array = self.fullName.components(separatedBy: " ")
         
-    }
-    
-    func isFriendsWith(user: User) -> Bool {
-        return false
-    }
-    
-    // Call this function if this user(the main user) requests to be friends with another user
-    func sendFriendRequestTo(_ user: User) {
-        
-    }
-    
-    // Load in this user's profile photo from the database
-    // For now just set it manually
-    private func loadPicture() {
+        if array.count > 1 {
+            // Get the first and last words from the array
+            let firstName = array[0]
+            let lastName = array[array.count - 1]
+            
+            
+            return "\(firstName[firstName.startIndex])\(lastName[lastName.startIndex])"
+        } else {
+            let string = array[0]
+            
+            return "\(string[string.startIndex])"
+        }
     }
     
     // Method needed to implement hashable

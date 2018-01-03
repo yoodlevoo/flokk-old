@@ -9,6 +9,9 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import FirebaseMessaging
+import FirebaseInstanceID
+import UserNotifications
 
 var mainUser: User!
 var database: Database!
@@ -26,9 +29,11 @@ let MAX_POST_SIZE: Int64 = 1 * 4096 * 4096
 
 let BANNER_DURATION: TimeInterval = 3.0
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+let RESIZED_ICON_WIDTH = CGFloat(337)
+let MAX_POST_WIDTH = CGFloat(337 * 2)
 
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, FIRMessagingDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -36,12 +41,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         database = Database()
         storage = Storage()
         
-        //FIRApp.configure()
-        
-        //database.createNewUser(email: "gannonprudhomme@gmail.com", password: "gannon123", handle: "gannonprudhomme", fullName: "Gannon Prudhomme", profilePhoto: UIImage())
-        
-        // Retrieve a registration token for this client
         let token = FIRInstanceID.instanceID().token()
+        
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            
+            UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: {_, _ in })
+            // For iOS 10 data message (sent via FCM
+            FIRMessaging.messaging().remoteMessageDelegate = self
+        } else {
+            let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        
+        application.registerForRemoteNotifications()
         
         return true
     }
@@ -69,4 +85,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    /// The callback to handle data message received via FCM for devices running iOS 10 or above.
+    func applicationReceivedRemoteMessage(_ remoteMessage: FIRMessagingRemoteMessage) {
+        print(remoteMessage.appData)
+    }
+    
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            print("Notification settings: \(settings)")
+            
+            guard settings.authorizationStatus == .authorized else { return }
+            UIApplication.shared.registerForRemoteNotifications()
+        }
+    }
+    
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+        
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+    }
+    
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register: \(error)")
+    }
 }

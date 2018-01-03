@@ -14,11 +14,6 @@
 		151E60EC1E93CECC00A45227 /* Pods_Flokk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A28DF034D8D231E26FEA16 /* Pods_Flokk.framework */; };
 		152F02281EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152F02271EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift */; };
 		152F02641EB7B42500F0C7BD /* PersonalProfileNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152F02631EB7B42500F0C7BD /* PersonalProfileNavigationViewController.swift */; };
-		15309E7D1E6494F200D1DFA1 /* gannonprudhomme.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */; };
-		15309E7F1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */; };
-		15309E811E65068100D1DFA1 /* jaredheyenSki_Trip.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */; };
-		15309E871E6541EE00D1DFA1 /* jaredheyenCouples.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */; };
-		15309E891E65430E00D1DFA1 /* jaredheyen.json in Resources */ = {isa = PBXBuildFile; fileRef = 15309E881E65430E00D1DFA1 /* jaredheyen.json */; };
 		153729EB1ED5F2D900381888 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153729EA1ED5F2D900381888 /* UserTableViewCell.swift */; };
 		15890CBD1EDF081400418BFB /* NewPhotoSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15890CBC1EDF081400418BFB /* NewPhotoSelectViewController.swift */; };
 		158F02621EC6A49F00D7552A /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158F02611EC6A49F00D7552A /* Storage.swift */; };
@@ -60,7 +55,7 @@
 		15C826E41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */; };
 		15C826E51E8587EF003EE6E4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B51E8587EF003EE6E4 /* Post.swift */; };
 		15C826E61E8587EF003EE6E4 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B61E8587EF003EE6E4 /* PriorityQueue.swift */; };
-		15C826E71E8587EF003EE6E4 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */; };
+		15C826E71E8587EF003EE6E4 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B71E8587EF003EE6E4 /* EditProfileViewController.swift */; };
 		15C826E81E8587EF003EE6E4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */; };
 		15C826EE1E8587EF003EE6E4 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826BE1E8587EF003EE6E4 /* SwiftyJSON.swift */; };
 		15C826EF1E8587EF003EE6E4 /* TakePictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C826BF1E8587EF003EE6E4 /* TakePictureViewController.swift */; };
@@ -70,9 +65,6 @@
 		15E743B11E967DA8002D1220 /* GroupsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E743B01E967DA8002D1220 /* GroupsNavigationViewController.swift */; };
 		15E743B31E968041002D1220 /* SlideRightAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E743B21E968041002D1220 /* SlideRightAnimator.swift */; };
 		15F74F1D1E898B3F00A23720 /* FriendsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F74F1C1E898B3F00A23720 /* FriendsNavigationViewController.swift */; };
-		15F998171E65525C003F1773 /* gannonprudhommeBasketball.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */; };
-		15F9981D1E655562003F1773 /* gannonprudhommeLadies_and_G.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */; };
-		15FA5E961ECD01470090C701 /* OpenNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FA5E951ECD01470090C701 /* OpenNavigationViewController.swift */; };
 		15FA9B0D1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FA9B0C1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift */; };
 		15FAA0B11E96C19F004820B9 /* SlideLeftAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */; };
 		15FB666A1EA9396C004D23AF /* ProfileNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */; };
@@ -92,8 +84,14 @@
 		7FA0B8431F1487A10052CF17 /* WalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA0B8421F1487A10052CF17 /* WalkthroughPageViewController.swift */; };
 		7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */; };
 		7FE0D33D1E91874F000E097D /* ConnectContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */; };
-		AD2236991E563E4500112715 /* posts.json in Resources */ = {isa = PBXBuildFile; fileRef = AD2236981E563E4500112715 /* posts.json */; };
-		AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */ = {isa = PBXBuildFile; fileRef = AD5C0FC01E4A62F200272FD0 /* comments.json */; };
+		877410221F427E860074594D /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877410211F427E860074594D /* DateUtils.swift */; };
+		8787EA451F1C466F005E045E /* PersonalProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA441F1C466F005E045E /* PersonalProfilePageViewController.swift */; };
+		8787EA4C1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4B1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift */; };
+		8787EA4E1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */; };
+		8787EA531F1EF529005E045E /* PersonalPostsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8787EA521F1EF529005E045E /* PersonalPostsCollectionViewCell.swift */; };
+		87E1C2CC1F3F614600005ABD /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E1C2CB1F3F614600005ABD /* Alert.swift */; };
+		87E2A8851F2589F50040255F /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E2A8841F2589F50040255F /* ImageUtils.swift */; };
+		87E2A8871F2B833E0040255F /* OpenNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E2A8861F2B833E0040255F /* OpenNavigationViewController.swift */; };
 		FF68FB30F333858091D73795 /* Pods_FlokkUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08116963DDC32F6213EF11B5 /* Pods_FlokkUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -123,11 +121,6 @@
 		150789E01E859EFD003C6FB3 /* SlideUpAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideUpAnimator.swift; sourceTree = "<group>"; };
 		152F02271EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideRightNavigationAnimator.swift; sourceTree = "<group>"; };
 		152F02631EB7B42500F0C7BD /* PersonalProfileNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileNavigationViewController.swift; sourceTree = "<group>"; };
-		15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhomme.json; sourceTree = SOURCE_ROOT; };
-		15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeFPSF2016.json; sourceTree = "<group>"; };
-		15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyenSki_Trip.json; sourceTree = "<group>"; };
-		15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyenCouples.json; sourceTree = "<group>"; };
-		15309E881E65430E00D1DFA1 /* jaredheyen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jaredheyen.json; sourceTree = "<group>"; };
 		153729EA1ED5F2D900381888 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		153A30D91EA7E7E0001540A3 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
 		15890CBC1EDF081400418BFB /* NewPhotoSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPhotoSelectViewController.swift; sourceTree = "<group>"; };
@@ -170,7 +163,7 @@
 		15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoUploadPageViewController.swift; sourceTree = "<group>"; };
 		15C826B51E8587EF003EE6E4 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		15C826B61E8587EF003EE6E4 /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
-		15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
+		15C826B71E8587EF003EE6E4 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		15C826B81E8587EF003EE6E4 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		15C826BE1E8587EF003EE6E4 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		15C826BF1E8587EF003EE6E4 /* TakePictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakePictureViewController.swift; sourceTree = "<group>"; };
@@ -180,9 +173,6 @@
 		15E743B01E967DA8002D1220 /* GroupsNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsNavigationViewController.swift; sourceTree = "<group>"; };
 		15E743B21E968041002D1220 /* SlideRightAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideRightAnimator.swift; sourceTree = "<group>"; };
 		15F74F1C1E898B3F00A23720 /* FriendsNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsNavigationViewController.swift; sourceTree = "<group>"; };
-		15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeBasketball.json; sourceTree = "<group>"; };
-		15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gannonprudhommeLadies_and_G.json; sourceTree = "<group>"; };
-		15FA5E951ECD01470090C701 /* OpenNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenNavigationViewController.swift; sourceTree = "<group>"; };
 		15FA9B0C1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSettingsNavigationViewController.swift; sourceTree = "<group>"; };
 		15FAA0B01E96C19F004820B9 /* SlideLeftAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideLeftAnimator.swift; sourceTree = "<group>"; };
 		15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileNavigationViewController.swift; sourceTree = "<group>"; };
@@ -211,9 +201,15 @@
 		7FD4D7691E6A226D00922724 /* JosefinSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "JosefinSans-Regular.ttf"; sourceTree = "<group>"; };
 		7FE0D33C1E91874F000E097D /* ConnectContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectContactsViewController.swift; sourceTree = "<group>"; };
 		870BBF911EFDF5B900D6EBEC /* Flokk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flokk.entitlements; sourceTree = "<group>"; };
+		877410211F427E860074594D /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
+		8787EA441F1C466F005E045E /* PersonalProfilePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfilePageViewController.swift; sourceTree = "<group>"; };
+		8787EA4B1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileSavedPageCollectionView.swift; sourceTree = "<group>"; };
+		8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalProfileUploadedPageCollectionView.swift; sourceTree = "<group>"; };
+		8787EA521F1EF529005E045E /* PersonalPostsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalPostsCollectionViewCell.swift; sourceTree = "<group>"; };
+		87E1C2CB1F3F614600005ABD /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		87E2A8841F2589F50040255F /* ImageUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
+		87E2A8861F2B833E0040255F /* OpenNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenNavigationViewController.swift; sourceTree = "<group>"; };
 		A68DF56A284B426BCD7F3944 /* Pods_FlokkTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FlokkTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD2236981E563E4500112715 /* posts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = posts.json; sourceTree = SOURCE_ROOT; };
-		AD5C0FC01E4A62F200272FD0 /* comments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = comments.json; sourceTree = SOURCE_ROOT; };
 		C7AD214B4E55925DA3EC13C8 /* Pods-FlokkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlokkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlokkTests/Pods-FlokkTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CF1B7B1941DF3885473F40CA /* Pods-FlokkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlokkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlokkTests/Pods-FlokkTests.release.xcconfig"; sourceTree = "<group>"; };
 		D8A28DF034D8D231E26FEA16 /* Pods_Flokk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flokk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,22 +253,6 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
-		159ACA201E65EB0F004E410B /* JSON files */ = {
-			isa = PBXGroup;
-			children = (
-				15309E7C1E6494F200D1DFA1 /* gannonprudhomme.json */,
-				15309E881E65430E00D1DFA1 /* jaredheyen.json */,
-				15309E7E1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json */,
-				15F998161E65525C003F1773 /* gannonprudhommeBasketball.json */,
-				15F9981C1E655562003F1773 /* gannonprudhommeLadies_and_G.json */,
-				15309E801E65068100D1DFA1 /* jaredheyenSki_Trip.json */,
-				15309E861E6541EE00D1DFA1 /* jaredheyenCouples.json */,
-				AD5C0FC01E4A62F200272FD0 /* comments.json */,
-				AD2236981E563E4500112715 /* posts.json */,
-			);
-			name = "JSON files";
-			sourceTree = "<group>";
-		};
 		15C826861E8587B1003EE6E4 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -292,7 +272,7 @@
 				15C826AD1E8587EF003EE6E4 /* NotificationsViewController.swift */,
 				15C826AF1E8587EF003EE6E4 /* PasswordRecoveryViewController.swift */,
 				15C826B01E8587EF003EE6E4 /* PersonalProfileViewController.swift */,
-				15C826B71E8587EF003EE6E4 /* ProfileSettingsViewController.swift */,
+				15C826B71E8587EF003EE6E4 /* EditProfileViewController.swift */,
 				15C275941E9FCC7100C62F0D /* AppSettingsTableViewController.swift */,
 				15C275901E9EB67C00C62F0D /* PushNotificationsSettingsTableViewController.swift */,
 				7F68DE461E6E78AF0067C5F4 /* FriendsViewController.swift */,
@@ -315,6 +295,7 @@
 		15C826871E8587B7003EE6E4 /* Navigation Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8787EA461F1C4684005E045E /* Personal Profile Pages */,
 				158FE22D1E954A81009EFBA6 /* MainTabBarController.swift */,
 				15E743B01E967DA8002D1220 /* GroupsNavigationViewController.swift */,
 				15C826B41E8587EF003EE6E4 /* PhotoUploadPageViewController.swift */,
@@ -328,7 +309,7 @@
 				15FB66691EA9396C004D23AF /* ProfileNavigationViewController.swift */,
 				15C826B31E8587EF003EE6E4 /* PhotoUploadPageNavigationViewController.swift */,
 				15FB666E1EB1225E004D23AF /* GroupProfileNavigationViewController.swift */,
-				15FA5E951ECD01470090C701 /* OpenNavigationViewController.swift */,
+				87E2A8861F2B833E0040255F /* OpenNavigationViewController.swift */,
 			);
 			name = "Navigation Controllers";
 			sourceTree = "<group>";
@@ -355,11 +336,14 @@
 		15C826F41E858844003EE6E4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				87E1C2CB1F3F614600005ABD /* Alert.swift */,
 				15C826921E8587EF003EE6E4 /* BinaryHeap.swift */,
 				15C826981E8587EF003EE6E4 /* Database.swift */,
 				15C8269B1E8587EF003EE6E4 /* FileUtils.swift */,
 				15FC229F1EA7BB5C00DC9FA6 /* TextUtils.swift */,
 				158F02611EC6A49F00D7552A /* Storage.swift */,
+				87E2A8841F2589F50040255F /* ImageUtils.swift */,
+				877410211F427E860074594D /* DateUtils.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -398,7 +382,6 @@
 				7FDF8B6C1E820C4500BC61C2 /* Animations */,
 				15C826F31E858820003EE6E4 /* Layouts */,
 				15C826F41E858844003EE6E4 /* Utils */,
-				159ACA201E65EB0F004E410B /* JSON files */,
 				159ACA1C1E65E3C5004E410B /* Libraries */,
 				15C826F51E85888A003EE6E4 /* Main.storyboard */,
 				15C8268C1E8587DF003EE6E4 /* AppDelegate.swift */,
@@ -452,6 +435,17 @@
 				152F02271EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift */,
 			);
 			name = Animations;
+			sourceTree = "<group>";
+		};
+		8787EA461F1C4684005E045E /* Personal Profile Pages */ = {
+			isa = PBXGroup;
+			children = (
+				8787EA441F1C466F005E045E /* PersonalProfilePageViewController.swift */,
+				8787EA4B1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift */,
+				8787EA4D1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift */,
+				8787EA521F1EF529005E045E /* PersonalPostsCollectionViewCell.swift */,
+			);
+			name = "Personal Profile Pages";
 			sourceTree = "<group>";
 		};
 		947F3CEDA54916F7D5C90AAD /* Frameworks */ = {
@@ -602,19 +596,10 @@
 			files = (
 				7F0666151E37BAAD003167AC /* LaunchScreen.storyboard in Resources */,
 				7F0666561E37BC00003167AC /* Assets.xcassets in Resources */,
-				15309E811E65068100D1DFA1 /* jaredheyenSki_Trip.json in Resources */,
-				15309E871E6541EE00D1DFA1 /* jaredheyenCouples.json in Resources */,
 				7FD4D7731E6A226D00922724 /* JosefinSans-Regular.ttf in Resources */,
-				15309E891E65430E00D1DFA1 /* jaredheyen.json in Resources */,
 				15C826F71E85888A003EE6E4 /* Main.storyboard in Resources */,
-				AD2236991E563E4500112715 /* posts.json in Resources */,
-				15F9981D1E655562003F1773 /* gannonprudhommeLadies_and_G.json in Resources */,
 				15FB87101EC421260048ADA4 /* userfile.txt in Resources */,
-				15F998171E65525C003F1773 /* gannonprudhommeBasketball.json in Resources */,
-				15309E7D1E6494F200D1DFA1 /* gannonprudhomme.json in Resources */,
 				15FB870E1EC41D000048ADA4 /* groupfile.txt in Resources */,
-				AD5C0FC11E4A62F300272FD0 /* comments.json in Resources */,
-				15309E7F1E64B5A900D1DFA1 /* gannonprudhommeFPSF2016.json in Resources */,
 				15FB870C1EC388560048ADA4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -784,11 +769,12 @@
 				15C826C41E8587EF003EE6E4 /* ConfirmUploadNavigationViewController.swift in Sources */,
 				15FB666C1EAA8493004D23AF /* GroupProfilePageViewController.swift in Sources */,
 				15073F531EDD020100CDF92B /* InviteFriendsViewController.swift in Sources */,
+				8787EA4C1F1C4840005E045E /* PersonalProfileSavedPageCollectionView.swift in Sources */,
 				15C826911E8587DF003EE6E4 /* AppDelegate.swift in Sources */,
 				15C826CF1E8587EF003EE6E4 /* GroupSettingsViewController.swift in Sources */,
 				15C826CA1E8587EF003EE6E4 /* FeedViewController.swift in Sources */,
 				15C826E61E8587EF003EE6E4 /* PriorityQueue.swift in Sources */,
-				15C826E71E8587EF003EE6E4 /* ProfileSettingsViewController.swift in Sources */,
+				15C826E71E8587EF003EE6E4 /* EditProfileViewController.swift in Sources */,
 				15C8268E1E8587DF003EE6E4 /* SecondSignUpViewController.swift in Sources */,
 				15C275951E9FCC7100C62F0D /* AppSettingsTableViewController.swift in Sources */,
 				15FB666F1EB1225E004D23AF /* GroupProfileNavigationViewController.swift in Sources */,
@@ -799,6 +785,7 @@
 				15C826DD1E8587EF003EE6E4 /* NotificationsViewController.swift in Sources */,
 				15C826DB1E8587EF003EE6E4 /* SignInViewController.swift in Sources */,
 				150789E41E859EFD003C6FB3 /* SlideUpAnimator.swift in Sources */,
+				87E2A8871F2B833E0040255F /* OpenNavigationViewController.swift in Sources */,
 				153729EB1ED5F2D900381888 /* UserTableViewCell.swift in Sources */,
 				15C826D81E8587EF003EE6E4 /* LoadingTableView.swift in Sources */,
 				15C826E11E8587EF003EE6E4 /* PhotoSelectLayout.swift in Sources */,
@@ -806,6 +793,7 @@
 				15C826C71E8587EF003EE6E4 /* CropGroupPhotoViewController.swift in Sources */,
 				15890CBD1EDF081400418BFB /* NewPhotoSelectViewController.swift in Sources */,
 				7F68DE471E6E78AF0067C5F4 /* FriendsViewController.swift in Sources */,
+				877410221F427E860074594D /* DateUtils.swift in Sources */,
 				15C826C31E8587EF003EE6E4 /* BounceButton.swift in Sources */,
 				15FA9B0D1E95D9BA004DBA32 /* GroupSettingsNavigationViewController.swift in Sources */,
 				15E743B11E967DA8002D1220 /* GroupsNavigationViewController.swift in Sources */,
@@ -829,19 +817,23 @@
 				15C826C91E8587EF003EE6E4 /* FeedNavigationViewController.swift in Sources */,
 				15C826D11E8587EF003EE6E4 /* ImageScrollView.swift in Sources */,
 				15C826E51E8587EF003EE6E4 /* Post.swift in Sources */,
-				15FA5E961ECD01470090C701 /* OpenNavigationViewController.swift in Sources */,
 				150789E21E859EFD003C6FB3 /* SlideDownAnimator.swift in Sources */,
+				87E1C2CC1F3F614600005ABD /* Alert.swift in Sources */,
+				8787EA531F1EF529005E045E /* PersonalPostsCollectionViewCell.swift in Sources */,
 				152F02281EB399AA00F0C7BD /* SlideRightNavigationAnimator.swift in Sources */,
 				15C826D21E8587EF003EE6E4 /* ImageTransition.swift in Sources */,
 				15C826EF1E8587EF003EE6E4 /* TakePictureViewController.swift in Sources */,
 				7FA0B8431F1487A10052CF17 /* WalkthroughPageViewController.swift in Sources */,
 				15C826F01E8587EF003EE6E4 /* UploadPhotoViewController.swift in Sources */,
+				87E2A8851F2589F50040255F /* ImageUtils.swift in Sources */,
+				8787EA4E1F1C4851005E045E /* PersonalProfileUploadedPageCollectionView.swift in Sources */,
 				15C826E31E8587EF003EE6E4 /* PhotoUploadPageNavigationViewController.swift in Sources */,
 				15C826CD1E8587EF003EE6E4 /* Group.swift in Sources */,
 				15C8268D1E8587DF003EE6E4 /* FirstSignUpViewController.swift in Sources */,
 				15C826E81E8587EF003EE6E4 /* ProfileViewController.swift in Sources */,
 				15FAA0B11E96C19F004820B9 /* SlideLeftAnimator.swift in Sources */,
 				15C826EE1E8587EF003EE6E4 /* SwiftyJSON.swift in Sources */,
+				8787EA451F1C466F005E045E /* PersonalProfilePageViewController.swift in Sources */,
 				15C826901E8587DF003EE6E4 /* AddCommentViewController.swift in Sources */,
 				15C8268F1E8587DF003EE6E4 /* AddCommentNavigationViewController.swift in Sources */,
 			);

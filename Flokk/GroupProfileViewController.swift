@@ -73,7 +73,7 @@ class GroupProfileViewController: UIViewController {
                         if let fullName = snapshot.value as? String {
                             
                             // Then, load in the profile photo of the user
-                            let profilePhotoRef = storage.ref.child("users").child(creatorHandle).child("profilePhoto.jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(creatorHandle).child("profilePhotoIcon.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!)
@@ -93,23 +93,24 @@ class GroupProfileViewController: UIViewController {
         // Check what data has been loaded for this group that hasn't been loaded already
         // Probably gonna be the members at the least, so do that now
         if self.group.members.count == 0 { // If the members of this gorup haven't been loaded yet
-            for handle in self.group.memberHandles { // Iterate through all of the member handles and load each user - should probably ignore the main user
-                let userRef = database.ref.child("users").child(handle)
+            for uid in self.group.memberIDs { // Iterate through all of the member handles and load each user - should probably ignore the main user
+                let userRef = database.ref.child("users").child(uid)
                 userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                     if let values = snapshot.value as? NSDictionary {
                         let fullName = values["fullName"] as! String
+                        let handle = values["handle"] as! String
                         
                         // Load in the profile photo for this user
-                        let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                        let profilePhotoRef = storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg")
                         profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                             if error == nil { // If there wasn't an error
                                 let profilePhoto = UIImage(data: data!)
                                 
-                                let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                                let user = User(uid: uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                                 
                                 // Attempt to load in the user's friends handles
                                 if let friends = values["friends"] as? [String : Bool] {
-                                    user.friendHandles = Array(friends.keys)
+                                    user.friendIDs = Array(friends.keys)
                                 }
                                 
                                 // Attempt to load in the user's group IDs
@@ -155,6 +156,14 @@ class GroupProfileViewController: UIViewController {
         if segue.identifier == "embedSegueGroupProfileContainer" {
             if let groupProfilePageView = segue.destination as? GroupProfilePageViewController {
                 groupProfilePageView.group = self.group
+            }
+        } else if segue.identifier == "segueFromGroupProfileToProfile" {
+            if let profileView = segue.destination as? ProfileViewController {
+                let indexPath = self.tableView.indexPathForSelectedRow
+                
+                let user = self.group.members[(indexPath?.row)!]
+                
+                profileView.user = user
             }
         }
     }

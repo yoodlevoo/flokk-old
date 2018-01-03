@@ -32,7 +32,7 @@ class Database {
     func createGroup(groupHandle: String, profileIcon: UIImage) {
         let groupData = ref.child("groups").child(groupHandle)
         
-        groupData.child("creator").setValue(mainUser.handle) // the creator will always be the main user
+        groupData.child("creator").setValue(mainUser.uid) // the creator will always be the main user
         
         
     }

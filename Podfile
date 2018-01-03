@@ -11,8 +11,13 @@ target 'Flokk' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
   pod 'BRYXBanner'
   pod 'Toucan'
+  pod 'Hero'
+  pod 'Tabman'
+  pod 'Pageboy'
+  pod 'PureLayout'
 
   target 'FlokkTests' do
     inherit! :search_paths

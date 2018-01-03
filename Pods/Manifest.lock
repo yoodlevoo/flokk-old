@@ -11,6 +11,9 @@ PODS:
   - Firebase/Database (3.15.0):
     - Firebase/Core
     - FirebaseDatabase (= 3.1.2)
+  - Firebase/Messaging (3.15.0):
+    - Firebase/Core
+    - FirebaseMessaging (= 1.2.2)
   - Firebase/Storage (3.15.0):
     - Firebase/Core
     - FirebaseStorage (= 1.1.0)
@@ -27,12 +30,19 @@ PODS:
   - FirebaseDatabase (3.1.2):
     - FirebaseAnalytics (~> 3.7)
   - FirebaseInstanceID (1.0.9)
+  - FirebaseMessaging (1.2.2):
+    - FirebaseAnalytics (~> 3.7)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
   - FirebaseStorage (1.1.0):
     - FirebaseAnalytics (~> 3.7)
     - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/DebugUtils (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/Logger (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1):
@@ -41,6 +51,13 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.9)
+  - Hero (0.3.6)
+  - Pageboy (1.0.8)
+  - Protobuf (3.3.0)
+  - PureLayout (3.0.2)
+  - Tabman (0.5.1):
+    - Pageboy (= 1.0.8)
+    - PureLayout (~> 3.0.0)
   - Toucan (0.6.0)
 
 DEPENDENCIES:
@@ -49,7 +66,12 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - Firebase/Messaging
   - Firebase/Storage
+  - Hero
+  - Pageboy
+  - PureLayout
+  - Tabman
   - Toucan
 
 SPEC CHECKSUMS:
@@ -60,11 +82,17 @@ SPEC CHECKSUMS:
   FirebaseCore: a024587e43778508700af8c6b1209f7c4516ba02
   FirebaseDatabase: 05c96d7b43a7368dc91c07791adb49683e1738d1
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
+  FirebaseMessaging: df8267f378580a24174ce7861233aa11d5c90109
   FirebaseStorage: a5c55b23741a49a72af8f30f95b3bb5ddbeda12d
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
+  Hero: d3c6f4dd80cdcdbb339be64e57ae3b5c3ab9938c
+  Pageboy: dbbb644bcc439687254f774ed160a5f6866a2457
+  Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  Tabman: 7336c5d439bc892163382064f3785ea605e4fe69
   Toucan: 47485bbc9cb4541ef6318d6886103e6eaf16e919
 
-PODFILE CHECKSUM: b03e692fc6cb247a78baeb9dadd8098fc7a3beb6
+PODFILE CHECKSUM: e001bc3770ee34d58f017c00adf38f58df260121
 
 COCOAPODS: 1.2.1

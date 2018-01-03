@@ -39,7 +39,7 @@ class GroupProfilePageViewController: UIPageViewController {
         
         // If the group invites has been loaded yet
         if mainUser.groupInvites == nil {
-            let userRef = database.ref.child("users").child(mainUser.handle).child("groupInvites")
+            let userRef = database.ref.child("users").child(mainUser.uid).child("groupInvites")
             userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 if let values = snapshot.value as? NSDictionary {
                     let groupIDs = values.allKeys as! [String]
@@ -202,15 +202,15 @@ class GroupProfileViewControllerPage1: UIViewController {
     // If the user accepts the invite to join this group
     @IBAction func acceptGroupInvitePressed(_ sender: Any) {
         let groupRef = database.ref.child("groups").child(self.group.id)
-        groupRef.child("invitedUsers").child(mainUser.handle).removeValue() // Remove the outgoing invite from the groups json
-        groupRef.child("members").child(mainUser.handle).setValue(true) // Tell
+        groupRef.child("invitedUsers").child(mainUser.uid).removeValue() // Remove the outgoing invite from the groups json
+        groupRef.child("members").child(mainUser.uid).setValue(true) // Tell
         
-        let userRef = database.ref.child("users").child(mainUser.handle)
+        let userRef = database.ref.child("users").child(mainUser.uid)
         userRef.child("groupInvites").child(self.group.id).removeValue() // Remove this group from the list of group invites for the user
         userRef.child("groups").child(self.group.id).setValue(true) // Set this group as one of the user's group
         
         // Delete the notification for the user
-        let notificationRef = database.ref.child("notifications").child(mainUser.handle)
+        let notificationRef = database.ref.child("notifications").child(mainUser.uid)
         // Sort by notifications sent from this group
         notificationRef.queryOrdered(byChild: "groupID").queryEqual(toValue: self.group.id).observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {
@@ -241,7 +241,7 @@ class GroupProfileViewControllerPage1: UIViewController {
                 let postsData = values["posts"] as? [String : [String : Any]] ?? [String : [String : Any]]() // Default empty dictionary incase there are no posts
                 
                 self.group.postsData = postsData
-                self.group.memberHandles.append(mainUser.handle)
+                self.group.memberIDs.append(mainUser.uid)
                 self.group.members.append(mainUser)
                 
                 groups.append(self.group)
@@ -263,14 +263,14 @@ class GroupProfileViewControllerPage1: UIViewController {
     // If the user declines the invite to join this group - most of this is the same as acceptGroupInvitePressed(above)
     @IBAction func decineGroupInvitePressed(_ sender: Any) {
         let groupRef = database.ref.child("groups").child(self.group.id)
-        groupRef.child("invitedUsers").child(mainUser.handle).removeValue() // Remove the outgoing invite from the groups json
-        groupRef.child("members").child(mainUser.handle).setValue(true) // Tell
+        groupRef.child("invitedUsers").child(mainUser.uid).removeValue() // Remove the outgoing invite from the groups json
+        groupRef.child("members").child(mainUser.uid).setValue(true) // Tell
         
         // Remove this group from the list of group invites for the user
-        database.ref.child("users").child(mainUser.handle).child("groupInvites").child(self.group.id).removeValue()
+        database.ref.child("users").child(mainUser.uid).child("groupInvites").child(self.group.id).removeValue()
         
         // Delete the notification for the user
-        let notificationRef = database.ref.child("notifications").child(mainUser.handle)
+        let notificationRef = database.ref.child("notifications").child(mainUser.uid)
         // Sort by notifications sent from this group
         notificationRef.queryOrdered(byChild: "groupID").queryEqual(toValue: self.group.id).observeSingleEvent(of: .value, with: { (snapshot) in
             if let values = snapshot.value as? NSDictionary {

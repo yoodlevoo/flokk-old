@@ -2,7 +2,7 @@
 //  OpenNavigationViewController.swift
 //  Flokk
 //
-//  Created by Jared Heyen on 5/17/17.
+//  Created by Gannon Prudomme on 7/28/17.
 //  Copyright © 2017 Flokk. All rights reserved.
 //
 
@@ -20,16 +20,4 @@ class OpenNavigationViewController: UINavigationController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -9,19 +9,25 @@
 import UIKit
 
 class AddCommentViewController: UIViewController {
-    @IBOutlet weak var postView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var profilePhotoBarButton: UIBarButtonItem!
+    @IBOutlet weak var noCommentsLabel: UILabel!
+    @IBOutlet weak var posterImage: UIImageView!
+    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var datePostedLabel: UILabel!
+    
     @IBOutlet var keyboardHeightLayoutConstraint : NSLayoutConstraint?
     
     var loadedComments = [Comment]()
     
     var post: Post! // A copy of the post
-    var postIndex: Int! // The index of the post in the post array
     var group: Group!
     
     var userProfilePhotos = [String : UIImage]() // Dict of all of the according profile photos
+    
+    // If the comments have been checked yet
+    private var checkedForComments = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +38,47 @@ class AddCommentViewController: UIViewController {
         self.tableView.dataSource = self
         self.textField.delegate = self
         
-        self.postView.image = post.image
+        // Get the date the post was uploaded
+        let date = post.timestamp!
+        let calendar = Calendar.current
+        
+        let month = date.getMonth()
+        let day = date.getDay()
+        let year = date.getYear()
+        
+        // Get the individual components from the most recent post
+        var hour = date.getHour()
+        let minutes = date.getMinute()
+        
+        // check if this was in the AM or PM
+        var amPM = "AM"
+        if hour > 12 {
+            amPM = "PM"
+            hour -= 12
+        }
+        
+        // Check how recent this post was
+        // If it was under an hour ago
+        
+        
         
         // Tells the notification to
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        // Load in the poster's profile photo
+        let userRef = storage.ref.child("users").child(self.post.poster.uid).child("profilePhotoIcon.jpg")
+        userRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
+            if error == nil { // If there wasn't an error
+                let profilePhoto = UIImage(data: data!)
+                
+                self.post.poster.profilePhoto = profilePhoto!
+                
+                self.posterImage.image = profilePhoto!
+            } else { // If there was an error
+                // TODO: Handle the error if the profile photo didnt load correctly
+                print(error!)
+            }
+        })
         
         // Load in the comments, ordered by most recent?
         let commentRef = database.ref.child("comments").child(self.group.id).child(post.id)
@@ -57,7 +100,7 @@ class AddCommentViewController: UIViewController {
                         
                         // Load in the profile photo for the commenter
                         if !self.userProfilePhotos.keys.contains(commenterHandle) { // If we haven't loaded this user's profile photo already
-                            let profilePhotoRef = storage.ref.child("users").child(commenterHandle).child("profilePhoto.jpg")
+                            let profilePhotoRef = storage.ref.child("users").child(commenterHandle).child("profilePhotoIcon.jpg")
                             profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                                 if error == nil { // If there wasn't an error
                                     let profilePhoto = UIImage(data: data!)
@@ -82,6 +125,20 @@ class AddCommentViewController: UIViewController {
                 }
             }
         })
+        
+        self.checkedForComments = true
+        
+        self.checkCommentsCount()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // If we've already checked for comments
+        if self.checkedForComments {
+            // Check if we should show the no comments icon or not
+            self.checkCommentsCount()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,6 +149,15 @@ class AddCommentViewController: UIViewController {
         
     }
     
+    // Check if we should show the no comments icon or not
+    private func checkCommentsCount() {
+        if self.loadedComments.count == 0 {
+            self.noCommentsLabel.isHidden = false
+        } else {
+            self.noCommentsLabel.isHidden = true
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let feedNav = segue.destination as? FeedNavigationViewController {
             //feedNav.groupToPass = post.postedGroup
@@ -99,7 +165,7 @@ class AddCommentViewController: UIViewController {
     }
 }
 
-// Table View Functions
+// MARK: Table View Functions
 extension AddCommentViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath as IndexPath) as! CommentsTableViewController
@@ -123,7 +189,7 @@ extension AddCommentViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// Text Field Functions
+// MARK: Text Field Functions
 extension AddCommentViewController: UITextFieldDelegate {
     // So the text field doesnt try to line break when we press enter
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -132,7 +198,7 @@ extension AddCommentViewController: UITextFieldDelegate {
         // Upload the comment
         let commentKey = database.ref.child("comments").child(self.group.id).child(post.id).childByAutoId().key
         let commentRef = database.ref.child("comments").child(self.group.id).child(post.id).child(commentKey) // Database reference
-        commentRef.child("poster").setValue(mainUser.handle) // The handle of the commenter, always going to be the mainUser
+        commentRef.child("poster").setValue(mainUser.uid) // The handle of the commenter, always going to be the mainUser
         commentRef.child("content").setValue(textField.text!) // The actual content of the comment
         commentRef.child("timestamp").setValue(NSDate.timeIntervalSinceReferenceDate)
         

@@ -13,6 +13,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var groupNameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tabBar: UINavigationItem!
+    @IBOutlet weak var leaveGroupButton: UIButton!
     
     let transitionUp = SlideUpAnimator()
     
@@ -30,11 +31,11 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
-       // self.refreshControl.tintColor =
+        //self.refreshControl.tintColor =
         
         self.activityIndicator.activityIndicatorViewStyle = .whiteLarge
         self.activityIndicator.frame = CGRect(x: self.tableView.frame.width / 2 - 30, y: 0.0, width: 60, height: 60)
-//        self.activityIndicator.scale(factor: 1.25)
+        //self.activityIndicator.scale(factor: 1.25)
         //self.activityIndicator.center = self.tableView.center
         self.activityIndicator.color = TEAL_COLOR
         self.activityIndicator.hidesWhenStopped =  true // what does this do
@@ -53,21 +54,22 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         // Put an overlay over the image so you know you can change it?
         
         // Load all of the friends
-        for handle in group.memberHandles { // Iterate through all the member handles
-            let userRef = database.ref.child("users").child(handle)
+        for uid in group.memberIDs { // Iterate through all the member handles
+            let userRef = database.ref.child("users").child(uid)
             userRef.observeSingleEvent(of: .value, with: { (snapshot) in
                 if let values = snapshot.value as? NSDictionary { // If the data loaded correctly
                     let fullName = values["fullName"] as! String
+                    let handle = values["handle"] as! String
                     let groupsDict = values["groups"] as? [String : Bool] ?? [String : Bool]()
                     
                     // Load this user's profile Photo
-                    let profilePhotoRef = storage.ref.child("users").child(handle).child("profilePhoto.jpg")
+                    let profilePhotoRef = storage.ref.child("users").child(uid).child("profilePhotoIcon.jpg")
                     profilePhotoRef.data(withMaxSize: MAX_PROFILE_PHOTO_SIZE, completion: { (data, error) in
                         if error == nil { // If there wasn't an error
                             let profilePhoto = UIImage(data: data!)
                             
                             // Load the user
-                            let user = User(handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
+                            let user = User(uid: uid, handle: handle, fullName: fullName, profilePhoto: profilePhoto!)
                             user.groupIDs = Array(groupsDict.keys)
                             
                             self.members.append(user) // Add it to members array
@@ -82,6 +84,11 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                     })
                 }
             })
+        }
+        
+        // If the mainUser created the group, then they should not be able to leave it
+        if self.group.creatorID == mainUser.uid {
+            self.leaveGroupButton.isHidden = true
         }
     }
 
@@ -113,15 +120,34 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func inviteFriendButtonPressed(_ sender: Any) {
-        /*
-        // Check if any friends not in this group are loaded - mainUser.friends. actually nah
-        let inviteFriendsView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InviteFriendsTableViewController") as! InviteFriendsTableViewController
-        var loadedUsers = 0
         
+    }
+    
+    @IBAction func leaveGroupBuyttonPressed(_ sender: Any) {
+        // Show an alert asking to confirm leaving the group
+        let alert = UIAlertController(title: "Leave Group", message: "Are you sure you want to leave \(self.group.name)?", preferredStyle: .alert)
         
-        }
+        let confirmActionButton = UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
+            // Remove the user from the members data from the group's database
+            database.ref.child("groups/\(self.group.id)/members").child(mainUser.uid).removeValue()
+            
+            // Remove the group from the main user's group's data in the database
+            database.ref.child("users").child(mainUser.uid).child("groups").child(self.group.id).removeValue()
+            
+            // Remove the group from the main user's group array locally
+            groups.remove(at: groups.index(where: {$0.id == self.group.id })!)
+            mainUser.groups.remove(at: mainUser.groups.index(where: {$0.id == self.group.id })!)
+            
+            // Remove the group from the main user's groupIDs array locally
+            mainUser.groupIDs.remove(at: mainUser.groupIDs.index(where: {$0 == self.group.id})!)
+        })
         
-        self.present(inviteFriendsView, animated: true, completion: nil) */
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in })
+        
+        alert.addAction(cancelAction)
+        alert.addAction(confirmActionButton)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -138,6 +164,7 @@ class GroupSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                 let user = self.members[(self.tableView.indexPathForSelectedRow?.row)!]
                 
                 profileView.user = user
+                profileView.userID = user.uid
                 profileView.userHandle = user.handle
             }
         }
