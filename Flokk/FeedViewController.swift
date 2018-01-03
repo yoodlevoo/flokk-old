@@ -178,7 +178,10 @@ class FeedViewController: UIViewController {
                                             // Reload the table view
                                             DispatchQueue.main.async {
                                                 self.tableView.reloadData()
-                                                self.refreshControl.endRefreshing()
+                                               
+                                                if self.loadedPosts.count == self.group.postsData.count {
+                                                    self.refreshControl.endRefreshing()
+                                                }
                                             }
                                         }
                                     })
@@ -280,6 +283,7 @@ class FeedViewController: UIViewController {
 }
 
 
+
 // MARK: Table View Functions
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     // Try to adjust the size of each cell according to the size of the picture
@@ -301,7 +305,6 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             // If this profile photo isn't loaded yet
             if self.userProfilePhotos[post.posterID] == nil {
                 // Then create a temporary one with their initials
-                var textImage = UIImage(named: "Empty Profile Picture")
                 
                 // Add the initials to the image
                 cell.userImage.image = UIImage.generateProfilePhotoWithText(text: post.poster.getInitials())
@@ -309,7 +312,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.userImage.image = self.userProfilePhotos[post.posterID]
             }
             
-            
+            cell.userImage.image = UIImage.generateProfilePhotoWithText(text: post.poster.getInitials())
             // Set the poster's profile photo & crop it to a circle
             cell.userImage.layer.cornerRadius = cell.userImage.frame.size.width / 2
             cell.userImage.clipsToBounds = true

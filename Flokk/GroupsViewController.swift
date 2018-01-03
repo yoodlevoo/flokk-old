@@ -258,7 +258,10 @@ extension GroupsViewController {
                                     
                                     DispatchQueue.main.async {
                                         self.tableView.reloadData() // Reload data every time a group is loaded
-                                        self.refreshControl.endRefreshing()
+                                        
+                                        if groups.count == mainUser.groupIDs.count {
+                                            self.refreshControl.endRefreshing()
+                                        }
                                     }
                                 } else { // If there was an error
                                     print(error!)

@@ -26,6 +26,8 @@ class Post {
     var width: Int!
     var height: Int!
     
+    var percentLoaded: Int! // From [0, 1), when the post is loading
+    
     init(poster: User, image: UIImage, postID: String) {
         self.poster = poster
         self.image = image

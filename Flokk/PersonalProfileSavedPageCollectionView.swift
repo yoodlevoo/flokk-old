@@ -27,10 +27,11 @@ class PersonalProfileSavedPageView: UIViewController, UICollectionViewDelegate, 
         let width = self.activityIndicator.frame.size.width
         let topY = self.activityIndicator.frame.minY
         
-        self.activityIndicator.frame = CGRect(x: 337 / 2 - (width / 2), y: topY / 2 - (width / 2), width: width, height: width)
+        self.activityIndicator.center = self.collectionView.center
         
-        self.collectionView?.addSubview(self.activityIndicator)
-        //self.activityIndicator.startAnimating()
+        self.view?.addSubview(self.activityIndicator)
+        self.view.bringSubview(toFront: self.activityIndicator)
+        self.activityIndicator.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,6 +61,12 @@ class PersonalProfileSavedPageView: UIViewController, UICollectionViewDelegate, 
                             // Every time a post is loaded, reload
                             DispatchQueue.main.async {
                                 self.collectionView?.reloadData()
+                                
+                                // Check if all of the saved posts are loaded
+                                if self.posts.count == mainUser.savedPostsData.count {
+                                    // If so, stop refreshing
+                                    self.activityIndicator.stopAnimating()
+                                }
                             }
                         } else {
                             print(error!)

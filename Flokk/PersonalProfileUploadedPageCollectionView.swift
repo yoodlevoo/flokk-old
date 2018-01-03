@@ -25,8 +25,11 @@ class PersonalProfileUploadedPageView: UIViewController, UICollectionViewDelegat
         
         //self.clearsSelectionOnViewWillAppear = true // It might default to this
         
-        self.collectionView?.addSubview(self.activityIndicator)
-        //self.activityIndicator.startAnimating()
+        self.activityIndicator.center = self.collectionView.center
+        
+        self.view?.addSubview(self.activityIndicator)
+        self.view.bringSubview(toFront: self.activityIndicator)
+        self.activityIndicator.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -54,6 +57,12 @@ class PersonalProfileUploadedPageView: UIViewController, UICollectionViewDelegat
                             // Every time a post is loaded, reload
                             DispatchQueue.main.async {
                                 self.collectionView?.reloadData()
+                                
+                                // Check if all of the saved posts are loaded
+                                if self.posts.count == mainUser.savedPostsData.count {
+                                    // If so, stop refreshing
+                                    self.activityIndicator.stopAnimating()
+                                }
                             }
                         } else {
                             print(error!)

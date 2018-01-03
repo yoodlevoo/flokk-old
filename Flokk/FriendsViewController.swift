@@ -81,7 +81,12 @@ class FriendsViewController: UIViewController {
                                         
                                         DispatchQueue.main.async {
                                             self.tableView.reloadData()
-                                            self.refreshControl.endRefreshing()
+                                            
+                                            // If all of the friends have been loaded
+                                            if mainUser.friends.count == mainUser.friendIDs.count {
+                                                // Then we can stop the refresh control
+                                                self.refreshControl.endRefreshing()
+                                            }
                                         }
                                     }
                                 }

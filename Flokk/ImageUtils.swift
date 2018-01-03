@@ -31,18 +31,24 @@ extension UIImage {
     }
     
     static func generateProfilePhotoWithText(text: String) -> UIImage {
-        let image = UIImage(named: "Empty Profile Picture")!
+        let image = UIImage(named: "Grey Empty Profile Picture")!
         
+        // Create the imageview
         let imageView = UIImageView(image: image)
         imageView.backgroundColor = UIColor.clear
         imageView.frame = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
         
+        // Create the label
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
         label.backgroundColor = UIColor.clear
         label.textAlignment = .center
         label.textColor = UIColor.black
         label.text = text
-        label.font = UIFont(name: "Josefin Sans", size: 55)
+        label.font = UIFont(name: "Josefin Sans", size: 50)
+        
+        // Center the label in the view
+        label.center = imageView.center
+        
         
         UIGraphicsBeginImageContextWithOptions(label.bounds.size, false, 0);
         imageView.layer.render(in: UIGraphicsGetCurrentContext()!)
