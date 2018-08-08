@@ -3,4 +3,6 @@
 </p>
 
 A project in hiatus designed by Jared Heyen and developed by Gannon Prudhomme.
-Content of project before restart can be found here:https://github.com/heyenhigher/flokk/tree/14bfed1da8d3a417d0f8498e840099cf6cc2ea70
+Content of project before purge can be found [here](https://github.com/heyenhigher/flokk/tree/14bfed1da8d3a417d0f8498e840099cf6cc2ea70)
+
+Ignoring purge, began project again in different [repo](https://github.com/gannonprudhomme/flokk)
